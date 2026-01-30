@@ -6,21 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Itinerary extends Model
+class Passenger extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'trek_id',
-        'day_number',
-        'title',
-        'description',
-        'accommodation',
-        'meals',
+        'trek_booking_id',
+        'name',
+        'passport_no',
+        'age',
     ];
 
-    public function trek(): BelongsTo
+    public function trekBooking(): BelongsTo
     {
-        return $this->belongsTo(Trek::class);
+        return $this->belongsTo(TrekBooking::class);
     }
 }
