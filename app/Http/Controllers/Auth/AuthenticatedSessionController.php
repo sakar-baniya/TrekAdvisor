@@ -28,22 +28,18 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate(); //starts session for the user
 
-        // 3. Simple logic: Get the role of the person who just logged in
+        // Simple logic: Get the role of the person who just logged in
         $role = Auth::user()->role;
 
-        // 4. Redirect based on role
-        if ($role === 'admin' || $role === 'staff') {
-            return redirect('/dashboard'); 
-        }
-
-        if ($role === 'hotel_owner') {
-            // You can create a '/hotel-dashboard' later, for now let's send them home
-            return redirect('/'); 
-        }
-
-        // Default: Regular customers go to the welcome/home page
-        return redirect('/');
-    } 
+        //  Redirect based on role
+        return match ($role){
+            'admin' => redirect()->intended('/admin/dashboard'),
+            'staff' => redirect()->intended('/staff/dashboard'),
+            'hotel_owner' => redirect()->intended('/hotel/dashboard'),
+            'customer' => redirect()->intended('/customer/dashboard'),
+            default => redirect()->intended('/'), // Fallback
+        };
+    }
 
     /**
      * Destroy an authenticated session.
