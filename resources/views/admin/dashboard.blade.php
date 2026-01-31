@@ -11,11 +11,13 @@
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-bold mb-4">System Overview</h3>
                     <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <a href="{{ route('admin.treks.index') }}" class="p-4 bg-blue-100 hover:bg-blue-200 rounded-lg text-center transition">
+                            <i class="fas fa-mountain text-3xl mb-2 text-blue-600"></i>
+                            <span class="block text-lg font-bold">Manage Treks</span>
+                        </a>
                         <div class="p-4 bg-gray-100 rounded-lg text-center">
-                            <span class="block text-2xl font-bold">Manage Treks</span>
-                        </div>
-                        <div class="p-4 bg-gray-100 rounded-lg text-center">
-                            <span class="block text-2xl font-bold">Manage Users</span>
+                            <i class="fas fa-users text-3xl mb-2 text-gray-600"></i>
+                            <span class="block text-lg font-bold">Manage Users</span>
                         </div>
                         <div class="p-4 bg-gray-100 rounded-lg text-center">
                             <span class="block text-2xl font-bold">Finances</span>

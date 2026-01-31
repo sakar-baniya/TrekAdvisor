@@ -23,6 +23,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('admin.dashboard');
     })->middleware('role:admin')->name('admin.dashboard');
 
+    Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
+        Route::resource('treks', \App\Http\Controllers\Admin\AdminTrekController::class);
+    });
+
     // Staff Only
     Route::get('/staff/dashboard', function () {
         return view('staff.dashboard');
