@@ -23,6 +23,11 @@ class HotelBooking extends Model
         'status',
     ];
 
+    protected $casts = [
+        'check_in' => 'date',
+        'check_out' => 'date',
+    ];
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

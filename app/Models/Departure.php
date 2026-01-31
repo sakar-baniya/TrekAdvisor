@@ -18,7 +18,6 @@ class Departure extends Model
         'price',
         'capacity',
         'booked_seats',
-        'available_slots',
         'status',
     ];
 
