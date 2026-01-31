@@ -17,4 +17,7 @@ class Trek extends Model
     public function departures() {
         return $this->hasMany(Departure::class);
     }
+    public function reviews() {
+        return $this->morphMany(Review::class, 'reviewable');
+    }
 }
