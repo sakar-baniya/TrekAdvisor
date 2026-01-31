@@ -15,8 +15,16 @@ class Departure extends Model
         'trek_id',
         'start_date',
         'end_date',
+        'price',
+        'capacity',
+        'booked_seats',
         'available_slots',
         'status',
+    ];
+
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
     ];
 
     public function trek(): BelongsTo
