@@ -20,4 +20,7 @@ class Trek extends Model
     public function reviews() {
         return $this->morphMany(Review::class, 'reviewable');
     }
+    public function gallery() {
+        return $this->hasMany(TrekImage::class);
+    }
 }
