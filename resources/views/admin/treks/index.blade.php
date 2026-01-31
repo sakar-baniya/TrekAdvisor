@@ -1,11 +1,16 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ __('Manage Treks') }}
-            </h2>
-            <a href="{{ route('admin.treks.create') }}" class="inline-flex items-center px-4 py-2 bg-blue-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150">
-                <i class="fas fa-plus mr-2"></i> Add New Trek
+            <div class="flex items-center">
+                <a href="{{ route('admin.dashboard') }}" class="mr-4 text-gray-500 hover:text-gray-700 transition-colors">
+                    <i class="fas fa-arrow-left"></i>
+                </a>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Manage Treks') }}
+                </h2>
+            </div>
+            <a href="{{ route('admin.treks.create') }}" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 shadow-sm">
+                <i class="fas fa-plus mr-2 text-[10px]"></i> New Trek
             </a>
         </div>
     </x-slot>
