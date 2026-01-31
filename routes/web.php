@@ -1,11 +1,18 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TrekController;
+use App\Http\Controllers\BookingController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('treks.index');
 });
+
+Route::get('/dashboard', function () {
+    $role = auth()->user()->role;
+    return redirect()->route($role . '.dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 // --- ROLE-BASED DASHBOARDS (THE LOCKED DOORS) ---
 
@@ -35,7 +42,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // --- STANDARD ROUTES ---
 
+Route::get('/treks', [TrekController::class, 'index'])->name('treks.index');
+Route::get('/treks/{slug}', [TrekController::class, 'show'])->name('treks.show');
+
 Route::middleware('auth')->group(function () {
+    Route::get('/bookings/create/{departure}', [BookingController::class, 'create'])->name('bookings.create');
+    Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
+    Route::get('/bookings/passengers', [BookingController::class, 'passengers'])->name('bookings.passengers');
+    Route::post('/bookings/confirm', [BookingController::class, 'confirm'])->name('bookings.confirm');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
