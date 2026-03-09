@@ -1,309 +1,176 @@
 <x-app-layout>
-    <div class="trek-details-container">
-        <div class="trek-hero" style="background-image: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.7)), url('{{ $trek->image ?? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b' }}')">
-            <div class="hero-content">
-                <div class="difficulty-badge difficulty-{{ strtolower($trek->difficulty) }}">{{ $trek->difficulty }}</div>
-                <h1>{{ $trek->title }}</h1>
-                <p class="trek-meta">
-                    <span><i class="fas fa-calendar-alt"></i> {{ $trek->itineraries->count() }} Days</span>
-                    <span><i class="fas fa-tag"></i> From ${{ number_format($trek->base_price) }}</span>
-                </p>
+    <div class="font-sans bg-slate-50 min-h-screen">
+        <!-- Hero Section: The High Altitude Welcome -->
+        <div class="relative h-[65vh] flex items-end pb-24 text-white overflow-hidden">
+            <div class="absolute inset-0 z-0">
+                <img src="{{ $trek->image ?? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b' }}" alt="{{ $trek->title }}" class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-6 lg:px-8 w-full">
+                <div class="flex flex-col items-start">
+                    @php
+                        $difficultyColors = [
+                            'easy' => 'bg-emerald-500/90',
+                            'moderate' => 'bg-blue-500/90',
+                            'difficult' => 'bg-amber-500/90',
+                            'extreme' => 'bg-rose-500/90'
+                        ][strtolower($trek->difficulty)] ?? 'bg-slate-500/90';
+                    @endphp
+                    <div class="{{ $difficultyColors }} px-6 py-2 rounded-full text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md shadow-2xl mb-6">
+                        {{ $trek->difficulty }} EXPEDITION
+                    </div>
+                    
+                    <h1 class="text-6xl md:text-8xl font-black mb-8 tracking-tighter leading-none drop-shadow-2xl">
+                        {{ $trek->title }}
+                    </h1>
+                    
+                    <div class="flex flex-wrap gap-6 text-sm font-black uppercase tracking-widest bg-white/10 backdrop-blur-xl px-8 py-5 rounded-[2rem] border border-white/20">
+                        <span class="flex items-center"><i class="fas fa-calendar-alt mr-3 text-blue-400"></i> {{ $trek->itineraries->count() }} Days</span>
+                        <div class="w-px h-4 bg-white/20"></div>
+                        <span class="flex items-center"><i class="fas fa-mountain mr-3 text-blue-400"></i> Easy Access</span>
+                        <div class="w-px h-4 bg-white/20"></div>
+                        <span class="flex items-center"><i class="fas fa-tag mr-3 text-blue-400"></i> ${{ number_format($trek->base_price) }} Starting</span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="trek-content-grid">
-            <div class="main-content">
-                <section class="trek-description">
-                    <h2>About this Trek</h2>
-                    <div class="description-text">
+        <!-- Details Grid -->
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 -mt-20 pb-24 relative z-20 grid grid-cols-1 lg:grid-cols-[1fr_420px] gap-12">
+            
+            <div class="space-y-12">
+                <!-- Description -->
+                <section class="bg-white p-12 lg:p-20 rounded-[3.5rem] shadow-2xl shadow-slate-200/50">
+                    <h2 class="text-4xl font-black text-slate-900 mb-10 flex items-center before:content-[''] before:w-3 before:h-10 before:bg-blue-600 before:mr-6 before:rounded-full tracking-tight text-[1.4em]">
+                        About This Trek
+                    </h2>
+                    <div class="text-slate-500 line-height-relaxed text-lg font-medium leading-loose space-y-6">
                         {!! nl2br(e($trek->description)) !!}
                     </div>
                 </section>
 
-                <section class="itinerary-section">
-                    <h2>Itinerary Timeline</h2>
-                    <div class="timeline">
+                <!-- Itinerary -->
+                <section class="bg-white p-12 lg:p-20 rounded-[3.5rem] shadow-2xl shadow-slate-200/50">
+                    <h2 class="text-4xl font-black text-slate-900 mb-12 flex items-center before:content-[''] before:w-3 before:h-10 before:bg-blue-600 before:mr-6 before:rounded-full tracking-tight">
+                        Itinerary
+                    </h2>
+                    <div class="relative border-l-2 border-slate-100 ml-6 py-4 space-y-12">
                         @foreach($trek->itineraries as $itinerary)
-                            <div class="timeline-item">
-                                <div class="day-marker">Day {{ $itinerary->day_number }}</div>
-                                <div class="timeline-content">
-                                    <h3>{{ $itinerary->title }}</h3>
-                                    <p>{{ $itinerary->description }}</p>
+                            <div class="relative pl-14">
+                                <div class="absolute -left-[1.45rem] top-0 bg-blue-600 text-white px-5 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl shadow-blue-200 border-4 border-white">
+                                    DAY {{ $itinerary->day_number }}
+                                </div>
+                                <div class="group">
+                                    <h3 class="text-xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
+                                        {{ $itinerary->title }}
+                                    </h3>
+                                    <p class="text-slate-500 font-medium leading-relaxed">
+                                        {{ $itinerary->description }}
+                                    </p>
                                 </div>
                             </div>
                         @endforeach
                     </div>
                 </section>
 
-                <section class="reviews-section">
-                    <h2>What Adventurers Say</h2>
+                <!-- Reviews -->
+                <section class="bg-white p-12 lg:p-20 rounded-[3.5rem] shadow-2xl shadow-slate-200/50">
+                    <h2 class="text-4xl font-black text-slate-900 mb-12 flex items-center before:content-[''] before:w-3 before:h-10 before:bg-blue-600 before:mr-6 before:rounded-full tracking-tight">
+                        Customer Reviews
+                    </h2>
                     @if($reviews->count() > 0)
-                        <div class="reviews-grid">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             @foreach($reviews as $review)
-                                <div class="review-card">
-                                    <div class="review-rating">
+                                <div class="bg-slate-50/50 p-10 rounded-[2.5rem] border border-slate-100 flex flex-col">
+                                    <div class="flex text-amber-400 mb-6 space-x-1">
                                         @for($i = 1; $i <= 5; $i++)
-                                            <i class="fa{{ $i <= $review->rating ? 's' : 'r' }} fa-star"></i>
+                                            <i class="fa{{ $i <= $review->rating ? 's' : 'r' }} fa-star text-xs"></i>
                                         @endfor
                                     </div>
-                                    <p class="review-comment">"{{ $review->comment }}"</p>
-                                    <div class="review-user">
-                                        <div class="user-avatar">{{ substr($review->user->name, 0, 1) }}</div>
-                                        <div class="user-info">
-                                            <p class="user-name">{{ $review->user->name }}</p>
-                                            <p class="review-date">{{ $review->created_at->diffForHumans() }}</p>
+                                    <p class="text-slate-600 font-medium italic text-lg leading-relaxed mb-8 flex-1">
+                                        "{{ $review->comment }}"
+                                    </p>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-black text-sm shadow-lg">
+                                            {{ substr($review->user->name, 0, 1) }}
+                                        </div>
+                                        <div>
+                                            <p class="text-sm font-black text-slate-900 uppercase tracking-tight">{{ $review->user->name }}</p>
+                                            <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $review->created_at->diffForHumans() }}</p>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     @else
-                        <p class="no-reviews">No reviews yet. Be the first to trek this peak!</p>
+                        <div class="text-center py-20 bg-slate-50 rounded-[3rem] border-2 border-dashed border-slate-200">
+                            <i class="fas fa-comment-slash text-4xl text-slate-300 mb-4 block"></i>
+                            <p class="text-slate-400 font-black uppercase tracking-widest text-[10px]">No reviews yet.</p>
+                        </div>
                     @endif
                 </section>
             </div>
 
-            <aside class="sidebar">
-                <div class="booking-sidebar-card">
-                    <h3>Available Departures</h3>
-                    <p class="sidebar-info">Select a date to begin your booking process.</p>
-                    
-                    <div class="departure-list">
-                        @forelse($trek->departures as $departure)
-                            <div class="departure-item">
-                                <div class="departure-date">
-                                    <p class="date">{{ $departure->start_date->format('M d, Y') }}</p>
-                                    <p class="slots">{{ $departure->capacity - $departure->booked_seats }} slots left</p>
+            <!-- Sidebar -->
+            <aside class="space-y-8">
+                <div class="sticky top-8 space-y-8">
+                    <!-- Booking Dates -->
+                    <div class="bg-white p-10 rounded-[3rem] shadow-2xl shadow-slate-200/50 border border-slate-50">
+                        <h3 class="text-2xl font-black text-slate-900 mb-2 uppercase tracking-tight">Available Dates</h3>
+                        <p class="text-slate-400 font-bold text-xs uppercase tracking-widest mb-10">Select a date to start booking</p>
+                        
+                        <div class="space-y-6">
+                            @forelse($trek->departures as $departure)
+                                <div class="group p-6 rounded-3xl bg-slate-50 hover:bg-white hover:shadow-xl hover:shadow-slate-100 transition-all border border-transparent hover:border-slate-100">
+                                    <div class="flex justify-between items-start mb-6">
+                                        <div>
+                                            <p class="text-sm font-black text-slate-900">{{ $departure->start_date->format('M d, Y') }}</p>
+                                            <p class="text-[10px] font-black uppercase tracking-widest text-emerald-500 mt-1">
+                                                {{ $departure->capacity - $departure->booked_seats }} SLOTS REMAINING
+                                            </p>
+                                        </div>
+                                        <p class="text-xl font-black text-blue-600">${{ number_format($departure->price) }}</p>
+                                    </div>
+                                    <a href="{{ route('bookings.create', $departure->id) }}" class="w-full block py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] text-center hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200 transition-all active:scale-95">
+                                        BOOK THIS DATE
+                                    </a>
                                 </div>
-                                <div class="departure-price">
-                                    <p>${{ number_format($departure->price) }}</p>
-                                    <a href="{{ route('bookings.create', $departure->id) }}" class="btn-book">Book Now</a>
+                            @empty
+                                <div class="p-8 text-center bg-rose-50 rounded-3xl">
+                                    <p class="text-[10px] font-black text-rose-600 uppercase tracking-[0.2em]">No dates available</p>
                                 </div>
-                            </div>
-                        @empty
-                            <p class="no-departures">No scheduled departures available currently.</p>
-                        @endforelse
+                            @endforelse
+                        </div>
                     </div>
-                </div>
 
-                <div class="trek-highlights">
-                    <h3>Highlights</h3>
-                    <ul>
-                        <li><i class="fas fa-check"></i> Experienced local guides</li>
-                        <li><i class="fas fa-check"></i> All permits included</li>
-                        <li><i class="fas fa-check"></i> Premium accommodation</li>
-                        <li><i class="fas fa-check"></i> High success rate</li>
-                    </ul>
+                    <!-- Trek Information -->
+                    <div class="bg-slate-900 text-white p-10 rounded-[3rem] shadow-2xl shadow-slate-900/40 relative overflow-hidden">
+                        <div class="absolute -right-8 -top-8 w-24 h-24 bg-white/5 rounded-full blur-2xl"></div>
+                        <h3 class="text-xl font-black mb-8 uppercase tracking-tight relative z-10">Why Trek With Us?</h3>
+                        <ul class="space-y-6 relative z-10">
+                            <li class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                                    <i class="fas fa-shield-alt text-xs"></i>
+                                </div>
+                                <span class="text-[10px] font-black uppercase tracking-widest">Expert Local Guides</span>
+                            </li>
+                            <li class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                                    <i class="fas fa-file-contract text-xs"></i>
+                                </div>
+                                <span class="text-[10px] font-black uppercase tracking-widest">Permits Included</span>
+                            </li>
+                            <li class="flex items-center space-x-4">
+                                <div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-xl flex items-center justify-center border border-emerald-500/20">
+                                    <i class="fas fa-hotel text-xs"></i>
+                                </div>
+                                <span class="text-[10px] font-black uppercase tracking-widest">Comfortable Guesthouses</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </aside>
         </div>
     </div>
-
-    <style>
-        .trek-details-container {
-            font-family: 'Inter', sans-serif;
-            background: #f8fafc;
-        }
-
-        .trek-hero {
-            height: 60vh;
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            align-items: flex-end;
-            padding-bottom: 5rem;
-            color: white;
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
-            width: 100%;
-        }
-
-        .hero-content h1 {
-            font-size: 4rem;
-            font-weight: 800;
-            margin-top: 1.5rem;
-            letter-spacing: -0.05em;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-        }
-
-        .trek-meta {
-            display: flex;
-            gap: 2rem;
-            margin-top: 1rem;
-            font-size: 1.1rem;
-            font-weight: 500;
-            opacity: 0.9;
-        }
-
-        .trek-meta i { margin-right: 0.5rem; }
-
-        .trek-content-grid {
-            max-width: 1200px;
-            margin: -4rem auto 4rem;
-            padding: 0 2rem;
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 3rem;
-        }
-
-        .main-content {
-            background: white;
-            padding: 4rem;
-            border-radius: 32px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-        }
-
-        h2 {
-            font-size: 2rem;
-            font-weight: 800;
-            color: #1a202c;
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
-        }
-
-        h2::before {
-            content: '';
-            display: inline-block;
-            width: 8px;
-            height: 32px;
-            background: #3182ce;
-            margin-right: 1.5rem;
-            border-radius: 4px;
-        }
-
-        .description-text {
-            color: #4a5568;
-            line-height: 1.8;
-            font-size: 1.1rem;
-            margin-bottom: 4rem;
-        }
-
-        /* Timeline Styling */
-        .timeline {
-            border-left: 2px solid #e2e8f0;
-            margin-left: 1.25rem;
-            padding-bottom: 4rem;
-        }
-
-        .timeline-item {
-            position: relative;
-            padding-left: 3rem;
-            margin-bottom: 3rem;
-        }
-
-        .day-marker {
-            position: absolute;
-            left: -1.25rem;
-            top: 0;
-            background: #3182ce;
-            color: white;
-            padding: 0.25rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            box-shadow: 0 4px 6px rgba(49,130,206,0.3);
-        }
-
-        .timeline-content h3 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 0.5rem;
-        }
-
-        .timeline-content p {
-            color: #718096;
-            line-height: 1.6;
-        }
-
-        /* Reviews Styling */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-        }
-
-        .review-card {
-            background: #f7fafc;
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid #edf2f7;
-        }
-
-        .review-rating { color: #f6ad55; margin-bottom: 1rem; }
-        .review-comment { font-style: italic; color: #4a5568; margin-bottom: 1.5rem; }
-
-        .review-user { display: flex; align-items: center; gap: 1rem; }
-        .user-avatar {
-            width: 40px; height: 40px;
-            background: #3182ce; color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-weight: 700;
-        }
-        .user-name { font-weight: 700; color: #2d3748; font-size: 0.9rem; }
-        .review-date { font-size: 0.8rem; color: #a0aec0; }
-
-        /* Sidebar Styling */
-        .sidebar { display: flex; flex-direction: column; gap: 2rem; }
-
-        .booking-sidebar-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 32px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 2rem;
-        }
-
-        .booking-sidebar-card h3 { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.5rem; }
-        .sidebar-info { color: #718096; font-size: 0.9rem; margin-bottom: 2rem; }
-
-        .departure-list { display: flex; flex-direction: column; gap: 1.5rem; }
-
-        .departure-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid #edf2f7;
-        }
-
-        .departure-date .date { font-weight: 700; color: #2d3748; }
-        .departure-date .slots { font-size: 0.8rem; color: #48bb78; font-weight: 600; }
-
-        .departure-price { text-align: right; }
-        .departure-price p { font-weight: 800; font-size: 1.25rem; color: #3182ce; margin-bottom: 0.5rem; }
-
-        .btn-book {
-            display: inline-block;
-            background: #2d3748;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-        }
-
-        .btn-book:hover { background: #1a202c; transform: scale(1.05); }
-
-        .trek-highlights {
-            background: #2d3748;
-            color: white;
-            padding: 2.5rem;
-            border-radius: 32px;
-        }
-
-        .trek-highlights h3 { margin-bottom: 1.5rem; }
-        .trek-highlights ul { list-style: none; padding: 0; }
-        .trek-highlights li { margin-bottom: 1rem; display: flex; align-items: center; gap: 1rem; font-size: 0.95rem; }
-        .trek-highlights i { color: #48bb78; }
-    </style>
 </x-app-layout>

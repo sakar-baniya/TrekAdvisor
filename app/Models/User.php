@@ -45,4 +45,14 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function dashboardRouteName(): string
+    {
+        return match ($this->role) {
+            'admin' => 'admin.dashboard',
+            'staff' => 'staff.dashboard',
+            'hotel_owner' => 'hotel_owner.dashboard',
+            default => 'customer.dashboard',
+        };
+    }
 }

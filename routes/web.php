@@ -10,8 +10,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    $role = auth()->user()->role;
-    return redirect()->route($role . '.dashboard');
+    return redirect()->route(auth()->user()->dashboardRouteName());
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // --- ROLE-BASED DASHBOARDS (THE LOCKED DOORS) ---
@@ -33,9 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->middleware('role:staff')->name('staff.dashboard');
 
     // Hotel Owner Only
-    Route::get('/hotel/dashboard', function () {
+    Route::get('/hotel-owner/dashboard', function () {
         return view('hotel.dashboard');
-    })->middleware('role:hotel_owner')->name('hotel.dashboard');
+    })->middleware('role:hotel_owner')->name('hotel_owner.dashboard');
 
     // Customer Only
     Route::get('/customer/dashboard', function () {

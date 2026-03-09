@@ -1,78 +1,100 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Admin Dashboard') }}
+        <h2 class="font-black text-2xl text-slate-900 uppercase tracking-tight">
+            Admin Dashboard
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-semibold mb-6 text-gray-700 border-b pb-2">Control Center</h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                        <!-- Trek Management -->
-                        <a href="{{ route('admin.treks.index') }}" class="group block p-6 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md hover:border-blue-300 transition-all duration-200">
-                            <div class="flex items-center space-x-4">
-                                <div class="p-3 bg-blue-50 rounded-lg group-hover:bg-blue-100 transition-colors">
-                                    <i class="fas fa-mountain text-2xl text-blue-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">Trek Management</h4>
-                                    <p class="text-sm text-gray-500">Add, edit, and organize trekking routes</p>
-                                </div>
-                            </div>
-                        </a>
-
-                        <!-- User Management -->
-                        <div class="group block p-6 bg-white border border-gray-200 rounded-lg shadow-sm opacity-75 cursor-not-allowed">
-                            <div class="flex items-center space-x-4">
-                                <div class="p-3 bg-gray-50 rounded-lg">
-                                    <i class="fas fa-users text-2xl text-gray-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">User Control</h4>
-                                    <p class="text-sm text-gray-500">Manage staff and customer accounts</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Finance & Analytics -->
-                        <div class="group block p-6 bg-white border border-gray-200 rounded-lg shadow-sm opacity-75 cursor-not-allowed">
-                            <div class="flex items-center space-x-4">
-                                <div class="p-3 bg-gray-50 rounded-lg">
-                                    <i class="fas fa-chart-line text-2xl text-gray-600"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-lg font-bold text-gray-800">Finances</h4>
-                                    <p class="text-sm text-gray-500">View bookings and revenue reports</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h3 class="text-lg font-semibold mb-4 text-gray-700 border-b pb-2">Quick Stats</h3>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <span class="block text-gray-500 text-xs uppercase font-bold tracking-wider">Total Treks</span>
-                            <span class="text-2xl font-black text-gray-800">{{ \App\Models\Trek::count() }}</span>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <span class="block text-gray-500 text-xs uppercase font-bold tracking-wider">Active Bookings</span>
-                            <span class="text-2xl font-black text-gray-800">{{ \App\Models\TrekBooking::count() }}</span>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <span class="block text-gray-500 text-xs uppercase font-bold tracking-wider">Total Revenue</span>
-                            <span class="text-2xl font-black text-gray-800">${{ number_format(\App\Models\Payment::sum('amount')) }}</span>
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-lg border border-gray-100">
-                            <span class="block text-gray-500 text-xs uppercase font-bold tracking-wider">Pending Gear</span>
-                            <span class="text-2xl font-black text-gray-800">{{ \App\Models\GearRental::where('status', 'Pending')->count() }}</span>
-                        </div>
-                    </div>
-                </div>
+    <!-- Stat Cards Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        <!-- Total Treks -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm transition-all hover:shadow-md group">
+            <div class="flex items-center justify-between mb-4 text-slate-900">
+                <i class="fas fa-mountain text-xl"></i>
+                <span class="text-[10px] font-black text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-widest">Active</span>
             </div>
+            <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Total Treks</p>
+            <h3 class="text-3xl font-black text-slate-900">{{ \App\Models\Trek::count() }}</h3>
+        </div>
+
+        <!-- Hotel Approvals -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm transition-all hover:shadow-md group">
+            <div class="flex items-center justify-between mb-4 text-blue-600">
+                <i class="fas fa-hotel text-xl"></i>
+                <span class="text-[10px] font-black text-blue-500 bg-blue-50 px-2 py-0.5 rounded-full uppercase tracking-widest">Pending</span>
+            </div>
+            <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Hotel Approvals</p>
+            <h3 class="text-3xl font-black text-slate-900">{{ \App\Models\Hotel::where('status', 'Pending')->count() }}</h3>
+        </div>
+
+        <!-- Today's Activity -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm transition-all hover:shadow-md group">
+            <div class="flex items-center justify-between mb-4 text-amber-600">
+                <i class="fas fa-calendar-check text-xl"></i>
+                <span class="text-[10px] font-black text-amber-500 bg-amber-50 px-2 py-0.5 rounded-full uppercase tracking-widest">Live</span>
+            </div>
+            <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Today's Bookings</p>
+            <h3 class="text-3xl font-black text-slate-900">{{ \App\Models\Payment::whereDate('created_at', today())->count() }}</h3>
+        </div>
+
+        <!-- Revenue -->
+        <div class="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm transition-all hover:shadow-md group">
+            <div class="flex items-center justify-between mb-4 text-emerald-600">
+                <i class="fas fa-wallet text-xl"></i>
+                <span class="text-[10px] font-black text-emerald-500 bg-emerald-50 px-2 py-0.5 rounded-full uppercase tracking-widest">Growth</span>
+            </div>
+            <p class="text-gray-500 text-xs font-bold uppercase tracking-widest mb-1">Total Revenue</p>
+            <h3 class="text-3xl font-black text-slate-900">${{ number_format(\App\Models\Payment::sum('amount') / 100, 2) }}</h3>
         </div>
     </div>
-</x-app-layout>
+
+    <!-- Recent Activity Table -->
+    <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+        <div class="px-8 py-6 border-b border-gray-100 flex justify-between items-center">
+            <h4 class="text-xs font-black text-slate-900 uppercase tracking-widest">Recent Activity</h4>
+            <span class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Latest 5 Bookings</span>
+        </div>
+        <div class="overflow-x-auto text-dark">
+            <table class="w-full text-left">
+                <thead class="bg-gray-50/50">
+                    <tr>
+                        <th class="px-8 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Order Ref</th>
+                        <th class="px-8 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Customer Name</th>
+                        <th class="px-8 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Paid Amount</th>
+                        <th class="px-8 py-4 text-[10px] font-black text-gray-400 uppercase tracking-widest">Status</th>
+                        <th class="px-8 py-4 text-right text-[10px] font-black text-gray-400 uppercase tracking-widest">Date</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-100">
+                    @forelse(\App\Models\Payment::latest()->take(5)->get() as $payment)
+                        <tr class="hover:bg-gray-50/20 transition-colors">
+                            <td class="px-8 py-5">
+                                <span class="text-xs font-bold text-slate-900 uppercase">#{{ substr($payment->transaction_id, -8) }}</span>
+                            </td>
+                            <td class="px-8 py-5">
+                                <span class="text-xs font-bold text-slate-600">{{ $payment->user->name }}</span>
+                            </td>
+                            <td class="px-8 py-5 text-sm font-black text-slate-900">
+                                ${{ number_format($payment->amount / 100, 2) }}
+                            </td>
+                            <td class="px-8 py-5">
+                                <span class="px-3 py-1 rounded-full text-[8px] font-black uppercase tracking-widest {{ $payment->status === 'succeeded' ? 'bg-emerald-500 text-white' : 'bg-gray-400 text-white' }}">
+                                    {{ $payment->status }}
+                                </span>
+                            </td>
+                            <td class="px-8 py-5 text-right text-[10px] font-bold text-gray-400 uppercase">
+                                {{ $payment->created_at->diffForHumans() }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="px-8 py-20 text-center text-gray-400 text-xs font-bold uppercase tracking-widest">
+                                No activity found
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+    </div>
+</x-dashboard-layout>

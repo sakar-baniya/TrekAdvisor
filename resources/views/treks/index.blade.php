@@ -1,213 +1,88 @@
 <x-app-layout>
-    <div class="trek-gallery-container">
-        <header class="gallery-header">
-            <h1>Explore the Majestic Himalayas</h1>
-            <p>Discover your next adventure from our curated list of unique trekking experiences.</p>
+    <div class="max-w-[1200px] mx-auto py-16 px-6 lg:px-8 font-sans">
+        <!-- Page Title -->
+        <header class="text-center mb-16">
+            <h1 class="text-5xl md:text-6xl font-black text-slate-900 mb-6 tracking-tighter">
+                Find Your Next <span class="text-blue-600">Adventure</span>
+            </h1>
+            <p class="text-xl text-slate-500 max-w-2xl mx-auto font-medium leading-relaxed">
+                Choose from our hand-picked list of amazing treks in the Himalayas.
+            </p>
         </header>
 
-        <div class="gallery-filters">
-            <form action="{{ route('treks.index') }}" method="GET">
-                <select name="difficulty" onchange="this.form.submit()">
-                    <option value="">All Difficulties</option>
-                    <option value="Easy" {{ request('difficulty') == 'Easy' ? 'selected' : '' }}>Easy</option>
-                    <option value="Moderate" {{ request('difficulty') == 'Moderate' ? 'selected' : '' }}>Moderate</option>
-                    <option value="Difficult" {{ request('difficulty') == 'Difficult' ? 'selected' : '' }}>Difficult</option>
-                    <option value="Extreme" {{ request('difficulty') == 'Extreme' ? 'selected' : '' }}>Extreme</option>
-                </select>
+        <!-- Filters -->
+        <div class="flex justify-end mb-10">
+            <form action="{{ route('treks.index') }}" method="GET" class="flex items-center space-x-4">
+                <div class="relative group">
+                    <select name="difficulty" onchange="this.form.submit()" class="appearance-none pl-8 pr-12 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer shadow-sm group-hover:border-blue-300">
+                        <option value="">Difficulty Level</option>
+                        <option value="Easy" {{ request('difficulty') == 'Easy' ? 'selected' : '' }}>Easy</option>
+                        <option value="Moderate" {{ request('difficulty') == 'Moderate' ? 'selected' : '' }}>Moderate</option>
+                        <option value="Difficult" {{ request('difficulty') == 'Difficult' ? 'selected' : '' }}>Difficult</option>
+                        <option value="Extreme" {{ request('difficulty') == 'Extreme' ? 'selected' : '' }}>Extreme</option>
+                    </select>
+                    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+                        <i class="fas fa-filter text-[10px]"></i>
+                    </div>
+                </div>
+                
                 @if(request('difficulty'))
-                    <a href="{{ route('treks.index') }}" class="clear-filter">Clear</a>
+                    <a href="{{ route('treks.index') }}" class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-800 transition-colors">
+                        Clear Filters
+                    </a>
                 @endif
             </form>
         </div>
 
-        <div class="trek-grid">
+        <!-- Trek List -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             @foreach($treks as $trek)
-                <div class="trek-card">
-                    <div class="card-image-wrapper">
-                        <img src="{{ $trek->image ?? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=640&q=80' }}" alt="{{ $trek->title }}">
-                        <div class="difficulty-badge difficulty-{{ strtolower($trek->difficulty) }}">{{ $trek->difficulty }}</div>
+                <div class="group bg-white rounded-[2.5rem] overflow-hidden border border-slate-100 shadow-2xl shadow-slate-100/50 hover:-translate-y-3 transition-all duration-500 flex flex-col">
+                    <!-- Image -->
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="{{ $trek->image ?? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=640&q=80' }}" alt="{{ $trek->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+                        
+                        @php
+                            $difficultyColors = [
+                                'easy' => 'bg-emerald-500/90 text-white',
+                                'moderate' => 'bg-blue-500/90 text-white',
+                                'difficult' => 'bg-amber-500/90 text-white',
+                                'extreme' => 'bg-rose-500/90 text-white'
+                            ][strtolower($trek->difficulty)] ?? 'bg-slate-500/90 text-white';
+                        @endphp
+                        
+                        <div class="absolute top-6 left-6 {{ $difficultyColors }} px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest backdrop-blur-sm shadow-lg">
+                            {{ $difficultyColors === 'bg-rose-500/90 text-white' ? 'EXTREME' : ($difficultyColors === 'bg-amber-500/90 text-white' ? 'DIFFICULT' : ($difficultyColors === 'bg-blue-500/90 text-white' ? 'MODERATE' : 'EASY')) }}
+                        </div>
                     </div>
-                    <div class="card-content">
-                        <h3>{{ $trek->title }}</h3>
-                        <p class="trek-price">Starting from <span>${{ number_format($trek->base_price) }}</span></p>
-                        <p class="trek-excerpt">{{ Str::limit($trek->description, 100) }}</p>
-                        <a href="{{ route('treks.show', $trek->slug) }}" class="btn-primary">View Details</a>
+
+                    <!-- Trek Details -->
+                    <div class="p-8 flex-1 flex flex-col">
+                        <h3 class="text-2xl font-black text-slate-900 mb-3 group-hover:text-blue-600 transition-colors tracking-tight">
+                            {{ $trek->title }}
+                        </h3>
+                        
+                        <div class="flex items-center mb-4 pb-4 border-b border-slate-50">
+                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mr-2">Starting From</span>
+                            <span class="text-xl font-black text-blue-600">${{ number_format($trek->base_price) }}</span>
+                        </div>
+                        
+                        <p class="text-slate-500 text-sm font-medium leading-relaxed mb-8 flex-1">
+                            {{ Str::limit($trek->description, 110) }}
+                        </p>
+                        
+                        <a href="{{ route('treks.show', $trek->slug) }}" class="w-full block py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] text-center hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-100 transition-all active:scale-95">
+                            View Details
+                        </a>
                     </div>
                 </div>
             @endforeach
         </div>
 
-        <div class="pagination-wrapper">
+        <!-- System Pagination -->
+        <div class="mt-20 flex justify-center">
             {{ $treks->links() }}
         </div>
     </div>
-
-    <style>
-        .trek-gallery-container {
-            padding: 4rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .gallery-header {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .gallery-header h1 {
-            font-size: 3rem;
-            color: #1a202c;
-            margin-bottom: 1rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-        }
-
-        .gallery-header p {
-            font-size: 1.25rem;
-            color: #4a5568;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .gallery-filters {
-            display: flex;
-            justify-content: flex-end;
-            margin-bottom: 2rem;
-        }
-
-        .gallery-filters select {
-            padding: 0.75rem 1.5rem;
-            border-radius: 9999px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            color: #4a5568;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-
-        .gallery-filters select:hover {
-            border-color: #3182ce;
-        }
-
-        .clear-filter {
-            margin-left: 1rem;
-            color: #3182ce;
-            text-decoration: none;
-            font-size: 0.9rem;
-            align-self: center;
-        }
-
-        .trek-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 3rem;
-        }
-
-        .trek-card {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
-            border: 1px solid #f7fafc;
-        }
-
-        .trek-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-
-        .card-image-wrapper {
-            position: relative;
-            height: 250px;
-            overflow: hidden;
-        }
-
-        .card-image-wrapper img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-
-        .trek-card:hover .card-image-wrapper img {
-            transform: scale(1.1);
-        }
-
-        .difficulty-badge {
-            position: absolute;
-            top: 1rem;
-            left: 1rem;
-            padding: 0.5rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            backdrop-filter: blur(8px);
-        }
-
-        .difficulty-easy { background: rgba(72, 187, 120, 0.9); color: white; }
-        .difficulty-moderate { background: rgba(66, 153, 225, 0.9); color: white; }
-        .difficulty-difficult { background: rgba(237, 137, 54, 0.9); color: white; }
-        .difficulty-extreme { background: rgba(245, 101, 101, 0.9); color: white; }
-
-        .card-content {
-            padding: 2rem;
-        }
-
-        .card-content h3 {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2d3748;
-            margin-bottom: 0.75rem;
-        }
-
-        .trek-price {
-            color: #718096;
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-        }
-
-        .trek-price span {
-            color: #3182ce;
-            font-size: 1.25rem;
-            font-weight: 800;
-            margin-left: 0.25rem;
-        }
-
-        .trek-excerpt {
-            color: #4a5568;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-        }
-
-        .btn-primary {
-            display: inline-block;
-            width: 100%;
-            text-align: center;
-            background: linear-gradient(135deg, #3182ce 0%, #2b6cb0 100%);
-            color: white;
-            padding: 1rem;
-            border-radius: 12px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
-        }
-
-        .btn-primary:hover {
-            background: linear-gradient(135deg, #2b6cb0 0%, #2c5282 100%);
-            box-shadow: 0 10px 15px rgba(49, 130, 206, 0.3);
-        }
-
-        .pagination-wrapper {
-            margin-top: 4rem;
-            display: flex;
-            justify-content: center;
-        }
-    </style>
 </x-app-layout>

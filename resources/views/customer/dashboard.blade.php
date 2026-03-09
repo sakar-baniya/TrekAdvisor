@@ -1,34 +1,17 @@
-<x-app-layout>
+<x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Customer Dashboard') }}
+        <h2 class="font-black text-2xl text-slate-900 uppercase tracking-tight">
+            My Account
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <h3 class="text-lg font-bold mb-4">Welcome back, {{ auth()->user()->name }}!</h3>
-                    <p>This is your personal journey dashboard. Here you'll find your trek bookings, hotel stays, and gear rentals.</p>
-                    
-                    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="p-4 bg-blue-50 border border-blue-200 rounded-xl">
-                            <h4 class="font-bold text-blue-700">My Treks</h4>
-                            <p class="text-sm text-blue-600">View your upcoming mountain adventures.</p>
-                            <a href="{{ route('treks.index') }}" class="mt-2 inline-block text-sm font-semibold text-blue-800 underline">Explore more treks</a>
-                        </div>
-                        <div class="p-4 bg-green-50 border border-green-200 rounded-xl">
-                            <h4 class="font-bold text-green-700">Hotel Bookings</h4>
-                            <p class="text-sm text-green-600">Manage your stay in the Himalayas.</p>
-                        </div>
-                        <div class="p-4 bg-purple-50 border border-purple-200 rounded-xl">
-                            <h4 class="font-bold text-purple-700">Gear Rentals</h4>
-                            <p class="text-sm text-purple-600">Check your equipment list.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="bg-white border border-gray-200 rounded-[2.5rem] p-20 text-center shadow-sm">
+        <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
+            <i class="fas fa-mountain text-3xl"></i>
         </div>
+        <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">My Bookings</h3>
+        <p class="text-gray-500 font-medium max-w-md mx-auto">
+            View your bookings and manage your treks from your account.
+        </p>
     </div>
-</x-app-layout>
+</x-dashboard-layout>
