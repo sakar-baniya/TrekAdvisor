@@ -8,13 +8,14 @@
         <title>{{ config('app.name', 'TrekAdvisor') }}</title>
 
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans text-[#1a1e18] antialiased">
+    <body class="text-[#1a1e18] antialiased" style="font-family: 'Inter', sans-serif;">
         <div class="min-h-screen flex flex-col sm:justify-center items-center px-4 py-10 bg-[#f4f4f4]">
             <div class="w-full max-w-md">
                 <a href="{{ route('home') }}" class="flex items-center justify-center gap-2 text-[#1a1e18]">
