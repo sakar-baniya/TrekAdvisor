@@ -1,4 +1,9 @@
 <x-guest-layout>
+    <div class="mb-6 text-center">
+        <h1 class="text-2xl font-black text-slate-900">Create your account</h1>
+        <p class="mt-2 text-sm text-slate-600">Join TrekAdvisor to book treks and manage trips.</p>
+    </div>
+
     <form method="POST" action="{{ route('register') }}">
         @csrf
 
@@ -26,11 +31,11 @@
         <!-- Account Type -->
         <div class="mt-4">
             <x-input-label for="role" :value="__('Register As')" />
-            <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+            <select id="role" name="role" class="block mt-1 w-full border-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm">
                 <option value="customer" {{ old('role') === 'customer' ? 'selected' : '' }}>Customer</option>
                 <option value="hotel_owner" {{ old('role') === 'hotel_owner' ? 'selected' : '' }}>Hotel Owner</option>
             </select>
-            <p class="mt-2 text-xs text-gray-500">Hotel owner accounts require admin approval.</p>
+            <p class="mt-2 text-xs text-slate-500">Hotel owner accounts require admin approval.</p>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
@@ -58,7 +63,7 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+            <a class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" href="{{ route('login') }}">
                 {{ __('Already registered?') }}
             </a>
 
