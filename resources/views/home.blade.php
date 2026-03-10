@@ -20,7 +20,7 @@
                 </a>
             </div>
 
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-10 text-xs font-semibold text-[#d9d9d9]">
+            <div class="mt-10 flex flex-wrap items-center justify-center gap-10 text-xs font-semibold text-[#f4f4f4] bg-black/40 rounded-full px-6 py-3 border border-white/10">
                 <span>500+ Treks</span>
                 <span>200+ Hotels</span>
                 <span>1000+ Happy Travelers</span>
