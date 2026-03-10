@@ -31,6 +31,8 @@
                         <span class="flex items-center"><i class="fas fa-mountain mr-3 text-blue-400"></i> Easy Access</span>
                         <div class="w-px h-4 bg-white/20"></div>
                         <span class="flex items-center"><i class="fas fa-tag mr-3 text-blue-400"></i> ${{ number_format($trek->base_price) }} Starting</span>
+                        <div class="w-px h-4 bg-white/20"></div>
+                        <span class="flex items-center"><i class="fas fa-star mr-3 text-amber-300"></i> {{ $avgRating ?? 'New' }} ({{ $reviewCount }})</span>
                     </div>
                 </div>
             </div>
@@ -79,6 +81,10 @@
                     <h2 class="text-4xl font-black text-slate-900 mb-12 flex items-center before:content-[''] before:w-3 before:h-10 before:bg-blue-600 before:mr-6 before:rounded-full tracking-tight">
                         Customer Reviews
                     </h2>
+                    <div class="mb-10 flex flex-wrap items-center gap-4 rounded-2xl bg-slate-50 px-6 py-4">
+                        <div class="text-3xl font-black text-slate-900">{{ $avgRating ?? 'New' }}</div>
+                        <div class="text-sm text-slate-600 font-semibold">{{ $reviewCount }} reviews</div>
+                    </div>
                     @if($reviews->count() > 0)
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             @foreach($reviews as $review)
@@ -131,6 +137,11 @@
                                             </p>
                                         </div>
                                         <p class="text-xl font-black text-blue-600">${{ number_format($departure->price) }}</p>
+                                    </div>
+                                    <div class="mb-4 flex items-center gap-3 text-[10px] font-black uppercase tracking-widest text-slate-500">
+                                        <span>{{ $departure->start_date->format('M d') }} - {{ $departure->end_date->format('M d, Y') }}</span>
+                                        <span class="h-1 w-1 rounded-full bg-slate-300"></span>
+                                        <span>{{ $departure->status }}</span>
                                     </div>
                                     <a href="{{ route('bookings.create', $departure->id) }}" class="w-full block py-4 bg-slate-900 text-white rounded-2xl font-black text-[10px] uppercase tracking-[0.3em] text-center hover:bg-blue-600 hover:shadow-xl hover:shadow-blue-200 transition-all active:scale-95">
                                         BOOK THIS DATE

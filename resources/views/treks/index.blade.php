@@ -11,26 +11,41 @@
         </header>
 
         <!-- Filters -->
-        <div class="flex justify-end mb-10">
-            <form action="{{ route('treks.index') }}" method="GET" class="flex items-center space-x-4">
-                <div class="relative group">
-                    <select name="difficulty" onchange="this.form.submit()" class="appearance-none pl-8 pr-12 py-3 bg-white border border-slate-200 rounded-full text-sm font-bold text-slate-600 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all cursor-pointer shadow-sm group-hover:border-blue-300">
-                        <option value="">Difficulty Level</option>
+        <div class="mb-10">
+            <form action="{{ route('treks.index') }}" method="GET" class="grid grid-cols-1 lg:grid-cols-[1.2fr_0.6fr_0.6fr_0.6fr_auto] gap-4 items-center">
+                <div class="relative">
+                    <input name="search" value="{{ request('search') }}" placeholder="Search treks by name or description" class="w-full pl-12 pr-4 py-3 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm">
+                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        <i class="fas fa-search text-[12px]"></i>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <select name="difficulty" class="w-full appearance-none pl-4 pr-10 py-3 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm">
+                        <option value="">All Difficulty</option>
                         <option value="Easy" {{ request('difficulty') == 'Easy' ? 'selected' : '' }}>Easy</option>
                         <option value="Moderate" {{ request('difficulty') == 'Moderate' ? 'selected' : '' }}>Moderate</option>
                         <option value="Difficult" {{ request('difficulty') == 'Difficult' ? 'selected' : '' }}>Difficult</option>
                         <option value="Extreme" {{ request('difficulty') == 'Extreme' ? 'selected' : '' }}>Extreme</option>
                     </select>
-                    <div class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
-                        <i class="fas fa-filter text-[10px]"></i>
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
+                        <i class="fas fa-chevron-down text-[10px]"></i>
                     </div>
                 </div>
-                
-                @if(request('difficulty'))
-                    <a href="{{ route('treks.index') }}" class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-800 transition-colors">
-                        Clear Filters
-                    </a>
-                @endif
+
+                <input name="min_price" value="{{ request('min_price') }}" type="number" min="0" step="1" placeholder="Min price" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm">
+                <input name="max_price" value="{{ request('max_price') }}" type="number" min="0" step="1" placeholder="Max price" class="w-full px-4 py-3 bg-white border border-slate-200 rounded-full text-sm font-semibold text-slate-700 focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all shadow-sm">
+
+                <div class="flex items-center gap-3">
+                    <button type="submit" class="px-6 py-3 rounded-full bg-slate-900 text-white text-xs font-black uppercase tracking-widest hover:bg-blue-600 transition-all">
+                        Apply
+                    </button>
+                    @if(request()->filled('search') || request()->filled('difficulty') || request()->filled('min_price') || request()->filled('max_price'))
+                        <a href="{{ route('treks.index') }}" class="text-[10px] font-black text-blue-600 uppercase tracking-widest hover:text-blue-800 transition-colors">
+                            Clear
+                        </a>
+                    @endif
+                </div>
             </form>
         </div>
 
