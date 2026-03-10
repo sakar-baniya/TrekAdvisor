@@ -15,7 +15,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-slate-50 text-slate-900">
+    <body class="font-sans antialiased bg-[#f4f4f4] text-[#1a1e18]">
         <div class="min-h-screen">
             @include('layouts.navigation')
 
@@ -34,21 +34,21 @@
             </main>
         </div>
 
-        <footer class="bg-slate-900 text-slate-300">
+        <footer class="bg-[#1a1e18] text-[#f4f4f4]">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
                     <div>
                         <div class="flex items-center gap-2 text-white font-black">
-                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-emerald-500 text-xs">TA</span>
+                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs text-[#1a1e18]">TA</span>
                             TrekAdvisor
                         </div>
-                        <p class="mt-3 text-xs text-slate-400">
+                        <p class="mt-3 text-xs text-[#cfcfcf]">
                             Your trusted platform for treks, hotels, and rental gear in Nepal.
                         </p>
                     </div>
                     <div>
                         <p class="text-white font-semibold mb-3">Quick Links</p>
-                        <ul class="space-y-2 text-slate-400">
+                        <ul class="space-y-2 text-[#cfcfcf]">
                             <li><a href="{{ route('home') }}" class="hover:text-white">Home</a></li>
                             <li><a href="{{ route('treks.index') }}" class="hover:text-white">Treks</a></li>
                             <li><span>Hotels</span></li>
@@ -57,7 +57,7 @@
                     </div>
                     <div>
                         <p class="text-white font-semibold mb-3">Services</p>
-                        <ul class="space-y-2 text-slate-400">
+                        <ul class="space-y-2 text-[#cfcfcf]">
                             <li>Book Trek</li>
                             <li>Book Hotel</li>
                             <li>Rent Gear</li>
@@ -65,14 +65,14 @@
                     </div>
                     <div>
                         <p class="text-white font-semibold mb-3">Contact</p>
-                        <ul class="space-y-2 text-slate-400">
+                        <ul class="space-y-2 text-[#cfcfcf]">
                             <li>Kathmandu, Nepal</li>
                             <li>info@trekadvisor.com</li>
                             <li>+977 9800000000</li>
                         </ul>
                     </div>
                 </div>
-                <div class="mt-8 border-t border-slate-800 pt-4 text-xs text-slate-500">
+                <div class="mt-8 border-t border-white/10 pt-4 text-xs text-[#cfcfcf]">
                     &copy; {{ date('Y') }} TrekAdvisor. All rights reserved.
                 </div>
             </div>
