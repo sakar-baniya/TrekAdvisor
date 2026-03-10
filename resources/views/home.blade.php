@@ -9,8 +9,8 @@
             </div>
 
             <div class="mt-8 flex flex-col md:flex-row gap-3 items-stretch justify-center">
-                <input type="text" placeholder="Search treks, hotels..." class="w-full md:w-[360px] rounded-md border border-white/20 bg-white/10 px-4 py-3 text-sm text-white placeholder:text-white/70 focus:ring-2 focus:ring-white focus:border-white">
-                <select class="w-full md:w-40 rounded-md border border-white/20 bg-white/10 px-4 py-3 text-sm text-white focus:ring-2 focus:ring-white focus:border-white">
+                <input type="text" placeholder="Search treks, hotels..." class="w-full md:w-[360px] rounded-md border border-white/60 bg-white px-4 py-3 text-sm text-[#1a1e18] placeholder:text-[#6b6b6b] focus:ring-2 focus:ring-white focus:border-white">
+                <select class="w-full md:w-40 rounded-md border border-white/60 bg-white px-4 py-3 text-sm text-[#1a1e18] focus:ring-2 focus:ring-white focus:border-white">
                     <option>Treks</option>
                     <option>Hotels</option>
                     <option>Gear</option>
