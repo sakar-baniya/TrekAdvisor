@@ -1,7 +1,8 @@
 <x-guest-layout>
-    <div class="mb-6 text-center">
-        <h1 class="text-2xl font-black text-slate-900">Create your account</h1>
-        <p class="mt-2 text-sm text-slate-600">Join TrekAdvisor to book treks and manage trips.</p>
+    <div class="mb-8 text-center">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">New Account</p>
+        <h1 class="mt-3 text-3xl font-black text-slate-900">Create your account</h1>
+        <p class="mt-2 text-sm text-slate-600">Join TrekAdvisor to book treks, hotels, and gear rentals.</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}">
@@ -31,10 +32,22 @@
         <!-- Account Type -->
         <div class="mt-4">
             <x-input-label for="role" :value="__('Register As')" />
-            <select id="role" name="role" class="block mt-1 w-full border-slate-300 focus:border-emerald-500 focus:ring-emerald-500 rounded-md shadow-sm">
-                <option value="customer" {{ old('role') === 'customer' ? 'selected' : '' }}>Customer</option>
-                <option value="hotel_owner" {{ old('role') === 'hotel_owner' ? 'selected' : '' }}>Hotel Owner</option>
-            </select>
+            <div class="mt-2 grid grid-cols-2 gap-3">
+                <label class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition hover:border-emerald-300">
+                    <input type="radio" name="role" value="customer" class="mt-1 text-emerald-600 focus:ring-emerald-500" {{ old('role', 'customer') === 'customer' ? 'checked' : '' }}>
+                    <span>
+                        <span class="block font-semibold text-slate-900">Customer</span>
+                        <span class="block text-xs text-slate-500">Book treks and stays.</span>
+                    </span>
+                </label>
+                <label class="flex items-start gap-3 rounded-xl border border-slate-200 bg-white px-4 py-3 text-sm text-slate-700 shadow-sm transition hover:border-emerald-300">
+                    <input type="radio" name="role" value="hotel_owner" class="mt-1 text-emerald-600 focus:ring-emerald-500" {{ old('role') === 'hotel_owner' ? 'checked' : '' }}>
+                    <span>
+                        <span class="block font-semibold text-slate-900">Hotel Owner</span>
+                        <span class="block text-xs text-slate-500">List rooms and manage bookings.</span>
+                    </span>
+                </label>
+            </div>
             <p class="mt-2 text-xs text-slate-500">Hotel owner accounts require admin approval.</p>
             <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
@@ -62,14 +75,17 @@
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
+        <div class="mt-6">
+            <x-primary-button class="w-full justify-center py-3 text-base">
+                {{ __('Create account') }}
             </x-primary-button>
+        </div>
+
+        <div class="mt-6 text-center text-sm text-slate-600">
+            Already have an account?
+            <a class="font-semibold text-emerald-700 hover:text-emerald-800" href="{{ route('login') }}">
+                Sign in
+            </a>
         </div>
     </form>
 </x-guest-layout>

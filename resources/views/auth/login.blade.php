@@ -2,9 +2,10 @@
     <!-- Session Status -->
     <x-auth-session-status class="mb-4" :status="session('status')" />
 
-    <div class="mb-6 text-center">
-        <h1 class="text-2xl font-black text-slate-900">Welcome back</h1>
-        <p class="mt-2 text-sm text-slate-600">Log in to manage your treks and bookings.</p>
+    <div class="mb-8 text-center">
+        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-600">Customer Portal</p>
+        <h1 class="mt-3 text-3xl font-black text-slate-900">Welcome back</h1>
+        <p class="mt-2 text-sm text-slate-600">Log in to manage bookings, itineraries, and invoices.</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}">
@@ -30,23 +31,29 @@
         </div>
 
         <!-- Remember Me -->
-        <div class="block mt-4">
+        <div class="flex items-center justify-between mt-5">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-slate-300 text-emerald-600 shadow-sm focus:ring-emerald-500" name="remember">
                 <span class="ms-2 text-sm text-slate-600">{{ __('Remember me') }}</span>
             </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-slate-600 hover:text-slate-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500" href="{{ route('password.request') }}">
+                <a class="text-sm font-medium text-emerald-700 hover:text-emerald-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 rounded-md" href="{{ route('password.request') }}">
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
+        </div>
 
-            <x-primary-button class="ms-3">
+        <div class="mt-6">
+            <x-primary-button class="w-full justify-center py-3 text-base">
                 {{ __('Log in') }}
             </x-primary-button>
+        </div>
+
+        <div class="mt-6 text-center text-sm text-slate-600">
+            New here?
+            <a class="font-semibold text-emerald-700 hover:text-emerald-800" href="{{ route('register') }}">
+                Create an account
+            </a>
         </div>
     </form>
 </x-guest-layout>
