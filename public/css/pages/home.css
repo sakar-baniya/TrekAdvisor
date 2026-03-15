@@ -1,0 +1,236 @@
+﻿/* Home page styles */
+.hero-section {
+    background-color: #0d2137;
+    padding: 64px 16px 72px;
+    color: #ffffff;
+}
+
+.hero-center {
+    text-align: center;
+}
+
+.hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 32px;
+}
+
+.hero-search {
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.hero-search-bar {
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hero-search-input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 14px 18px;
+    font-size: 0.875rem;
+    color: #1a2e3d;
+    background: transparent;
+}
+
+.hero-search-divider {
+    width: 1px;
+    background: #e0e0e0;
+    margin: 10px 0;
+    flex-shrink: 0;
+}
+
+.hero-search-select {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: 14px 14px;
+    font-size: 0.875rem;
+    color: #1a2e3d;
+    cursor: pointer;
+    min-width: 110px;
+    flex-shrink: 0;
+}
+
+.hero-search-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f97316;
+    color: #ffffff;
+    padding: 14px 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    transition: background 0.2s;
+}
+
+.hero-search-btn:hover {
+    background: #ea580c;
+}
+
+.hero-stats {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.hero-stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.hero-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+}
+
+.section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #1a1e18;
+}
+
+.view-link {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 24px;
+}
+
+.feature-card {
+    border-radius: 16px;
+    border: 1px solid #e2e2e2;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.feature-card .card-top {
+    height: 96px;
+    background: #f4f4f4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
+.feature-card .card-content {
+    padding: 20px;
+}
+
+.feature-card .meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.7rem;
+    color: #6b6b6b;
+}
+
+.feature-card .card-title {
+    margin-top: 8px;
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1a1e18;
+}
+
+.feature-card .card-text {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: #5a5a5a;
+}
+
+.feature-card .card-actions {
+    margin-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.feature-card .price {
+    font-size: 0.9rem;
+    font-weight: 800;
+}
+
+.feature-card .action-btn {
+    border-radius: 8px;
+    background: #1a1e18;
+    color: #ffffff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 6px 12px;
+}
+
+.empty-note {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.cta-section {
+    background: #1a1e18;
+    color: #ffffff;
+    text-align: center;
+    padding: 48px 16px;
+}
+
+.cta-section .cta-title {
+    font-size: 1.75rem;
+    font-weight: 800;
+}
+
+.cta-section .cta-text {
+    margin-top: 8px;
+    font-size: 0.9rem;
+    color: #d9d9d9;
+}
+
+.cta-section .cta-btn {
+    margin-top: 24px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1a1e18;
+    padding: 12px 24px;
+    font-size: 0.8rem;
+    font-weight: 700;
+}

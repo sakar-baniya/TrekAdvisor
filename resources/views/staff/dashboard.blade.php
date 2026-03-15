@@ -1,17 +1,15 @@
-<x-dashboard-layout>
+﻿<x-dashboard-layout>
     <x-slot name="header">
-        <h2 class="font-black text-2xl text-slate-900 uppercase tracking-tight">
-            Staff Dashboard
-        </h2>
+        <h2 class="admin-title">Staff Dashboard</h2>
     </x-slot>
 
-    <div class="bg-white border border-gray-200 rounded-[2.5rem] p-20 text-center shadow-sm">
-        <div class="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-8">
-            <i class="fas fa-clipboard-check text-3xl"></i>
+    <div class="dashboard-empty">
+        <div class="dashboard-empty-icon">
+            <i class="fas fa-clipboard-list"></i>
         </div>
-        <h3 class="text-xl font-black text-slate-900 uppercase tracking-tight mb-4">Welcome Back</h3>
-        <p class="text-gray-500 font-medium max-w-md mx-auto">
-            Welcome to your staff dashboard. Use the sidebar to find what you need.
+        <h3 class="dashboard-empty-title">Check-in Logs</h3>
+        <p class="dashboard-empty-text">
+            Monitor guest check-ins and manage operational logs here.
         </p>
     </div>
 </x-dashboard-layout>

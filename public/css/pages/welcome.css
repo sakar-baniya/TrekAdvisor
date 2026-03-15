@@ -1,0 +1,87 @@
+﻿/* Welcome page */
+.welcome-hero {
+    padding: 96px 0 64px;
+    background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 40%, #fffbeb 100%);
+}
+
+.welcome-content {
+    max-width: 640px;
+}
+
+.welcome-kicker {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: #0f766e;
+}
+
+.welcome-title {
+    font-size: 3rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin: 16px 0;
+    letter-spacing: -0.02em;
+}
+
+.welcome-subtitle {
+    font-size: 1.1rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.welcome-actions {
+    display: flex;
+    gap: 16px;
+    margin-top: 24px;
+}
+
+.welcome-primary,
+.welcome-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 24px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.welcome-primary {
+    background: #111827;
+    color: #ffffff;
+}
+
+.welcome-secondary {
+    border: 1px solid #d1d5db;
+    color: #111827;
+}
+
+.welcome-stats {
+    margin-top: 48px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 24px;
+}
+
+.welcome-stat {
+    background: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    text-align: center;
+}
+
+.welcome-stat h3 {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 4px;
+}
+
+.welcome-stat p {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: #94a3b8;
+}

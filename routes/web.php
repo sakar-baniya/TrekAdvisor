@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrekController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AdminUserController;
+use App\Http\Controllers\Admin\AdminHotelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -23,6 +25,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('treks', \App\Http\Controllers\Admin\AdminTrekController::class);
+        Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::patch('users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
+        Route::patch('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
+
+        Route::get('hotels', [AdminHotelController::class, 'index'])->name('hotels.index');
+        Route::patch('hotels/{hotel}/status', [AdminHotelController::class, 'updateStatus'])->name('hotels.status');
     });
 
     // Staff Only

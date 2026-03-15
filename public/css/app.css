@@ -1,0 +1,10 @@
+﻿@import url("base.css");
+@import url("layout.css");
+@import url("components.css");
+@import url("pages/home.css");
+@import url("pages/auth.css");
+@import url("pages/dashboard.css");
+@import url("pages/treks.css");
+@import url("pages/bookings.css");
+@import url("pages/profile.css");
+@import url("pages/welcome.css");

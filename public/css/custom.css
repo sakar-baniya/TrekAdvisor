@@ -1,0 +1,124 @@
+﻿/* Custom, hand-managed styles that replace inline CSS. */
+
+[x-cloak] {
+    display: none !important;
+}
+
+/* Home hero section */
+.hero-section {
+    background-color: #0d2137;
+    padding: 64px 16px 72px;
+    color: #ffffff;
+}
+
+.hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+    font-weight: 800;
+    line-height: 1.2;
+    color: #ffffff;
+    margin-bottom: 14px;
+}
+
+.hero-subtitle {
+    font-size: 0.95rem;
+    color: rgba(255, 255, 255, 0.72);
+    margin-bottom: 32px;
+}
+
+.hero-search {
+    max-width: 660px;
+    margin: 0 auto;
+}
+
+.hero-search-bar {
+    display: flex;
+    align-items: stretch;
+    background: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+.hero-search-input {
+    flex: 1;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    padding: 14px 18px;
+    font-size: 0.875rem;
+    color: #1a2e3d;
+    background: transparent;
+    font-family: inherit;
+}
+
+.hero-search-divider {
+    width: 1px;
+    background: #e0e0e0;
+    margin: 10px 0;
+    flex-shrink: 0;
+}
+
+.hero-search-select {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: 14px 14px;
+    font-size: 0.875rem;
+    color: #1a2e3d;
+    cursor: pointer;
+    font-family: inherit;
+    min-width: 110px;
+    flex-shrink: 0;
+}
+
+.hero-search-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #f97316;
+    color: #ffffff;
+    padding: 14px 24px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    white-space: nowrap;
+    flex-shrink: 0;
+    text-decoration: none;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+
+.hero-search-btn:hover {
+    background: #ea580c;
+}
+
+.hero-stats {
+    margin-top: 40px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 40px;
+}
+
+.hero-stat-value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.hero-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 4px;
+}
+
+/* SVG blend modes on welcome page */
+.blend-hard-light {
+    mix-blend-mode: hard-light;
+}
+
+.blend-plus-darker {
+    mix-blend-mode: plus-darker;
+}

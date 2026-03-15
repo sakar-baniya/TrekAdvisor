@@ -1,0 +1,141 @@
+/* Base styles */
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+body {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    color: #1a1e18;
+    background: #f4f4f4;
+    line-height: 1.5;
+}
+
+img,
+svg,
+video {
+    max-width: 100%;
+    display: block;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.container-wide {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.section {
+    padding: 64px 0;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.page-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: #111827;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.is-hidden {
+    display: none !important;
+}
+
+.is-inline-flex {
+    display: inline-flex !important;
+}
+
+.icon-20 {
+    width: 20px;
+    height: 20px;
+}
+
+.icon-24 {
+    width: 24px;
+    height: 24px;
+}
+
+.overflow-y-hidden {
+    overflow-y: hidden;
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.badge-success {
+    color: #047857;
+    background: #ecfdf5;
+}
+
+.badge-warning {
+    color: #b45309;
+    background: #fffbeb;
+}
+
+.badge-info {
+    color: #0f766e;
+    background: #f0fdfa;
+}
+
+.badge-muted {
+    color: #4b5563;
+    background: #f3f4f6;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+

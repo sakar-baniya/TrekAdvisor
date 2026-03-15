@@ -13,67 +13,68 @@
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="antialiased bg-[#f4f4f4] text-[#1a1e18]" style="font-family: 'Inter', sans-serif;">
-        <div class="min-h-screen">
+    <body class="body-app">
+        <div class="page-shell">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
             @isset($header)
-                <header class="bg-white border-b border-gray-100">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                <header class="page-header">
+                    <div class="container header-inner">
                         {{ $header }}
                     </div>
                 </header>
             @endisset
 
             <!-- Page Content -->
-            <main>
+            <main class="page-content">
                 {{ $slot }}
             </main>
         </div>
 
-        <footer class="bg-[#1a1e18] text-[#f4f4f4]">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-sm">
+        <footer class="site-footer">
+            <div class="container section">
+                <div class="footer-grid">
                     <div>
-                        <div class="flex items-center gap-2 text-white font-black">
-                            <span class="inline-flex h-8 w-8 items-center justify-center rounded-full bg-white text-xs text-[#1a1e18]">TA</span>
+                        <div class="footer-brand">
+                            <span class="footer-brand-badge">TA</span>
                             TrekAdvisor
                         </div>
-                        <p class="mt-3 text-xs text-[#cfcfcf]">
+                        <p class="footer-muted footer-text">
                             Your trusted platform for treks, hotels, and rental gear in Nepal.
                         </p>
                     </div>
                     <div>
-                        <p class="text-white font-semibold mb-3">Quick Links</p>
-                        <ul class="space-y-2 text-[#cfcfcf]">
-                            <li><a href="{{ route('home') }}" class="hover:text-white">Home</a></li>
-                            <li><a href="{{ route('treks.index') }}" class="hover:text-white">Treks</a></li>
+                        <p class="footer-title">Quick Links</p>
+                        <ul class="footer-muted footer-list">
+                            <li><a href="{{ route('home') }}">Home</a></li>
+                            <li><a href="{{ route('treks.index') }}">Treks</a></li>
                             <li><span>Hotels</span></li>
                             <li><span>Gear Rental</span></li>
                         </ul>
                     </div>
                     <div>
-                        <p class="text-white font-semibold mb-3">Services</p>
-                        <ul class="space-y-2 text-[#cfcfcf]">
+                        <p class="footer-title">Services</p>
+                        <ul class="footer-muted footer-list">
                             <li>Book Trek</li>
                             <li>Book Hotel</li>
                             <li>Rent Gear</li>
                         </ul>
                     </div>
                     <div>
-                        <p class="text-white font-semibold mb-3">Contact</p>
-                        <ul class="space-y-2 text-[#cfcfcf]">
+                        <p class="footer-title">Contact</p>
+                        <ul class="footer-muted footer-list">
                             <li>Kathmandu, Nepal</li>
                             <li>info@trekadvisor.com</li>
                             <li>+977 9800000000</li>
                         </ul>
                     </div>
                 </div>
-                <div class="mt-8 border-t border-white/10 pt-4 text-xs text-[#cfcfcf]">
+                <div class="footer-bottom">
                     &copy; {{ date('Y') }} TrekAdvisor. All rights reserved.
                 </div>
             </div>

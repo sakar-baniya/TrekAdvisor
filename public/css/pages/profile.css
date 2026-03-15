@@ -1,0 +1,58 @@
+﻿/* Profile pages */
+.profile-stack {
+    display: grid;
+    gap: 24px;
+}
+
+.profile-card {
+    background: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+}
+
+.profile-card-body {
+    padding: 24px;
+    max-width: 640px;
+}
+
+.profile-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #111827;
+}
+
+.profile-subtitle {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 4px;
+}
+
+.profile-form {
+    display: grid;
+    gap: 16px;
+    margin-top: 16px;
+}
+
+.profile-field {
+    display: grid;
+    gap: 8px;
+}
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.profile-note {
+    font-size: 0.85rem;
+    color: #6b7280;
+}
+
+.profile-modal {
+    display: grid;
+    gap: 16px;
+    padding: 24px;
+}

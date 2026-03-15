@@ -52,6 +52,14 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
+        if ($role === 'hotel_owner' && ! $user->is_approved) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->with('status', 'Your hotel owner account is pending admin approval.');
+        }
+
         return redirect(route('dashboard', absolute: false));
     }
 }
