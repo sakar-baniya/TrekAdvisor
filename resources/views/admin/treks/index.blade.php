@@ -1,117 +1,99 @@
-﻿<x-dashboard-layout>
+<x-dashboard-layout>
     <x-slot name="header">
-        <div class="admin-header">
-            <h2 class="admin-title">{{ __('Trek List') }}</h2>
-            <a href="{{ route('admin.treks.create') }}" class="admin-action">
-                <i class="fas fa-plus"></i> Add New Trek
+        <div class="admin-page-heading admin-page-heading--split">
+            <div>
+                <p class="admin-eyebrow">Trek Management</p>
+                <h2 class="admin-page-title">All treks</h2>
+            </div>
+            <a href="{{ route('admin.treks.create') }}" class="admin-primary-button">
+                <i class="fas fa-plus"></i>
+                <span>Add New Trek</span>
             </a>
         </div>
     </x-slot>
 
-    @if(session('success'))
-        <div class="admin-alert">
-            <div class="admin-alert-icon">
-                <i class="fas fa-check"></i>
-            </div>
-            <span class="admin-alert-text">{{ session('success') }}</span>
-        </div>
+    @if (session('success'))
+        <div class="admin-flash success">{{ session('success') }}</div>
     @endif
 
-    <div class="card admin-table-card">
-        <div class="recent-table">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Trek Name</th>
-                        <th>Price</th>
-                        <th>Difficulty</th>
-                        <th>Status</th>
-                        <th class="table-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($treks as $trek)
-                        <tr>
-                            <td>
-                                <div class="stat-meta">
-                                    <img src="{{ $trek->image ?? 'https://via.placeholder.com/300x200?text=NO+IMAGE' }}" alt="{{ $trek->title }}" class="admin-image">
-                                    <div>
-                                        <div class="admin-name">{{ $trek->title }}</div>
-                                        <div class="admin-subtext">{{ $trek->slug }}</div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="table-amount">${{ number_format($trek->base_price) }}</div>
-                                <div class="admin-subtext">Price</div>
-                            </td>
-                            <td>
-                                @php
-                                    $difficultyClass = [
-                                        'Easy' => 'admin-inline-badge easy',
-                                        'Moderate' => 'admin-inline-badge moderate',
-                                        'Difficult' => 'admin-inline-badge difficult',
-                                        'Extreme' => 'admin-inline-badge extreme',
-                                    ][$trek->difficulty] ?? 'admin-inline-badge neutral';
-                                @endphp
-                                <span class="{{ $difficultyClass }}">
-                                    <i class="fas fa-bolt"></i> {{ $trek->difficulty }}
-                                </span>
-                            </td>
-                            <td>
-                                @if($trek->status == 'Active')
-                                    <div class="stat-meta">
-                                        <span class="admin-status-dot active"></span>
-                                        <span class="table-label">Active</span>
-                                    </div>
-                                @else
-                                    <div class="stat-meta">
-                                        <span class="admin-status-dot inactive"></span>
-                                        <span class="table-date">Inactive</span>
-                                    </div>
-                                @endif
-                            </td>
-                            <td class="table-right">
-                                <div class="admin-row-actions">
-                                    <a href="{{ route('admin.treks.show', $trek->id) }}" class="admin-icon-btn" title="View Details">
-                                        <i class="fas fa-eye"></i>
-                                    </a>
-                                    <a href="{{ route('admin.treks.edit', $trek->id) }}" class="admin-icon-btn" title="Edit Trek">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
-                                    <form action="{{ route('admin.treks.destroy', $trek->id) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this trek?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="admin-icon-btn danger" title="Delete Trek">
-                                            <i class="fas fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="table-empty">
-                                No Treks Found
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-
-        @if($treks->hasPages())
-            <div class="admin-table-header">
-                {{ $treks->links() }}
+    <section class="admin-panel">
+        <div class="admin-panel__header">
+            <div>
+                <h3>Filters</h3>
+                <p>Search and narrow down trek records</p>
             </div>
-        @endif
-    </div>
-
-    <div class="admin-footer-note">
-        <div>Total Treks: {{ $treks->total() }}</div>
-        <div class="admin-footer-status">
-            <span><span class="admin-status-dot active"></span> Active</span>
-            <span><span class="admin-status-dot inactive"></span> Inactive</span>
         </div>
-    </div>
+        <form method="GET" action="{{ route('admin.treks.index') }}" class="admin-filter-grid">
+            <input type="search" name="search" value="{{ $search }}" class="admin-input" placeholder="Search trek name" />
+            <select name="difficulty" class="admin-input">
+                <option value="">All difficulty</option>
+                @foreach (['Easy', 'Moderate', 'Difficult', 'Extreme'] as $option)
+                    <option value="{{ $option }}" @selected($difficulty === $option)>{{ $option }}</option>
+                @endforeach
+            </select>
+            <select name="status" class="admin-input">
+                <option value="">All status</option>
+                @foreach (['Active', 'Inactive'] as $option)
+                    <option value="{{ $option }}" @selected($status === $option)>{{ $option }}</option>
+                @endforeach
+            </select>
+            <button type="submit" class="admin-primary-button admin-primary-button--fit">Apply</button>
+        </form>
+    </section>
+
+    <section class="admin-card-list">
+        @forelse ($treks as $trek)
+            <article class="admin-list-card">
+                <div class="admin-list-card__media">
+                    <img src="{{ $trek->image ?: 'https://via.placeholder.com/480x320?text=Trek' }}" alt="{{ $trek->title }}">
+                </div>
+                <div class="admin-list-card__content">
+                    <div class="admin-list-card__top">
+                        <div>
+                            <h3>{{ $trek->title }}</h3>
+                            <p>{{ $trek->difficulty }} | {{ $trek->duration_days ?? 'N/A' }} days | Max {{ $trek->max_altitude ? number_format($trek->max_altitude) . 'm' : 'Not set' }}</p>
+                        </div>
+                        <span class="admin-badge {{ $trek->status === 'Active' ? 'is-success' : 'is-muted' }}">{{ $trek->status }}</span>
+                    </div>
+                    <div class="admin-list-card__meta">
+                        <span>Price: ${{ number_format($trek->base_price, 2) }}</span>
+                        <span>Departures: {{ $trek->departures_count }}</span>
+                        <span>Total bookings: {{ (int) ($trek->total_booked_seats ?? 0) }}</span>
+                    </div>
+                    <p class="admin-list-card__excerpt">{{ \Illuminate\Support\Str::limit(strip_tags($trek->description), 150) }}</p>
+                    <div class="admin-list-card__actions">
+                        <a href="{{ route('admin.treks.edit', $trek) }}" class="admin-secondary-button">
+                            <i class="fas fa-pen"></i>
+                            <span>Edit</span>
+                        </a>
+                        <a href="{{ route('admin.treks.show', $trek) }}" class="admin-secondary-button">
+                            <i class="fas fa-eye"></i>
+                            <span>View</span>
+                        </a>
+                        <form action="{{ route('admin.treks.destroy', $trek) }}" method="POST" onsubmit="return confirm('Delete this trek?')">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="admin-danger-button">
+                                <i class="fas fa-trash"></i>
+                                <span>Delete</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </article>
+        @empty
+            <div class="admin-panel admin-panel--empty">
+                <div class="admin-panel__header">
+                    <div>
+                        <h3>No treks found</h3>
+                        <p>Try adjusting the filters or add a new trek.</p>
+                    </div>
+                </div>
+            </div>
+        @endforelse
+    </section>
+
+    @if ($treks->hasPages())
+        <div class="admin-pagination">{{ $treks->links() }}</div>
+    @endif
 </x-dashboard-layout>

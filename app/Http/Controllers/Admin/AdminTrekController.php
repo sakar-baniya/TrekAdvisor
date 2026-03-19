@@ -4,158 +4,179 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Trek;
-use App\Models\TrekImage;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Illuminate\View\View;
 
 class AdminTrekController extends Controller
 {
-    /**
-     * Display a listing of the treks.
-     */
-    public function index()
+    public function index(Request $request): View
     {
-        $treks = Trek::latest()->paginate(10);
-        return view('admin.treks.index', compact('treks'));
+        $search = $request->string('search')->toString();
+        $difficulty = $request->string('difficulty')->toString();
+        $status = $request->string('status')->toString();
+
+        $treks = Trek::query()
+            ->withCount('departures')
+            ->withSum('departures as total_booked_seats', 'booked_seats')
+            ->when($search !== '', fn ($query) => $query->where('title', 'like', "%{$search}%"))
+            ->when($difficulty !== '', fn ($query) => $query->where('difficulty', $difficulty))
+            ->when($status !== '', fn ($query) => $query->where('status', $status))
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
+        return view('admin.treks.index', compact('treks', 'search', 'difficulty', 'status'));
     }
 
-    /**
-     * Show the form for creating a new trek.
-     */
-    public function create()
+    public function create(): View
     {
-        return view('admin.treks.create');
+        $trek = new Trek();
+        $trek->setRelation('itineraries', collect());
+
+        return view('admin.treks.create', compact('trek'));
     }
 
-    /**
-     * Store a newly created trek in storage.
-     */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'base_price' => 'required|numeric|min:0',
-            'difficulty' => 'required|in:Easy,Moderate,Difficult,Extreme',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:Active,Inactive',
-        ]);
+        $validated = $this->validateRequest($request);
 
-        $data = $request->except('gallery');
-        $data['slug'] = Str::slug($request->title);
+        $trek = DB::transaction(function () use ($request, $validated) {
+            $payload = $this->payloadFromValidated($request, $validated);
+            $trek = Trek::create($payload);
+            $this->syncItineraries($trek, $validated['itinerary'] ?? []);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('treks', 'public');
-            $data['image'] = Storage::url($path);
-        }
+            return $trek;
+        });
 
-        $trek = Trek::create($data);
-
-        // Handle Gallery Images
-        if ($request->hasFile('gallery')) {
-            foreach ($request->file('gallery') as $image) {
-                $galleryPath = $image->store('treks/gallery', 'public');
-                $trek->gallery()->create([
-                    'path' => Storage::url($galleryPath)
-                ]);
-            }
-        }
-
-        return redirect()->route('admin.treks.index')->with('success', 'Trek created successfully.');
+        return redirect()
+            ->route('admin.treks.edit', $trek)
+            ->with('success', 'Trek created successfully.');
     }
 
-    /**
-     * Display the specified trek.
-     */
-    public function show(Trek $trek)
+    public function show(Trek $trek): View
     {
+        $trek->load(['itineraries', 'departures', 'gallery']);
+
         return view('admin.treks.show', compact('trek'));
     }
 
-    /**
-     * Show the form for editing the specified trek.
-     */
-    public function edit(Trek $trek)
+    public function edit(Trek $trek): View
     {
+        $trek->load('itineraries');
+
         return view('admin.treks.edit', compact('trek'));
     }
 
-    /**
-     * Update the specified trek in storage.
-     */
-    public function update(Request $request, Trek $trek)
+    public function update(Request $request, Trek $trek): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required|string|max:255',
-            'description' => 'required|string',
-            'base_price' => 'required|numeric|min:0',
-            'difficulty' => 'required|in:Easy,Moderate,Difficult,Extreme',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'gallery.*' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'status' => 'required|in:Active,Inactive',
-        ]);
+        $validated = $this->validateRequest($request, $trek);
 
-        $data = $request->except(['gallery', 'remove_gallery']);
-        $data['slug'] = Str::slug($request->title);
+        DB::transaction(function () use ($request, $validated, $trek) {
+            $trek->update($this->payloadFromValidated($request, $validated, $trek));
+            $this->syncItineraries($trek, $validated['itinerary'] ?? []);
+        });
 
-        if ($request->hasFile('image')) {
-            // Delete old image if exists
-            if ($trek->image) {
-                $oldPath = str_replace('/storage/', '', $trek->image);
-                Storage::disk('public')->delete($oldPath);
-            }
-            $path = $request->file('image')->store('treks', 'public');
-            $data['image'] = Storage::url($path);
-        }
-
-        $trek->update($data);
-
-        // Handle Image Deletions from Gallery
-        if ($request->has('remove_gallery')) {
-            foreach ($request->remove_gallery as $imageId) {
-                $img = TrekImage::find($imageId);
-                if ($img) {
-                    $path = str_replace('/storage/', '', $img->path);
-                    Storage::disk('public')->delete($path);
-                    $img->delete();
-                }
-            }
-        }
-
-        // Handle New Gallery Images
-        if ($request->hasFile('gallery')) {
-            foreach ($request->file('gallery') as $image) {
-                $galleryPath = $image->store('treks/gallery', 'public');
-                $trek->gallery()->create([
-                    'path' => Storage::url($galleryPath)
-                ]);
-            }
-        }
-
-        return redirect()->route('admin.treks.index')->with('success', 'Trek updated successfully.');
+        return redirect()
+            ->route('admin.treks.edit', $trek)
+            ->with('success', 'Trek updated successfully.');
     }
 
-    /**
-     * Remove the specified trek from storage.
-     */
-    public function destroy(Trek $trek)
+    public function destroy(Trek $trek): RedirectResponse
     {
-        // Delete Main Image
         if ($trek->image) {
-            $oldPath = str_replace('/storage/', '', $trek->image);
-            Storage::disk('public')->delete($oldPath);
+            Storage::disk('public')->delete(str_replace('/storage/', '', $trek->image));
         }
 
-        // Delete Gallery Images
-        foreach ($trek->gallery as $img) {
-            $path = str_replace('/storage/', '', $img->path);
-            Storage::disk('public')->delete($path);
+        foreach ($trek->gallery as $image) {
+            Storage::disk('public')->delete(str_replace('/storage/', '', $image->path));
         }
 
         $trek->delete();
 
-        return redirect()->route('admin.treks.index')->with('success', 'Trek deleted successfully.');
+        return redirect()
+            ->route('admin.treks.index')
+            ->with('success', 'Trek deleted successfully.');
+    }
+
+    protected function validateRequest(Request $request, ?Trek $trek = null): array
+    {
+        return $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'base_price' => ['required', 'numeric', 'min:0'],
+            'difficulty' => ['required', Rule::in(['Easy', 'Moderate', 'Difficult', 'Extreme'])],
+            'duration_days' => ['required', 'integer', 'min:1'],
+            'max_altitude' => ['nullable', 'integer', 'min:0'],
+            'status' => ['required', Rule::in(['Active', 'Inactive'])],
+            'description' => ['required', 'string'],
+            'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'itinerary' => ['nullable', 'array'],
+            'itinerary.*.title' => ['nullable', 'string', 'max:255'],
+            'itinerary.*.description' => ['nullable', 'string'],
+        ]);
+    }
+
+    protected function payloadFromValidated(Request $request, array $validated, ?Trek $trek = null): array
+    {
+        $payload = [
+            'title' => $validated['title'],
+            'slug' => $this->generateUniqueSlug($validated['title'], $trek),
+            'base_price' => $validated['base_price'],
+            'difficulty' => $validated['difficulty'],
+            'duration_days' => $validated['duration_days'],
+            'max_altitude' => $validated['max_altitude'] ?? null,
+            'description' => $validated['description'],
+            'status' => $validated['status'],
+        ];
+
+        if ($request->hasFile('image')) {
+            if ($trek?->image) {
+                Storage::disk('public')->delete(str_replace('/storage/', '', $trek->image));
+            }
+
+            $payload['image'] = Storage::url($request->file('image')->store('treks', 'public'));
+        }
+
+        return $payload;
+    }
+
+    protected function syncItineraries(Trek $trek, array $itineraries): void
+    {
+        $trek->itineraries()->delete();
+
+        $rows = collect($itineraries)
+            ->filter(fn (array $day) => filled($day['title'] ?? null) && filled($day['description'] ?? null))
+            ->values();
+
+        foreach ($rows as $index => $day) {
+            $trek->itineraries()->create([
+                'day_number' => $index + 1,
+                'title' => $day['title'],
+                'description' => $day['description'],
+            ]);
+        }
+    }
+
+    protected function generateUniqueSlug(string $title, ?Trek $trek = null): string
+    {
+        $slug = Str::slug($title);
+        $original = $slug;
+        $counter = 2;
+
+        while (
+            Trek::query()
+                ->when($trek, fn ($query) => $query->whereKeyNot($trek->id))
+                ->where('slug', $slug)
+                ->exists()
+        ) {
+            $slug = $original . '-' . $counter;
+            $counter++;
+        }
+
+        return $slug;
     }
 }
