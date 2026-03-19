@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AdminUserController extends Controller
@@ -13,6 +14,7 @@ class AdminUserController extends Controller
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
+        $role = $request->string('role')->toString();
 
         $usersQuery = User::query()
             ->orderByDesc('created_at');
@@ -22,6 +24,10 @@ class AdminUserController extends Controller
                 $query->where('name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%");
             });
+        }
+
+        if ($role !== '') {
+            $usersQuery->where('role', $role);
         }
 
         $users = $usersQuery->paginate(12)->withQueryString();
@@ -34,7 +40,38 @@ class AdminUserController extends Controller
             'users' => $users,
             'pendingHotelOwners' => $pendingHotelOwners,
             'search' => $search,
+            'role' => $role,
         ]);
+    }
+
+    public function createStaff(): View
+    {
+        return view('admin.users.create-staff');
+    }
+
+    public function storeStaff(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email'],
+            'phone' => ['nullable', 'string', 'max:30'],
+            'role' => ['required', 'in:admin,staff'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ]);
+
+        User::query()->create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'] ?? null,
+            'role' => $validated['role'],
+            'password' => Hash::make($validated['password']),
+            'is_approved' => true,
+            'email_verified_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Staff user added.');
     }
 
     public function approve(User $user): RedirectResponse

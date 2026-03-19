@@ -44,6 +44,7 @@
                     'icon' => 'fa-users',
                     'children' => [
                         ['label' => 'All Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*')],
+                        ['label' => 'Add Staff', 'route' => route('admin.users.create-staff'), 'active' => request()->routeIs('admin.users.create-staff')],
                     ],
                 ],
             ];

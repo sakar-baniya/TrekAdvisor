@@ -34,6 +34,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('trek-bookings/{trekBooking}', [AdminTrekBookingController::class, 'show'])->name('trek-bookings.show');
         Route::patch('trek-bookings/{trekBooking}/status', [AdminTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+        Route::get('users/create-staff', [AdminUserController::class, 'createStaff'])->name('users.create-staff');
+        Route::post('users/create-staff', [AdminUserController::class, 'storeStaff'])->name('users.store-staff');
         Route::patch('users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
         Route::patch('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
 
