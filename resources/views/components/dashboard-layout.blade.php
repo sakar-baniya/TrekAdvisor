@@ -29,6 +29,7 @@
                         ['label' => 'All Treks', 'route' => route('admin.treks.index'), 'active' => request()->routeIs('admin.treks.index')],
                         ['label' => 'Add New Trek', 'route' => route('admin.treks.create'), 'active' => request()->routeIs('admin.treks.create')],
                         ['label' => 'Departures', 'route' => route('admin.departures.index'), 'active' => request()->routeIs('admin.departures.*')],
+                        ['label' => 'Trek Bookings', 'route' => route('admin.trek-bookings.index'), 'active' => request()->routeIs('admin.trek-bookings.*')],
                     ],
                 ],
                 [
