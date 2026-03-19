@@ -1,125 +1,168 @@
 <x-dashboard-layout>
     <x-slot name="header">
-        <div>
-            <h2 class="dashboard-header-title">Admin Dashboard</h2>
-            <p class="dashboard-header-subtitle">Here’s what’s happening today.</p>
+        <div class="admin-page-heading">
+            <div>
+                <p class="admin-eyebrow">Dashboard Overview</p>
+                <h2 class="admin-page-title">Track bookings, revenue, and approvals in one place</h2>
+            </div>
+            <div class="admin-page-heading__meta">
+                <span class="admin-date-chip">
+                    <i class="fas fa-calendar-days"></i>
+                    {{ now()->format('M d, Y') }}
+                </span>
+            </div>
         </div>
     </x-slot>
 
-    <!-- Stat Cards Grid -->
-    <div class="stat-grid">
-        <!-- Total Treks -->
-        <div class="card card-hover">
-            <div class="card-body stat-card">
-                <div class="stat-meta">
-                    <div class="icon-circle icon-gradient-teal">
-                        <i class="fas fa-mountain"></i>
-                    </div>
-                    <div>
-                        <p class="stat-title">Total Treks</p>
-                        <h3 class="stat-value">{{ \App\Models\Trek::count() }}</h3>
-                    </div>
-                </div>
-                <span class="badge badge-info">Active</span>
+    <section class="admin-stats-grid">
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-blue"><i class="fas fa-chart-column"></i></div>
+            <div>
+                <p>Bookings</p>
+                <h3>{{ number_format($stats['bookings_this_month']) }}</h3>
+                <span>This month</span>
             </div>
         </div>
-
-        <!-- Hotel Approvals -->
-        <div class="card card-hover">
-            <div class="card-body stat-card">
-                <div class="stat-meta">
-                    <div class="icon-circle icon-gradient-emerald">
-                        <i class="fas fa-hotel"></i>
-                    </div>
-                    <div>
-                        <p class="stat-title">Owner Approvals</p>
-                        <h3 class="stat-value">{{ \App\Models\User::where('role', 'hotel_owner')->where('is_approved', false)->count() }}</h3>
-                    </div>
-                </div>
-                <span class="badge badge-warning">Pending</span>
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-green"><i class="fas fa-wallet"></i></div>
+            <div>
+                <p>Revenue</p>
+                <h3>${{ number_format($stats['revenue_this_month'], 2) }}</h3>
+                <span>This month</span>
             </div>
         </div>
-
-        <!-- Today's Activity -->
-        <div class="card card-hover">
-            <div class="card-body stat-card">
-                <div class="stat-meta">
-                    <div class="icon-circle icon-gradient-amber">
-                        <i class="fas fa-calendar-check"></i>
-                    </div>
-                    <div>
-                        <p class="stat-title">Today's Bookings</p>
-                        <h3 class="stat-value">{{ \App\Models\Payment::whereDate('created_at', today())->where('status', 'Success')->count() }}</h3>
-                    </div>
-                </div>
-                <span class="badge badge-warning">Live</span>
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-violet"><i class="fas fa-users"></i></div>
+            <div>
+                <p>Users</p>
+                <h3>{{ number_format($stats['total_users']) }}</h3>
+                <span>Total accounts</span>
             </div>
         </div>
-
-        <!-- Revenue -->
-        <div class="card card-hover">
-            <div class="card-body stat-card">
-                <div class="stat-meta">
-                    <div class="icon-circle icon-gradient-teal">
-                        <i class="fas fa-wallet"></i>
-                    </div>
-                    <div>
-                        <p class="stat-title">Total Revenue</p>
-                        <h3 class="stat-value">${{ number_format(\App\Models\Payment::where('status', 'Success')->sum('amount'), 2) }}</h3>
-                    </div>
-                </div>
-                <span class="badge badge-info">Growth</span>
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-amber"><i class="fas fa-mountain-sun"></i></div>
+            <div>
+                <p>Treks</p>
+                <h3>{{ number_format($stats['active_treks']) }}</h3>
+                <span>Active treks</span>
             </div>
         </div>
-    </div>
-
-    <!-- Recent Activity Table -->
-    <div class="card">
-        <div class="card-header">
-            <h4 class="stat-title">Recent Activity</h4>
-            <span class="table-caption">Latest 5 Bookings</span>
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-slate"><i class="fas fa-hotel"></i></div>
+            <div>
+                <p>Hotels</p>
+                <h3>{{ number_format($stats['active_hotels']) }}</h3>
+                <span>{{ $stats['pending_hotels'] }} pending approval</span>
+            </div>
         </div>
-        <div class="recent-table">
-            <table class="table">
+        <div class="admin-stat-card">
+            <div class="admin-stat-card__icon is-rose"><i class="fas fa-people-carry-box"></i></div>
+            <div>
+                <p>Gear</p>
+                <h3>{{ number_format($stats['gear_items']) }}</h3>
+                <span>{{ $stats['rented_gear'] }} active rentals</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="admin-panel">
+        <div class="admin-panel__header">
+            <div>
+                <h3>Recent Bookings</h3>
+                <p>Latest activity across treks, hotels, and gear rentals</p>
+            </div>
+            <span class="admin-link-chip">Newest 10</span>
+        </div>
+        <div class="admin-table-wrap">
+            <table class="admin-table">
                 <thead>
                     <tr>
-                        <th>Order Ref</th>
-                        <th>Customer Name</th>
-                        <th>Paid Amount</th>
+                        <th>Reference</th>
+                        <th>Booking</th>
+                        <th>Customer</th>
+                        <th>Details</th>
+                        <th>Amount</th>
                         <th>Status</th>
-                        <th class="table-right">Date</th>
+                        <th>Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse(\App\Models\Payment::latest()->take(5)->get() as $payment)
+                    @forelse($recentBookings as $booking)
                         <tr>
+                            <td><span class="admin-table__ref">{{ $booking->reference }}</span></td>
                             <td>
-                                <span class="table-label">#{{ substr($payment->transaction_id, -8) }}</span>
+                                <strong>{{ $booking->title }}</strong>
+                                <small>{{ $booking->type }}</small>
                             </td>
+                            <td>{{ $booking->customer }}</td>
+                            <td>{{ $booking->details }}</td>
+                            <td>${{ number_format($booking->amount, 2) }}</td>
                             <td>
-                                <span class="table-text">{{ $payment->user->name }}</span>
-                            </td>
-                            <td class="table-amount">
-                                ${{ number_format($payment->amount / 100, 2) }}
-                            </td>
-                            <td>
-                                <span class="status-pill {{ $payment->status === 'Success' ? 'status-success' : 'status-muted' }}">
-                                    {{ $payment->status }}
+                                <span class="admin-badge {{ strtolower($booking->status) === 'confirmed' || strtolower($booking->status) === 'success' || strtolower($booking->status) === 'active' ? 'is-success' : (strtolower($booking->status) === 'pending' ? 'is-warning' : 'is-muted') }}">
+                                    {{ $booking->status }}
                                 </span>
                             </td>
-                            <td class="table-right table-date">
-                                {{ $payment->created_at->diffForHumans() }}
-                            </td>
+                            <td>{{ $booking->created_at->diffForHumans() }}</td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="table-empty">
-                                No activity found
-                            </td>
+                            <td colspan="7" class="admin-table__empty">No recent bookings yet.</td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-    </div>
+    </section>
+
+    <section class="admin-quick-grid">
+        <div class="admin-panel">
+            <div class="admin-panel__header">
+                <div>
+                    <h3>Quick Actions</h3>
+                    <p>Shortcuts for common admin tasks</p>
+                </div>
+            </div>
+            <div class="admin-actions">
+                <a href="{{ route('admin.treks.create') }}" class="admin-primary-button">
+                    <i class="fas fa-plus"></i>
+                    <span>Add New Trek</span>
+                </a>
+                <a href="{{ route('admin.treks.index') }}" class="admin-secondary-button">
+                    <i class="fas fa-route"></i>
+                    <span>Manage Treks</span>
+                </a>
+                <a href="{{ route('admin.hotels.index', ['status' => 'Pending']) }}" class="admin-secondary-button">
+                    <i class="fas fa-circle-check"></i>
+                    <span>Approve Hotels ({{ $stats['pending_hotels'] }})</span>
+                </a>
+                <a href="{{ route('admin.users.index') }}" class="admin-secondary-button">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Manage Users</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="admin-panel">
+            <div class="admin-panel__header">
+                <div>
+                    <h3>System Notes</h3>
+                    <p>Useful operational snapshots</p>
+                </div>
+            </div>
+            <div class="admin-note-stack">
+                <article class="admin-note-card">
+                    <strong>{{ $stats['pending_hotels'] }} hotels are waiting for review</strong>
+                    <span>Use the hotel management page to approve or deactivate listings.</span>
+                </article>
+                <article class="admin-note-card">
+                    <strong>{{ $stats['rented_gear'] }} gear rentals need tracking</strong>
+                    <span>Once gear pages are wired in, return handling will update stock automatically.</span>
+                </article>
+                <article class="admin-note-card">
+                    <strong>{{ $stats['bookings_this_month'] }} bookings recorded this month</strong>
+                    <span>The dashboard is ready to support the next admin pages.</span>
+                </article>
+            </div>
+        </div>
+    </section>
 </x-dashboard-layout>

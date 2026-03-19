@@ -5,133 +5,156 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TrekAdvisor') }} - Dashboard</title>
+        <title>{{ config('app.name', 'TrekAdvisor') }} - Admin</title>
 
-        <!-- Fonts & Icons -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-        <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="body-dashboard">
-        <div class="dashboard-shell">
-            
-            <!-- SIDEBAR: Role-Based Navigation -->
-            <aside id="sidebar" class="dashboard-sidebar">
-                <div class="sidebar-header">
-                    <span class="sidebar-title">
-                        Trek<span class="brand-accent">Advisor</span>
-                        <span class="role-pill">{{ auth()->user()->role }}</span>
-                    </span>
+    <body class="admin-body">
+        @php
+            $adminNavigation = [
+                [
+                    'label' => 'Dashboard',
+                    'icon' => 'fa-chart-line',
+                    'route' => route('admin.dashboard'),
+                    'active' => request()->routeIs('admin.dashboard'),
+                ],
+                [
+                    'label' => 'Trek Management',
+                    'icon' => 'fa-mountain-sun',
+                    'children' => [
+                        ['label' => 'All Treks', 'route' => route('admin.treks.index'), 'active' => request()->routeIs('admin.treks.index')],
+                        ['label' => 'Add New Trek', 'route' => route('admin.treks.create'), 'active' => request()->routeIs('admin.treks.create')],
+                    ],
+                ],
+                [
+                    'label' => 'Hotel Management',
+                    'icon' => 'fa-hotel',
+                    'children' => [
+                        ['label' => 'All Hotels', 'route' => route('admin.hotels.index'), 'active' => request()->routeIs('admin.hotels.*')],
+                    ],
+                ],
+                [
+                    'label' => 'User Management',
+                    'icon' => 'fa-users',
+                    'children' => [
+                        ['label' => 'All Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*')],
+                    ],
+                ],
+            ];
+        @endphp
+
+        <div class="admin-shell" data-admin-shell>
+            <aside class="admin-sidebar" id="admin-sidebar">
+                <div class="admin-sidebar__brand">
+                    <a href="{{ route('admin.dashboard') }}" class="admin-brandmark">
+                        <span class="admin-brandmark__badge">TA</span>
+                        <span>
+                            <strong>TrekAdvisor</strong>
+                            <small>Admin Panel</small>
+                        </span>
+                    </a>
                 </div>
 
-                <nav class="dashboard-nav">
-                    <!-- Global/Shared Links -->
-                    <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="dashboard-link {{ request()->routeIs('*.dashboard') ? 'is-active' : '' }}">
-                        <i class="fas fa-th-large"></i>
-                        <span>Dashboard</span>
-                    </a>
+                <nav class="admin-sidebar__nav">
+                    @foreach ($adminNavigation as $item)
+                        @if (isset($item['children']))
+                            <section class="admin-nav-group">
+                                <div class="admin-nav-group__label">
+                                    <i class="fas {{ $item['icon'] }}"></i>
+                                    <span>{{ $item['label'] }}</span>
+                                </div>
 
-                    @if(auth()->user()->role === 'admin')
-                        <!-- Admin Specific Links -->
-                        <a href="{{ route('admin.treks.index') }}" class="dashboard-link {{ request()->routeIs('admin.treks.*') ? 'is-active' : '' }}">
-                            <i class="fas fa-mountain"></i>
-                            <span>Manage Treks</span>
-                        </a>
-                        <a href="{{ route('admin.hotels.index') }}" class="dashboard-link {{ request()->routeIs('admin.hotels.*') ? 'is-active' : '' }}">
-                            <i class="fas fa-hotel"></i>
-                            <span>Hotel Approvals</span>
-                        </a>
-                        <a href="{{ route('admin.users.index') }}" class="dashboard-link {{ request()->routeIs('admin.users.*') ? 'is-active' : '' }}">
-                            <i class="fas fa-users"></i>
-                            <span>Manage Users</span>
-                        </a>
-                    @endif
-
-                    @if(auth()->user()->role === 'staff')
-                        <!-- Staff Specific Links -->
-                        <a href="#" class="dashboard-link">
-                            <i class="fas fa-clipboard-list"></i>
-                            <span>Check-in Logs</span>
-                        </a>
-                    @endif
-
-                    @if(auth()->user()->role === 'hotel_owner')
-                        <!-- Hotel Owner Specific Links -->
-                        <a href="#" class="dashboard-link">
-                            <i class="fas fa-bed"></i>
-                            <span>My Rooms</span>
-                        </a>
-                    @endif
-
-                    @if(auth()->user()->role === 'customer')
-                        <!-- Customer Specific Links -->
-                        <a href="#" class="dashboard-link">
-                            <i class="fas fa-ticket-alt"></i>
-                            <span>My Bookings</span>
-                        </a>
-                    @endif
-
-                    <!-- Logout at bottom -->
-                    <div class="logout-wrap">
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <button type="submit" class="dashboard-link logout">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span>Sign Out</span>
-                            </button>
-                        </form>
-                    </div>
+                                @foreach ($item['children'] as $child)
+                                    <a href="{{ $child['route'] }}" class="admin-nav-link {{ $child['active'] ? 'is-active' : '' }}">
+                                        <span>{{ $child['label'] }}</span>
+                                    </a>
+                                @endforeach
+                            </section>
+                        @else
+                            <a href="{{ $item['route'] }}" class="admin-nav-link admin-nav-link--root {{ $item['active'] ? 'is-active' : '' }}">
+                                <i class="fas {{ $item['icon'] }}"></i>
+                                <span>{{ $item['label'] }}</span>
+                            </a>
+                        @endif
+                    @endforeach
                 </nav>
+
+                <div class="admin-sidebar__footer">
+                    <div class="admin-user-card">
+                        <div class="admin-user-card__avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                        <div>
+                            <strong>{{ auth()->user()->name }}</strong>
+                            <small>{{ str_replace('_', ' ', auth()->user()->role) }}</small>
+                        </div>
+                    </div>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="admin-ghost-button admin-ghost-button--full">
+                            <i class="fas fa-right-from-bracket"></i>
+                            <span>Sign Out</span>
+                        </button>
+                    </form>
+                </div>
             </aside>
 
-            <div class="dashboard-content">
-                <!-- Top Navigation Bar -->
-                <header class="dashboard-topbar">
-                    <button onclick="toggleSidebar()" class="dashboard-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    
-                    <div class="dashboard-date">
-                        <span>{{ now()->format('l, F j, Y') }}</span>
+            <div class="admin-content">
+                <header class="admin-topbar">
+                    <div class="admin-topbar__left">
+                        <button type="button" class="admin-icon-button admin-mobile-toggle" data-sidebar-toggle>
+                            <i class="fas fa-bars"></i>
+                        </button>
+                        <div>
+                            <p class="admin-eyebrow">Operations center</p>
+                            <h1 class="admin-topbar__title">TrekAdvisor Admin</h1>
+                        </div>
                     </div>
 
-                    <div class="dashboard-user">
-                        <span>{{ auth()->user()->name }}</span>
-                        <div class="user-avatar">
-                            {{ substr(auth()->user()->name, 0, 1) }}
+                    <div class="admin-topbar__right">
+                        <label class="admin-searchbar">
+                            <i class="fas fa-magnifying-glass"></i>
+                            <input type="search" placeholder="Search pages, bookings, users" />
+                        </label>
+                        <button type="button" class="admin-icon-button">
+                            <i class="fas fa-bell"></i>
+                        </button>
+                        <div class="admin-profile-chip">
+                            <div class="admin-profile-chip__avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
+                            <div>
+                                <strong>{{ auth()->user()->name }}</strong>
+                                <small>{{ now()->format('M d, Y') }}</small>
+                            </div>
                         </div>
                     </div>
                 </header>
 
-                <!-- Page Header -->
-                @if(isset($header))
-                    <div class="dashboard-header">
+                @if (isset($header))
+                    <div class="admin-page-header">
                         {{ $header }}
                     </div>
                 @endif
 
-                <!-- MAIN CONTENT -->
-                <main class="dashboard-main">
+                <main class="admin-main">
                     {{ $slot }}
                 </main>
             </div>
         </div>
 
-        <!-- OVERLAY & JS -->
-        <div id="sidebar-overlay" class="dashboard-overlay" onclick="toggleSidebar()"></div>
-        
+        <button type="button" class="admin-overlay" id="admin-overlay" data-sidebar-toggle aria-label="Close sidebar"></button>
+
         <script>
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.getElementById('sidebar-overlay');
-                sidebar.classList.toggle('open');
-                overlay.classList.toggle('show');
-            }
+            (() => {
+                const shell = document.querySelector('[data-admin-shell]');
+                const toggles = document.querySelectorAll('[data-sidebar-toggle]');
+
+                toggles.forEach((toggle) => {
+                    toggle.addEventListener('click', () => shell.classList.toggle('sidebar-open'));
+                });
+            })();
         </script>
     </body>
 </html>

@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrekController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
 use Illuminate\Support\Facades\Route;
@@ -19,12 +21,12 @@ Route::get('/dashboard', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
     
     // Admin Only
-    Route::get('/admin/dashboard', function () {
-        return view('admin.dashboard');
-    })->middleware('role:admin')->name('admin.dashboard');
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->middleware('role:admin')
+        ->name('admin.dashboard');
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('treks', \App\Http\Controllers\Admin\AdminTrekController::class);
+        Route::resource('treks', AdminTrekController::class);
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::patch('users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
         Route::patch('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
