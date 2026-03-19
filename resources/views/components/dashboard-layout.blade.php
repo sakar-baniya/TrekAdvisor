@@ -40,6 +40,14 @@
                     ],
                 ],
                 [
+                    'label' => 'Gear Management',
+                    'icon' => 'fa-backpack',
+                    'children' => [
+                        ['label' => 'All Gear Items', 'route' => route('admin.gear.index'), 'active' => request()->routeIs('admin.gear.*')],
+                        ['label' => 'Add Gear Item', 'route' => route('admin.gear.create'), 'active' => request()->routeIs('admin.gear.create')],
+                    ],
+                ],
+                [
                     'label' => 'User Management',
                     'icon' => 'fa-users',
                     'children' => [

@@ -845,3 +845,21 @@
 .admin-inline-role-form .admin-input {
     min-width: 150px;
 }
+
+.admin-filter-tabs--padded {
+    padding: 0 1.25rem 1.25rem;
+}
+
+.admin-table-item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+}
+
+.admin-table-item img {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    object-fit: cover;
+    background: #e2e8f0;
+}

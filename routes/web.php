@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
+use App\Http\Controllers\Admin\AdminGearController;
 use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -33,6 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('trek-bookings', [AdminTrekBookingController::class, 'index'])->name('trek-bookings.index');
         Route::get('trek-bookings/{trekBooking}', [AdminTrekBookingController::class, 'show'])->name('trek-bookings.show');
         Route::patch('trek-bookings/{trekBooking}/status', [AdminTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
+        Route::resource('gear', AdminGearController::class)->except(['show', 'destroy']);
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::get('users/create-staff', [AdminUserController::class, 'createStaff'])->name('users.create-staff');
         Route::post('users/create-staff', [AdminUserController::class, 'storeStaff'])->name('users.store-staff');
