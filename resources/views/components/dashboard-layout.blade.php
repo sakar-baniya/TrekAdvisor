@@ -63,6 +63,14 @@
                         ['label' => 'All Payments', 'route' => route('admin.payments.index'), 'active' => request()->routeIs('admin.payments.*')],
                     ],
                 ],
+                [
+                    'label' => 'Reviews',
+                    'icon' => 'fa-star',
+                    'children' => [
+                        ['label' => 'All Reviews', 'route' => route('admin.reviews.index'), 'active' => request()->routeIs('admin.reviews.index')],
+                        ['label' => 'Flagged Reviews', 'route' => route('admin.reviews.flagged'), 'active' => request()->routeIs('admin.reviews.flagged')],
+                    ],
+                ],
             ];
         @endphp
 
