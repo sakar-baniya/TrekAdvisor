@@ -801,3 +801,13 @@
         grid-template-columns: 1fr;
     }
 }
+
+.admin-list-card--compact {
+    grid-template-columns: 1fr;
+}
+
+.admin-status-form {
+    display: grid;
+    gap: 1rem;
+    padding: 0 1.25rem 1.25rem;
+}

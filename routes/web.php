@@ -5,6 +5,7 @@ use App\Http\Controllers\TrekController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\AdminDepartureController;
 use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
@@ -27,6 +28,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
         Route::resource('treks', AdminTrekController::class);
+        Route::resource('departures', AdminDepartureController::class)->except(['destroy']);
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::patch('users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
         Route::patch('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
