@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
 use App\Http\Controllers\Admin\AdminGearController;
 use App\Http\Controllers\Admin\AdminGearRentalController;
+use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
@@ -38,6 +39,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('gear', AdminGearController::class)->except(['show', 'destroy']);
         Route::get('gear-rentals', [AdminGearRentalController::class, 'index'])->name('gear-rentals.index');
         Route::patch('gear-rentals/{gearRental}/return', [AdminGearRentalController::class, 'markReturned'])->name('gear-rentals.return');
+        Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
+        Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
         Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
         Route::get('users/create-staff', [AdminUserController::class, 'createStaff'])->name('users.create-staff');
         Route::post('users/create-staff', [AdminUserController::class, 'storeStaff'])->name('users.store-staff');

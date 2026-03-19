@@ -56,6 +56,13 @@
                         ['label' => 'Add Staff', 'route' => route('admin.users.create-staff'), 'active' => request()->routeIs('admin.users.create-staff')],
                     ],
                 ],
+                [
+                    'label' => 'Payments',
+                    'icon' => 'fa-credit-card',
+                    'children' => [
+                        ['label' => 'All Payments', 'route' => route('admin.payments.index'), 'active' => request()->routeIs('admin.payments.*')],
+                    ],
+                ],
             ];
         @endphp
 
