@@ -12,11 +12,22 @@ class AdminHotelController extends Controller
 {
     public function index(Request $request): View
     {
+        $search = $request->string('search')->toString();
         $status = $request->string('status')->toString();
 
         $hotelsQuery = Hotel::query()
-            ->with('owner')
+            ->with(['owner', 'rooms'])
             ->orderByDesc('created_at');
+
+        if ($search !== '') {
+            $hotelsQuery->where(function ($query) use ($search) {
+                $query->where('name', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%")
+                    ->orWhereHas('owner', fn ($ownerQuery) => $ownerQuery
+                        ->where('name', 'like', "%{$search}%")
+                        ->orWhere('email', 'like', "%{$search}%"));
+            });
+        }
 
         if ($status !== '') {
             $hotelsQuery->where('status', $status);
@@ -24,10 +35,15 @@ class AdminHotelController extends Controller
 
         $hotels = $hotelsQuery->paginate(10)->withQueryString();
         $pendingCount = Hotel::query()->where('status', 'Pending')->count();
+        $activeCount = Hotel::query()->where('status', 'Active')->count();
+        $inactiveCount = Hotel::query()->where('status', 'Inactive')->count();
 
         return view('admin.hotels.index', [
             'hotels' => $hotels,
             'pendingCount' => $pendingCount,
+            'activeCount' => $activeCount,
+            'inactiveCount' => $inactiveCount,
+            'search' => $search,
             'status' => $status,
         ]);
     }
@@ -41,6 +57,12 @@ class AdminHotelController extends Controller
         $hotel->update([
             'status' => $validated['status'],
         ]);
+
+        if ($validated['status'] === 'Active' && $hotel->owner && ! $hotel->owner->is_approved) {
+            $hotel->owner->update([
+                'is_approved' => true,
+            ]);
+        }
 
         return back()->with('success', 'Hotel status updated.');
     }
