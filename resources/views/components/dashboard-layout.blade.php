@@ -45,6 +45,7 @@
                     'children' => [
                         ['label' => 'All Gear Items', 'route' => route('admin.gear.index'), 'active' => request()->routeIs('admin.gear.*')],
                         ['label' => 'Add Gear Item', 'route' => route('admin.gear.create'), 'active' => request()->routeIs('admin.gear.create')],
+                        ['label' => 'Gear Rentals', 'route' => route('admin.gear-rentals.index'), 'active' => request()->routeIs('admin.gear-rentals.*')],
                     ],
                 ],
                 [
