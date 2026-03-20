@@ -89,17 +89,23 @@
                 <nav class="admin-sidebar__nav">
                     @foreach ($adminNavigation as $item)
                         @if (isset($item['children']))
-                            <section class="admin-nav-group">
-                                <div class="admin-nav-group__label">
+                            @php
+                                $groupIsActive = collect($item['children'])->contains(fn ($child) => $child['active']);
+                            @endphp
+                            <section class="admin-nav-group {{ $groupIsActive ? 'is-open' : '' }}" data-nav-group>
+                                <button type="button" class="admin-nav-group__toggle" data-nav-toggle aria-expanded="{{ $groupIsActive ? 'true' : 'false' }}">
                                     <i class="fas {{ $item['icon'] }}"></i>
                                     <span>{{ $item['label'] }}</span>
-                                </div>
+                                    <i class="fas fa-chevron-down admin-nav-group__chevron"></i>
+                                </button>
 
-                                @foreach ($item['children'] as $child)
-                                    <a href="{{ $child['route'] }}" class="admin-nav-link {{ $child['active'] ? 'is-active' : '' }}">
-                                        <span>{{ $child['label'] }}</span>
-                                    </a>
-                                @endforeach
+                                <div class="admin-nav-group__menu">
+                                    @foreach ($item['children'] as $child)
+                                        <a href="{{ $child['route'] }}" class="admin-nav-link {{ $child['active'] ? 'is-active' : '' }}">
+                                            <span>{{ $child['label'] }}</span>
+                                        </a>
+                                    @endforeach
+                                </div>
                             </section>
                         @else
                             <a href="{{ $item['route'] }}" class="admin-nav-link admin-nav-link--root {{ $item['active'] ? 'is-active' : '' }}">
@@ -177,9 +183,18 @@
             (() => {
                 const shell = document.querySelector('[data-admin-shell]');
                 const toggles = document.querySelectorAll('[data-sidebar-toggle]');
+                const navToggles = document.querySelectorAll('[data-nav-toggle]');
 
                 toggles.forEach((toggle) => {
                     toggle.addEventListener('click', () => shell.classList.toggle('sidebar-open'));
+                });
+
+                navToggles.forEach((toggle) => {
+                    toggle.addEventListener('click', () => {
+                        const group = toggle.closest('[data-nav-group]');
+                        const isOpen = group.classList.toggle('is-open');
+                        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    });
                 });
             })();
         </script>
