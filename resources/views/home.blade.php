@@ -1,32 +1,21 @@
-﻿<x-app-layout>
+<x-app-layout>
     <section class="market-hero">
         <div class="container market-hero__inner">
-            <p class="market-kicker">Nature Inspired Adventures</p>
-            <h1 class="market-hero__title">Discover Your Next Adventure</h1>
-            <p class="market-hero__subtitle">Plan premium trekking experiences with curated routes, trusted stays, and essential gear in one calm, elegant platform.</p>
+            <div class="hero-rating">
+                <span class="rating-text">5.0</span>
+                <span class="stars">★★★★★</span>
+                <span class="rating-note">2614 TripAdvisor reviews</span>
+            </div>
+            <p class="market-kicker">Local Experts In Himalayan Journeys</p>
+            <h1 class="market-hero__title">Local Experts in Himalayan Trekking</h1>
+            <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
 
-            <div class="market-search-card">
-                <div class="market-search-grid market-search-grid--wide">
-                    <input type="text" placeholder="Search destination or trek name" class="market-input" />
-                    <select class="market-input">
-                        <option>Difficulty</option>
-                        <option>Easy</option>
-                        <option>Medium</option>
-                        <option>Hard</option>
-                        <option>Extreme</option>
-                    </select>
-                    <select class="market-input">
-                        <option>Duration</option>
-                        <option>1-3 days</option>
-                        <option>4-7 days</option>
-                        <option>8-14 days</option>
-                        <option>15+ days</option>
-                    </select>
-                    <a href="{{ route('treks.index') }}" class="market-search-btn">
-                        <i class="fas fa-search"></i>
-                        <span>Explore Treks</span>
-                    </a>
-                </div>
+            <div class="hero-search-wrapper">
+                <form action="{{ route('treks.index') }}" method="GET" class="hero-search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" name="search" placeholder="Find your trip..." class="hero-search-input" />
+                    <button type="submit" class="hero-search-btn">Explore</button>
+                </form>
             </div>
 
             <div class="market-hero__stats">
@@ -43,6 +32,10 @@
                     <span>Gear Items</span>
                 </div>
             </div>
+
+            <a href="{{ route('treks.index') }}" class="market-hero__play" aria-label="Explore treks">
+                <i class="fas fa-play"></i>
+            </a>
         </div>
     </section>
 
@@ -93,7 +86,7 @@
             <div class="market-card-grid market-card-grid--three">
                 @forelse ($featuredTreks as $trek)
                     <article class="market-card market-card--trek">
-                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(8, 145, 178, 0.15), rgba(6, 78, 59, 0.45)), url('{{ $trek->image }}');" @endif>
+                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(9, 39, 77, 0.18), rgba(32, 121, 215, 0.38)), url('{{ $trek->image }}');" @endif>
                             <span class="market-badge market-badge--{{ strtolower($trek->difficulty) === 'easy' ? 'green' : (strtolower($trek->difficulty) === 'moderate' ? 'orange' : 'red') }}">{{ $trek->difficulty }}</span>
                             <span class="market-rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}</span>
                         </div>
