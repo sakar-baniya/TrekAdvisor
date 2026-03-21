@@ -1,8 +1,8 @@
 <x-guest-layout>
-    <div class="auth-header">
+    <div class="auth-header auth-header--centered">
         <p class="auth-kicker">New Account</p>
-        <h1 class="auth-title">Create your account</h1>
-        <p class="auth-subtitle">Join TrekAdvisor to book treks, hotels, and gear rentals.</p>
+        <h1 class="auth-title">Create your TrekAdvisor account</h1>
+        <p class="auth-subtitle">Join to book treks, reserve stays, and rent gear from one place.</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="auth-form">
@@ -107,11 +107,13 @@
             </button>
         </div>
 
-        <div class="auth-footer">
-            Already have an account?
-            <a class="auth-link" href="{{ route('login') }}">
-                Sign in
-            </a>
+        <div class="auth-footer auth-footer--stacked">
+            <div class="auth-footer-copy">
+                Already have an account?
+                <a class="auth-link" href="{{ route('login') }}">
+                    Sign in
+                </a>
+            </div>
         </div>
     </form>
 </x-guest-layout>

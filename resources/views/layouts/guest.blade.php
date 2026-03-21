@@ -17,36 +17,21 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="body-guest">
-        <div class="guest-shell">
-            <div class="guest-bg"></div>
-            <div class="guest-orb guest-orb-teal"></div>
-            <div class="guest-orb guest-orb-amber"></div>
-            <div class="guest-orb guest-orb-emerald"></div>
+        <div class="guest-shell guest-shell--auth">
+            <div class="guest-auth-stage">
+                <div class="guest-auth-shell">
+                    <a href="{{ route('home') }}" class="guest-auth-brand">
+                        <span class="guest-brand-badge"><i class="fas fa-mountain"></i></span>
+                        <span class="guest-brand-text">TrekAdvisor</span>
+                    </a>
 
-            <div class="guest-nav">
-                @include('layouts.navigation')
-            </div>
-
-            <div class="guest-content container-wide">
-                <div class="guest-grid">
-                    <div class="guest-spacer"></div>
-
-                    <div class="guest-card-wrap">
-                        <div class="guest-brand">
-                            <a href="{{ route('home') }}" class="guest-brand-link">
-                                <span class="guest-brand-badge">TA</span>
-                                <span class="guest-brand-text">TrekAdvisor</span>
-                            </a>
-                        </div>
-
-                        <div class="auth-card">
-                            {{ $slot }}
-                        </div>
-
-                        <p class="auth-note">
-                            By continuing, you agree to TrekAdvisor terms and privacy policy.
-                        </p>
+                    <div class="auth-card auth-card--centered">
+                        {{ $slot }}
                     </div>
+
+                    <p class="auth-note auth-note--centered">
+                        By continuing, you agree to TrekAdvisor terms and privacy policy.
+                    </p>
                 </div>
             </div>
         </div>

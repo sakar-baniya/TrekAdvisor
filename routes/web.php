@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrekController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
@@ -58,19 +59,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 
     // Staff Only
-    Route::get('/staff/dashboard', function () {
-        return view('staff.dashboard');
-    })->middleware('role:staff')->name('staff.dashboard');
+    Route::get('/staff/dashboard', [DashboardController::class, 'staff'])
+        ->middleware('role:staff')
+        ->name('staff.dashboard');
 
     // Hotel Owner Only
-    Route::get('/hotel-owner/dashboard', function () {
-        return view('hotel.dashboard');
-    })->middleware('role:hotel_owner')->name('hotel_owner.dashboard');
+    Route::get('/hotel-owner/dashboard', [DashboardController::class, 'hotelOwner'])
+        ->middleware('role:hotel_owner')
+        ->name('hotel_owner.dashboard');
 
     // Customer Only
-    Route::get('/customer/dashboard', function () {
-        return view('customer.dashboard');
-    })->middleware('role:customer')->name('customer.dashboard');
+    Route::get('/customer/dashboard', [DashboardController::class, 'customer'])
+        ->middleware('role:customer')
+        ->name('customer.dashboard');
 
 });
 

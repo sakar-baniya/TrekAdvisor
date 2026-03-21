@@ -2,10 +2,10 @@
     <!-- Session Status -->
     <x-auth-session-status class="auth-status" :status="session('status')" />
 
-    <div class="auth-header">
-        <p class="auth-kicker">Customer Portal</p>
-        <h1 class="auth-title">Welcome back</h1>
-        <p class="auth-subtitle">Log in to manage bookings, itineraries, and invoices.</p>
+    <div class="auth-header auth-header--centered">
+        <p class="auth-kicker">Welcome Back</p>
+        <h1 class="auth-title">Sign in to your account</h1>
+        <p class="auth-subtitle">Access your TrekAdvisor bookings, plans, and account details.</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="auth-form">
@@ -62,14 +62,27 @@
             </button>
         </div>
 
-        <div class="auth-footer">
-            <a class="auth-link" href="{{ route('login') }}">
-                Login as hotel owner
-            </a>
-            <div class="auth-divider">or</div>
-            <a class="auth-link" href="{{ route('register') }}">
-                New here? Create an account
-            </a>
+        <div class="auth-footer auth-footer--stacked">
+            <div class="auth-footer-copy">
+                Don't have an account?
+                <a class="auth-link" href="{{ route('register') }}">
+                    Sign up
+                </a>
+            </div>
+        </div>
+
+        <div class="auth-alt-panel">
+            <div class="auth-alt-label">Or sign in as</div>
+            <div class="auth-alt-grid">
+                <a href="{{ route('login') }}" class="auth-alt-button">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Admin</span>
+                </a>
+                <a href="{{ route('login') }}" class="auth-alt-button">
+                    <i class="fas fa-hotel"></i>
+                    <span>Hotel Owner</span>
+                </a>
+            </div>
         </div>
     </form>
 </x-guest-layout>
