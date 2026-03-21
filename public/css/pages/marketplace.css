@@ -1789,3 +1789,17 @@ body.body-guest {
         grid-template-columns: 1fr;
     }
 }
+
+.market-hero__title {
+    color: #ffffff !important;
+}
+
+.market-hero .market-kicker {
+    color: #ffffff !important;
+}
+
+.catalog-hero h1,
+.catalog-hero p,
+.catalog-hero .market-kicker {
+    color: #ffffff !important;
+}
