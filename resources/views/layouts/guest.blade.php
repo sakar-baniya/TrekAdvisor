@@ -18,9 +18,9 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="body-guest">
-        <div class="guest-shell guest-shell--auth">
-            @include('layouts.navigation')
+        @include('layouts.navigation')
 
+        <div class="guest-shell guest-shell--auth">
             <div class="guest-auth-stage">
                 <div class="guest-auth-shell">
                     <div class="auth-card auth-card--centered">

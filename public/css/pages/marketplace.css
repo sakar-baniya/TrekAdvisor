@@ -1469,3 +1469,19 @@ body.body-guest {
         align-items: flex-start;
     }
 }
+
+/* Guest layout top-nav fix */
+.guest-shell--auth {
+    display: block;
+    min-height: calc(100vh - 5rem);
+    padding: 0;
+}
+
+.guest-auth-stage {
+    width: 100%;
+    min-height: calc(100vh - 5rem);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1rem 3rem;
+}
