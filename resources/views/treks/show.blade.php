@@ -1,154 +1,121 @@
 ﻿<x-app-layout>
-    <div class="trek-show">
-        <!-- Hero Section -->
-        <section class="trek-hero">
-            <div class="trek-hero-bg">
-                <img src="{{ $trek->image ?? 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b' }}" alt="{{ $trek->title }}">
-                <div class="trek-hero-overlay"></div>
+    <section class="detail-hero" @if($trek->image) style="background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.5)), url('{{ $trek->image }}');" @endif>
+        <div class="container detail-hero__content">
+            <div class="detail-breadcrumb"><a href="{{ route('home') }}">Home</a> / <a href="{{ route('treks.index') }}">Treks</a> / <span>{{ $trek->title }}</span></div>
+            <h1>{{ $trek->title }}</h1>
+            <div class="detail-hero__stats">
+                <span><i class="fas fa-clock"></i> {{ $trek->duration_days ?? $trek->itineraries->count() }} Days</span>
+                <span><i class="fas fa-signal"></i> {{ $trek->difficulty }}</span>
+                <span><i class="fas fa-mountain"></i> {{ $trek->max_altitude ? number_format($trek->max_altitude) . 'm' : 'High-altitude route' }}</span>
+                <span><i class="fas fa-star"></i> {{ $avgRating ?? 'New' }} ({{ $reviewCount }})</span>
+            </div>
+        </div>
+    </section>
+
+    <div class="container detail-grid">
+        <section class="detail-main">
+            <div class="detail-tabs">
+                <button type="button" class="detail-tab is-active" data-tab-target="overview">Overview</button>
+                <button type="button" class="detail-tab" data-tab-target="itinerary">Itinerary</button>
+                <button type="button" class="detail-tab" data-tab-target="reviews">Reviews</button>
             </div>
 
-            <div class="container trek-hero-content">
-                @php
-                    $difficultyClass = [
-                        'easy' => 'trek-hero-badge easy',
-                        'moderate' => 'trek-hero-badge moderate',
-                        'difficult' => 'trek-hero-badge difficult',
-                        'extreme' => 'trek-hero-badge extreme'
-                    ][strtolower($trek->difficulty)] ?? 'trek-hero-badge neutral';
-                @endphp
-                <div class="{{ $difficultyClass }}">
-                    {{ $trek->difficulty }} Expedition
-                </div>
+            <article class="detail-panel detail-tab-panel is-active" data-tab-panel="overview">
+                <h2>Trip Overview</h2>
+                <p>{!! nl2br(e($trek->description)) !!}</p>
+            </article>
 
-                <h1 class="trek-hero-title">{{ $trek->title }}</h1>
-
-                <div class="trek-hero-stats">
-                    <span><i class="fas fa-calendar-alt"></i> {{ $trek->itineraries->count() }} Days</span>
-                    <span class="dot"></span>
-                    <span><i class="fas fa-mountain"></i> Easy Access</span>
-                    <span class="dot"></span>
-                    <span><i class="fas fa-tag"></i> ${{ number_format($trek->base_price) }} Starting</span>
-                    <span class="dot"></span>
-                    <span><i class="fas fa-star"></i> {{ $avgRating ?? 'New' }} ({{ $reviewCount }})</span>
+            <article class="detail-panel detail-tab-panel" data-tab-panel="itinerary">
+                <h2>Day by Day Itinerary</h2>
+                <div class="detail-timeline">
+                    @foreach($trek->itineraries as $itinerary)
+                        <div class="detail-timeline__item">
+                            <div class="detail-timeline__day">Day {{ $itinerary->day_number }}</div>
+                            <div>
+                                <h3>{{ $itinerary->title }}</h3>
+                                <p>{{ $itinerary->description }}</p>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            </div>
+            </article>
+
+            <article class="detail-panel detail-tab-panel" data-tab-panel="reviews">
+                <div class="detail-review-summary">
+                    <div>
+                        <strong>{{ $avgRating ?? 'New' }}</strong>
+                        <span>{{ $reviewCount }} reviews</span>
+                    </div>
+                </div>
+                <div class="detail-review-list">
+                    @forelse($reviews as $review)
+                        <div class="detail-review-card">
+                            <strong class="detail-review-stars">
+                                @for ($i = 0; $i < 5; $i++)
+                                    <i class="fas fa-star {{ $i < $review->rating ? 'is-filled' : '' }}"></i>
+                                @endfor
+                            </strong>
+                            <p>"{{ $review->comment }}"</p>
+                            <span>{{ $review->user->name }} • {{ $review->created_at->diffForHumans() }}</span>
+                        </div>
+                    @empty
+                        <p class="empty-note">No reviews yet.</p>
+                    @endforelse
+                </div>
+            </article>
         </section>
 
-        <!-- Details Grid -->
-        <div class="container trek-details">
-            <div class="trek-content">
-                <!-- Description -->
-                <section class="content-card">
-                    <h2 class="content-title">About This Trek</h2>
-                    <div class="content-body">
-                        {!! nl2br(e($trek->description)) !!}
-                    </div>
-                </section>
-
-                <!-- Itinerary -->
-                <section class="content-card">
-                    <h2 class="content-title">Itinerary</h2>
-                    <div class="timeline">
-                        @foreach($trek->itineraries as $itinerary)
-                            <div class="timeline-item">
-                                <div class="timeline-badge">Day {{ $itinerary->day_number }}</div>
-                                <div class="timeline-content">
-                                    <h3>{{ $itinerary->title }}</h3>
-                                    <p>{{ $itinerary->description }}</p>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </section>
-
-                <!-- Reviews -->
-                <section class="content-card">
-                    <h2 class="content-title">Customer Reviews</h2>
-                    <div class="review-summary">
-                        <div class="review-score">{{ $avgRating ?? 'New' }}</div>
-                        <div class="review-count">{{ $reviewCount }} reviews</div>
-                    </div>
-                    @if($reviews->count() > 0)
-                        <div class="review-grid">
-                            @foreach($reviews as $review)
-                                <div class="review-card">
-                                    <div class="review-stars">
-                                        @for($i = 1; $i <= 5; $i++)
-                                            <i class="fa{{ $i <= $review->rating ? 's' : 'r' }} fa-star"></i>
-                                        @endfor
-                                    </div>
-                                    <p class="review-text">"{{ $review->comment }}"</p>
-                                    <div class="review-user">
-                                        <div class="review-avatar">{{ substr($review->user->name, 0, 1) }}</div>
-                                        <div>
-                                            <p class="review-name">{{ $review->user->name }}</p>
-                                            <p class="review-date">{{ $review->created_at->diffForHumans() }}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <div class="review-empty">
-                            <i class="fas fa-comment-slash"></i>
-                            <p>No reviews yet.</p>
-                        </div>
-                    @endif
-                </section>
-            </div>
-
-            <!-- Sidebar -->
-            <aside class="trek-sidebar">
-                <div class="sidebar-card">
-                    <h3 class="sidebar-title">Available Dates</h3>
-                    <p class="sidebar-subtitle">Select a date to start booking</p>
-
-                    <div class="date-list">
-                        @forelse($trek->departures as $departure)
-                            <div class="date-card">
-                                <div class="date-card-header">
-                                    <div>
-                                        <p class="date-title">{{ $departure->start_date->format('M d, Y') }}</p>
-                                        <p class="date-slots">{{ $departure->capacity - $departure->booked_seats }} slots remaining</p>
-                                    </div>
-                                    <p class="date-price">${{ number_format($departure->price) }}</p>
-                                </div>
-                                <div class="date-meta">
-                                    <span>{{ $departure->start_date->format('M d') }} - {{ $departure->end_date->format('M d, Y') }}</span>
-                                    <span class="dot"></span>
-                                    <span>{{ $departure->status }}</span>
-                                </div>
-                                <a href="{{ route('bookings.create', $departure->id) }}" class="date-cta">
-                                    Book This Date
-                                </a>
-                            </div>
-                        @empty
-                            <div class="date-empty">
-                                <p>No dates available</p>
-                            </div>
-                        @endforelse
-                    </div>
+        <aside class="detail-sidebar">
+            <div class="detail-booking-card">
+                <div class="detail-price-block">
+                    <span>Starting from</span>
+                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
+                    <small>per person</small>
                 </div>
-
-                <div class="sidebar-card dark">
-                    <div class="sidebar-glow"></div>
-                    <h3 class="sidebar-title">Why Trek With Us?</h3>
-                    <ul class="sidebar-list">
-                        <li>
-                            <span class="sidebar-icon"><i class="fas fa-shield-alt"></i></span>
-                            <span>Expert Local Guides</span>
-                        </li>
-                        <li>
-                            <span class="sidebar-icon"><i class="fas fa-file-contract"></i></span>
-                            <span>Permits Included</span>
-                        </li>
-                        <li>
-                            <span class="sidebar-icon"><i class="fas fa-hotel"></i></span>
-                            <span>Comfortable Guesthouses</span>
-                        </li>
+                <div class="detail-discount-box">
+                    <strong>Group Discounts Available</strong>
+                    <ul>
+                        <li>3-5 people: 5% off</li>
+                        <li>6-9 people: 10% off</li>
+                        <li>10+ people: 15% off</li>
                     </ul>
                 </div>
-            </aside>
-        </div>
+                <h3>Available Departures</h3>
+                <div class="detail-departure-list">
+                    @forelse($trek->departures as $departure)
+                        <div class="detail-departure-card">
+                            <div class="detail-departure-card__top">
+                                <div>
+                                    <strong>{{ $departure->start_date->format('M d') }} - {{ $departure->end_date->format('M d, Y') }}</strong>
+                                    <span>{{ $departure->capacity - $departure->booked_seats }} / {{ $departure->capacity }} seats left</span>
+                                </div>
+                                <span class="market-stock {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'is-good' : 'is-low' }}">{{ $departure->status }}</span>
+                            </div>
+                            <div class="detail-departure-card__bottom">
+                                <span>${{ number_format($departure->price, 0) }}</span>
+                                <a href="{{ route('bookings.create', $departure->id) }}" class="market-button">Book Now</a>
+                            </div>
+                        </div>
+                    @empty
+                        <p class="empty-note">No dates available.</p>
+                    @endforelse
+                </div>
+            </div>
+        </aside>
     </div>
+
+    <script>
+        (() => {
+            const tabs = document.querySelectorAll('[data-tab-target]');
+            const panels = document.querySelectorAll('[data-tab-panel]');
+            tabs.forEach((tab) => {
+                tab.addEventListener('click', () => {
+                    tabs.forEach((item) => item.classList.remove('is-active'));
+                    panels.forEach((panel) => panel.classList.remove('is-active'));
+                    tab.classList.add('is-active');
+                    document.querySelector(`[data-tab-panel="${tab.dataset.tabTarget}"]`)?.classList.add('is-active');
+                });
+            });
+        })();
+    </script>
 </x-app-layout>

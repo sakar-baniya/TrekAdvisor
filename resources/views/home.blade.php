@@ -1,165 +1,135 @@
 ﻿<x-app-layout>
+    <section class="market-hero">
+        <div class="container market-hero__inner">
+            <p class="market-kicker">Tourism Marketplace</p>
+            <h1 class="market-hero__title">Discover Your Next Adventure</h1>
+            <p class="market-hero__subtitle">Trek the Himalayas, book trusted stays, and rent the gear you need from one streamlined experience.</p>
 
-    {{-- ===================== HERO SECTION ===================== --}}
-    <section id="hero" class="hero-section">
-
-        <div class="container hero-center">
-
-            {{-- Headline --}}
-            <h1 class="hero-title">
-                Discover Your Next Adventure
-            </h1>
-
-            {{-- Subtitle --}}
-            <p class="hero-subtitle">
-                Trek the Himalayas, Book Hotels, Rent Gear &mdash; All in One Place
-            </p>
-
-            {{-- Horizontal Search Bar --}}
-            <div class="hero-search">
-                <div class="hero-search-bar">
-
-                    {{-- Text input --}}
-                    <input
-                        id="hero-search-input"
-                        type="text"
-                        placeholder="Search treks, hotels..."
-                        class="hero-search-input"
-                    >
-
-                    {{-- Divider --}}
-                    <div class="hero-search-divider"></div>
-
-                    {{-- Category dropdown --}}
-                    <select
-                        id="hero-search-category"
-                        class="hero-search-select"
-                    >
-                        <option value="treks">Treks</option>
-                        <option value="hotels">Hotels</option>
-                        <option value="gear">Gear</option>
+            <div class="market-search-card">
+                <div class="market-search-grid">
+                    <input type="text" placeholder="Search treks, hotels, gear" class="market-input" />
+                    <select class="market-input">
+                        <option>All Services</option>
+                        <option>Treks</option>
+                        <option>Hotels</option>
+                        <option>Gear</option>
                     </select>
-
-                    {{-- Search button --}}
-                    <a href="{{ route('treks.index') }}"
-                       id="hero-search-btn"
-                       class="hero-search-btn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
-                        </svg>
-                        Search
+                    <a href="{{ route('treks.index') }}" class="market-search-btn">
+                        <i class="fas fa-search"></i>
+                        <span>Search</span>
                     </a>
                 </div>
             </div>
 
-            {{-- Stats --}}
-            <div class="hero-stats">
+            <div class="market-hero__stats">
                 <div>
-                    <div class="hero-stat-value">500+</div>
-                    <div class="hero-stat-label">Treks</div>
+                    <strong>{{ $featuredTreks->count() }}+</strong>
+                    <span>Featured Treks</span>
                 </div>
                 <div>
-                    <div class="hero-stat-value">200+</div>
-                    <div class="hero-stat-label">Hotels</div>
+                    <strong>{{ $featuredHotels->count() }}+</strong>
+                    <span>Active Hotels</span>
                 </div>
                 <div>
-                    <div class="hero-stat-value">1000+</div>
-                    <div class="hero-stat-label">Happy Trekkers</div>
+                    <strong>{{ $featuredGearItems->count() }}+</strong>
+                    <span>Gear Items</span>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <section class="section">
+    <section class="market-section">
         <div class="container">
-            <div class="section-heading">
+            <div class="market-section__head">
                 <div>
-                    <h2 class="section-title">Featured Treks</h2>
+                    <p class="market-kicker">Top Picks</p>
+                    <h2>Featured Treks</h2>
                 </div>
-                <a href="{{ route('treks.index') }}" class="view-link">View All</a>
+                <a href="{{ route('treks.index') }}" class="market-link">View All</a>
             </div>
 
-            <div class="card-grid">
-                @forelse($featuredTreks as $trek)
-                    <article class="feature-card">
-                        <div class="card-top">
-                            Trek
+            <div class="market-card-grid market-card-grid--three">
+                @forelse ($featuredTreks as $trek)
+                    <article class="market-card market-card--trek">
+                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(8, 145, 178, 0.15), rgba(6, 78, 59, 0.45)), url('{{ $trek->image }}');" @endif>
+                            <span class="market-badge market-badge--{{ strtolower($trek->difficulty) === 'easy' ? 'green' : (strtolower($trek->difficulty) === 'moderate' ? 'orange' : 'red') }}">{{ $trek->difficulty }}</span>
+                            <span class="market-rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}</span>
                         </div>
-                        <div class="card-content">
-                            <div class="meta-row">
-                                <span>{{ $trek->difficulty }}</span>
-                                <span>â˜… 4.8</span>
-                            </div>
-                            <h3 class="card-title">{{ $trek->title }}</h3>
-                            <p class="card-text">{{ \Illuminate\Support\Str::limit($trek->description, 70) }}</p>
-                            <div class="card-actions">
-                                <span class="price">${{ number_format($trek->base_price, 2) }}</span>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="action-btn">View Details</a>
+                        <div class="market-card__body">
+                            <h3>{{ $trek->title }}</h3>
+                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($trek->description), 95) }}</p>
+                            <div class="market-card__footer">
+                                <div>
+                                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
+                                    <span>/person</span>
+                                </div>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
                             </div>
                         </div>
                     </article>
                 @empty
-                    <p class="empty-note">No active treks found.</p>
+                    <p class="empty-note">No featured treks yet.</p>
                 @endforelse
             </div>
         </div>
     </section>
 
-    <section class="section">
+    <section id="featured-hotels" class="market-section market-section--soft">
         <div class="container">
-            <div class="section-heading">
+            <div class="market-section__head">
                 <div>
-                    <h2 class="section-title">Featured Hotels</h2>
+                    <p class="market-kicker">Stay Options</p>
+                    <h2>Featured Hotels</h2>
                 </div>
-                <span class="view-link">View All</span>
+                <a href="{{ route('home') }}#featured-hotels" class="market-link">Explore</a>
             </div>
-            <div class="card-grid">
-                @forelse($featuredHotels as $hotel)
-                    <article class="feature-card">
-                        <div class="card-top">
-                            Hotel
+
+            <div class="market-card-grid market-card-grid--three">
+                @forelse ($featuredHotels as $hotel)
+                    <article class="market-card market-card--hotel">
+                        <div class="market-card__media market-card__media--icon">
+                            <i class="fas fa-hotel"></i>
                         </div>
-                        <div class="card-content">
-                            <div class="meta-row">
-                                <span>{{ $hotel->location }}</span>
-                                <span>â˜… 4.6</span>
-                            </div>
-                            <h3 class="card-title">{{ $hotel->name }}</h3>
-                            <div class="card-actions">
-                                <span class="price">${{ number_format($hotel->rooms_min_price_per_night ?? 0, 2) }}/night</span>
-                                <span class="action-btn">Book Now</span>
+                        <div class="market-card__body">
+                            <div class="market-card__meta"><span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span><span><i class="fas fa-star"></i> 4.6</span></div>
+                            <h3>{{ $hotel->name }}</h3>
+                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 88) }}</p>
+                            <div class="market-card__footer">
+                                <div>
+                                    <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>
+                                    <span>/night</span>
+                                </div>
+                                <span class="market-button market-button--ghost">Book Soon</span>
                             </div>
                         </div>
                     </article>
                 @empty
-                    <p class="empty-note">No active hotels yet.</p>
+                    <p class="empty-note">No hotel listings yet.</p>
                 @endforelse
             </div>
         </div>
     </section>
 
-    <section class="section">
+    <section id="featured-gear" class="market-section">
         <div class="container">
-            <div class="section-heading">
+            <div class="market-section__head">
                 <div>
-                    <h2 class="section-title">Rental Gear</h2>
+                    <p class="market-kicker">Rental Gear</p>
+                    <h2>Essentials for the Trail</h2>
                 </div>
-                <span class="view-link">View All</span>
+                <a href="{{ route('home') }}#featured-gear" class="market-link">Browse</a>
             </div>
-            <div class="card-grid">
-                @forelse($featuredGearItems as $item)
-                    <article class="feature-card">
-                        <div class="card-top">
-                            Gear
-                        </div>
-                        <div class="card-content">
-                            <h3 class="card-title">{{ $item->name }}</h3>
-                            <p class="card-text">{{ $item->type }}</p>
-                            <div class="card-actions">
-                                <span class="price">${{ number_format($item->daily_price, 2) }}/day</span>
-                                <span class="action-btn">Rent</span>
-                            </div>
+
+            <div class="market-card-grid market-card-grid--four">
+                @forelse ($featuredGearItems as $item)
+                    <article class="market-mini-card">
+                        <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
+                        <span class="market-stock {{ $item->available_stock > 5 ? 'is-good' : 'is-low' }}">Available: {{ $item->available_stock }}</span>
+                        <h3>{{ $item->name }}</h3>
+                        <p>{{ $item->type }}</p>
+                        <div class="market-mini-card__footer">
+                            <strong>${{ number_format($item->daily_price, 0) }}/day</strong>
+                            <span class="market-button market-button--ghost">Rent</span>
                         </div>
                     </article>
                 @empty
@@ -169,13 +139,11 @@
         </div>
     </section>
 
-    <section class="cta-section">
-        <div class="container">
-            <h2 class="cta-title">Ready for Your Adventure?</h2>
-            <p class="cta-text">Join thousands of happy trekkers exploring the Himalayas.</p>
-            <a href="{{ route('treks.index') }}" class="cta-btn">
-                Start Planning Now
-            </a>
+    <section class="market-cta">
+        <div class="container market-cta__inner">
+            <h2>Ready for Your Adventure?</h2>
+            <p>Join trekkers using TrekAdvisor to plan routes, stays, and rental gear in one place.</p>
+            <a href="{{ route('treks.index') }}" class="market-cta__button">Start Planning Now</a>
         </div>
     </section>
 </x-app-layout>

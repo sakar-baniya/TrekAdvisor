@@ -1,23 +1,20 @@
 <nav x-data="{ open: false }" class="site-nav">
     <div class="container nav-inner">
         <div class="nav-left">
-            <div class="brand-wrap">
-                <a href="{{ route('home') }}" class="brand">
-                    <span class="brand-badge">TA</span>
-                    <span>TrekAdvisor</span>
-                </a>
-            </div>
+            <a href="{{ route('home') }}" class="brand">
+                <span class="brand-badge"><i class="fas fa-mountain"></i></span>
+                <span class="brand-wordmark">TrekAdvisor</span>
+            </a>
 
             <div class="nav-links">
                 <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'is-active' : '' }}">Home</a>
                 <a href="{{ route('treks.index') }}" class="nav-link {{ request()->routeIs('treks.*') ? 'is-active' : '' }}">Treks</a>
-                <span class="nav-link is-muted">Hotels</span>
-                <span class="nav-link is-muted">Gear Rental</span>
+                <a href="{{ route('home') }}#featured-hotels" class="nav-link">Hotels</a>
+                <a href="{{ route('home') }}#featured-gear" class="nav-link">Gear Rental</a>
                 @auth
                     <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="nav-link">My Account</a>
                 @endauth
             </div>
-
         </div>
 
         <div class="nav-actions">
@@ -27,7 +24,7 @@
                     <button type="submit" class="btn btn-link">Logout</button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="btn btn-link">Login</a>
+                <a href="{{ route('login') }}" class="btn btn-link"><i class="fas fa-user"></i> Login</a>
                 <a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a>
             @endauth
         </div>
@@ -44,8 +41,8 @@
         <div class="nav-mobile-links">
             <a href="{{ route('home') }}" class="nav-link">Home</a>
             <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>
-            <span class="nav-link is-muted">Hotels</span>
-            <span class="nav-link is-muted">Gear Rental</span>
+            <a href="{{ route('home') }}#featured-hotels" class="nav-link">Hotels</a>
+            <a href="{{ route('home') }}#featured-gear" class="nav-link">Gear Rental</a>
             @auth
                 <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="nav-link">My Account</a>
                 <form method="POST" action="{{ route('logout') }}">
