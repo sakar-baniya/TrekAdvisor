@@ -32,6 +32,15 @@
                     </div>
                 @endfor
 
+                <div class="booking-note-card">
+                    <strong>Need to know</strong>
+                    <ul>
+                        <li>Passenger names should match travel documents.</li>
+                        <li>Passport information helps prepare the booking record.</li>
+                        <li>You can review totals after confirmation.</li>
+                    </ul>
+                </div>
+
                 <button type="submit" class="market-search-btn market-search-btn--full">Complete Booking & Pay</button>
             </form>
         </div>

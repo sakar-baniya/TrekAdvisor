@@ -23,6 +23,22 @@
             <article class="detail-panel detail-tab-panel is-active" data-tab-panel="overview">
                 <h2>Trip Overview</h2>
                 <p>{!! nl2br(e($trek->description)) !!}</p>
+                <div class="detail-highlight-grid">
+                    <div class="detail-highlight-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Expert-led route</strong>
+                            <span>Well-structured pacing for a smoother trekking experience.</span>
+                        </div>
+                    </div>
+                    <div class="detail-highlight-card">
+                        <i class="fas fa-compass"></i>
+                        <div>
+                            <strong>Adventure planning</strong>
+                            <span>Departure selection, group pricing, and booking flow in one place.</span>
+                        </div>
+                    </div>
+                </div>
             </article>
 
             <article class="detail-panel detail-tab-panel" data-tab-panel="itinerary">

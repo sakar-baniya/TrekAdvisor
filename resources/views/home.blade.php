@@ -1,22 +1,30 @@
 ﻿<x-app-layout>
     <section class="market-hero">
         <div class="container market-hero__inner">
-            <p class="market-kicker">Tourism Marketplace</p>
+            <p class="market-kicker">Nature Inspired Adventures</p>
             <h1 class="market-hero__title">Discover Your Next Adventure</h1>
-            <p class="market-hero__subtitle">Trek the Himalayas, book trusted stays, and rent the gear you need from one streamlined experience.</p>
+            <p class="market-hero__subtitle">Plan premium trekking experiences with curated routes, trusted stays, and essential gear in one calm, elegant platform.</p>
 
             <div class="market-search-card">
-                <div class="market-search-grid">
-                    <input type="text" placeholder="Search treks, hotels, gear" class="market-input" />
+                <div class="market-search-grid market-search-grid--wide">
+                    <input type="text" placeholder="Search destination or trek name" class="market-input" />
                     <select class="market-input">
-                        <option>All Services</option>
-                        <option>Treks</option>
-                        <option>Hotels</option>
-                        <option>Gear</option>
+                        <option>Difficulty</option>
+                        <option>Easy</option>
+                        <option>Medium</option>
+                        <option>Hard</option>
+                        <option>Extreme</option>
+                    </select>
+                    <select class="market-input">
+                        <option>Duration</option>
+                        <option>1-3 days</option>
+                        <option>4-7 days</option>
+                        <option>8-14 days</option>
+                        <option>15+ days</option>
                     </select>
                     <a href="{{ route('treks.index') }}" class="market-search-btn">
                         <i class="fas fa-search"></i>
-                        <span>Search</span>
+                        <span>Explore Treks</span>
                     </a>
                 </div>
             </div>
@@ -34,6 +42,40 @@
                     <strong>{{ $featuredGearItems->count() }}+</strong>
                     <span>Gear Items</span>
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="market-section market-section--soft market-section--compact">
+        <div class="container">
+            <div class="market-section__head">
+                <div>
+                    <p class="market-kicker">Browse By Style</p>
+                    <h2>Trek Categories</h2>
+                </div>
+            </div>
+
+            <div class="market-category-grid">
+                <article class="market-category-card">
+                    <i class="fas fa-mountain"></i>
+                    <strong>Himalayan</strong>
+                    <span>High-altitude classics</span>
+                </article>
+                <article class="market-category-card">
+                    <i class="fas fa-tree"></i>
+                    <strong>Forest Trails</strong>
+                    <span>Quiet green escapes</span>
+                </article>
+                <article class="market-category-card">
+                    <i class="fas fa-sun"></i>
+                    <strong>Sunrise Routes</strong>
+                    <span>Short scenic climbs</span>
+                </article>
+                <article class="market-category-card">
+                    <i class="fas fa-users"></i>
+                    <strong>Group Friendly</strong>
+                    <span>Built for shared journeys</span>
+                </article>
             </div>
         </div>
     </section>
@@ -142,8 +184,40 @@
     <section class="market-cta">
         <div class="container market-cta__inner">
             <h2>Ready for Your Adventure?</h2>
-            <p>Join trekkers using TrekAdvisor to plan routes, stays, and rental gear in one place.</p>
+            <p>Join trekkers using TrekAdvisor to plan routes, stays, and rental gear in one thoughtful, premium experience.</p>
             <a href="{{ route('treks.index') }}" class="market-cta__button">Start Planning Now</a>
+        </div>
+    </section>
+
+    <section class="market-section">
+        <div class="container">
+            <div class="market-section__head">
+                <div>
+                    <p class="market-kicker">Testimonials</p>
+                    <h2>What Trekkers Say</h2>
+                </div>
+            </div>
+
+            <div class="market-card-grid market-card-grid--three">
+                <article class="market-quote-card">
+                    <div class="market-quote-card__stars">★★★★★</div>
+                    <p>"Everything felt smooth and premium from picking the route to checking departure details."</p>
+                    <strong>Sarah Johnson</strong>
+                    <span>Everest Base Camp Trek</span>
+                </article>
+                <article class="market-quote-card">
+                    <div class="market-quote-card__stars">★★★★★</div>
+                    <p>"The clean layout made it easy to compare treks, stays, and gear without feeling overwhelmed."</p>
+                    <strong>Michael Chen</strong>
+                    <span>Annapurna Region</span>
+                </article>
+                <article class="market-quote-card">
+                    <div class="market-quote-card__stars">★★★★☆</div>
+                    <p>"A strong booking experience with clear pricing, polished visuals, and the right information at each step."</p>
+                    <strong>Emma Williams</strong>
+                    <span>Langtang Trek</span>
+                </article>
+            </div>
         </div>
     </section>
 </x-app-layout>

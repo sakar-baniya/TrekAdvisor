@@ -35,6 +35,7 @@
                         <input name="max_price" value="{{ request('max_price') }}" type="number" min="0" step="1" class="market-input" placeholder="$3000">
                     </label>
                     <button type="submit" class="market-search-btn market-search-btn--full">Apply Filters</button>
+                    <a href="{{ route('treks.index') }}" class="catalog-reset-link">Reset Filters</a>
                 </form>
             </div>
         </aside>
@@ -42,6 +43,10 @@
         <section class="catalog-content">
             <div class="catalog-toolbar">
                 <p>Showing {{ $treks->count() }} of {{ $treks->total() }} treks</p>
+                <div class="catalog-toolbar__actions">
+                    <span class="catalog-toolbar__chip">Most Popular</span>
+                    <span class="catalog-toolbar__chip">Premium Trails</span>
+                </div>
             </div>
 
             <div class="market-card-grid market-card-grid--three">
@@ -51,6 +56,10 @@
                             <span class="market-badge market-badge--{{ strtolower($trek->difficulty) === 'easy' ? 'green' : (strtolower($trek->difficulty) === 'moderate' ? 'orange' : 'red') }}">{{ $trek->difficulty }}</span>
                         </div>
                         <div class="market-card__body">
+                            <div class="market-card__meta">
+                                <span><i class="fas fa-location-dot"></i> Nepal</span>
+                                <span><i class="fas fa-clock"></i> {{ $trek->duration_days ?? 'Flexible' }} days</span>
+                            </div>
                             <h3>{{ $trek->title }}</h3>
                             <p>{{ Str::limit($trek->description, 100) }}</p>
                             <div class="market-card__footer">

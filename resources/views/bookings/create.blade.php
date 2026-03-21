@@ -36,6 +36,15 @@
                     <div class="total"><span>Estimated Total</span><strong id="estimated_price" data-price="{{ $departure->price }}">${{ number_format($departure->price, 0) }}</strong></div>
                 </div>
 
+                <div class="booking-note-card">
+                    <strong>Before you continue</strong>
+                    <ul>
+                        <li>Group discounts are applied automatically.</li>
+                        <li>You will enter passenger details on the next step.</li>
+                        <li>Your booking reference will be created after confirmation.</li>
+                    </ul>
+                </div>
+
                 <button type="submit" class="market-search-btn market-search-btn--full">Continue to Passenger Details</button>
             </form>
         </div>

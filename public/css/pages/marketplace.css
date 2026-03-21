@@ -1486,3 +1486,272 @@ body.body-guest {
     padding: 2.5rem 1rem 3rem;
 }
 
+
+/* Final public UI pass */
+body.body-app,
+body.body-guest {
+    background:
+        radial-gradient(circle at top left, rgba(45, 80, 22, 0.08), transparent 32%),
+        radial-gradient(circle at top right, rgba(212, 112, 74, 0.08), transparent 24%),
+        var(--market-slate-50);
+}
+
+.container {
+    width: min(1400px, calc(100% - 2.5rem));
+}
+
+.site-nav {
+    background: rgba(255, 255, 255, 0.94);
+    border-bottom: 1px solid rgba(209, 204, 199, 0.45);
+    box-shadow: 0 10px 25px rgba(31, 31, 31, 0.04);
+}
+
+.brand-badge,
+.footer-brand-badge,
+.guest-brand-badge,
+.btn.btn-primary,
+.market-button,
+.market-cta__button,
+.auth-submit {
+    box-shadow: 0 8px 18px rgba(45, 80, 22, 0.16);
+}
+
+.brand-wordmark {
+    background: linear-gradient(135deg, var(--market-cyan-700), var(--market-cyan-500));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.nav-link:hover,
+.nav-link.is-active {
+    background: rgba(45, 80, 22, 0.1);
+    color: var(--market-cyan-700);
+}
+
+.market-button,
+.btn.btn-primary,
+.market-cta__button,
+.auth-submit {
+    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+}
+
+.market-search-btn {
+    background: linear-gradient(135deg, var(--market-orange-500), var(--market-orange-600));
+    box-shadow: 0 15px 25px rgba(212, 112, 74, 0.24);
+}
+
+.market-search-btn:hover {
+    box-shadow: 0 18px 28px rgba(212, 112, 74, 0.3);
+}
+
+.market-hero,
+.catalog-hero,
+.detail-hero {
+    background:
+        linear-gradient(rgba(31, 31, 31, 0.38), rgba(31, 31, 31, 0.4)),
+        linear-gradient(135deg, #233f12 0%, #2d5016 45%, #496c2c 100%);
+}
+
+.market-hero {
+    min-height: 38rem;
+    display: flex;
+    align-items: center;
+}
+
+.market-hero__title,
+.catalog-hero h1,
+.detail-hero h1,
+.auth-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5vw, 4.2rem);
+}
+
+.market-search-card,
+.catalog-panel,
+.detail-panel,
+.detail-booking-card,
+.booking-layout-card,
+.booking-step-card,
+.booking-success-card,
+.market-mini-card,
+.market-card,
+.auth-card,
+.guest-brand,
+.detail-review-summary,
+.account-panel {
+    border-radius: 16px;
+    border: 1px solid rgba(209, 204, 199, 0.35);
+    box-shadow: var(--shadow-sm);
+}
+
+.market-search-grid--wide {
+    grid-template-columns: 1.6fr 1fr 1fr auto;
+}
+
+.market-section--compact {
+    padding-top: 2.5rem;
+    padding-bottom: 2.5rem;
+}
+
+.market-category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.25rem;
+}
+
+.market-category-card,
+.market-quote-card {
+    background: var(--color-surface);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid rgba(209, 204, 199, 0.35);
+}
+
+.market-category-card {
+    display: grid;
+    gap: 0.55rem;
+}
+
+.market-category-card i {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(45, 80, 22, 0.1);
+    color: var(--market-cyan-700);
+    font-size: 1.1rem;
+}
+
+.market-category-card strong,
+.market-quote-card strong {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+}
+
+.market-category-card span,
+.market-quote-card span {
+    color: var(--market-slate-500);
+}
+
+.market-quote-card__stars {
+    color: var(--color-gold);
+    letter-spacing: 0.25em;
+    margin-bottom: 0.8rem;
+}
+
+.market-quote-card p {
+    color: var(--market-slate-700);
+    margin-bottom: 1rem;
+}
+
+.market-card__media,
+.market-card__media--icon,
+.market-mini-card__icon {
+    background: linear-gradient(135deg, #4b7a29, #2d5016);
+}
+
+.market-card__meta i,
+.catalog-toolbar__chip,
+.detail-highlight-card i,
+.account-meta-grid i {
+    color: var(--market-orange-500);
+}
+
+.catalog-reset-link {
+    text-align: center;
+    color: var(--market-cyan-700);
+    font-weight: 700;
+}
+
+.catalog-toolbar__actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.catalog-toolbar__chip {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 999px;
+    background: rgba(45, 80, 22, 0.08);
+    padding: 0.45rem 0.8rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.detail-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.detail-highlight-card,
+.booking-note-card {
+    border-radius: 14px;
+    background: rgba(45, 80, 22, 0.05);
+    border: 1px solid rgba(45, 80, 22, 0.12);
+    padding: 1rem 1.1rem;
+}
+
+.detail-highlight-card {
+    display: flex;
+    gap: 0.85rem;
+    align-items: flex-start;
+}
+
+.detail-highlight-card strong,
+.booking-note-card strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-display);
+}
+
+.detail-highlight-card span,
+.booking-note-card li {
+    color: var(--market-slate-500);
+}
+
+.booking-note-card ul {
+    margin: 0;
+    padding-left: 1.1rem;
+    display: grid;
+    gap: 0.4rem;
+}
+
+.market-cta__inner {
+    background: linear-gradient(135deg, #2d5016, #456d28);
+}
+
+.site-footer {
+    background: #1f1f1f;
+}
+
+.site-footer .footer-muted,
+.site-footer .footer-muted a,
+.site-footer .footer-bottom,
+.site-footer .footer-text {
+    color: rgba(250, 247, 242, 0.76);
+}
+
+@media (max-width: 1024px) {
+    .market-search-grid--wide,
+    .market-category-grid,
+    .detail-highlight-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 720px) {
+    .market-search-grid--wide,
+    .market-category-grid,
+    .detail-highlight-grid,
+    .catalog-toolbar__actions {
+        grid-template-columns: 1fr;
+        display: grid;
+    }
+}
