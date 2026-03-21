@@ -1,6 +1,8 @@
 <x-guest-layout>
-    <div class="auth-subtitle">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
+    <div class="auth-header auth-header--centered">
+        <p class="auth-kicker">Verify Email</p>
+        <h1 class="auth-title">Check your inbox</h1>
+        <p class="auth-subtitle">{{ __('Before getting started, please verify your email address using the link we just sent you.') }}</p>
     </div>
 
     @if (session('status') == 'verification-link-sent')
@@ -9,14 +11,14 @@
         </div>
     @endif
 
-    <div class="auth-actions auth-actions-row">
+    <div class="auth-actions auth-actions-row auth-actions--centered">
         <form method="POST" action="{{ route('verification.send') }}">
             @csrf
 
             <div>
-                <x-primary-button>
+                <button type="submit" class="auth-submit">
                     {{ __('Resend Verification Email') }}
-                </x-primary-button>
+                </button>
             </div>
         </form>
 

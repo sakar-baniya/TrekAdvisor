@@ -1,4 +1,10 @@
 <x-guest-layout>
+    <div class="auth-header auth-header--centered">
+        <p class="auth-kicker">Create New Password</p>
+        <h1 class="auth-title">Reset your password</h1>
+        <p class="auth-subtitle">Choose a new secure password to continue your TrekAdvisor journey.</p>
+    </div>
+
     <form method="POST" action="{{ route('password.store') }}" class="auth-form">
         @csrf
 
@@ -30,10 +36,10 @@
             <x-input-error :messages="$errors->get('password_confirmation')" />
         </div>
 
-        <div class="auth-actions">
-            <x-primary-button>
+        <div>
+            <button type="submit" class="auth-submit">
                 {{ __('Reset Password') }}
-            </x-primary-button>
+            </button>
         </div>
     </form>
 </x-guest-layout>

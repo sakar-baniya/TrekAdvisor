@@ -1,6 +1,8 @@
 <x-guest-layout>
-    <div class="auth-subtitle">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
+    <div class="auth-header auth-header--centered">
+        <p class="auth-kicker">Secure Area</p>
+        <h1 class="auth-title">Confirm your password</h1>
+        <p class="auth-subtitle">{{ __('This action needs an extra confirmation before you continue.') }}</p>
     </div>
 
     <form method="POST" action="{{ route('password.confirm') }}" class="auth-form">
@@ -18,10 +20,10 @@
             <x-input-error :messages="$errors->get('password')" />
         </div>
 
-        <div class="auth-actions">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
+        <div>
+            <button type="submit" class="auth-submit">
+                {{ __('Confirm Password') }}
+            </button>
         </div>
     </form>
 </x-guest-layout>

@@ -1,6 +1,8 @@
 <x-guest-layout>
-    <div class="auth-subtitle">
-        {{ __('Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.') }}
+    <div class="auth-header auth-header--centered">
+        <p class="auth-kicker">Reset Password</p>
+        <h1 class="auth-title">Forgot your password?</h1>
+        <p class="auth-subtitle">{{ __('Enter your email address and we will send you a reset link so you can choose a new password.') }}</p>
     </div>
 
     <!-- Session Status -->
@@ -16,10 +18,16 @@
             <x-input-error :messages="$errors->get('email')" />
         </div>
 
-        <div class="auth-actions">
-            <x-primary-button>
+        <div>
+            <button type="submit" class="auth-submit">
                 {{ __('Email Password Reset Link') }}
-            </x-primary-button>
+            </button>
+        </div>
+
+        <div class="auth-footer auth-footer--stacked">
+            <div class="auth-footer-copy">
+                <a class="auth-link" href="{{ route('login') }}">Back to login</a>
+            </div>
         </div>
     </form>
 </x-guest-layout>
