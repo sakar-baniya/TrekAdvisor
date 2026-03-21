@@ -13,18 +13,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="body-guest">
         <div class="guest-shell guest-shell--auth">
+            @include('layouts.navigation')
+
             <div class="guest-auth-stage">
                 <div class="guest-auth-shell">
-                    <a href="{{ route('home') }}" class="guest-auth-brand">
-                        <span class="guest-brand-badge"><i class="fas fa-mountain"></i></span>
-                        <span class="guest-brand-text">TrekAdvisor</span>
-                    </a>
-
                     <div class="auth-card auth-card--centered">
                         {{ $slot }}
                     </div>
