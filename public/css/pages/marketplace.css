@@ -1,27 +1,27 @@
 ﻿:root {
-    --market-cyan-50: #ecfeff;
-    --market-cyan-100: #cffafe;
-    --market-cyan-200: #a5f3fc;
-    --market-cyan-500: #06b6d4;
-    --market-cyan-600: #0891b2;
-    --market-cyan-700: #0e7490;
-    --market-blue-700: #1d4ed8;
-    --market-slate-50: #f8fafc;
-    --market-slate-100: #f1f5f9;
-    --market-slate-200: #e2e8f0;
-    --market-slate-300: #cbd5e1;
-    --market-slate-500: #64748b;
-    --market-slate-700: #334155;
-    --market-slate-900: #0f172a;
-    --market-orange-400: #fb923c;
-    --market-orange-500: #f97316;
-    --market-orange-600: #ea580c;
+    --market-cyan-50: #f5f1e8;
+    --market-cyan-100: #e7eee2;
+    --market-cyan-200: #d6e1d3;
+    --market-cyan-500: #4b7a29;
+    --market-cyan-600: #2d5016;
+    --market-cyan-700: #1f3f0f;
+    --market-blue-700: #3d6a22;
+    --market-slate-50: #faf7f2;
+    --market-slate-100: #f3f3f1;
+    --market-slate-200: #e3ddd7;
+    --market-slate-300: #d1ccc7;
+    --market-slate-500: #6b6b6b;
+    --market-slate-700: #3e3a34;
+    --market-slate-900: #1f1f1f;
+    --market-orange-400: #de8663;
+    --market-orange-500: #d4704a;
+    --market-orange-600: #c85a3a;
     --market-green-100: #dcfce7;
     --market-green-600: #16a34a;
     --market-red-100: #fee2e2;
     --market-red-600: #dc2626;
     --market-yellow-100: #fef3c7;
-    --market-yellow-600: #ca8a04;
+    --market-yellow-600: #d4af37;
     --market-shadow: 0 20px 45px rgba(15, 23, 42, 0.08);
     --market-shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
 }
@@ -33,7 +33,7 @@ body.body-guest {
         radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 25%),
         var(--market-slate-50);
     color: var(--market-slate-900);
-    font-family: 'Manrope', sans-serif;
+    font-family: var(--font-body);
 }
 
 .page-content {
@@ -91,7 +91,7 @@ body.body-guest {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
     color: white;
     box-shadow: 0 12px 25px rgba(8, 145, 178, 0.28);
 }
@@ -118,7 +118,7 @@ body.body-guest {
 .nav-link:hover,
 .nav-link.is-active {
     color: white;
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
 }
 
 .btn.btn-link,
@@ -150,7 +150,7 @@ body.body-guest {
     padding: 0.85rem 1.35rem;
     border: 0;
     border-radius: 1rem;
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
     color: white;
     text-decoration: none;
     font-weight: 800;
@@ -552,7 +552,7 @@ body.body-guest {
     padding: 4rem 2rem;
     text-align: center;
     color: white;
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
     box-shadow: var(--market-shadow);
 }
 
@@ -674,7 +674,7 @@ body.body-guest {
 }
 
 .detail-tab.is-active {
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
     color: white;
     border-color: transparent;
 }
@@ -803,7 +803,7 @@ body.body-guest {
 }
 
 .booking-progress span.is-active {
-    background: linear-gradient(135deg, var(--market-cyan-600), var(--market-blue-700));
+    background: linear-gradient(135deg, var(--market-primary, var(--market-cyan-600)), var(--market-blue-700));
     color: white;
     border-color: transparent;
 }
@@ -1485,3 +1485,4 @@ body.body-guest {
     justify-content: center;
     padding: 2.5rem 1rem 3rem;
 }
+
