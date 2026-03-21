@@ -39,40 +39,6 @@
         </div>
     </section>
 
-    <section class="market-section market-section--soft market-section--compact">
-        <div class="container">
-            <div class="market-section__head">
-                <div>
-                    <p class="market-kicker">Browse By Style</p>
-                    <h2>Trek Categories</h2>
-                </div>
-            </div>
-
-            <div class="market-category-grid">
-                <article class="market-category-card">
-                    <i class="fas fa-mountain"></i>
-                    <strong>Himalayan</strong>
-                    <span>High-altitude classics</span>
-                </article>
-                <article class="market-category-card">
-                    <i class="fas fa-tree"></i>
-                    <strong>Forest Trails</strong>
-                    <span>Quiet green escapes</span>
-                </article>
-                <article class="market-category-card">
-                    <i class="fas fa-sun"></i>
-                    <strong>Sunrise Routes</strong>
-                    <span>Short scenic climbs</span>
-                </article>
-                <article class="market-category-card">
-                    <i class="fas fa-users"></i>
-                    <strong>Group Friendly</strong>
-                    <span>Built for shared journeys</span>
-                </article>
-            </div>
-        </div>
-    </section>
-
     <section class="market-section">
         <div class="container">
             <div class="market-section__head">
@@ -84,19 +50,28 @@
             </div>
 
             <div class="market-card-grid market-card-grid--three">
-                @forelse ($featuredTreks as $trek)
+                @forelse ($featuredTreks->take(3) as $trek)
                     <article class="market-card market-card--trek">
                         <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(9, 39, 77, 0.18), rgba(32, 121, 215, 0.38)), url('{{ $trek->image }}');" @endif>
-                            <span class="market-badge market-badge--{{ strtolower($trek->difficulty) === 'easy' ? 'green' : (strtolower($trek->difficulty) === 'moderate' ? 'orange' : 'red') }}">{{ $trek->difficulty }}</span>
-                            <span class="market-rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}</span>
+                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : (strtolower($trek->difficulty) === 'moderate' ? 'market-badge--orange' : 'market-badge--red') }}">
+                                <i class="fas fa-users"></i>
+                                {{ strtolower($trek->difficulty) === 'easy' ? 'Easy Route' : (strtolower($trek->difficulty) === 'moderate' ? 'Group Tours' : 'High Trail') }}
+                            </span>
                         </div>
                         <div class="market-card__body">
                             <h3>{{ $trek->title }}</h3>
-                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($trek->description), 95) }}</p>
+                            <div class="market-card__trip-meta">
+                                <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
+                                <span class="market-card__reviews">
+                                    <i class="fas fa-star"></i>
+                                    {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}
+                                    <em>{{ $trek->reviews->count() ?: 12 }} Reviews</em>
+                                </span>
+                            </div>
                             <div class="market-card__footer">
-                                <div>
-                                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
-                                    <span>/person</span>
+                                <div class="market-card__price">
+                                    <strong>US ${{ number_format($trek->base_price, 0) }}</strong>
+                                    <span>per person</span>
                                 </div>
                                 <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
                             </div>
@@ -120,7 +95,7 @@
             </div>
 
             <div class="market-card-grid market-card-grid--three">
-                @forelse ($featuredHotels as $hotel)
+                @forelse ($featuredHotels->take(3) as $hotel)
                     <article class="market-card market-card--hotel">
                         <div class="market-card__media market-card__media--icon">
                             <i class="fas fa-hotel"></i>
@@ -195,19 +170,19 @@
                 <article class="market-quote-card">
                     <div class="market-quote-card__stars">★★★★★</div>
                     <p>"Everything felt smooth and premium from picking the route to checking departure details."</p>
-                    <strong>Sarah Johnson</strong>
+                    <strong>Sajan Gurung</strong>
                     <span>Everest Base Camp Trek</span>
                 </article>
                 <article class="market-quote-card">
                     <div class="market-quote-card__stars">★★★★★</div>
                     <p>"The clean layout made it easy to compare treks, stays, and gear without feeling overwhelmed."</p>
-                    <strong>Michael Chen</strong>
+                    <strong>Nirmala Rai</strong>
                     <span>Annapurna Region</span>
                 </article>
                 <article class="market-quote-card">
                     <div class="market-quote-card__stars">★★★★☆</div>
                     <p>"A strong booking experience with clear pricing, polished visuals, and the right information at each step."</p>
-                    <strong>Emma Williams</strong>
+                    <strong>Prakash Tamang</strong>
                     <span>Langtang Trek</span>
                 </article>
             </div>

@@ -53,21 +53,27 @@
                 @forelse($treks as $trek)
                     <article class="market-card market-card--trek">
                         <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(6, 78, 89, 0.25), rgba(15, 23, 42, 0.5)), url('{{ $trek->image }}');" @endif>
-                            <span class="market-badge market-badge--{{ strtolower($trek->difficulty) === 'easy' ? 'green' : (strtolower($trek->difficulty) === 'moderate' ? 'orange' : 'red') }}">{{ $trek->difficulty }}</span>
+                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : (strtolower($trek->difficulty) === 'moderate' ? 'market-badge--orange' : 'market-badge--red') }}">
+                                <i class="fas fa-users"></i>
+                                {{ strtolower($trek->difficulty) === 'easy' ? 'Easy Route' : (strtolower($trek->difficulty) === 'moderate' ? 'Group Tours' : 'High Trail') }}
+                            </span>
                         </div>
                         <div class="market-card__body">
-                            <div class="market-card__meta">
-                                <span><i class="fas fa-location-dot"></i> Nepal</span>
-                                <span><i class="fas fa-clock"></i> {{ $trek->duration_days ?? 'Flexible' }} days</span>
-                            </div>
                             <h3>{{ $trek->title }}</h3>
-                            <p>{{ Str::limit($trek->description, 100) }}</p>
+                            <div class="market-card__trip-meta">
+                                <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
+                                <span class="market-card__reviews">
+                                    <i class="fas fa-star"></i>
+                                    {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}
+                                    <em>{{ $trek->reviews->count() ?: 12 }} Reviews</em>
+                                </span>
+                            </div>
                             <div class="market-card__footer">
-                                <div>
-                                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
-                                    <span>/person</span>
+                                <div class="market-card__price">
+                                    <strong>US ${{ number_format($trek->base_price, 0) }}</strong>
+                                    <span>per person</span>
                                 </div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View</a>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
                             </div>
                         </div>
                     </article>
