@@ -48,17 +48,17 @@
                         <ul class="footer-muted footer-list">
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('treks.index') }}">Treks</a></li>
-                            <li><a href="{{ route('home') }}#featured-hotels">Hotels</a></li>
-                            <li><a href="{{ route('home') }}#featured-gear">Gear Rental</a></li>
+                            <li><a href="{{ route('hotels.index') }}">Hotels</a></li>
+                            <li><a href="{{ route('gear.index') }}">Gear Rental</a></li>
                         </ul>
                     </div>
                     <div>
                         <p class="footer-title">Services</p>
                         <ul class="footer-muted footer-list">
-                            <li>Book Trek</li>
-                            <li>Book Hotel</li>
-                            <li>Rent Gear</li>
-                            <li>Travel Support</li>
+                            <li><a href="{{ route('about') }}">About Us</a></li>
+                            <li><a href="{{ route('contact') }}">Contact</a></li>
+                            <li><a href="{{ route('faq') }}">FAQ</a></li>
+                            <li><a href="{{ route('blog') }}">Blog</a></li>
                         </ul>
                     </div>
                     <div>

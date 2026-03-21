@@ -1755,3 +1755,37 @@ body.body-guest {
         display: grid;
     }
 }
+
+/* Extra content pages */
+.market-card-grid--two {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.faq-stack {
+    display: grid;
+    gap: 1rem;
+}
+
+.faq-card {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(209, 204, 199, 0.35);
+    box-shadow: var(--shadow-sm);
+    padding: 1.4rem 1.5rem;
+}
+
+.faq-card h3 {
+    margin: 0 0 0.65rem;
+    font-size: 1.15rem;
+}
+
+.faq-card p {
+    margin: 0;
+    color: var(--color-text-secondary);
+}
+
+@media (max-width: 720px) {
+    .market-card-grid--two {
+        grid-template-columns: 1fr;
+    }
+}

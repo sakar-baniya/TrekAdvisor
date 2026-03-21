@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrekController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FrontendPageController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
@@ -18,6 +19,14 @@ use App\Http\Controllers\Admin\AdminHotelController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/about', [FrontendPageController::class, 'about'])->name('about');
+Route::get('/contact', [FrontendPageController::class, 'contact'])->name('contact');
+Route::get('/faq', [FrontendPageController::class, 'faq'])->name('faq');
+Route::get('/blog', [FrontendPageController::class, 'blog'])->name('blog');
+Route::get('/hotels', [FrontendPageController::class, 'hotels'])->name('hotels.index');
+Route::get('/hotels/{hotel}', [FrontendPageController::class, 'hotelShow'])->name('hotels.show');
+Route::get('/gear', [FrontendPageController::class, 'gear'])->name('gear.index');
+Route::get('/gear/{gearItem}', [FrontendPageController::class, 'gearShow'])->name('gear.show');
 
 Route::get('/dashboard', function () {
     return redirect()->route(auth()->user()->dashboardRouteName());

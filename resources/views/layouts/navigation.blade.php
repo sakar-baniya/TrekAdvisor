@@ -9,8 +9,10 @@
             <div class="nav-links">
                 <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'is-active' : '' }}">Home</a>
                 <a href="{{ route('treks.index') }}" class="nav-link {{ request()->routeIs('treks.*') ? 'is-active' : '' }}">Treks</a>
-                <a href="{{ route('home') }}#featured-hotels" class="nav-link">Hotels</a>
-                <a href="{{ route('home') }}#featured-gear" class="nav-link">Gear Rental</a>
+                <a href="{{ route('hotels.index') }}" class="nav-link {{ request()->routeIs('hotels.*') ? 'is-active' : '' }}">Hotels</a>
+                <a href="{{ route('gear.index') }}" class="nav-link {{ request()->routeIs('gear.*') ? 'is-active' : '' }}">Gear Rental</a>
+                <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'is-active' : '' }}">About</a>
+                <a href="{{ route('contact') }}" class="nav-link {{ request()->routeIs('contact') ? 'is-active' : '' }}">Contact</a>
                 @auth
                     <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="nav-link">My Account</a>
                 @endauth
@@ -41,8 +43,10 @@
         <div class="nav-mobile-links">
             <a href="{{ route('home') }}" class="nav-link">Home</a>
             <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>
-            <a href="{{ route('home') }}#featured-hotels" class="nav-link">Hotels</a>
-            <a href="{{ route('home') }}#featured-gear" class="nav-link">Gear Rental</a>
+            <a href="{{ route('hotels.index') }}" class="nav-link">Hotels</a>
+            <a href="{{ route('gear.index') }}" class="nav-link">Gear Rental</a>
+            <a href="{{ route('about') }}" class="nav-link">About</a>
+            <a href="{{ route('contact') }}" class="nav-link">Contact</a>
             @auth
                 <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="nav-link">My Account</a>
                 <form method="POST" action="{{ route('logout') }}">
