@@ -16,7 +16,7 @@
                     </div>
                     <div class="contact-card__text">
                         <small>Direct Call or WhatsApp 24/7</small>
-                        <strong>+977 9851 058678</strong>
+                        <strong>+977 9816681137</strong>
                     </div>
                 </div>
             </div>
@@ -51,7 +51,8 @@
                         <button type="submit" class="btn btn-link">Logout</button>
                     </form>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-link">Login</a>
+                    <a href="{{ route('login') }}" class="btn btn-auth btn-auth--ghost">Login</a>
+                    <a href="{{ route('register') }}" class="btn btn-auth btn-auth--primary">Sign Up</a>
                 @endauth
             </div>
         </div>

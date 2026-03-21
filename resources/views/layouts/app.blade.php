@@ -11,12 +11,29 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="body-app">
         <div class="page-shell">
-            @include('layouts.navigation')
+            <header class="site-header">
+                <div class="top-bar">
+                    <div class="container top-bar__inner">
+                        <div class="top-bar__center">
+                            <i class="fas fa-bell"></i>
+                            <span>Check Our Risk-Free Booking Policy <a href="#">View Details &raquo;</a></span>
+                        </div>
+                        <div class="top-bar__right">
+                            <div class="top-bar__item">
+                                <img src="https://flagcdn.com/w20/np.png" alt="Nepal" style="width: 16px; margin-right: 5px;">
+                                <span>Nepal</span>
+                                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @include('layouts.navigation')
+            </header>
 
             @isset($header)
                 <header class="page-header">
