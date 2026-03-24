@@ -491,6 +491,9 @@
 .site-header {
     background: #ffffff;
     width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+    overflow-x: clip;
     z-index: 100;
 }
 
@@ -691,9 +694,6 @@
 @media (max-width: 1024px) {
     .header-contact, .nav-bar {
         display: none;
-    }
-    .nav-toggle {
-        display: block;
     }
 }
 
