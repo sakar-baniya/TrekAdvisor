@@ -40,41 +40,52 @@
         </div>
     </section>
 
-    <section class="market-section">
-        <div class="container">
-            <div class="market-section__head">
-                <div>
-                    <p class="market-kicker">Top Picks</p>
+    <section class="booking-section">
+        <div class="container container-wide">
+            <div class="booking-section__head">
+                <div class="booking-section__title">
+                    <p class="section-kicker">Top Picks</p>
                     <h2>Featured Treks</h2>
                 </div>
-                <a href="{{ route('treks.index') }}" class="market-link">View All</a>
+                <div class="booking-section__actions">
+                    <a href="{{ route('treks.index') }}" class="view-all-link">View All</a>
+                    <div class="carousel-arrows">
+                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
             </div>
 
-            <div class="market-card-grid market-card-grid--three">
+            <div class="filter-chips">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Easy</button>
+                <button class="filter-chip">Moderate</button>
+                <button class="filter-chip">Hard</button>
+            </div>
+
+            <div class="booking-grid">
                 @forelse ($featuredTreks->take(3) as $trek)
-                    <article class="market-card market-card--trek">
-                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(44, 62, 80, 0.18), rgba(26, 37, 47, 0.45)), url('{{ $trek->image }}');" @endif>
-                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : 'market-badge--orange' }}">
-                                <i class="fas fa-users"></i>
-                                {{ strtolower($trek->difficulty) === 'easy' ? 'Easy Route' : (strtolower($trek->difficulty) === 'moderate' ? 'Group Tours' : 'High Trail') }}
+                    <article class="booking-card">
+                        <div class="booking-card__media">
+                            @if($trek->image)
+                                <img src="{{ $trek->image }}" alt="Image of {{ $trek->title }}">
+                            @else
+                                <div class="booking-card__media-placeholder"></div>
+                            @endif
+                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
+                            <span class="booking-badge {{ strtolower($trek->difficulty) === 'hard' ? 'badge-red' : (strtolower($trek->difficulty) === 'moderate' ? 'badge-orange' : 'badge-green') }}">
+                                {{ ucfirst($trek->difficulty) }}
                             </span>
                         </div>
-                        <div class="market-card__body">
-                            <h3>{{ $trek->title }}</h3>
-                            <div class="market-card__trip-meta">
+                        <div class="booking-card__body">
+                            <div class="booking-card__meta">
                                 <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
-                                <span class="market-card__reviews">
-                                    <i class="fas fa-star"></i>
-                                    {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}
-                                    <em>{{ $trek->reviews->count() ?: 12 }} Reviews</em>
-                                </span>
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }} ({{ $trek->reviews->count() ?: 12 }} reviews)</span>
                             </div>
-                            <div class="market-card__footer">
-                                <div class="market-card__price">
-                                    <strong>US ${{ number_format($trek->base_price, 0) }}</strong>
-                                    <span>per person</span>
-                                </div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
+                            <h3>{{ $trek->title }}</h3>
+                            <div class="booking-card__footer">
+                                <div class="booking-card__price">From <strong>${{ number_format($trek->base_price, 0) }}</strong> <span>/person</span></div>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="btn-primary-filled">View Details</a>
                             </div>
                         </div>
                     </article>
@@ -85,30 +96,57 @@
         </div>
     </section>
 
-    <section id="featured-hotels" class="market-section market-section--soft">
-        <div class="container">
-            <div class="market-section__head">
-                <div>
-                    <p class="market-kicker">Stay Options</p>
+    <section id="featured-hotels" class="booking-section booking-section--soft">
+        <div class="container container-wide">
+            <div class="booking-section__head">
+                <div class="booking-section__title">
+                    <p class="section-kicker">Stay Options</p>
                     <h2>Featured Hotels</h2>
                 </div>
-                <a href="{{ route('home') }}#featured-hotels" class="market-link">Explore</a>
+                <div class="booking-section__actions">
+                    <a href="{{ route('home') }}#featured-hotels" class="view-all-link">View All</a>
+                    <div class="carousel-arrows">
+                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
             </div>
 
-            <div class="market-card-grid market-card-grid--three">
+            <div class="filter-chips">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Budget</button>
+                <button class="filter-chip">Mid-range</button>
+                <button class="filter-chip">Luxury</button>
+            </div>
+
+            <div class="booking-grid">
                 @forelse ($featuredHotels->take(3) as $hotel)
-                    <article class="market-card market-card--hotel">
-                        <div class="market-card__media" @if($hotel->image) style="background-image: linear-gradient(rgba(44, 62, 80, 0.12), rgba(44, 62, 80, 0.35)), url('{{ $hotel->image }}');" @endif></div>
-                        <div class="market-card__body">
-                            <div class="market-card__meta"><span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span><span><i class="fas fa-star"></i> 4.6</span></div>
+                    <article class="booking-card">
+                        <div class="booking-card__media">
+                            @if($hotel->image)
+                                <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}">
+                            @else
+                                <div class="booking-card__media-placeholder"></div>
+                            @endif
+                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
+                            <span class="booking-badge badge-location">
+                                <i class="fas fa-map-marker-alt"></i> {{ \Illuminate\Support\Str::limit($hotel->location, 15) }}
+                            </span>
+                        </div>
+                        <div class="booking-card__body">
+                            <div class="booking-card__meta">
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> 4.6 (24 reviews)</span>
+                                <span class="booking-card__amenities">
+                                    <i class="fas fa-wifi" title="WiFi"></i>
+                                    <i class="fas fa-swimming-pool" title="Pool"></i>
+                                    <i class="fas fa-parking" title="Parking"></i>
+                                </span>
+                            </div>
                             <h3>{{ $hotel->name }}</h3>
-                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 88) }}</p>
-                            <div class="market-card__footer">
-                                <div>
-                                    <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>
-                                    <span>/night</span>
-                                </div>
-                                <span class="market-button market-button--ghost">Book Soon</span>
+                            <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 60) }}</p>
+                            <div class="booking-card__footer">
+                                <div class="booking-card__price"><strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
+                                <span class="btn-primary-filled">Book Now</span>
                             </div>
                         </div>
                     </article>
@@ -119,30 +157,41 @@
         </div>
     </section>
 
-    <section id="featured-gear" class="market-section">
-        <div class="container">
-            <div class="market-section__head">
-                <div>
-                    <p class="market-kicker">Rental Gear</p>
+    <section id="featured-gear" class="booking-section">
+        <div class="container container-wide">
+            <div class="booking-section__head">
+                <div class="booking-section__title">
+                    <p class="section-kicker">Rental Gear</p>
                     <h2>Essentials for the Trail</h2>
                 </div>
-                <a href="{{ route('home') }}#featured-gear" class="market-link">Browse</a>
+                <div class="booking-section__actions">
+                    <a href="{{ route('home') }}#featured-gear" class="view-all-link">View All</a>
+                    <div class="carousel-arrows">
+                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
             </div>
 
-            <div class="market-card-grid market-card-grid--four">
-                @forelse ($featuredGearItems as $item)
-                    <article class="market-mini-card">
-                        @if ($item->image)
-                            <div class="market-card__media" style="min-height: 160px; border-radius: 20px; margin-bottom: 1rem; background-image: linear-gradient(rgba(44, 62, 80, 0.10), rgba(26, 37, 47, 0.25)), url('{{ $item->image }}');"></div>
-                        @else
-                            <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
-                        @endif
-                        <span class="market-stock {{ $item->available_stock > 5 ? 'is-good' : 'is-low' }}">Available: {{ $item->available_stock }}</span>
-                        <h3>{{ $item->name }}</h3>
-                        <p>{{ \Illuminate\Support\Str::limit($item->description, 80) }}</p>
-                        <div class="market-mini-card__footer">
-                            <strong>${{ number_format($item->daily_price, 0) }}/day</strong>
-                            <span class="market-button market-button--ghost">Rent</span>
+            <div class="booking-grid">
+                @forelse ($featuredGearItems->take(4) as $item)
+                    <article class="booking-card">
+                        <div class="booking-card__media">
+                            @if ($item->image)
+                                <img src="{{ $item->image }}" alt="Image of {{ $item->name }}">
+                            @else
+                                <div class="booking-card__media-placeholder"><i class="fas fa-campground"></i></div>
+                            @endif
+                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
+                            <span class="booking-badge badge-neutral">Available: {{ $item->available_stock }}</span>
+                        </div>
+                        <div class="booking-card__body">
+                            <h3>{{ $item->name }}</h3>
+                            <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit($item->description, 50) }}</p>
+                            <div class="booking-card__footer">
+                                <div class="booking-card__price"><strong>${{ number_format($item->daily_price, 0) }}</strong> <span>/day</span></div>
+                                <span class="btn-primary-filled">Rent Now</span>
+                            </div>
                         </div>
                     </article>
                 @empty

@@ -21,8 +21,8 @@
     --color-info:    #0ea5e9;
     --color-gold:    #e9c46a;
     /* === Typography === */
-    --font-display: 'Montserrat', sans-serif;  /* Headings */
-    --font-body:    'Open Sans', 'Lato', sans-serif;     /* Body + nav */
+    --font-display: 'Inter', sans-serif;  /* Headings */
+    --font-body:    'Inter', sans-serif;  /* Body */
     /* === Shadows === */
     --shadow-sm: 0 2px 8px rgba(44, 62, 80, 0.08);
     --shadow-md: 0 6px 20px rgba(44, 62, 80, 0.14);
