@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
     <body class="body-app">
@@ -37,10 +37,71 @@
 
         <!-- Global Footer -->
         <footer class="page-footer">
-            <div class="container footer-center">
-                <p class="footer-note">
-                    &copy; {{ date('Y') }} TrekAdvisor - Final Year Project
-                </p>
+            <div class="footer-container">
+                <div class="footer-grid">
+                    <!-- Brand Section -->
+                    <div class="footer-section-brand">
+                        <a href="{{ route('home') }}" class="footer-brand">
+                            <span class="footer-brand-icon"><i class="fas fa-mountain-sun"></i></span>
+                            <span>TrekAdvisor</span>
+                        </a>
+                        <p class="footer-description">
+                            Your trusted companion for Himalayan trekking adventures. Expert-guided journeys with over 17 years of experience in mountain exploration.
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://facebook.com" class="social-link" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://instagram.com" class="social-link" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                            <a href="https://twitter.com" class="social-link" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                            <a href="https://wa.me/9779816681137" class="social-link" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div>
+                        <h4 class="footer-section-title">Quick Links</h4>
+                        <ul class="footer-links">
+                            <li><a href="{{ route('home') }}" class="footer-link">Home</a></li>
+                            <li><a href="{{ route('treks.index') }}" class="footer-link">Explore Treks</a></li>
+                            <li><a href="{{ route('hotels.index') }}" class="footer-link">Hotels</a></li>
+                            <li><a href="{{ route('gear.index') }}" class="footer-link">Gear Rental</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Company -->
+                    <div>
+                        <h4 class="footer-section-title">Company</h4>
+                        <ul class="footer-links">
+                            <li><a href="{{ route('about') }}" class="footer-link">About Us</a></li>
+                            <li><a href="{{ route('blog') }}" class="footer-link">Travel Guide</a></li>
+                            <li><a href="{{ route('contact') }}" class="footer-link">Contact Us</a></li>
+                            <li><a href="#" class="footer-link">Careers</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact & Newsletter -->
+                    <div>
+                        <h4 class="footer-section-title">Stay Updated</h4>
+                        <form class="footer-newsletter" action="#" method="POST">
+                            <div style="width: 100%;">
+                                <input type="email" class="newsletter-input" placeholder="Your email" required />
+                                <button type="submit" class="newsletter-submit" style="width: 100%; margin-top: 8px;">Subscribe</button>
+                            </div>
+                        </form>
+                        <p style="font-size: 0.8rem; color: rgba(255, 255, 255, 0.6); margin-top: 12px;">Get trek updates & travel tips</p>
+                    </div>
+                </div>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom">
+                    <p class="footer-copyright">
+                        &copy; {{ date('Y') }} TrekAdvisor. All rights reserved.
+                    </p>
+                    <div class="footer-legal">
+                        <a href="#" class="footer-legal-link">Privacy Policy</a>
+                        <a href="#" class="footer-legal-link">Terms of Service</a>
+                        <a href="#" class="footer-legal-link">Contact</a>
+                    </div>
+                </div>
             </div>
         </footer>
     </body>

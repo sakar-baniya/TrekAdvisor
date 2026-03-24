@@ -1,0 +1,183 @@
+/* ============ ACCESSIBILITY IMPROVEMENTS ============ */
+
+/* Focus visible for keyboard navigation */
+*:focus-visible {
+    outline: 3px solid var(--color-cta);
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+    outline: 3px solid var(--color-cta);
+    outline-offset: 2px;
+}
+
+/* Skip to main content link (hidden by default, shows on focus) */
+.skip-to-main {
+    position: absolute;
+    top: -40px;
+    left: 0;
+    background: var(--color-cta);
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    z-index: 100;
+    border-radius: 0 0 8px 0;
+}
+
+.skip-to-main:focus {
+    top: 0;
+}
+
+/* Improved button contrast and readability */
+.btn-solid,
+.btn-cta,
+.btn-outline,
+.btn-danger {
+    /* Ensure minimum touch target size (44x44px) */
+    min-width: 44px;
+    min-height: 44px;
+    /* Visible focus state */
+    position: relative;
+}
+
+.btn-solid:focus-visible,
+.btn-cta:focus-visible,
+.btn-outline:focus-visible,
+.btn-danger:focus-visible {
+    outline-offset: 3px;
+}
+
+/* Form accessibility improvements */
+.form-label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+    /* Ensure readable text size */
+    font-size: 16px;
+    /* Clear focus indicator */
+    position: relative;
+}
+
+.form-input:focus-visible,
+.form-select:focus-visible,
+.form-textarea:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* Error message styling for accessibility */
+.form-error,
+.form-error li {
+    color: #DC2626;
+    font-weight: 600;
+}
+
+/* Links with sufficient contrast */
+a {
+    color: var(--color-primary);
+}
+
+a:visited {
+    color: var(--color-primary);
+}
+
+a:hover,
+a:focus {
+    color: var(--color-primary-dark);
+}
+
+/* Text alternatives for decorative icons */
+.icon::before {
+    content: attr(data-label);
+    position: absolute;
+    left: -9999px;
+}
+
+/* Ensure sufficient color contrast for all text */
+body {
+    color: var(--color-text-primary);
+    background: var(--color-background);
+}
+
+/* Light background + dark text ensures WCAG AA contrast */
+.text-secondary {
+    color: var(--color-text-secondary);
+}
+
+/* Visible focus for navigation links */
+.nav-link:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 4px;
+    border-radius: 4px;
+}
+
+/* Reduced motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-background: #1a1a1a;
+        --color-surface: #2d2d2d;
+        --color-surface-muted: #3d3d3d;
+        --color-text-primary: #f0f0f0;
+        --color-text-secondary: #b0b0b0;
+    }
+}
+
+/* Print styles for accessibility */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
+    
+    a {
+        text-decoration: underline;
+    }
+    
+    .no-print {
+        display: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: more) {
+    .btn-solid,
+    .btn-cta,
+    .btn-outline,
+    .btn-danger {
+        border: 2px solid currentColor;
+    }
+    
+    .form-input,
+    .form-select,
+    .form-textarea {
+        border: 2px solid var(--color-primary);
+    }
+}
+
+/* Ensures text is readable at 200% zoom */
+@media (min-width: 2000px) {
+    html {
+        font-size: 18px;
+    }
+}

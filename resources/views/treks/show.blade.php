@@ -1,7 +1,6 @@
-﻿<x-app-layout>
+<x-app-layout>
     <section class="detail-hero" @if($trek->image) style="background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.5)), url('{{ $trek->image }}');" @endif>
         <div class="container detail-hero__content">
-            <div class="detail-breadcrumb"><a href="{{ route('home') }}">Home</a> / <a href="{{ route('treks.index') }}">Treks</a> / <span>{{ $trek->title }}</span></div>
             <h1>{{ $trek->title }}</h1>
             <div class="detail-hero__stats">
                 <span><i class="fas fa-clock"></i> {{ $trek->duration_days ?? $trek->itineraries->count() }} Days</span>

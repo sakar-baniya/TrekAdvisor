@@ -131,18 +131,18 @@
 
 .trek-card {
     background: #ffffff;
-    border-radius: 36px;
+    border-radius: 16px;
     overflow: hidden;
-    border: 1px solid #f1f5f9;
-    box-shadow: 0 25px 40px rgba(15, 23, 42, 0.08);
+    border: 1px solid rgba(34, 139, 34, 0.08);
+    box-shadow: 0 2px 8px rgba(34, 139, 34, 0.1);
     display: flex;
     flex-direction: column;
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .trek-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 30px 50px rgba(37, 99, 235, 0.12);
+    transform: translateY(-6px);
+    box-shadow: 0 12px 30px rgba(34, 139, 34, 0.15);
 }
 
 .trek-image {

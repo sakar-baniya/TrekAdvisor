@@ -1,11 +1,11 @@
 <x-app-layout>
     <section class="detail-hero">
         <div class="container detail-hero__content">
-            <div class="detail-breadcrumb"><a href="{{ route('home') }}">Home</a> / <a href="{{ route('hotels.index') }}">Hotels</a> / <span>{{ $hotel->name }}</span></div>
             <h1>{{ $hotel->name }}</h1>
             <div class="detail-hero__stats">
                 <span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span>
                 <span><i class="fas fa-hotel"></i> {{ $hotel->rooms->count() }} room types</span>
+                <span><i class="fas fa-bed"></i> {{ $hotel->rooms->sum('total_rooms') }} total rooms</span>
                 <span><i class="fas fa-star"></i> {{ number_format($hotel->reviews->avg('rating') ?? 4.6, 1) }} ({{ $hotel->reviews->count() }})</span>
             </div>
         </div>
@@ -13,6 +13,12 @@
 
     <div class="container detail-grid">
         <section class="detail-main">
+            @if ($hotel->image)
+                <article class="detail-panel">
+                    <div class="market-card__media" style="min-height: 300px; border-radius: 24px; background-image: linear-gradient(rgba(16, 27, 45, 0.12), rgba(16, 27, 45, 0.35)), url('{{ $hotel->image }}');"></div>
+                </article>
+            @endif
+
             <article class="detail-panel">
                 <h2>Hotel Overview</h2>
                 <p>{!! nl2br(e($hotel->description)) !!}</p>
@@ -51,9 +57,9 @@
                 <div class="detail-discount-box">
                     <strong>Stay details</strong>
                     <ul>
-                        <li>Location-aware booking support</li>
-                        <li>Clean room type breakdown</li>
-                        <li>Built to complement trek planning</li>
+                        <li>{{ $hotel->location }}</li>
+                        <li>{{ $hotel->rooms->count() }} room types currently listed</li>
+                        <li>{{ $hotel->rooms->sum('total_rooms') }} rooms available across categories</li>
                     </ul>
                 </div>
             </div>

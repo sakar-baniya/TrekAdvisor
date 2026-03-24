@@ -47,8 +47,15 @@
                         <span class="role-card-subtitle">List rooms and manage bookings.</span>
                     </span>
                 </label>
+                <label class="role-card">
+                    <input type="radio" name="role" value="staff" {{ old('role') === 'staff' ? 'checked' : '' }}>
+                    <span class="role-card-text">
+                        <span class="role-card-title">Staff</span>
+                        <span class="role-card-subtitle">Join team (admin approval needed).</span>
+                    </span>
+                </label>
             </div>
-            <p class="role-note">Hotel owner accounts require admin approval.</p>
+            <p class="role-note">Hotel owner and staff accounts require admin approval. Administrators cannot register via this form.</p>
             <x-input-error :messages="$errors->get('role')" />
         </div>
 

@@ -33,7 +33,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:customer,hotel_owner'],
+            'role' => ['required', 'in:customer,hotel_owner,staff'],
             'phone' => ['nullable', 'string', 'max:30'],
         ]);
 
@@ -45,19 +45,19 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $role,
             'phone' => $request->input('phone'),
-            'is_approved' => $role === 'hotel_owner' ? false : true,
+            'is_approved' => $role === 'customer' ? true : false,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        if ($role === 'hotel_owner' && ! $user->is_approved) {
+        if (($role === 'hotel_owner' || $role === 'staff') && ! $user->is_approved) {
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
-            return redirect()->route('login')->with('status', 'Your hotel owner account is pending admin approval.');
+            return redirect()->route('login')->with('status', 'Your ' . $role . ' account is pending admin approval.');
         }
 
         return redirect(route('dashboard', absolute: false));

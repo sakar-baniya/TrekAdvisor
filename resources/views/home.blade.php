@@ -6,9 +6,10 @@
                 <span class="stars">★★★★★</span>
                 <span class="rating-note">2614 TripAdvisor reviews</span>
             </div>
-            <p class="market-kicker">Local Experts In Himalayan Journeys</p>
-            <h1 class="market-hero__title">Local Experts in Himalayan Trekking</h1>
-            <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
+            <div class="market-hero__text-box">
+                <h1 class="market-hero__title">Local Experts in Himalayan Trekking</h1>
+                <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
+            </div>
 
             <div class="hero-search-wrapper">
                 <form action="{{ route('treks.index') }}" method="GET" class="hero-search-bar">
@@ -52,8 +53,8 @@
             <div class="market-card-grid market-card-grid--three">
                 @forelse ($featuredTreks->take(3) as $trek)
                     <article class="market-card market-card--trek">
-                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(9, 39, 77, 0.18), rgba(32, 121, 215, 0.38)), url('{{ $trek->image }}');" @endif>
-                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : (strtolower($trek->difficulty) === 'moderate' ? 'market-badge--orange' : 'market-badge--red') }}">
+                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(44, 62, 80, 0.18), rgba(26, 37, 47, 0.45)), url('{{ $trek->image }}');" @endif>
+                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : 'market-badge--orange' }}">
                                 <i class="fas fa-users"></i>
                                 {{ strtolower($trek->difficulty) === 'easy' ? 'Easy Route' : (strtolower($trek->difficulty) === 'moderate' ? 'Group Tours' : 'High Trail') }}
                             </span>
@@ -97,9 +98,7 @@
             <div class="market-card-grid market-card-grid--three">
                 @forelse ($featuredHotels->take(3) as $hotel)
                     <article class="market-card market-card--hotel">
-                        <div class="market-card__media market-card__media--icon">
-                            <i class="fas fa-hotel"></i>
-                        </div>
+                        <div class="market-card__media" @if($hotel->image) style="background-image: linear-gradient(rgba(44, 62, 80, 0.12), rgba(44, 62, 80, 0.35)), url('{{ $hotel->image }}');" @endif></div>
                         <div class="market-card__body">
                             <div class="market-card__meta"><span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span><span><i class="fas fa-star"></i> 4.6</span></div>
                             <h3>{{ $hotel->name }}</h3>
@@ -133,10 +132,14 @@
             <div class="market-card-grid market-card-grid--four">
                 @forelse ($featuredGearItems as $item)
                     <article class="market-mini-card">
-                        <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
+                        @if ($item->image)
+                            <div class="market-card__media" style="min-height: 160px; border-radius: 20px; margin-bottom: 1rem; background-image: linear-gradient(rgba(44, 62, 80, 0.10), rgba(26, 37, 47, 0.25)), url('{{ $item->image }}');"></div>
+                        @else
+                            <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
+                        @endif
                         <span class="market-stock {{ $item->available_stock > 5 ? 'is-good' : 'is-low' }}">Available: {{ $item->available_stock }}</span>
                         <h3>{{ $item->name }}</h3>
-                        <p>{{ $item->type }}</p>
+                        <p>{{ \Illuminate\Support\Str::limit($item->description, 80) }}</p>
                         <div class="market-mini-card__footer">
                             <strong>${{ number_format($item->daily_price, 0) }}/day</strong>
                             <span class="market-button market-button--ghost">Rent</span>
@@ -168,22 +171,46 @@
 
             <div class="market-card-grid market-card-grid--three">
                 <article class="market-quote-card">
-                    <div class="market-quote-card__stars">★★★★★</div>
-                    <p>"Everything felt smooth and premium from picking the route to checking departure details."</p>
-                    <strong>Sajan Gurung</strong>
-                    <span>Everest Base Camp Trek</span>
+                    <div class="market-quote-card__top">
+                        <div class="market-quote-card__stars">★★★★★</div>
+                        <i class="fas fa-quote-right quote-icon"></i>
+                    </div>
+                    <p class="market-quote-card__text">"Everything felt smooth and premium from picking the route to checking departure details."</p>
+                    <div class="market-quote-card__author">
+                        <div class="avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <strong>Sajan Gurung</strong>
+                            <span>Everest Base Camp Trek</span>
+                        </div>
+                    </div>
                 </article>
                 <article class="market-quote-card">
-                    <div class="market-quote-card__stars">★★★★★</div>
-                    <p>"The clean layout made it easy to compare treks, stays, and gear without feeling overwhelmed."</p>
-                    <strong>Nirmala Rai</strong>
-                    <span>Annapurna Region</span>
+                    <div class="market-quote-card__top">
+                        <div class="market-quote-card__stars">★★★★★</div>
+                        <i class="fas fa-quote-right quote-icon"></i>
+                    </div>
+                    <p class="market-quote-card__text">"The clean layout made it easy to compare treks, stays, and gear without feeling overwhelmed."</p>
+                    <div class="market-quote-card__author">
+                        <div class="avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <strong>Nirmala Rai</strong>
+                            <span>Annapurna Region</span>
+                        </div>
+                    </div>
                 </article>
                 <article class="market-quote-card">
-                    <div class="market-quote-card__stars">★★★★☆</div>
-                    <p>"A strong booking experience with clear pricing, polished visuals, and the right information at each step."</p>
-                    <strong>Prakash Tamang</strong>
-                    <span>Langtang Trek</span>
+                    <div class="market-quote-card__top">
+                        <div class="market-quote-card__stars">★★★★☆</div>
+                        <i class="fas fa-quote-right quote-icon"></i>
+                    </div>
+                    <p class="market-quote-card__text">"A strong booking experience with clear pricing, polished visuals, and the right information at each step."</p>
+                    <div class="market-quote-card__author">
+                        <div class="avatar"><i class="fas fa-user"></i></div>
+                        <div class="author-info">
+                            <strong>Prakash Tamang</strong>
+                            <span>Langtang Trek</span>
+                        </div>
+                    </div>
                 </article>
             </div>
         </div>

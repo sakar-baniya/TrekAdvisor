@@ -1,4 +1,5 @@
 @import url("base.css");
+@import url("accessibility.css");
 @import url("layout.css");
 @import url("components.css");
 @import url("pages/home.css");
@@ -10,3 +11,4 @@
 @import url("pages/welcome.css");
 @import url("pages/admin.css");
 @import url("pages/marketplace.css");
+@import url("pages/footer.css");

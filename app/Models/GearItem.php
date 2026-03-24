@@ -14,6 +14,7 @@ class GearItem extends Model
     protected $fillable = [
         'name',
         'type',
+        'description',
         'daily_price',
         'total_stock',
         'available_stock',

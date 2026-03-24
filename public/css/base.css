@@ -1,28 +1,38 @@
-﻿/* Base styles */
+/* Base styles */
 :root {
-    --color-primary: #2d5016;
-    --color-primary-dark: #1f3f0f;
-    --color-accent: #d4704a;
-    --color-accent-dark: #c85a3a;
-    --color-background: #faf7f2;
-    --color-surface: #ffffff;
-    --color-surface-muted: #f3f3f1;
-    --color-text-primary: #1f1f1f;
-    --color-text-secondary: #6b6b6b;
-    --color-border: #d1ccc7;
-    --color-success: #22c55e;
-    --color-warning: #f59e0b;
-    --color-error: #ef4444;
-    --color-info: #3b82f6;
-    --color-gold: #d4af37;
-    --font-display: 'Poppins', sans-serif;
-    --font-body: 'Inter', sans-serif;
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
-    --radius-sm: 8px;
-    --radius-md: 12px;
-    --radius-lg: 16px;
+    /* === TrekAdvisor Premium Palette === */
+    --color-primary:       #2C3E50;   /* Deep Blue */
+    --color-primary-dark:  #1a252f;
+    --color-primary-light: #3f5973;
+    --color-green:         #28a745;   /* Kept for success states */
+    --color-cta:           #E9C46A;   /* Soft Gold */
+    --color-cta-dark:      #d4a342;
+    --color-cta-light:     #f2dfa1;
+    --color-background:    #F8F9FA;   /* Soft Off-White */
+    --color-surface:       #ffffff;
+    --color-surface-muted: #f4f6f8;   /* Tinted blue-white */
+    --color-text-primary:  #343A40;   /* Charcoal Gray */
+    --color-text-secondary:#6c757d;
+    --color-border:        #CED4DA;   /* Light Gray */
+    --color-border-light:  #e9ecef;
+    --color-success: #28a745;
+    --color-warning: #e9c46a;
+    --color-error:   #e74c3c;
+    --color-info:    #0ea5e9;
+    --color-gold:    #e9c46a;
+    /* === Typography === */
+    --font-display: 'Montserrat', sans-serif;  /* Headings */
+    --font-body:    'Open Sans', 'Lato', sans-serif;     /* Body + nav */
+    /* === Shadows === */
+    --shadow-sm: 0 2px 8px rgba(44, 62, 80, 0.08);
+    --shadow-md: 0 6px 20px rgba(44, 62, 80, 0.14);
+    --shadow-lg: 0 12px 36px rgba(44, 62, 80, 0.18);
+    --shadow-card: 0 4px 16px rgba(52, 58, 64, 0.10);
+    /* === Border Radius === */
+    --radius-sm:  8px;
+    --radius-md: 14px;
+    --radius-lg: 20px;
+    --radius-xl: 28px;
 }
 
 * {
@@ -40,6 +50,7 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background);
     line-height: 1.6;
+    letter-spacing: 0.3px;
 }
 
 img,
@@ -69,9 +80,34 @@ h4,
 h5,
 h6 {
     margin-top: 0;
+    margin-bottom: 0.75em;
     font-family: var(--font-display);
     color: var(--color-text-primary);
-    line-height: 1.25;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    font-weight: 700;
+}
+
+h1 {
+    font-size: clamp(1.875rem, 5vw, 3.5rem);
+}
+
+h2 {
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+h3 {
+    font-size: clamp(1.25rem, 3vw, 1.875rem);
+}
+
+h4 {
+    font-size: 1.125rem;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 1.25em;
+    line-height: 1.75;
 }
 
 .container {
@@ -89,7 +125,13 @@ h6 {
 }
 
 .section {
-    padding: 64px 0;
+    padding: 80px 0;
+}
+
+@media (max-width: 768px) {
+    .section {
+        padding: 60px 0;
+    }
 }
 
 .text-center {

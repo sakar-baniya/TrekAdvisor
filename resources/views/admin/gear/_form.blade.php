@@ -28,6 +28,12 @@
                 @error('type') <small class="admin-error">{{ $message }}</small> @enderror
             </label>
 
+            <label class="admin-field admin-field--full">
+                <span>Description</span>
+                <textarea name="description" rows="4" class="admin-input" placeholder="Key use case, weather suitability, and who this item is best for">{{ old('description', $gearItem->description) }}</textarea>
+                @error('description') <small class="admin-error">{{ $message }}</small> @enderror
+            </label>
+
             <label class="admin-field">
                 <span>Daily Price (USD) *</span>
                 <input type="number" step="0.01" min="0" name="daily_price" value="{{ old('daily_price', $gearItem->daily_price) }}" class="admin-input" required />

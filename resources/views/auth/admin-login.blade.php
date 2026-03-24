@@ -3,12 +3,12 @@
     <x-auth-session-status class="auth-status" :status="session('status')" />
 
     <div class="auth-header auth-header--centered">
-        <p class="auth-kicker">Welcome Back</p>
-        <h1 class="auth-title">Sign in to your account</h1>
-        <p class="auth-subtitle">Access your TrekAdvisor bookings, plans, and account details.</p>
+        <p class="auth-kicker">Admin Portal</p>
+        <h1 class="auth-title">Administrator Sign In</h1>
+        <p class="auth-subtitle">Access the TrekAdvisor admin dashboard to manage the platform.</p>
     </div>
 
-    <form method="POST" action="{{ route('login') }}" class="auth-form">
+    <form method="POST" action="{{ route('admin.login.store') }}" class="auth-form">
         @csrf
 
         <!-- Email Address -->
@@ -58,35 +58,16 @@
 
         <div>
             <button type="submit" class="auth-submit">
-                {{ __('Log in') }}
+                {{ __('Sign In as Admin') }}
             </button>
         </div>
 
         <div class="auth-footer auth-footer--stacked">
             <div class="auth-footer-copy">
-                Don't have an account?
-                <a class="auth-link" href="{{ route('register') }}">
-                    Sign up
+                <a class="auth-link" href="{{ route('login') }}">
+                    Back to customer login
                 </a>
             </div>
         </div>
-
-        <div class="auth-alt-panel">
-            <div class="auth-alt-label">Signing in as</div>
-            <div class="auth-alt-grid">
-                <div class="auth-alt-button" style="opacity: 0.8;">
-                    <i class="fas fa-user"></i>
-                    <span>Customer</span>
-                </div>
-                <div class="auth-alt-button" style="opacity: 0.8;">
-                    <i class="fas fa-hotel"></i>
-                    <span>Hotel Owner</span>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 1rem;">
-                <strong>Administrators:</strong> Use <a href="{{ route('admin.login') }}" class="auth-link">admin login</a>
-            </p>
-        </div>
     </form>
 </x-guest-layout>
-

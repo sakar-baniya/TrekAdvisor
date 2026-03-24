@@ -12,8 +12,11 @@
             <div class="market-card-grid market-card-grid--three">
                 @forelse ($hotels as $hotel)
                     <article class="market-card market-card--hotel">
-                        <div class="market-card__media market-card__media--icon">
-                            <i class="fas fa-hotel"></i>
+                        <div class="market-card__media" @if($hotel->image) style="background-image: linear-gradient(rgba(16, 27, 45, 0.18), rgba(16, 27, 45, 0.45)), url('{{ $hotel->image }}');" @endif>
+                            <span class="market-badge market-badge--label market-badge--green">
+                                <i class="fas fa-bed"></i>
+                                {{ $hotel->rooms->sum('total_rooms') }} rooms
+                            </span>
                         </div>
                         <div class="market-card__body">
                             <div class="market-card__meta">
@@ -22,6 +25,10 @@
                             </div>
                             <h3>{{ $hotel->name }}</h3>
                             <p>{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 100) }}</p>
+                            <div class="market-card__trip-meta">
+                                <span>{{ $hotel->rooms->count() }} room types</span>
+                                <span>{{ $hotel->rooms->pluck('room_type')->take(2)->implode(' • ') }}</span>
+                            </div>
                             <div class="market-card__footer">
                                 <div>
                                     <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>

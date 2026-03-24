@@ -12,10 +12,15 @@
             <div class="market-card-grid market-card-grid--four">
                 @forelse ($gearItems as $item)
                     <article class="market-mini-card">
-                        <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
+                        @if ($item->image)
+                            <div class="market-card__media" style="min-height: 180px; border-radius: 20px; margin-bottom: 1rem; background-image: linear-gradient(rgba(16, 27, 45, 0.12), rgba(16, 27, 45, 0.25)), url('{{ $item->image }}');"></div>
+                        @else
+                            <div class="market-mini-card__icon"><i class="fas fa-campground"></i></div>
+                        @endif
                         <span class="market-stock {{ $item->available_stock > 5 ? 'is-good' : 'is-low' }}">Available: {{ $item->available_stock }}</span>
                         <h3>{{ $item->name }}</h3>
                         <p>{{ $item->type }}</p>
+                        <p>{{ \Illuminate\Support\Str::limit($item->description, 90) }}</p>
                         <div class="market-mini-card__footer">
                             <strong>${{ number_format($item->daily_price, 0) }}/day</strong>
                             <a href="{{ route('gear.show', $item) }}" class="market-button market-button--ghost">View</a>

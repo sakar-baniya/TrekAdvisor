@@ -30,13 +30,24 @@ class AuthenticatedSessionController extends Controller
 
         $user = Auth::user();
 
-        if ($user->role === 'hotel_owner' && ! $user->is_approved) {
+        // Prevent admin from logging in via frontend login
+        if ($user->role === 'admin') {
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
 
             return redirect()->route('login')->withErrors([
-                'email' => 'Your hotel owner account is pending admin approval.',
+                'email' => 'Administrators must use the admin login portal.',
+            ])->with('route', 'admin.login');
+        }
+
+        if (($user->role === 'hotel_owner' || $user->role === 'staff') && ! $user->is_approved) {
+            Auth::guard('web')->logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+
+            return redirect()->route('login')->withErrors([
+                'email' => 'Your ' . $user->role . ' account is pending admin approval.',
             ]);
         }
 

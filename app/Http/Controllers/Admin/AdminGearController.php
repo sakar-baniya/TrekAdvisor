@@ -78,6 +78,7 @@ class AdminGearController extends Controller
         return $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'type' => ['required', 'string', 'max:255'],
+            'description' => ['nullable', 'string'],
             'daily_price' => ['required', 'numeric', 'min:0'],
             'total_stock' => ['required', 'integer', 'min:0'],
             'available_stock' => ['required', 'integer', 'min:0'],
