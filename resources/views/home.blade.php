@@ -65,15 +65,6 @@
                                 class="hero-search-input"
                             />
                         </div>
-
-                        <div class="hero-location-row" x-show="category" x-cloak>
-                            <input
-                                type="text"
-                                name="location"
-                                placeholder="Location (optional)"
-                                class="hero-location-input"
-                            />
-                        </div>
                     </div>
 
                     <button type="submit" class="hero-search-btn" x-text="exploreLabel()"></button>

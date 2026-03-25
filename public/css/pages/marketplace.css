@@ -170,19 +170,6 @@ h1, h2, h3, h4, h5, h6 {
     white-space: nowrap;
 }
 
-.site-nav .search-trigger {
-    border-left: 0;
-    margin-left: 0;
-    padding: 0.35rem 0.45rem;
-    border-radius: 0.5rem;
-    color: var(--market-cta);
-}
-
-.site-nav .search-trigger:hover {
-    background: rgba(233, 196, 106, 0.15);
-    color: var(--market-cta-light);
-}
-
 .site-nav .nav-toggle {
     align-items: center;
     justify-content: center;
@@ -593,26 +580,6 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     gap: 0.65rem;
     min-width: 0;
-}
-
-.hero-location-row {
-    width: 100%;
-}
-
-.hero-location-input {
-    width: 100%;
-    border-radius: 999px;
-    border: 1px solid rgba(11, 37, 69, 0.12);
-    background: rgba(255, 255, 255, 0.95);
-    padding: 0.5rem 0.85rem;
-    font-size: 0.95rem;
-    color: var(--market-slate-900);
-    outline: none;
-}
-
-.hero-location-input:focus {
-    border-color: rgba(8, 145, 178, 0.55);
-    box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.15);
 }
 
 .market-hero .hero-search-btn {

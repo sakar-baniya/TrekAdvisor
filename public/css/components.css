@@ -739,23 +739,6 @@
     box-shadow: 0 8px 20px rgba(233, 196, 106, 0.35);
 }
 
-.search-trigger {
-    background: none;
-    border: none;
-    color: var(--color-primary);
-    font-size: 1.1rem;
-    padding: 8px;
-    cursor: pointer;
-    border-left: 1px solid var(--color-border);
-    padding-left: 14px;
-    margin-left: 4px;
-    transition: color 0.2s ease;
-}
-
-.search-trigger:hover {
-    color: var(--color-primary-dark);
-}
-
 .nav-toggle {
     display: none;
     color: var(--color-primary);

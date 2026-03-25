@@ -28,7 +28,6 @@
                     </a>
                 </div>
                 <a href="{{ route('contact') }}" class="btn btn-cta">Contact</a>
-                <button type="button" class="search-trigger" aria-label="Search"><i class="fas fa-search"></i></button>
                 @auth
                     <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="btn btn-link nav-account-link {{ request()->routeIs(auth()->user()->dashboardRouteName()) ? 'is-active' : '' }}">My Account</a>
                     <form method="POST" action="{{ route('logout') }}" class="nav-logout-form">
