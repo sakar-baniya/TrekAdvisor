@@ -623,55 +623,48 @@
     letter-spacing: -0.03em;
 }
 
-.header-contact {
-    display: flex;
-    align-items: center;
-    gap: 30px;
+.nav-bar {
+    background: #ffffff;
+    border-bottom: 2px solid var(--color-border);
 }
 
-.contact-card {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    text-decoration: none;
-    color: inherit;
-}
-
-.contact-card__icon {
-    width: 44px;
-    height: 44px;
-    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-light));
+/* Floating WhatsApp Button */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #25D366 0%, #20BA5A 100%);
     color: #ffffff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    box-shadow: 0 4px 10px rgba(44, 62, 80, 0.2);
+    font-size: 1.5rem;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    z-index: 999;
 }
 
-.contact-card__text {
-    display: flex;
-    flex-direction: column;
+.floating-whatsapp:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.45);
 }
 
-.contact-card__label {
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-text-secondary);
+.floating-whatsapp:active {
+    transform: scale(0.95);
 }
 
-.contact-card__text strong {
-    font-size: 1.05rem;
-    color: var(--color-primary);
-    font-weight: 700;
-}
-
-.nav-bar {
-    background: #ffffff;
-    border-bottom: 2px solid var(--color-border);
+@media (max-width: 768px) {
+    .floating-whatsapp {
+        bottom: 20px;
+        right: 20px;
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+    }
 }
 
 .nav-bar__inner {

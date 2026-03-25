@@ -121,47 +121,6 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 }
 
-.site-nav .header-contact {
-    gap: 0;
-}
-
-.site-nav .contact-card {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    color: inherit;
-    max-width: 14rem;
-}
-
-.site-nav .contact-card__icon {
-    width: 2.25rem;
-    height: 2.25rem;
-    font-size: 1rem;
-    flex-shrink: 0;
-}
-
-.site-nav .contact-card__text {
-    display: flex;
-    flex-direction: column;
-    gap: 0.1rem;
-    line-height: 1.2;
-    min-width: 0;
-}
-
-.site-nav .contact-card__label {
-    font-size: 0.65rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: rgba(255,255,255,0.75);
-}
-
-.site-nav .contact-card__text strong {
-    font-size: 0.9rem;
-    color: #fff;
-}
-
 .site-nav .btn-cta {
     padding: 0.45rem 0.85rem;
     font-size: 0.72rem;

@@ -18,15 +18,6 @@
                 </div>
             </div>
             <div class="nav-section nav-right">
-                <div class="header-contact">
-                    <a href="https://wa.me/9779816681137" class="contact-card" target="_blank" rel="noopener noreferrer">
-                        <span class="contact-card__icon" aria-hidden="true"><i class="fab fa-whatsapp"></i></span>
-                        <span class="contact-card__text">
-                            <span class="contact-card__label">24/7 WhatsApp</span>
-                            <strong>+977 9816681137</strong>
-                        </span>
-                    </a>
-                </div>
                 <a href="{{ route('contact') }}" class="btn btn-cta">Contact</a>
                 @auth
                     <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="btn btn-link nav-account-link {{ request()->routeIs(auth()->user()->dashboardRouteName()) ? 'is-active' : '' }}">My Account</a>
@@ -74,3 +65,8 @@
         </div>
     </div>
 </div>
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/9779816681137" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+</a>
