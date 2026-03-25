@@ -1107,3 +1107,202 @@
 .admin-overlay {
     background: rgba(31, 31, 31, 0.4);
 }
+
+/* Unified dashboard palette */
+.admin-body {
+    background: linear-gradient(180deg, #eef6fb 0%, #ddecf6 100%);
+    color: #184E6C;
+}
+
+.admin-sidebar {
+    background: linear-gradient(180deg, #184E6C 0%, #1b5a79 52%, #245A78 100%);
+    color: #DDECF6;
+    box-shadow: 24px 0 48px rgba(24, 78, 108, 0.16);
+}
+
+.admin-brandmark__badge,
+.admin-user-card__avatar,
+.admin-profile-chip__avatar {
+    background: linear-gradient(135deg, #5BA3C6, #387EA2);
+    box-shadow: 0 12px 24px rgba(56, 126, 162, 0.24);
+}
+
+.admin-brandmark small,
+.admin-user-card small,
+.admin-profile-chip small,
+.admin-nav-group__toggle,
+.admin-nav-link,
+.admin-ghost-button {
+    color: rgba(221, 236, 246, 0.82);
+}
+
+.admin-nav-group__toggle:hover,
+.admin-ghost-button:hover {
+    background: rgba(155, 203, 229, 0.12);
+    color: #ffffff;
+}
+
+.admin-nav-link:hover,
+.admin-nav-link.is-active {
+    background: rgba(155, 203, 229, 0.16);
+    color: #ffffff;
+}
+
+.admin-user-card,
+.admin-ghost-button {
+    background: rgba(155, 203, 229, 0.08);
+}
+
+.admin-topbar {
+    background: rgba(221, 236, 246, 0.84);
+    border-bottom: 1px solid rgba(24, 78, 108, 0.08);
+    box-shadow: 0 8px 26px rgba(24, 78, 108, 0.06);
+}
+
+.admin-topbar__title,
+.admin-page-title,
+.admin-panel__header h3,
+.admin-list-card__top h3,
+.admin-stat-card h3,
+.admin-table__ref,
+.admin-info-list strong {
+    color: #184E6C;
+}
+
+.admin-eyebrow,
+.admin-stat-card p,
+.admin-stat-card span,
+.admin-panel__header p,
+.admin-note-card span,
+.admin-table small,
+.admin-table th,
+.admin-table__empty,
+.admin-list-card__excerpt,
+.admin-list-card__meta,
+.admin-review-card__top p,
+.admin-review-full,
+.admin-info-list div {
+    color: #5b7382;
+}
+
+.admin-searchbar,
+.admin-input,
+.admin-textarea,
+.admin-select,
+.admin-filter-tab,
+.admin-date-chip,
+.admin-link-chip,
+.admin-panel,
+.admin-list-card,
+.admin-stat-card,
+.admin-note-card,
+.admin-itinerary-card,
+.admin-upload-card,
+.admin-image-preview,
+.admin-choice-pill {
+    border-color: rgba(24, 78, 108, 0.12) !important;
+}
+
+.admin-searchbar,
+.admin-input,
+.admin-textarea,
+.admin-select,
+.admin-panel,
+.admin-list-card,
+.admin-stat-card,
+.admin-note-card,
+.admin-itinerary-card,
+.admin-image-preview,
+.admin-choice-pill {
+    background: #ffffff;
+}
+
+.admin-panel,
+.admin-list-card,
+.admin-stat-card,
+.admin-note-card,
+.admin-pagination nav > div:first-child span,
+.admin-pagination nav > div:last-child a,
+.admin-pagination nav > div:last-child span {
+    box-shadow: 0 18px 40px rgba(24, 78, 108, 0.08);
+}
+
+.admin-searchbar:focus-within,
+.admin-input:focus,
+.admin-textarea:focus,
+.admin-select:focus {
+    border-color: #5BA3C6 !important;
+    box-shadow: 0 0 0 3px rgba(91, 163, 198, 0.18);
+}
+
+.admin-primary-button,
+.admin-primary-button--fit {
+    background: linear-gradient(135deg, #5BA3C6, #387EA2);
+    color: #ffffff;
+    box-shadow: 0 12px 22px rgba(56, 126, 162, 0.2);
+}
+
+.admin-primary-button:hover,
+.admin-primary-button--fit:hover {
+    background: linear-gradient(135deg, #69b0d1, #4b8fb2);
+    box-shadow: 0 16px 28px rgba(56, 126, 162, 0.24);
+}
+
+.admin-secondary-button,
+.admin-filter-tab,
+.admin-link-chip {
+    background: rgba(91, 163, 198, 0.1);
+    color: #184E6C;
+    border: 1px solid rgba(56, 126, 162, 0.18);
+}
+
+.admin-secondary-button:hover,
+.admin-filter-tab:hover,
+.admin-filter-tab.is-active {
+    background: rgba(91, 163, 198, 0.18);
+    color: #184E6C;
+}
+
+.admin-stat-card__icon.is-blue,
+.admin-stat-card__icon.is-green,
+.admin-stat-card__icon.is-violet,
+.admin-stat-card__icon.is-amber,
+.admin-stat-card__icon.is-slate,
+.admin-stat-card__icon.is-rose {
+    background: rgba(91, 163, 198, 0.14);
+    color: #387EA2;
+}
+
+.admin-badge,
+.admin-date-chip,
+.admin-link-chip {
+    background: rgba(91, 163, 198, 0.12);
+    color: #184E6C;
+}
+
+.admin-badge.is-success {
+    background: rgba(34, 197, 94, 0.14);
+    color: #166534;
+}
+
+.admin-badge.is-warning {
+    background: rgba(245, 158, 11, 0.16);
+    color: #92400e;
+}
+
+.admin-badge.is-muted {
+    background: rgba(155, 203, 229, 0.18);
+    color: #184E6C;
+}
+
+.admin-table thead {
+    background: rgba(221, 236, 246, 0.72);
+}
+
+.admin-table tbody tr:hover {
+    background: rgba(221, 236, 246, 0.45);
+}
+
+.admin-overlay {
+    background: rgba(24, 78, 108, 0.28);
+}

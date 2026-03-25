@@ -5,89 +5,139 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'TrekAdvisor') }} - Admin</title>
+        <title>{{ config('app.name', 'TrekAdvisor') }} - Dashboard</title>
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=4">
     </head>
-    <body class="admin-body">
         @php
-            $adminNavigation = [
-                [
-                    'label' => 'Dashboard',
-                    'icon' => 'fa-chart-line',
-                    'route' => route('admin.dashboard'),
-                    'active' => request()->routeIs('admin.dashboard'),
-                ],
-                [
-                    'label' => 'Trek Management',
-                    'icon' => 'fa-mountain-sun',
-                    'children' => [
-                        ['label' => 'All Treks', 'route' => route('admin.treks.index'), 'active' => request()->routeIs('admin.treks.index')],
-                        ['label' => 'Add New Trek', 'route' => route('admin.treks.create'), 'active' => request()->routeIs('admin.treks.create')],
-                        ['label' => 'Departures', 'route' => route('admin.departures.index'), 'active' => request()->routeIs('admin.departures.*')],
-                        ['label' => 'Trek Bookings', 'route' => route('admin.trek-bookings.index'), 'active' => request()->routeIs('admin.trek-bookings.*')],
+            $user = auth()->user();
+            $role = $user->role;
+
+            $dashboardConfigs = [
+                'admin' => [
+                    'title' => 'TrekAdvisor Admin',
+                    'subtitle' => 'Operations center',
+                    'panel_label' => 'Admin panel',
+                    'home_route' => route('admin.dashboard'),
+                    'navigation' => [
+                        [
+                            'label' => 'Dashboard',
+                            'icon' => 'fa-chart-line',
+                            'route' => route('admin.dashboard'),
+                            'active' => request()->routeIs('admin.dashboard'),
+                        ],
+                        [
+                            'label' => 'Trek Management',
+                            'icon' => 'fa-mountain-sun',
+                            'children' => [
+                                ['label' => 'All Treks', 'route' => route('admin.treks.index'), 'active' => request()->routeIs('admin.treks.index')],
+                                ['label' => 'Add New Trek', 'route' => route('admin.treks.create'), 'active' => request()->routeIs('admin.treks.create')],
+                                ['label' => 'Departures', 'route' => route('admin.departures.index'), 'active' => request()->routeIs('admin.departures.*')],
+                                ['label' => 'Trek Bookings', 'route' => route('admin.trek-bookings.index'), 'active' => request()->routeIs('admin.trek-bookings.*')],
+                            ],
+                        ],
+                        [
+                            'label' => 'Hotel Management',
+                            'icon' => 'fa-hotel',
+                            'children' => [
+                                ['label' => 'All Hotels', 'route' => route('admin.hotels.index'), 'active' => request()->routeIs('admin.hotels.*')],
+                            ],
+                        ],
+                        [
+                            'label' => 'Gear Management',
+                            'icon' => 'fa-backpack',
+                            'children' => [
+                                ['label' => 'All Gear Items', 'route' => route('admin.gear.index'), 'active' => request()->routeIs('admin.gear.*')],
+                                ['label' => 'Add Gear Item', 'route' => route('admin.gear.create'), 'active' => request()->routeIs('admin.gear.create')],
+                                ['label' => 'Gear Rentals', 'route' => route('admin.gear-rentals.index'), 'active' => request()->routeIs('admin.gear-rentals.*')],
+                            ],
+                        ],
+                        [
+                            'label' => 'User Management',
+                            'icon' => 'fa-users',
+                            'children' => [
+                                ['label' => 'All Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*')],
+                                ['label' => 'Add Staff', 'route' => route('admin.users.create-staff'), 'active' => request()->routeIs('admin.users.create-staff')],
+                            ],
+                        ],
+                        [
+                            'label' => 'Payments',
+                            'icon' => 'fa-credit-card',
+                            'children' => [
+                                ['label' => 'All Payments', 'route' => route('admin.payments.index'), 'active' => request()->routeIs('admin.payments.*')],
+                            ],
+                        ],
+                        [
+                            'label' => 'Reviews',
+                            'icon' => 'fa-star',
+                            'children' => [
+                                ['label' => 'All Reviews', 'route' => route('admin.reviews.index'), 'active' => request()->routeIs('admin.reviews.index')],
+                                ['label' => 'Flagged Reviews', 'route' => route('admin.reviews.flagged'), 'active' => request()->routeIs('admin.reviews.flagged')],
+                            ],
+                        ],
                     ],
                 ],
-                [
-                    'label' => 'Hotel Management',
-                    'icon' => 'fa-hotel',
-                    'children' => [
-                        ['label' => 'All Hotels', 'route' => route('admin.hotels.index'), 'active' => request()->routeIs('admin.hotels.*')],
+                'staff' => [
+                    'title' => 'TrekAdvisor Staff',
+                    'subtitle' => 'Support desk',
+                    'panel_label' => 'Staff dashboard',
+                    'home_route' => route('staff.dashboard'),
+                    'navigation' => [
+                        [
+                            'label' => 'Dashboard',
+                            'icon' => 'fa-headset',
+                            'route' => route('staff.dashboard'),
+                            'active' => request()->routeIs('staff.dashboard'),
+                        ],
                     ],
                 ],
-                [
-                    'label' => 'Gear Management',
-                    'icon' => 'fa-backpack',
-                    'children' => [
-                        ['label' => 'All Gear Items', 'route' => route('admin.gear.index'), 'active' => request()->routeIs('admin.gear.*')],
-                        ['label' => 'Add Gear Item', 'route' => route('admin.gear.create'), 'active' => request()->routeIs('admin.gear.create')],
-                        ['label' => 'Gear Rentals', 'route' => route('admin.gear-rentals.index'), 'active' => request()->routeIs('admin.gear-rentals.*')],
-                    ],
-                ],
-                [
-                    'label' => 'User Management',
-                    'icon' => 'fa-users',
-                    'children' => [
-                        ['label' => 'All Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*')],
-                        ['label' => 'Add Staff', 'route' => route('admin.users.create-staff'), 'active' => request()->routeIs('admin.users.create-staff')],
-                    ],
-                ],
-                [
-                    'label' => 'Payments',
-                    'icon' => 'fa-credit-card',
-                    'children' => [
-                        ['label' => 'All Payments', 'route' => route('admin.payments.index'), 'active' => request()->routeIs('admin.payments.*')],
-                    ],
-                ],
-                [
-                    'label' => 'Reviews',
-                    'icon' => 'fa-star',
-                    'children' => [
-                        ['label' => 'All Reviews', 'route' => route('admin.reviews.index'), 'active' => request()->routeIs('admin.reviews.index')],
-                        ['label' => 'Flagged Reviews', 'route' => route('admin.reviews.flagged'), 'active' => request()->routeIs('admin.reviews.flagged')],
+                'hotel_owner' => [
+                    'title' => 'TrekAdvisor Hotel Hub',
+                    'subtitle' => 'Partner console',
+                    'panel_label' => 'Hotel owner dashboard',
+                    'home_route' => route('hotel_owner.dashboard'),
+                    'navigation' => [
+                        [
+                            'label' => 'Dashboard',
+                            'icon' => 'fa-hotel',
+                            'route' => route('hotel_owner.dashboard'),
+                            'active' => request()->routeIs('hotel_owner.dashboard'),
+                        ],
                     ],
                 ],
             ];
+
+            $dashboardConfig = $dashboardConfigs[$role] ?? [
+                'title' => 'TrekAdvisor Dashboard',
+                'subtitle' => 'Workspace',
+                'panel_label' => 'Dashboard',
+                'home_route' => route($user->dashboardRouteName()),
+                'navigation' => [],
+            ];
+
+            $dashboardNavigation = $dashboardConfig['navigation'];
         @endphp
+
+    <body class="admin-body admin-body--{{ str_replace('_', '-', $role) }}">
 
         <div class="admin-shell" data-admin-shell>
             <aside class="admin-sidebar" id="admin-sidebar">
                 <div class="admin-sidebar__brand">
-                    <a href="{{ route('admin.dashboard') }}" class="admin-brandmark">
+                    <a href="{{ $dashboardConfig['home_route'] }}" class="admin-brandmark">
                         <span class="admin-brandmark__badge">TA</span>
                         <span>
                             <strong>TrekAdvisor</strong>
-                            <small>Admin Panel</small>
+                            <small>{{ $dashboardConfig['panel_label'] }}</small>
                         </span>
                     </a>
                 </div>
 
                 <nav class="admin-sidebar__nav">
-                    @foreach ($adminNavigation as $item)
+                    @foreach ($dashboardNavigation as $item)
                         @if (isset($item['children']))
                             @php
                                 $groupIsActive = collect($item['children'])->contains(fn ($child) => $child['active']);
@@ -114,6 +164,11 @@
                             </a>
                         @endif
                     @endforeach
+
+                    <a href="{{ route('home') }}" class="admin-nav-link admin-nav-link--root">
+                        <i class="fas fa-compass"></i>
+                        <span>Back to Site</span>
+                    </a>
                 </nav>
 
                 <div class="admin-sidebar__footer">
@@ -142,8 +197,8 @@
                             <i class="fas fa-bars"></i>
                         </button>
                         <div>
-                            <p class="admin-eyebrow">Operations center</p>
-                            <h1 class="admin-topbar__title">TrekAdvisor Admin</h1>
+                            <p class="admin-eyebrow">{{ $dashboardConfig['subtitle'] }}</p>
+                            <h1 class="admin-topbar__title">{{ $dashboardConfig['title'] }}</h1>
                         </div>
                     </div>
 

@@ -46,7 +46,7 @@
             @forelse ($hotels as $hotel)
                 <article class="admin-note-card">
                     <strong>{{ $hotel->name }}</strong>
-                    <span>{{ $hotel->location }} • {{ $hotel->rooms_count }} room types • {{ $hotel->status }}</span>
+                    <span>{{ $hotel->location }} | {{ $hotel->rooms_count }} room types | {{ $hotel->status }}</span>
                 </article>
             @empty
                 <p class="admin-table__empty">No hotels have been added to your account yet.</p>
