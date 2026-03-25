@@ -1,21 +1,82 @@
 <x-app-layout>
     <section class="market-hero">
         <div class="container market-hero__inner">
-            <div class="hero-rating">
-                <span class="rating-text">5.0</span>
-                <span class="stars">★★★★★</span>
-                <span class="rating-note">2614 TripAdvisor reviews</span>
-            </div>
             <div class="market-hero__text-box">
                 <h1 class="market-hero__title">Local Experts in Himalayan Trekking</h1>
                 <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
             </div>
 
-            <div class="hero-search-wrapper">
-                <form action="{{ route('treks.index') }}" method="GET" class="hero-search-bar">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" name="search" placeholder="Find your trip..." class="hero-search-input" />
-                    <button type="submit" class="hero-search-btn">Explore</button>
+            <div class="hero-search-wrapper" x-data="{
+                category: 'treks',
+                treksUrl: '{{ route('treks.index') }}',
+                hotelsUrl: '{{ route('hotels.index') }}',
+                gearUrl: '{{ route('gear.index') }}',
+                placeholder() {
+                    if (this.category === 'treks') return 'Search for treks, destinations...'
+                    if (this.category === 'hotels') return 'Search for hotels, locations...'
+                    return 'Search for gear type, location...'
+                },
+                exploreLabel() {
+                    if (this.category === 'treks') return 'Explore Treks'
+                    if (this.category === 'hotels') return 'Explore Hotels'
+                    return 'Explore Gear'
+                },
+                actionUrl() {
+                    if (this.category === 'treks') return this.treksUrl
+                    if (this.category === 'hotels') return this.hotelsUrl
+                    return this.gearUrl
+                }
+            }">
+                <div class="hero-search-tabs" role="tablist" aria-label="Search category">
+                    <button
+                        type="button"
+                        class="hero-search-tab"
+                        :class="{ 'is-active': category === 'treks' }"
+                        @click="category = 'treks'"
+                    >
+                        Treks
+                    </button>
+                    <button
+                        type="button"
+                        class="hero-search-tab"
+                        :class="{ 'is-active': category === 'hotels' }"
+                        @click="category = 'hotels'"
+                    >
+                        Hotels
+                    </button>
+                    <button
+                        type="button"
+                        class="hero-search-tab"
+                        :class="{ 'is-active': category === 'gear' }"
+                        @click="category = 'gear'"
+                    >
+                        Gear Rental
+                    </button>
+                </div>
+
+                <form :action="actionUrl()" method="GET" class="hero-search-bar">
+                    <div class="hero-search-left">
+                        <div class="hero-search-row">
+                            <i class="fas fa-search search-icon" aria-hidden="true"></i>
+                            <input
+                                type="text"
+                                name="search"
+                                x-bind:placeholder="placeholder()"
+                                class="hero-search-input"
+                            />
+                        </div>
+
+                        <div class="hero-location-row" x-show="category" x-cloak>
+                            <input
+                                type="text"
+                                name="location"
+                                placeholder="Location (optional)"
+                                class="hero-location-input"
+                            />
+                        </div>
+                    </div>
+
+                    <button type="submit" class="hero-search-btn" x-text="exploreLabel()"></button>
                 </form>
             </div>
 
