@@ -117,7 +117,7 @@
 
             <div class="booking-grid">
                 @forelse ($featuredTreks->take(3) as $trek)
-                    <article class="booking-card">
+                    <article class="booking-card booking-card--featured booking-card--trek">
                         <div class="booking-card__media">
                             @if($trek->image)
                                 <img src="{{ $trek->image }}" alt="Image of {{ $trek->title }}">
@@ -137,7 +137,7 @@
                             <h3>{{ $trek->title }}</h3>
                             <div class="booking-card__footer">
                                 <div class="booking-card__price">From <strong>${{ number_format($trek->base_price, 0) }}</strong> <span>/person</span></div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="btn-primary-filled">View Details</a>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="btn-primary-filled booking-card__action">View Details</a>
                             </div>
                         </div>
                     </article>
@@ -173,7 +173,7 @@
 
             <div class="booking-grid">
                 @forelse ($featuredHotels->take(3) as $hotel)
-                    <article class="booking-card">
+                    <article class="booking-card booking-card--featured booking-card--hotel">
                         <div class="booking-card__media">
                             @if($hotel->image)
                                 <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}">
@@ -198,7 +198,7 @@
                             <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 60) }}</p>
                             <div class="booking-card__footer">
                                 <div class="booking-card__price"><strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
-                                <span class="btn-primary-filled">Book Now</span>
+                                <span class="btn-primary-filled booking-card__action">Book Now</span>
                             </div>
                         </div>
                     </article>
@@ -227,7 +227,7 @@
 
             <div class="booking-grid">
                 @forelse ($featuredGearItems->take(4) as $item)
-                    <article class="booking-card">
+                    <article class="booking-card booking-card--featured booking-card--gear">
                         <div class="booking-card__media">
                             @if ($item->image)
                                 <img src="{{ $item->image }}" alt="Image of {{ $item->name }}">
@@ -242,7 +242,7 @@
                             <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit($item->description, 50) }}</p>
                             <div class="booking-card__footer">
                                 <div class="booking-card__price"><strong>${{ number_format($item->daily_price, 0) }}</strong> <span>/day</span></div>
-                                <span class="btn-primary-filled">Rent Now</span>
+                                <span class="btn-primary-filled booking-card__action">Rent Now</span>
                             </div>
                         </div>
                     </article>

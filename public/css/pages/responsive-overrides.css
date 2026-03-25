@@ -840,3 +840,23 @@ body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
     border-bottom-color: transparent !important;
     box-shadow: none !important;
 }
+
+/* Authenticated nav alignment fix */
+.site-nav .nav-right {
+    align-items: center;
+}
+
+.nav-logout-form {
+    display: flex;
+    align-items: center;
+    margin: 0;
+}
+
+.site-nav .nav-account-link,
+.site-nav .nav-logout-form .btn.btn-link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    line-height: 1;
+    margin: 0;
+}

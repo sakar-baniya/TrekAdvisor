@@ -154,7 +154,7 @@ h1, h2, h3, h4, h5, h6 {
     bottom: 4px;
     height: 2px;
     border-radius: 2px;
-    background: #E9C46A;
+    background: var(--accent-highlight);
 }
 }
 
@@ -2122,6 +2122,7 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.05em;
     font-weight: 600;
 }
+
 
 
 
