@@ -17,21 +17,7 @@
     <body class="body-app">
         <div class="page-shell">
             <header class="site-header">
-                <div class="top-bar">
-                    <div class="container top-bar__inner">
-                        <div class="top-bar__center">
-                            <i class="fas fa-bell"></i>
-                            <span>Check Our Risk-Free Booking Policy <a href="#">View Details &raquo;</a></span>
-                        </div>
-                        <div class="top-bar__right">
-                            <div class="top-bar__item">
-                                <img src="https://flagcdn.com/w20/np.png" alt="Nepal" style="width: 16px; margin-right: 5px;">
-                                <span>Nepal</span>
-                                <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 4px;"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+
                 @include('layouts.navigation')
             </header>
 
