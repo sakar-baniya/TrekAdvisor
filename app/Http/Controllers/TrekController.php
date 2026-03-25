@@ -22,6 +22,15 @@ class TrekController extends Controller
             });
         }
 
+        if ($request->filled('location')) {
+            $location = $request->string('location')->toString();
+            $query->where(function ($q) use ($location) {
+                // Location isn't a dedicated column; use title/description match to keep the filter useful.
+                $q->where('title', 'like', "%{$location}%")
+                    ->orWhere('description', 'like', "%{$location}%");
+            });
+        }
+
         if ($request->filled('difficulty')) {
             $query->where('difficulty', $request->difficulty);
         }

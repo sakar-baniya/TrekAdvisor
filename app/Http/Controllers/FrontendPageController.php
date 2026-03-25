@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GearItem;
 use App\Models\Hotel;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FrontendPageController extends Controller
@@ -64,14 +65,28 @@ class FrontendPageController extends Controller
         return view('pages.blog', compact('posts'));
     }
 
-    public function hotels(): View
+    public function hotels(Request $request): View
     {
-        $hotels = Hotel::query()
+        $query = Hotel::query()
             ->where('status', 'Active')
             ->with(['rooms', 'reviews'])
-            ->withMin('rooms', 'price_per_night')
-            ->latest()
-            ->paginate(9);
+            ->withMin('rooms', 'price_per_night');
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->toString();
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('location', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('location')) {
+            $location = $request->string('location')->toString();
+            $query->where('location', 'like', "%{$location}%");
+        }
+
+        $hotels = $query->latest()->paginate(9)->withQueryString();
 
         return view('hotels.index', compact('hotels'));
     }
@@ -83,12 +98,31 @@ class FrontendPageController extends Controller
         return view('hotels.show', compact('hotel'));
     }
 
-    public function gear(): View
+    public function gear(Request $request): View
     {
-        $gearItems = GearItem::query()
+        $query = GearItem::query()
             ->with('reviews')
-            ->latest()
-            ->paginate(12);
+            ->latest();
+
+        if ($request->filled('search')) {
+            $search = $request->string('search')->toString();
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                    ->orWhere('type', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('location')) {
+            $location = $request->string('location')->toString();
+            // Gear items don't have a dedicated location field; match loosely against text fields.
+            $query->where(function ($q) use ($location) {
+                $q->where('name', 'like', "%{$location}%")
+                    ->orWhere('description', 'like', "%{$location}%");
+            });
+        }
+
+        $gearItems = $query->paginate(12)->withQueryString();
 
         return view('gear.index', compact('gearItems'));
     }
