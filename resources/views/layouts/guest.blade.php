@@ -14,11 +14,11 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="body-guest">
-        @include('layouts.navigation')
+    <body class="body-guest body-auth-page">
+        @include('layouts.navigation', ['navVariant' => 'auth'])
 
         <div class="guest-shell guest-shell--auth">
             <div class="guest-auth-stage">
@@ -36,6 +36,45 @@
     </body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const syncNavbarState = () => {
+                document.querySelectorAll('.site-nav').forEach((nav) => {
+                    nav.classList.toggle('is-scrolled', window.scrollY > 50);
+                });
+            };
+
+            syncNavbarState();
+            window.addEventListener('scroll', syncNavbarState, { passive: true });
+
+            document.querySelectorAll('[data-nav-shell]').forEach((shell) => {
+                const toggle = shell.querySelector('[data-nav-toggle]');
+                const mobile = shell.querySelector('[data-nav-mobile]');
+
+                if (!toggle || !mobile) {
+                    return;
+                }
+
+                const setOpen = (isOpen) => {
+                    mobile.classList.toggle('open', isOpen);
+                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                };
+
+                toggle.addEventListener('click', () => {
+                    setOpen(!mobile.classList.contains('open'));
+                });
+
+                document.addEventListener('click', (event) => {
+                    if (!shell.contains(event.target)) {
+                        setOpen(false);
+                    }
+                });
+
+                document.addEventListener('keydown', (event) => {
+                    if (event.key === 'Escape') {
+                        setOpen(false);
+                    }
+                });
+            });
+
             document.querySelectorAll('[data-toggle-password]').forEach((button) => {
                 const targetId = button.getAttribute('data-target');
                 const input = document.getElementById(targetId);
@@ -56,5 +95,3 @@
         });
     </script>
 </html>
-
-

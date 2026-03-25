@@ -1,5 +1,12 @@
-<div class="site-nav-cluster" data-nav-shell>
-    <nav class="site-nav" aria-label="Primary">
+@php
+    $navVariant = $navVariant ?? 'default';
+    $navClusterClass = $navVariant === 'auth' ? 'site-nav-cluster site-nav-cluster--auth' : 'site-nav-cluster';
+    $navClass = $navVariant === 'auth' ? 'site-nav site-nav--auth' : 'site-nav';
+    $navMobileClass = $navVariant === 'auth' ? 'nav-mobile nav-mobile--auth' : 'nav-mobile';
+@endphp
+
+<div class="{{ $navClusterClass }}" data-nav-shell>
+    <nav class="{{ $navClass }}" aria-label="Primary">
         <div class="container nav-inner">
             <div class="nav-section nav-left">
                 <a href="{{ route('home') }}" class="brand">
@@ -9,7 +16,6 @@
             </div>
             <div class="nav-section nav-center">
                 <div class="nav-links">
-                    <a href="{{ route('home') }}" class="nav-link {{ request()->routeIs('home') ? 'is-active' : '' }}">Home</a>
                     <a href="{{ route('treks.index') }}" class="nav-link {{ request()->routeIs('treks.*') ? 'is-active' : '' }}">Treks</a>
                     <a href="{{ route('hotels.index') }}" class="nav-link {{ request()->routeIs('hotels.*') ? 'is-active' : '' }}">Hotels</a>
                     <a href="{{ route('gear.index') }}" class="nav-link {{ request()->routeIs('gear.*') ? 'is-active' : '' }}">Gear Rental</a>
@@ -43,9 +49,8 @@
         </div>
     </nav>
 
-    <div id="site-nav-mobile" class="nav-mobile" data-nav-mobile>
+    <div id="site-nav-mobile" class="{{ $navMobileClass }}" data-nav-mobile>
         <div class="nav-mobile-links">
-            <a href="{{ route('home') }}" class="nav-link">Home</a>
             <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>
             <a href="{{ route('hotels.index') }}" class="nav-link">Hotels</a>
             <a href="{{ route('gear.index') }}" class="nav-link">Gear Rental</a>

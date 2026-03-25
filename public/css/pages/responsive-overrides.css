@@ -1,3 +1,339 @@
+:root {
+    --primary: #5BA3C6;
+    --secondary: #387EA2;
+    --dark-blue: #184E6C;
+    --light-blue: #DDECF6;
+    --accent-highlight: #9BCBE5;
+
+    --market-primary: var(--secondary);
+    --market-primary-dark: var(--dark-blue);
+    --market-primary-light: var(--primary);
+    --market-cta: var(--primary);
+    --market-cta-dark: var(--secondary);
+    --market-cta-light: var(--accent-highlight);
+    --market-bg: var(--light-blue);
+    --market-border: rgba(24, 78, 108, 0.14);
+    --market-border-light: rgba(155, 203, 229, 0.28);
+    --market-accent: var(--secondary);
+    --market-cyan-50: #f4f9fc;
+    --market-cyan-100: #e9f4fa;
+    --market-cyan-200: var(--light-blue);
+    --market-cyan-500: var(--primary);
+    --market-cyan-600: var(--secondary);
+    --market-cyan-700: var(--dark-blue);
+    --market-blue-700: var(--dark-blue);
+    --market-slate-50: #f7fbfe;
+    --market-slate-100: #edf5fa;
+    --market-slate-200: #d8e8f1;
+    --market-slate-300: #bdd7e6;
+    --market-slate-400: #8da8b9;
+    --market-slate-500: #5b7382;
+    --market-slate-700: var(--dark-blue);
+    --market-slate-900: #12384d;
+    --market-orange-400: var(--primary);
+    --market-orange-500: var(--primary);
+    --market-orange-600: var(--secondary);
+    --market-yellow-100: rgba(91, 163, 198, 0.18);
+    --market-yellow-600: var(--secondary);
+    --market-shadow: 0 12px 36px rgba(24, 78, 108, 0.12);
+    --market-shadow-soft: 0 8px 24px rgba(24, 78, 108, 0.08);
+    --market-shadow-card: 0 10px 28px rgba(24, 78, 108, 0.1);
+}
+
+body.body-app,
+body.body-guest,
+.page-shell,
+.page-content,
+.guest-shell,
+.guest-auth-stage,
+.market-section,
+.market-section--soft,
+.booking-wrap,
+.account-shell,
+.treks-page {
+    background: var(--light-blue);
+}
+
+.site-header,
+.site-nav-cluster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+}
+
+.site-nav {
+    position: relative;
+    background: linear-gradient(to bottom, rgba(24, 78, 108, 0.4), transparent) !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    transition: all 0.35s ease;
+}
+
+.site-nav.is-scrolled {
+    background: rgba(24, 78, 108, 0.92) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.site-nav .brand-wordmark,
+.site-nav .nav-link,
+.site-nav .btn.btn-link,
+.site-nav .btn-auth,
+.site-nav .nav-toggle {
+    color: #ffffff !important;
+}
+
+.site-nav .nav-link,
+.site-nav .btn.btn-link,
+.site-nav .btn-auth,
+.site-nav .btn-cta,
+.site-nav .nav-toggle,
+.nav-mobile,
+.nav-mobile .nav-link,
+.nav-mobile .btn {
+    transition: all 0.35s ease;
+}
+
+.site-nav .nav-link,
+.site-nav .btn.btn-link {
+    position: relative;
+}
+
+.site-nav .nav-link::after,
+.site-nav .btn.btn-link::after {
+    content: "";
+    position: absolute;
+    left: 0.35rem;
+    right: 0.35rem;
+    bottom: 0.2rem;
+    height: 2px;
+    border-radius: 999px;
+    background: var(--accent-highlight);
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 0.35s ease;
+}
+
+.site-nav .nav-link:hover::after,
+.site-nav .nav-link.is-active::after,
+.site-nav .btn.btn-link:hover::after,
+.site-nav .btn.btn-link.is-active::after {
+    transform: scaleX(1);
+}
+
+.site-nav .nav-link:hover,
+.site-nav .nav-link.is-active,
+.site-nav .btn.btn-link:hover,
+.site-nav .btn.btn-link.is-active {
+    color: #ffffff !important;
+    background: transparent !important;
+}
+
+.site-nav .btn-cta,
+.btn.btn-primary,
+.market-button,
+.market-search-btn,
+.market-cta__button,
+.auth-submit,
+.hero-search-btn,
+.newsletter-submit {
+    background: var(--primary) !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    box-shadow: 0 10px 24px rgba(56, 126, 162, 0.22) !important;
+}
+
+.site-nav .btn-cta:hover,
+.btn.btn-primary:hover,
+.market-button:hover,
+.market-search-btn:hover,
+.market-cta__button:hover,
+.auth-submit:hover,
+.hero-search-btn:hover,
+.newsletter-submit:hover {
+    background: var(--secondary) !important;
+    color: #ffffff !important;
+    box-shadow: 0 12px 26px rgba(24, 78, 108, 0.24) !important;
+}
+
+.site-nav .btn-auth--ghost,
+.site-nav .btn-auth--primary,
+.nav-mobile .btn.btn-primary {
+    background: transparent !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(155, 203, 229, 0.4) !important;
+    box-shadow: none !important;
+}
+
+.site-nav .btn-auth--ghost:hover,
+.site-nav .btn-auth--primary:hover,
+.nav-mobile .btn.btn-primary:hover {
+    background: rgba(56, 126, 162, 0.1) !important;
+    border-color: var(--primary) !important;
+    color: #ffffff !important;
+}
+
+.hero-search-tab {
+    background: transparent !important;
+    border: 1px solid rgba(155, 203, 229, 0.3) !important;
+    color: #ffffff !important;
+}
+
+.hero-search-tab:hover {
+    border-color: var(--accent-highlight) !important;
+    background: rgba(56, 126, 162, 0.16) !important;
+}
+
+.hero-search-tab.is-active {
+    background: var(--light-blue) !important;
+    border-color: var(--light-blue) !important;
+    color: var(--dark-blue) !important;
+    box-shadow: 0 10px 24px rgba(24, 78, 108, 0.18) !important;
+}
+
+.market-hero .hero-search-bar,
+.hero-search-bar,
+.market-input,
+.auth-input,
+.booking-counter input,
+.booking-passenger-grid input,
+.market-hero .hero-search-input,
+.hero-search-location select,
+.hero-search-location input {
+    background: #ffffff !important;
+}
+
+.market-hero .hero-search-bar .search-icon,
+.hero-search-bar .search-icon,
+.hero-search-location i,
+.market-search-card i[class*="fa-"],
+.market-search-card svg {
+    color: var(--dark-blue) !important;
+}
+
+.site-footer,
+.page-footer {
+    background: var(--dark-blue) !important;
+    color: #ffffff !important;
+}
+
+.site-footer a,
+.page-footer a,
+.footer-link,
+.footer-legal-link,
+.footer-muted a,
+.footer-bottom a {
+    color: var(--accent-highlight) !important;
+}
+
+.site-footer a:hover,
+.page-footer a:hover,
+.footer-link:hover,
+.footer-legal-link:hover,
+.footer-muted a:hover,
+.footer-bottom a:hover,
+.market-link:hover,
+.auth-link:hover,
+.detail-breadcrumb a:hover {
+    color: var(--primary) !important;
+}
+
+.market-section__head h2,
+.detail-panel h2,
+.booking-step-card h1,
+.booking-step-card h2,
+.booking-success-card h1,
+.footer-section-title,
+.footer-title,
+.page-header h1,
+.page-header h2 {
+    color: var(--dark-blue) !important;
+}
+
+.market-card,
+.market-mini-card,
+.catalog-panel,
+.detail-panel,
+.detail-booking-card,
+.booking-layout-card,
+.booking-step-card,
+.booking-success-card,
+.auth-card,
+.account-panel,
+.account-booking-card,
+.role-card,
+.guest-brand,
+.detail-review-summary,
+.market-search-card {
+    background: #ffffff !important;
+    border-color: rgba(24, 78, 108, 0.12) !important;
+}
+
+.market-card__price strong,
+.market-card__footer strong,
+.market-mini-card__footer strong,
+.detail-price-block strong,
+.booking-price-box strong,
+.market-card__reviews,
+.auth-link,
+.account-outline-button,
+.market-link,
+.btn.btn-link,
+.market-kicker,
+.auth-kicker {
+    color: var(--secondary) !important;
+}
+
+.account-outline-button {
+    border-color: rgba(56, 126, 162, 0.28) !important;
+    background: #ffffff !important;
+}
+
+.account-outline-button:hover {
+    border-color: var(--secondary) !important;
+    color: var(--dark-blue) !important;
+}
+
+.market-badge--orange,
+.account-status.is-warning {
+    background: rgba(91, 163, 198, 0.18) !important;
+    color: var(--secondary) !important;
+}
+
+.market-quote-card__stars,
+.market-card__reviews i,
+.market-rating i,
+.hero-rating .fa-star,
+.hero-rating .fas.fa-star {
+    color: var(--primary) !important;
+}
+
+.market-cta__inner::before,
+.market-quote-card .quote-icon {
+    color: rgba(155, 203, 229, 0.24) !important;
+    background: rgba(155, 203, 229, 0.18) !important;
+}
+
+.nav-mobile {
+    background: rgba(24, 78, 108, 0.96) !important;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border-top: 1px solid rgba(155, 203, 229, 0.22) !important;
+}
+
+.nav-mobile .nav-link,
+.nav-mobile .btn.btn-link {
+    color: #ffffff !important;
+}
+
+.nav-mobile .nav-link:hover,
+.nav-mobile .nav-link.is-active,
+.nav-mobile .btn.btn-link:hover {
+    background: rgba(56, 126, 162, 0.16) !important;
+    color: #ffffff !important;
+}
 img,
 video,
 iframe {
@@ -302,4 +638,205 @@ iframe {
     .account-outline-button {
         width: 100%;
     }
+}
+
+
+body.body-auth-page,
+body.body-auth-page .guest-shell,
+body.body-auth-page .guest-shell--auth,
+body.body-auth-page .guest-auth-stage {
+    min-height: 100vh;
+    background: #DDECF6;
+}
+
+body.body-auth-page .site-nav-cluster--auth,
+body.body-auth-page .site-nav--auth {
+    position: sticky;
+    top: 0;
+}
+
+body.body-auth-page .site-nav--auth {
+    background: rgba(221, 236, 246, 0.82) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(24, 78, 108, 0.08) !important;
+    box-shadow: 0 4px 18px rgba(24, 78, 108, 0.06) !important;
+}
+
+body.body-auth-page .site-nav--auth.is-scrolled {
+    background: rgba(221, 236, 246, 0.9) !important;
+}
+
+body.body-auth-page .site-nav--auth .brand-wordmark,
+body.body-auth-page .site-nav--auth .nav-link,
+body.body-auth-page .site-nav--auth .btn.btn-link,
+body.body-auth-page .site-nav--auth .btn-auth,
+body.body-auth-page .site-nav--auth .nav-toggle,
+body.body-auth-page .site-nav--auth .brand-badge {
+    color: #184E6C !important;
+}
+
+body.body-auth-page .site-nav--auth .brand-badge {
+    border-color: rgba(24, 78, 108, 0.12) !important;
+    background: rgba(255, 255, 255, 0.55) !important;
+}
+
+body.body-auth-page .site-nav--auth .nav-link:hover,
+body.body-auth-page .site-nav--auth .nav-link.is-active,
+body.body-auth-page .site-nav--auth .btn.btn-link:hover,
+body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
+    color: #387EA2 !important;
+}
+
+body.body-auth-page .site-nav--auth .nav-link::after,
+body.body-auth-page .site-nav--auth .btn.btn-link::after {
+    background: #9BCBE5 !important;
+}
+
+body.body-auth-page .site-nav--auth .btn-cta {
+    background: #5BA3C6 !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .site-nav--auth .btn-cta:hover {
+    background: #387EA2 !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .site-nav--auth .btn-auth--ghost,
+body.body-auth-page .site-nav--auth .btn-auth--primary {
+    background: transparent !important;
+    color: #184E6C !important;
+    border: 1px solid rgba(24, 78, 108, 0.2) !important;
+}
+
+body.body-auth-page .site-nav--auth .btn-auth--ghost:hover,
+body.body-auth-page .site-nav--auth .btn-auth--primary:hover {
+    background: transparent !important;
+    color: #387EA2 !important;
+    border-color: #387EA2 !important;
+}
+
+body.body-auth-page .nav-mobile--auth {
+    background: rgba(221, 236, 246, 0.96) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-top: 1px solid rgba(24, 78, 108, 0.08) !important;
+}
+
+body.body-auth-page .nav-mobile--auth .nav-link,
+body.body-auth-page .nav-mobile--auth .btn.btn-link,
+body.body-auth-page .nav-mobile--auth .btn.btn-primary {
+    color: #184E6C !important;
+}
+
+body.body-auth-page .nav-mobile--auth .nav-link:hover,
+body.body-auth-page .nav-mobile--auth .nav-link.is-active,
+body.body-auth-page .nav-mobile--auth .btn.btn-link:hover,
+body.body-auth-page .nav-mobile--auth .btn.btn-primary:hover {
+    background: rgba(91, 163, 198, 0.12) !important;
+    color: #387EA2 !important;
+}
+
+body.body-auth-page .nav-mobile--auth .btn.btn-primary {
+    border: 1px solid rgba(24, 78, 108, 0.2) !important;
+    background: transparent !important;
+}
+
+body.body-auth-page .guest-auth-stage {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+body.body-auth-page .guest-auth-shell {
+    width: min(32rem, calc(100% - 1.5rem));
+}
+
+body.body-auth-page .auth-card,
+body.body-auth-page .auth-card.auth-card--centered {
+    background: linear-gradient(180deg, #2D6B8C 0%, #245A78 100%) !important;
+    color: #ffffff !important;
+    border-radius: 24px !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 20px 60px rgba(24, 78, 108, 0.18) !important;
+}
+
+body.body-auth-page .auth-kicker,
+body.body-auth-page .auth-title,
+body.body-auth-page .auth-subtitle,
+body.body-auth-page .auth-field label,
+body.body-auth-page .auth-row,
+body.body-auth-page .auth-note,
+body.body-auth-page .auth-footer,
+body.body-auth-page .auth-footer-copy,
+body.body-auth-page .auth-divider {
+    color: #ffffff !important;
+}
+
+body.body-auth-page .auth-input {
+    background: rgba(255, 255, 255, 0.14) !important;
+    border: 1px solid rgba(255, 255, 255, 0.16) !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .auth-input::placeholder {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+body.body-auth-page .auth-input:focus {
+    border-color: #9BCBE5 !important;
+    box-shadow: 0 0 0 4px rgba(155, 203, 229, 0.18) !important;
+    background: rgba(255, 255, 255, 0.18) !important;
+}
+
+body.body-auth-page .auth-submit {
+    background: #5BA3C6 !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .auth-submit:hover {
+    background: #387EA2 !important;
+}
+
+body.body-auth-page .auth-password-toggle {
+    color: rgba(255, 255, 255, 0.72) !important;
+}
+
+body.body-auth-page .auth-link,
+body.body-auth-page .auth-footer a {
+    color: #DDECF6 !important;
+}
+
+body.body-auth-page .auth-link:hover,
+body.body-auth-page .auth-footer a:hover {
+    color: #9BCBE5 !important;
+}
+
+body.body-auth-page .auth-checkbox input {
+    accent-color: #5BA3C6;
+}
+
+@media (max-width: 640px) {
+    body.body-auth-page .guest-auth-stage {
+        padding-top: 2rem;
+    }
+}
+
+
+
+.site-nav .nav-link,
+.site-nav .btn.btn-link,
+body.body-auth-page .site-nav--auth .nav-link,
+body.body-auth-page .site-nav--auth .btn.btn-link {
+    border-bottom: 0 !important;
+    box-shadow: none !important;
+}
+
+.site-nav .nav-link.is-active,
+.site-nav .btn.btn-link.is-active,
+body.body-auth-page .site-nav--auth .nav-link.is-active,
+body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
+    background: transparent !important;
+    border-bottom-color: transparent !important;
+    box-shadow: none !important;
 }

@@ -14,10 +14,19 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
+                const syncNavbarState = function () {
+                    document.querySelectorAll('.site-nav').forEach(function (nav) {
+                        nav.classList.toggle('is-scrolled', window.scrollY > 50);
+                    });
+                };
+
+                syncNavbarState();
+                window.addEventListener('scroll', syncNavbarState, { passive: true });
+
                 document.querySelectorAll('[data-nav-shell]').forEach(function (shell) {
                     const toggle = shell.querySelector('[data-nav-toggle]');
                     const mobile = shell.querySelector('[data-nav-mobile]');
@@ -139,3 +148,5 @@
         </footer>
     </body>
 </html>
+
+
