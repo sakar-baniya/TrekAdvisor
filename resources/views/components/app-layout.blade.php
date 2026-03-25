@@ -16,6 +16,39 @@
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=2">
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                document.querySelectorAll('[data-nav-shell]').forEach(function (shell) {
+                    const toggle = shell.querySelector('[data-nav-toggle]');
+                    const mobile = shell.querySelector('[data-nav-mobile]');
+
+                    if (!toggle || !mobile) {
+                        return;
+                    }
+
+                    const setOpen = function (isOpen) {
+                        mobile.classList.toggle('open', isOpen);
+                        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                    };
+
+                    toggle.addEventListener('click', function () {
+                        setOpen(!mobile.classList.contains('open'));
+                    });
+
+                    document.addEventListener('click', function (event) {
+                        if (!shell.contains(event.target)) {
+                            setOpen(false);
+                        }
+                    });
+
+                    document.addEventListener('keydown', function (event) {
+                        if (event.key === 'Escape') {
+                            setOpen(false);
+                        }
+                    });
+                });
+            });
+        </script>
     </head>
     <body class="body-app">
         <!-- Navigation Include for Public Pages -->

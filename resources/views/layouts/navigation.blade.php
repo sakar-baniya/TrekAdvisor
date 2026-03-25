@@ -1,4 +1,4 @@
-<div class="site-nav-cluster" x-data="{ open: false }">
+<div class="site-nav-cluster" data-nav-shell>
     <nav class="site-nav" aria-label="Primary">
         <div class="container nav-inner">
             <div class="nav-section nav-left">
@@ -30,7 +30,7 @@
                 <a href="{{ route('contact') }}" class="btn btn-cta">Contact</a>
                 <button type="button" class="search-trigger" aria-label="Search"><i class="fas fa-search"></i></button>
                 @auth
-                    <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="btn btn-link nav-account-link">My Account</a>
+                    <a href="{{ route(auth()->user()->dashboardRouteName()) }}" class="btn btn-link nav-account-link {{ request()->routeIs(auth()->user()->dashboardRouteName()) ? 'is-active' : '' }}">My Account</a>
                     <form method="POST" action="{{ route('logout') }}" class="nav-logout-form">
                         @csrf
                         <button type="submit" class="btn btn-link">Logout</button>
@@ -42,8 +42,8 @@
                 <button
                     type="button"
                     class="nav-toggle"
-                    @click="open = !open"
-                    :aria-expanded="open"
+                    data-nav-toggle
+                    aria-expanded="false"
                     aria-controls="site-nav-mobile"
                     aria-label="Toggle navigation menu"
                 >
@@ -53,7 +53,7 @@
         </div>
     </nav>
 
-    <div id="site-nav-mobile" class="nav-mobile" :class="{ 'open': open }" @click.outside="open = false">
+    <div id="site-nav-mobile" class="nav-mobile" data-nav-mobile>
         <div class="nav-mobile-links">
             <a href="{{ route('home') }}" class="nav-link">Home</a>
             <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>

@@ -1,0 +1,305 @@
+img,
+video,
+iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+    .container,
+    .container-wide,
+    .catalog-hero .container,
+    .catalog-layout,
+    .detail-grid,
+    .booking-flow-container {
+        width: min(100%, calc(100% - 1.5rem));
+    }
+
+    .catalog-layout,
+    .detail-grid,
+    .guest-grid,
+    .market-search-grid,
+    .booking-summary-hero,
+    .footer-grid,
+    .role-grid,
+    .grid-form,
+    .catalog-content .market-card-grid--three,
+    .market-card-grid--three,
+    .market-card-grid--four {
+        grid-template-columns: 1fr !important;
+    }
+
+    .catalog-sidebar,
+    .detail-sidebar {
+        position: static;
+        top: auto;
+    }
+
+    .market-hero {
+        min-height: auto;
+        padding: 4.75rem 0 3.5rem;
+    }
+
+    .market-hero__text-box,
+    .market-cta__inner,
+    .booking-card,
+    .market-card,
+    .market-mini-card,
+    .success-card,
+    .profile-card-body {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .market-hero__stats {
+        gap: 1rem;
+    }
+
+    .market-hero__stats > div {
+        min-width: 0;
+        flex: 1 1 12rem;
+    }
+
+    .detail-hero__stats span,
+    .detail-tab,
+    .account-actions a,
+    .account-actions button {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .catalog-toolbar,
+    .market-card__footer,
+    .market-mini-card__footer,
+    .detail-departure-card__top,
+    .detail-departure-card__bottom,
+    .booking-price-box > div,
+    .booking-section__head,
+    .booking-section__actions,
+    .booking-card__footer,
+    .booking-card__meta,
+    .total-estimated,
+    .account-booking-card__top {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .market-card__footer,
+    .market-mini-card__footer,
+    .booking-card__footer,
+    .detail-departure-card__top,
+    .detail-departure-card__bottom,
+    .account-booking-card__top {
+        gap: 0.85rem;
+    }
+
+    .trek-summary {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.25rem;
+        padding-bottom: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .booking-steps {
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .booking-steps::before {
+        display: none;
+    }
+
+    .step {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 860px) {
+    .site-nav .nav-inner {
+        grid-template-columns: 1fr auto;
+        gap: 0.75rem;
+    }
+
+    .site-nav .nav-right {
+        gap: 0.35rem;
+    }
+
+    .site-nav .btn-cta,
+    .site-nav .btn.btn-link,
+    .site-nav .btn-auth {
+        min-height: 2.15rem;
+        padding-inline: 0.7rem;
+        font-size: 0.75rem;
+    }
+
+    .hero-search-wrapper {
+        max-width: 100%;
+    }
+
+    .market-hero__play {
+        margin-top: 1.25rem;
+    }
+
+    .market-cta__inner {
+        padding-top: 4rem;
+        padding-bottom: 4rem;
+    }
+
+    .booking-flow-container {
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .booking-card,
+    .success-card,
+    .passenger-block {
+        padding: 1.5rem;
+        border-radius: 1.5rem;
+    }
+
+    .number-input {
+        gap: 0.85rem;
+    }
+
+    .number-input button {
+        width: 2.75rem;
+        height: 2.75rem;
+        font-size: 1.25rem;
+    }
+
+    .number-input input {
+        width: 4rem;
+        font-size: 1.5rem;
+    }
+
+    .account-meta-grid,
+    .account-stat-grid,
+    .grid-form {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+@media (max-width: 640px) {
+    .container,
+    .container-wide,
+    .catalog-hero .container,
+    .catalog-layout,
+    .detail-grid,
+    .booking-flow-container {
+        width: min(100%, calc(100% - 1rem));
+    }
+
+    .site-nav .nav-inner {
+        min-height: 3.5rem;
+    }
+
+    .market-hero,
+    .catalog-hero,
+    .detail-hero,
+    .market-section,
+    .market-cta,
+    .booking-wrap,
+    .treks-page {
+        padding-inline: 0;
+    }
+
+    .market-hero__text-box {
+        padding: 1.25rem;
+        border-radius: 1rem;
+    }
+
+    .market-hero__title,
+    .catalog-hero h1,
+    .detail-hero h1,
+    .success-card h1 {
+        font-size: clamp(1.7rem, 8vw, 2.25rem);
+    }
+
+    .market-hero__subtitle,
+    .catalog-hero p,
+    .market-cta__inner p,
+    .success-msg {
+        font-size: 0.95rem;
+    }
+
+    .hero-rating,
+    .detail-hero__stats span,
+    .booking-badge,
+    .market-badge,
+    .market-stock {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .booking-card,
+    .market-card,
+    .market-mini-card,
+    .market-quote-card,
+    .catalog-panel,
+    .detail-panel,
+    .detail-booking-card,
+    .booking-layout-card,
+    .booking-step-card,
+    .booking-success-card,
+    .auth-card,
+    .profile-card-body,
+    .passenger-block,
+    .success-card {
+        padding: 1.15rem;
+    }
+
+    .booking-card__media img,
+    .market-card__media,
+    .trek-image {
+        min-height: 12rem;
+    }
+
+    .booking-card__body h3,
+    .market-card__body h3,
+    .market-mini-card h3,
+    .trek-name,
+    .summary-details h1 {
+        font-size: 1.1rem;
+    }
+
+    .booking-card__price strong,
+    .market-card__price strong,
+    .market-card__footer strong,
+    .market-mini-card__footer strong,
+    .detail-price-block strong,
+    .booking-price-box strong,
+    .total-estimated span#estimated_price {
+        font-size: 1.35rem;
+    }
+
+    .carousel-arrows,
+    .filter-chips,
+    .booking-section__actions,
+    .account-actions,
+    .footer-legal,
+    .footer-social {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+    .footer-grid,
+    .footer-bottom {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+
+    .footer-bottom {
+        gap: 1rem;
+    }
+
+    .newsletter-submit,
+    .market-search-btn,
+    .hero-search-btn,
+    .btn-next,
+    .account-outline-button {
+        width: 100%;
+    }
+}
