@@ -860,3 +860,36 @@ body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
     line-height: 1;
     margin: 0;
 }
+/* Homepage featured card edge-to-edge media fix */
+.booking-section .booking-card.booking-card--featured {
+    padding: 0 !important;
+    border: 0 !important;
+    box-shadow: 0 12px 26px rgba(24, 78, 108, 0.07) !important;
+    background: #ffffff;
+    overflow: hidden;
+}
+
+.booking-section .booking-card.booking-card--featured:hover {
+    box-shadow: 0 16px 30px rgba(24, 78, 108, 0.1) !important;
+}
+
+.booking-section .booking-card.booking-card--featured .booking-card__media {
+    width: 100%;
+    margin: 0;
+    border-radius: 0;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.booking-section .booking-card.booking-card--featured .booking-card__media img,
+.booking-section .booking-card.booking-card--featured .booking-card__media-placeholder {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.booking-section .booking-card.booking-card--featured .booking-card__body {
+    padding: 1rem 1rem 1.1rem;
+}

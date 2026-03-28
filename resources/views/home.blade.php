@@ -108,13 +108,6 @@
                 </div>
             </div>
 
-            <div class="filter-chips">
-                <button class="filter-chip active">All</button>
-                <button class="filter-chip">Easy</button>
-                <button class="filter-chip">Moderate</button>
-                <button class="filter-chip">Hard</button>
-            </div>
-
             <div class="booking-grid">
                 @forelse ($featuredTreks->take(3) as $trek)
                     <article class="booking-card booking-card--featured booking-card--trek">
@@ -124,14 +117,9 @@
                             @else
                                 <div class="booking-card__media-placeholder"></div>
                             @endif
-                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
-                            <span class="booking-badge {{ strtolower($trek->difficulty) === 'hard' ? 'badge-red' : (strtolower($trek->difficulty) === 'moderate' ? 'badge-orange' : 'badge-green') }}">
-                                {{ ucfirst($trek->difficulty) }}
-                            </span>
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
-                                <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
                                 <span class="booking-card__rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }} ({{ $trek->reviews->count() ?: 12 }} reviews)</span>
                             </div>
                             <h3>{{ $trek->title }}</h3>
@@ -164,13 +152,6 @@
                 </div>
             </div>
 
-            <div class="filter-chips">
-                <button class="filter-chip active">All</button>
-                <button class="filter-chip">Budget</button>
-                <button class="filter-chip">Mid-range</button>
-                <button class="filter-chip">Luxury</button>
-            </div>
-
             <div class="booking-grid">
                 @forelse ($featuredHotels->take(3) as $hotel)
                     <article class="booking-card booking-card--featured booking-card--hotel">
@@ -180,22 +161,12 @@
                             @else
                                 <div class="booking-card__media-placeholder"></div>
                             @endif
-                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
-                            <span class="booking-badge badge-location">
-                                <i class="fas fa-map-marker-alt"></i> {{ \Illuminate\Support\Str::limit($hotel->location, 15) }}
-                            </span>
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
                                 <span class="booking-card__rating"><i class="fas fa-star"></i> 4.6 (24 reviews)</span>
-                                <span class="booking-card__amenities">
-                                    <i class="fas fa-wifi" title="WiFi"></i>
-                                    <i class="fas fa-swimming-pool" title="Pool"></i>
-                                    <i class="fas fa-parking" title="Parking"></i>
-                                </span>
                             </div>
                             <h3>{{ $hotel->name }}</h3>
-                            <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 60) }}</p>
                             <div class="booking-card__footer">
                                 <div class="booking-card__price"><strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
                                 <span class="btn-primary-filled booking-card__action">Book Now</span>
@@ -226,7 +197,7 @@
             </div>
 
             <div class="booking-grid">
-                @forelse ($featuredGearItems->take(4) as $item)
+                @forelse ($featuredGearItems->take(3) as $item)
                     <article class="booking-card booking-card--featured booking-card--gear">
                         <div class="booking-card__media">
                             @if ($item->image)
@@ -234,12 +205,12 @@
                             @else
                                 <div class="booking-card__media-placeholder"><i class="fas fa-campground"></i></div>
                             @endif
-                            <button class="save-btn" aria-label="Save"><i class="far fa-heart"></i></button>
-                            <span class="booking-badge badge-neutral">Available: {{ $item->available_stock }}</span>
                         </div>
                         <div class="booking-card__body">
+                            <div class="booking-card__meta">
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> 4.7 (18 reviews)</span>
+                            </div>
                             <h3>{{ $item->name }}</h3>
-                            <p class="booking-card__desc">{{ \Illuminate\Support\Str::limit($item->description, 50) }}</p>
                             <div class="booking-card__footer">
                                 <div class="booking-card__price"><strong>${{ number_format($item->daily_price, 0) }}</strong> <span>/day</span></div>
                                 <span class="btn-primary-filled booking-card__action">Rent Now</span>
