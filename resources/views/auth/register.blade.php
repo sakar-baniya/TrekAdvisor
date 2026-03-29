@@ -1,32 +1,31 @@
 <x-guest-layout>
-    <div class="auth-header auth-header--centered">
+    <div class="auth-header auth-header--split">
         <p class="auth-kicker">New Account</p>
-        <h1 class="auth-title">Create your TrekAdvisor account</h1>
+        <h1 class="auth-title">Create your account</h1>
         <p class="auth-subtitle">Join to book treks, reserve stays, and rent gear from one place.</p>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
-        <!-- Name -->
-        <div class="auth-field">
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" />
+        <div class="auth-grid auth-grid--two">
+            <div class="auth-field">
+                <x-input-label for="name" :value="__('Full Name')" />
+                <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+                <x-input-error :messages="$errors->get('name')" />
+            </div>
+
+            <div class="auth-field">
+                <x-input-label for="phone" :value="__('Phone (optional)')" />
+                <x-text-input id="phone" class="auth-input" type="text" name="phone" :value="old('phone')" autocomplete="tel" />
+                <x-input-error :messages="$errors->get('phone')" />
+            </div>
         </div>
 
-        <!-- Email Address -->
         <div class="auth-field">
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" />
-        </div>
-
-        <!-- Phone (optional) -->
-        <div class="auth-field">
-            <x-input-label for="phone" :value="__('Phone (optional)')" />
-            <x-text-input id="phone" class="auth-input" type="text" name="phone" :value="old('phone')" autocomplete="tel" />
-            <x-input-error :messages="$errors->get('phone')" />
         </div>
 
         <!-- Account Type -->
@@ -124,4 +123,3 @@
         </div>
     </form>
 </x-guest-layout>
-

@@ -2,10 +2,10 @@
     <!-- Session Status -->
     <x-auth-session-status class="auth-status" :status="session('status')" />
 
-    <div class="auth-header auth-header--centered">
+    <div class="auth-header auth-header--split">
         <p class="auth-kicker">Welcome Back</p>
-        <h1 class="auth-title">Sign in to your account</h1>
-        <p class="auth-subtitle">Access your TrekAdvisor bookings, plans, and account details.</p>
+        <h1 class="auth-title">Sign in to TrekAdvisor</h1>
+        <p class="auth-subtitle">Access your trek bookings, stays, rentals, and account details.</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="auth-form">
@@ -71,22 +71,8 @@
             </div>
         </div>
 
-        <div class="auth-alt-panel">
-            <div class="auth-alt-label">Signing in as</div>
-            <div class="auth-alt-grid">
-                <div class="auth-alt-button" style="opacity: 0.8;">
-                    <i class="fas fa-user"></i>
-                    <span>Customer</span>
-                </div>
-                <div class="auth-alt-button" style="opacity: 0.8;">
-                    <i class="fas fa-hotel"></i>
-                    <span>Hotel Owner</span>
-                </div>
-            </div>
-            <p style="text-align: center; font-size: 0.875rem; color: #666; margin-top: 1rem;">
-                <strong>Administrators:</strong> Use <a href="{{ route('admin.login') }}" class="auth-link">admin login</a>
-            </p>
+        <div class="auth-support-note">
+            <strong>Administrators:</strong> Use <a href="{{ route('admin.login') }}" class="auth-link">admin login</a>
         </div>
     </form>
 </x-guest-layout>
-

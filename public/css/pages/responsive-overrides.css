@@ -1164,3 +1164,88 @@ body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
         margin-left: 0;
     }
 }
+
+/* Auth redesign final layer */
+body.body-auth-page .guest-auth-stage {
+    padding: 2rem 1.25rem;
+}
+
+body.body-auth-page .guest-auth-shell {
+    width: min(1120px, 100%);
+    display: grid;
+    grid-template-columns: minmax(0, 1.02fr) minmax(420px, 0.98fr);
+    gap: 0;
+    overflow: hidden;
+    border-radius: 32px;
+    background: rgba(14, 52, 73, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 28px 80px rgba(12, 36, 51, 0.28);
+}
+
+body.body-auth-page .auth-card,
+body.body-auth-page .auth-card.auth-card--centered {
+    background: transparent !important;
+    color: #ffffff !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+}
+
+body.body-auth-page .auth-kicker {
+    color: rgba(155, 203, 229, 0.88) !important;
+}
+
+body.body-auth-page .auth-title,
+body.body-auth-page .auth-subtitle,
+body.body-auth-page .auth-field label,
+body.body-auth-page .auth-row,
+body.body-auth-page .auth-note,
+body.body-auth-page .auth-footer,
+body.body-auth-page .auth-footer-copy,
+body.body-auth-page .auth-divider,
+body.body-auth-page .auth-support-note {
+    color: inherit !important;
+}
+
+body.body-auth-page .auth-input {
+    background: rgba(255, 255, 255, 0.12) !important;
+    border: 1px solid rgba(155, 203, 229, 0.18) !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .auth-input::placeholder {
+    color: rgba(221, 236, 246, 0.56) !important;
+}
+
+body.body-auth-page .auth-input:focus {
+    border-color: #5BA3C6 !important;
+    box-shadow: 0 0 0 4px rgba(91, 163, 198, 0.18) !important;
+    background: rgba(255, 255, 255, 0.16) !important;
+}
+
+body.body-auth-page .auth-submit {
+    background: #5BA3C6 !important;
+    color: #ffffff !important;
+}
+
+body.body-auth-page .auth-submit:hover {
+    background: #387EA2 !important;
+}
+
+body.body-auth-page .auth-link,
+body.body-auth-page .auth-footer a {
+    color: #9BCBE5 !important;
+}
+
+body.body-auth-page .auth-link:hover,
+body.body-auth-page .auth-footer a:hover {
+    color: #ffffff !important;
+}
+
+@media (max-width: 1024px) {
+    body.body-auth-page .guest-auth-shell {
+        grid-template-columns: 1fr;
+        width: min(760px, 100%);
+    }
+}
