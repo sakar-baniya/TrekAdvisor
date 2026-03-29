@@ -6,12 +6,19 @@ use App\Models\Departure;
 use App\Models\TrekBooking;
 use App\Models\Passenger;
 use App\Models\Payment;
+use App\Services\StripeCheckoutService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Throwable;
 
 class BookingController extends Controller
 {
+    public function __construct(
+        protected StripeCheckoutService $stripeCheckoutService
+    ) {
+    }
+
     /**
      * Step 1: Initialize booking for a specific departure.
      */
@@ -84,7 +91,7 @@ class BookingController extends Controller
             'price_per_person' => $bookingData['price_per_person'],
             'subtotal' => $totalPrice,
             'total_price' => $totalPrice,
-            'status' => 'Confirmed', // We'll auto-confirm for now
+            'status' => 'Pending',
         ]);
 
         // Create passenger records
@@ -98,22 +105,32 @@ class BookingController extends Controller
         }
 
         // Create payment record
-        Payment::create([
+        $payment = Payment::create([
             'user_id' => Auth::id(),
             'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
             'amount' => $totalPrice,
+            'currency' => 'USD',
             'payment_for' => 'trek',
             'reference_id' => $booking->id,
-            'status' => 'Success',
+            'gateway' => 'stripe',
+            'status' => 'Pending',
         ]);
 
-        // Update departure booked seats
-        $departure = Departure::find($bookingData['departure_id']);
-        $departure->increment('booked_seats', $bookingData['total_passengers']);
+        try {
+            $session = $this->stripeCheckoutService->createTrekCheckoutSession(
+                $payment,
+                $booking->load('departure.trek', 'user'),
+                route('stripe.success', ['payment' => $payment]) . '?session_id={CHECKOUT_SESSION_ID}',
+                route('stripe.cancel', ['payment' => $payment])
+            );
+        } catch (Throwable $exception) {
+            return redirect()
+                ->route('stripe.cancel', $payment)
+                ->with('error', 'We saved your booking, but could not start Stripe checkout. Please try again.');
+        }
 
-        // Clear session
         session()->forget('booking_data');
 
-        return view('bookings.success', compact('booking'));
+        return redirect()->away($session->url);
     }
 }

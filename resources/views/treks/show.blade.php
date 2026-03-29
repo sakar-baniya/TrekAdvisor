@@ -13,28 +13,35 @@
 
     <div class="container detail-grid">
         <section class="detail-main">
-            <div class="detail-tabs">
-                <button type="button" class="detail-tab is-active" data-tab-target="overview">Overview</button>
-                <button type="button" class="detail-tab" data-tab-target="itinerary">Itinerary</button>
-                <button type="button" class="detail-tab" data-tab-target="reviews">Reviews</button>
+            <div class="detail-tabs-wrap">
+                <div class="detail-tabs">
+                    <button type="button" class="detail-tab is-active" data-tab-target="overview">Overview</button>
+                    <button type="button" class="detail-tab" data-tab-target="itinerary">Itinerary</button>
+                    <button type="button" class="detail-tab" data-tab-target="reviews">Reviews</button>
+                </div>
             </div>
 
             <article class="detail-panel detail-tab-panel is-active" data-tab-panel="overview">
                 <h2>Trip Overview</h2>
-                <p>{!! nl2br(e($trek->description)) !!}</p>
-                <div class="detail-highlight-grid">
-                    <div class="detail-highlight-card">
-                        <i class="fas fa-check-circle"></i>
-                        <div>
-                            <strong>Expert-led route</strong>
-                            <span>Well-structured pacing for a smoother trekking experience.</span>
+                <div class="detail-panel__lead">
+                    <p>{!! nl2br(e($trek->description)) !!}</p>
+                </div>
+                <div class="detail-overview-highlights">
+                    <h3 class="detail-panel__section-title">What makes this trek stand out</h3>
+                    <div class="detail-highlight-grid">
+                        <div class="detail-highlight-card">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <strong>Expert-led route</strong>
+                                <span>Well-structured pacing for a smoother trekking experience.</span>
+                            </div>
                         </div>
-                    </div>
-                    <div class="detail-highlight-card">
-                        <i class="fas fa-compass"></i>
-                        <div>
-                            <strong>Adventure planning</strong>
-                            <span>Departure selection, group pricing, and booking flow in one place.</span>
+                        <div class="detail-highlight-card">
+                            <i class="fas fa-compass"></i>
+                            <div>
+                                <strong>Adventure planning</strong>
+                                <span>Departure selection, group pricing, and booking flow in one place.</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -71,7 +78,7 @@
                                 @endfor
                             </strong>
                             <p>"{{ $review->comment }}"</p>
-                            <span>{{ $review->user->name }} • {{ $review->created_at->diffForHumans() }}</span>
+                            <span>{{ $review->user->name }} &bull; {{ $review->created_at->diffForHumans() }}</span>
                         </div>
                     @empty
                         <p class="empty-note">No reviews yet.</p>

@@ -37,23 +37,10 @@ class DatabaseSeeder extends Seeder
             'role' => 'customer',
         ]);
 
-        // 2. Create 10 Treks with Itineraries and Departures
-        $treks = \App\Models\Trek::factory(10)->create();
-
-        foreach ($treks as $trek) {
-            // Create 5-10 days of itinerary
-            for ($i = 1; $i <= rand(5, 10); $i++) {
-                \App\Models\Itinerary::factory()->create([
-                    'trek_id' => $trek->id,
-                    'day_number' => $i,
-                ]);
-            }
-
-            // Create 2-3 departures
-            \App\Models\Departure::factory(rand(2, 3))->create([
-                'trek_id' => $trek->id,
-            ]);
-        }
+        // 2. Sync curated trek content with real route names and pricing
+        $this->call(CuratedTrekSeeder::class);
+        $this->call(CuratedItinerarySeeder::class);
+        $treks = \App\Models\Trek::query()->get();
 
         // 3. Create hotels, rooms, gear items, related bookings, and reviews
         $this->call(HotelAndGearSeeder::class);

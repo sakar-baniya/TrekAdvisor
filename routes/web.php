@@ -6,6 +6,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendPageController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
 use App\Http\Controllers\Admin\AdminGearController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -94,10 +96,17 @@ Route::middleware('auth')->group(function () {
     Route::post('/bookings/store', [BookingController::class, 'store'])->name('bookings.store');
     Route::get('/bookings/passengers', [BookingController::class, 'passengers'])->name('bookings.passengers');
     Route::post('/bookings/confirm', [BookingController::class, 'confirm'])->name('bookings.confirm');
+    Route::get('/payments/stripe/{payment}/checkout', [StripeCheckoutController::class, 'retry'])->name('stripe.retry');
+    Route::get('/payments/stripe/{payment}/success', [StripeCheckoutController::class, 'success'])->name('stripe.success');
+    Route::get('/payments/stripe/{payment}/cancel', [StripeCheckoutController::class, 'cancel'])->name('stripe.cancel');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::post('/payments/stripe/webhook', [StripeCheckoutController::class, 'webhook'])
+    ->withoutMiddleware([VerifyCsrfToken::class])
+    ->name('stripe.webhook');
 
 require __DIR__.'/auth.php';

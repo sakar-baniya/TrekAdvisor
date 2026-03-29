@@ -893,3 +893,274 @@ body.body-auth-page .site-nav--auth .btn.btn-link.is-active {
 .booking-section .booking-card.booking-card--featured .booking-card__body {
     padding: 1rem 1rem 1.1rem;
 }
+
+/* Trek detail page layout cleanup */
+.detail-grid {
+    align-items: start;
+    gap: 2rem;
+    margin-top: 2.5rem;
+}
+
+.detail-main {
+    align-content: start;
+    gap: 1.5rem;
+}
+
+.detail-tabs-wrap {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.detail-tabs {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    width: auto;
+    max-width: 100%;
+    padding: 0.4rem;
+    border: 1px solid rgba(24, 78, 108, 0.1);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 12px 28px rgba(24, 78, 108, 0.08);
+}
+
+.detail-tab {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3.25rem;
+    padding: 0.95rem 1.4rem;
+    white-space: nowrap;
+    line-height: 1;
+    border-radius: 999px;
+    transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.detail-tab:hover {
+    border-color: rgba(56, 126, 162, 0.24);
+    color: var(--dark-blue) !important;
+}
+
+.detail-tab.is-active {
+    box-shadow: 0 10px 24px rgba(56, 126, 162, 0.22);
+}
+
+.detail-panel,
+.detail-booking-card {
+    border-radius: 1.85rem;
+    box-shadow: 0 18px 42px rgba(24, 78, 108, 0.08);
+}
+
+.detail-panel {
+    padding: 2rem !important;
+}
+
+.detail-panel h2 {
+    margin-bottom: 0.8rem;
+}
+
+.detail-panel__lead p {
+    margin: 0;
+    max-width: 68ch;
+    font-size: 1.04rem;
+    line-height: 1.9;
+}
+
+.detail-overview-highlights {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.6rem;
+}
+
+.detail-panel__section-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: var(--dark-blue);
+}
+
+.detail-highlight-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.detail-highlight-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+    padding: 1rem 1.05rem;
+    border-radius: 1.1rem;
+    border: 1px solid rgba(24, 78, 108, 0.08);
+    background: rgba(221, 236, 246, 0.45);
+}
+
+.detail-highlight-card i {
+    flex: 0 0 2.25rem;
+    display: grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border-radius: 999px;
+    background: #ffffff;
+    color: var(--secondary);
+    box-shadow: 0 10px 20px rgba(24, 78, 108, 0.08);
+}
+
+.detail-highlight-card strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--dark-blue);
+}
+
+.detail-highlight-card span {
+    display: block;
+    line-height: 1.65;
+    color: var(--market-slate-500);
+}
+
+.detail-timeline {
+    gap: 1.1rem;
+}
+
+.detail-timeline__item {
+    align-items: start;
+    gap: 1.1rem;
+    padding: 1rem 0 1rem 1.15rem;
+    border-left: 3px solid rgba(56, 126, 162, 0.32);
+    border-radius: 0 1rem 1rem 0;
+    background: linear-gradient(90deg, rgba(221, 236, 246, 0.35), rgba(255, 255, 255, 0));
+}
+
+.detail-timeline__item > div:last-child {
+    display: grid;
+    gap: 0.45rem;
+}
+
+.detail-timeline__item h3,
+.detail-booking-card h3 {
+    margin: 0;
+}
+
+.detail-timeline__item p,
+.detail-review-card p {
+    margin: 0;
+    line-height: 1.75;
+}
+
+.detail-review-summary {
+    padding: 0;
+    margin-bottom: 1.2rem;
+}
+
+.detail-review-card {
+    display: grid;
+    gap: 0.8rem;
+}
+
+.detail-review-card span {
+    color: var(--market-slate-500);
+}
+
+.detail-booking-card {
+    display: grid;
+    gap: 1.4rem;
+    padding: 1.6rem !important;
+}
+
+.detail-price-block {
+    margin-bottom: 0;
+}
+
+.detail-price-block span,
+.detail-price-block small {
+    display: block;
+}
+
+.detail-price-block small {
+    margin-top: 0.2rem;
+}
+
+.detail-discount-box {
+    margin-bottom: 0;
+}
+
+.detail-booking-card h3 {
+    font-size: 2rem;
+    line-height: 1.1;
+}
+
+.detail-departure-list {
+    gap: 0.9rem;
+}
+
+.detail-departure-card {
+    padding: 1.1rem;
+    border-radius: 1.15rem;
+    box-shadow: 0 10px 24px rgba(24, 78, 108, 0.05);
+}
+
+.detail-departure-card__top {
+    align-items: flex-start;
+}
+
+.detail-departure-card__bottom {
+    margin-top: 0.9rem;
+    align-items: center;
+}
+
+.detail-departure-card__bottom .market-button {
+    margin-left: auto;
+}
+
+@media (max-width: 1024px) {
+    .detail-grid {
+        gap: 1.5rem;
+    }
+
+    .detail-tabs {
+        width: 100%;
+        border-radius: 1.4rem;
+    }
+
+    .detail-tab {
+        flex: 1 1 calc(33.333% - 0.5rem);
+        width: auto !important;
+        min-width: 9rem;
+    }
+
+    .detail-highlight-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .detail-panel,
+    .detail-booking-card {
+        padding: 1.25rem !important;
+        border-radius: 1.4rem;
+    }
+
+    .detail-tabs {
+        padding: 0.5rem;
+        border-radius: 1.25rem;
+    }
+
+    .detail-tab {
+        flex: 1 1 100%;
+        width: 100% !important;
+    }
+
+    .detail-timeline__item {
+        grid-template-columns: 1fr;
+        gap: 0.55rem;
+        padding-left: 1rem;
+    }
+
+    .detail-departure-card__bottom .market-button {
+        margin-left: 0;
+    }
+}

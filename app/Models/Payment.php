@@ -18,8 +18,15 @@ class Payment extends Model
         'payment_for',
         'reference_id',
         'gateway',
+        'stripe_session_id',
+        'stripe_payment_intent_id',
         'status',
+        'paid_at',
         'gateway_response',
+    ];
+
+    protected $casts = [
+        'paid_at' => 'datetime',
     ];
 
     public function user(): BelongsTo
