@@ -29,6 +29,22 @@
         </article>
 
         <aside class="admin-side-stack">
+            @if ($trek->gallery->isNotEmpty())
+                <section class="admin-panel">
+                    <div class="admin-panel__header">
+                        <div>
+                            <h3>Gallery</h3>
+                            <p>Supporting trek photos</p>
+                        </div>
+                    </div>
+                    <div class="admin-gallery">
+                        @foreach ($trek->gallery as $image)
+                            <img src="{{ $image->path }}" alt="{{ $trek->title }} gallery image {{ $loop->iteration }}">
+                        @endforeach
+                    </div>
+                </section>
+            @endif
+
             <section class="admin-panel">
                 <div class="admin-panel__header">
                     <div>

@@ -1,4 +1,4 @@
-﻿.admin-body {
+.admin-body {
     margin: 0;
     min-height: 100vh;
     background: #f8fafc;
@@ -658,6 +658,40 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.admin-gallery-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+}
+
+.admin-gallery-card {
+    display: grid;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 1px solid #dbe4f0;
+    border-radius: 20px;
+    background: #fff;
+}
+
+.admin-gallery-card img {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+.admin-gallery-card__footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #475569;
+    font-size: 0.95rem;
+}
+
+.admin-gallery-card--pending {
+    background: #f8fafc;
 }
 
 .admin-itinerary-stack,
@@ -1994,3 +2028,18 @@
         font-size: 1.5rem;
     }
 }
+
+
+.admin-gallery {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.admin-gallery img {
+    width: 100%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+

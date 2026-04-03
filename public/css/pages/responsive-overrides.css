@@ -207,9 +207,7 @@ body.body-guest,
 
 .market-hero .hero-search-bar .search-icon,
 .hero-search-bar .search-icon,
-.hero-search-location i,
-.market-search-card i[class*="fa-"],
-.market-search-card svg {
+.hero-search-location i {
     color: var(--dark-blue) !important;
 }
 
@@ -265,8 +263,7 @@ body.body-guest,
 .account-booking-card,
 .role-card,
 .guest-brand,
-.detail-review-summary,
-.market-search-card {
+.detail-review-summary {
     background: #ffffff !important;
     border-color: rgba(24, 78, 108, 0.12) !important;
 }
@@ -304,7 +301,6 @@ body.body-guest,
 
 .market-quote-card__stars,
 .market-card__reviews i,
-.market-rating i,
 .hero-rating .fa-star,
 .hero-rating .fas.fa-star {
     color: var(--primary) !important;
@@ -353,7 +349,6 @@ iframe {
     .catalog-layout,
     .detail-grid,
     .guest-grid,
-    .market-search-grid,
     .booking-summary-hero,
     .footer-grid,
     .role-grid,
@@ -1249,3 +1244,4 @@ body.body-auth-page .auth-footer a:hover {
         width: min(760px, 100%);
     }
 }
+

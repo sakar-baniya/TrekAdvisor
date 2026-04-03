@@ -1,0 +1,78 @@
+<?php
+
+namespace App\Services\Trek;
+
+use App\Models\Trek;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class UpsertTrekService
+{
+    public function __construct(
+        private readonly TrekSlugService $trekSlugService,
+        private readonly TrekGalleryService $trekGalleryService,
+    ) {
+    }
+
+    public function create(Request $request): Trek
+    {
+        $validated = $request->validated();
+
+        return DB::transaction(function () use ($request, $validated) {
+            $payload = $this->buildPayload($request, $validated);
+            $trek = Trek::query()->create($payload);
+            $this->syncItineraries($trek, $validated['itinerary'] ?? []);
+            $this->trekGalleryService->syncGallery($request, $trek);
+
+            return $trek;
+        });
+    }
+
+    public function update(Request $request, Trek $trek): Trek
+    {
+        $validated = $request->validated();
+
+        return DB::transaction(function () use ($request, $validated, $trek) {
+            $trek->update($this->buildPayload($request, $validated, $trek));
+            $this->syncItineraries($trek, $validated['itinerary'] ?? []);
+            $this->trekGalleryService->syncGallery($request, $trek);
+
+            return $trek;
+        });
+    }
+
+    private function buildPayload(Request $request, array $validated, ?Trek $trek = null): array
+    {
+        $payload = [
+            'title' => $validated['title'],
+            'slug' => $this->trekSlugService->generate($validated['title'], $trek),
+            'base_price' => $validated['base_price'],
+            'difficulty' => $validated['difficulty'],
+            'duration_days' => $validated['duration_days'],
+            'max_altitude' => $validated['max_altitude'] ?? null,
+            'description' => $validated['description'],
+            'status' => $validated['status'],
+        ];
+
+        $this->trekGalleryService->syncHeroImage($request, $payload, $trek);
+
+        return $payload;
+    }
+
+    private function syncItineraries(Trek $trek, array $itineraries): void
+    {
+        $trek->itineraries()->delete();
+
+        $rows = collect($itineraries)
+            ->filter(fn (array $day) => filled($day['title'] ?? null) && filled($day['description'] ?? null))
+            ->values();
+
+        foreach ($rows as $index => $day) {
+            $trek->itineraries()->create([
+                'day_number' => $index + 1,
+                'title' => $day['title'],
+                'description' => $day['description'],
+            ]);
+        }
+    }
+}

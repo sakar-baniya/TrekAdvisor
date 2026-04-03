@@ -2,55 +2,49 @@
 
 namespace App\Http\Controllers;
 
+use App\DTOs\CreateTrekBookingData;
+use App\Http\Requests\ConfirmBookingRequest;
+use App\Http\Requests\StoreBookingRequest;
 use App\Models\Departure;
-use App\Models\TrekBooking;
-use App\Models\Passenger;
-use App\Models\Payment;
-use App\Services\StripeCheckoutService;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
-use Throwable;
+use App\Services\Booking\BookingSessionService;
+use App\Services\Booking\CreateTrekBookingService;
+use App\Services\Booking\StartTrekBookingService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
+use RuntimeException;
 
 class BookingController extends Controller
 {
     public function __construct(
-        protected StripeCheckoutService $stripeCheckoutService
+        protected StartTrekBookingService $startTrekBookingService,
+        protected CreateTrekBookingService $createTrekBookingService,
+        protected BookingSessionService $bookingSessionService,
     ) {
     }
 
     /**
      * Step 1: Initialize booking for a specific departure.
      */
-    public function create(Departure $departure)
+    public function create(Departure $departure): View
     {
-        $departure->load('trek');
-        return view('bookings.create', compact('departure'));
+        return view('bookings.create', [
+            'departure' => $this->startTrekBookingService->loadDeparture($departure),
+        ]);
     }
 
     /**
      * Step 2: Store basic info and move to passenger details.
      */
-    public function store(Request $request)
+    public function store(StoreBookingRequest $request): RedirectResponse
     {
-        $request->validate([
-            'departure_id' => 'required|exists:departures,id',
-            'total_passengers' => 'required|integer|min:1|max:10',
-        ]);
-
-        $departure = Departure::findOrFail($request->departure_id);
-        
-        // Check availability
-        if ($departure->booked_seats + $request->total_passengers > $departure->capacity) {
-            return back()->with('error', 'Not enough slots available for this departure.');
+        try {
+            $this->startTrekBookingService->handle(
+                (int) $request->validated('departure_id'),
+                (int) $request->validated('total_passengers')
+            );
+        } catch (RuntimeException $exception) {
+            return back()->with('error', $exception->getMessage());
         }
-
-        // Store basic booking info in session to carry over to passenger step
-        session(['booking_data' => [
-            'departure_id' => $departure->id,
-            'total_passengers' => $request->total_passengers,
-            'price_per_person' => $departure->price,
-        ]]);
 
         return redirect()->route('bookings.passengers');
     }
@@ -58,10 +52,13 @@ class BookingController extends Controller
     /**
      * Step 3: Show passenger details form.
      */
-    public function passengers()
+    public function passengers(): View|RedirectResponse
     {
-        $bookingData = session('booking_data');
-        if (!$bookingData) return redirect()->route('treks.index');
+        $bookingData = $this->bookingSessionService->get();
+
+        if (! $bookingData) {
+            return redirect()->route('treks.index');
+        }
 
         return view('bookings.passengers', compact('bookingData'));
     }
@@ -69,68 +66,24 @@ class BookingController extends Controller
     /**
      * Step 4: Finalize booking and payment.
      */
-    public function confirm(Request $request)
+    public function confirm(ConfirmBookingRequest $request): RedirectResponse
     {
-        $bookingData = session('booking_data');
-        if (!$bookingData) return redirect()->route('treks.index');
+        $bookingData = $this->bookingSessionService->get();
 
-        $request->validate([
-            'passengers.*.name' => 'required|string|max:255',
-            'passengers.*.passport_no' => 'required|string|max:50',
-            'passengers.*.age' => 'required|integer|min:1|max:120',
-        ]);
-
-        $totalPrice = $bookingData['price_per_person'] * $bookingData['total_passengers'];
-
-        // Create the booking record
-        $booking = TrekBooking::create([
-            'user_id' => Auth::id(),
-            'departure_id' => $bookingData['departure_id'],
-            'booking_reference' => 'TB-' . strtoupper(Str::random(8)),
-            'total_passengers' => $bookingData['total_passengers'],
-            'price_per_person' => $bookingData['price_per_person'],
-            'subtotal' => $totalPrice,
-            'total_price' => $totalPrice,
-            'status' => 'Pending',
-        ]);
-
-        // Create passenger records
-        foreach ($request->passengers as $pData) {
-            Passenger::create([
-                'trek_booking_id' => $booking->id,
-                'name' => $pData['name'],
-                'passport_no' => $pData['passport_no'],
-                'age' => $pData['age'],
-            ]);
+        if (! $bookingData) {
+            return redirect()->route('treks.index');
         }
 
-        // Create payment record
-        $payment = Payment::create([
-            'user_id' => Auth::id(),
-            'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
-            'amount' => $totalPrice,
-            'currency' => 'USD',
-            'payment_for' => 'trek',
-            'reference_id' => $booking->id,
-            'gateway' => 'stripe',
-            'status' => 'Pending',
-        ]);
+        $result = $this->createTrekBookingService->handle(
+            CreateTrekBookingData::fromRequest($request, $bookingData)
+        );
 
-        try {
-            $session = $this->stripeCheckoutService->createTrekCheckoutSession(
-                $payment,
-                $booking->load('departure.trek', 'user'),
-                route('stripe.success', ['payment' => $payment]) . '?session_id={CHECKOUT_SESSION_ID}',
-                route('stripe.cancel', ['payment' => $payment])
-            );
-        } catch (Throwable $exception) {
+        if (! $result->checkoutStarted()) {
             return redirect()
-                ->route('stripe.cancel', $payment)
-                ->with('error', 'We saved your booking, but could not start Stripe checkout. Please try again.');
+                ->route('stripe.cancel', $result->payment)
+                ->with('error', $result->errorMessage);
         }
 
-        session()->forget('booking_data');
-
-        return redirect()->away($session->url);
+        return redirect()->away($result->checkoutUrl);
     }
 }

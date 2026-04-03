@@ -1,4 +1,8 @@
 <x-app-layout>
+    @php
+        $galleryImages = $trek->gallery->pluck('path')->prepend($trek->image)->filter()->unique()->values();
+    @endphp
+
     <section class="detail-hero" @if($trek->image) style="background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.5)), url('{{ $trek->image }}');" @endif>
         <div class="container detail-hero__content">
             <h1>{{ $trek->title }}</h1>
@@ -23,6 +27,15 @@
 
             <article class="detail-panel detail-tab-panel is-active" data-tab-panel="overview">
                 <h2>Trip Overview</h2>
+                @if ($galleryImages->count() > 1)
+                    <div class="detail-gallery">
+                        @foreach ($galleryImages as $image)
+                            <div class="detail-gallery__item">
+                                <img src="{{ $image }}" alt="{{ $trek->title }} photo {{ $loop->iteration }}">
+                            </div>
+                        @endforeach
+                    </div>
+                @endif
                 <div class="detail-panel__lead">
                     <p>{!! nl2br(e($trek->description)) !!}</p>
                 </div>

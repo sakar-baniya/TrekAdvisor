@@ -69,7 +69,7 @@ class FrontendPageController extends Controller
     {
         $query = Hotel::query()
             ->where('status', 'Active')
-            ->with(['rooms', 'reviews'])
+            ->with(['rooms', 'reviews', 'gallery'])
             ->withMin('rooms', 'price_per_night');
 
         if ($request->filled('search')) {
@@ -93,7 +93,7 @@ class FrontendPageController extends Controller
 
     public function hotelShow(Hotel $hotel): View
     {
-        $hotel->load(['rooms', 'reviews.user']);
+        $hotel->load(['rooms', 'reviews.user', 'gallery']);
 
         return view('hotels.show', compact('hotel'));
     }

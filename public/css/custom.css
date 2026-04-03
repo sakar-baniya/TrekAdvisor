@@ -3,14 +3,3 @@
 [x-cloak] {
     display: none !important;
 }
-
-/* Removed redundant .hero-section block injected from Lush Forest theme */
-
-/* SVG blend modes on welcome page */
-.blend-hard-light {
-    mix-blend-mode: hard-light;
-}
-
-.blend-plus-darker {
-    mix-blend-mode: plus-darker;
-}

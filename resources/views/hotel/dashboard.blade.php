@@ -41,12 +41,17 @@
                 <h3>My Hotels</h3>
                 <p>Overview of the hotels registered under your account.</p>
             </div>
+            <a href="{{ route('hotel_owner.hotels.create') }}" class="admin-primary-button">
+                <i class="fas fa-plus"></i>
+                <span>Add Hotel</span>
+            </a>
         </div>
         <div class="admin-note-stack">
             @forelse ($hotels as $hotel)
                 <article class="admin-note-card">
                     <strong>{{ $hotel->name }}</strong>
-                    <span>{{ $hotel->location }} | {{ $hotel->rooms_count }} room types | {{ $hotel->status }}</span>
+                    <span>{{ $hotel->location }} | {{ $hotel->rooms_count }} room types | {{ $hotel->gallery_count }} photos | {{ $hotel->status }}</span>
+                    <a href="{{ route('hotel_owner.hotels.edit', $hotel) }}" class="admin-link-button">Edit listing</a>
                 </article>
             @empty
                 <p class="admin-table__empty">No hotels have been added to your account yet.</p>

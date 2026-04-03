@@ -1,5 +1,9 @@
 <x-app-layout>
-    <section class="detail-hero">
+    @php
+        $galleryImages = $hotel->gallery->pluck('path')->prepend($hotel->image)->filter()->unique()->values();
+    @endphp
+
+    <section class="detail-hero" @if($hotel->image) style="background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.5)), url('{{ $hotel->image }}');" @endif>
         <div class="container detail-hero__content">
             <h1>{{ $hotel->name }}</h1>
             <div class="detail-hero__stats">
@@ -13,9 +17,15 @@
 
     <div class="container detail-grid">
         <section class="detail-main">
-            @if ($hotel->image)
+            @if ($galleryImages->isNotEmpty())
                 <article class="detail-panel">
-                    <div class="market-card__media" style="min-height: 300px; border-radius: 24px; background-image: linear-gradient(rgba(16, 27, 45, 0.12), rgba(16, 27, 45, 0.35)), url('{{ $hotel->image }}');"></div>
+                    <div class="detail-gallery">
+                        @foreach ($galleryImages as $image)
+                            <div class="detail-gallery__item">
+                                <img src="{{ $image }}" alt="{{ $hotel->name }} photo {{ $loop->iteration }}">
+                            </div>
+                        @endforeach
+                    </div>
                 </article>
             @endif
 

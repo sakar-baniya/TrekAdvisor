@@ -28,4 +28,9 @@ class Hotel extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+
+    public function gallery(): HasMany
+    {
+        return $this->hasMany(HotelImage::class)->orderBy('sort_order')->orderBy('id');
+    }
 }

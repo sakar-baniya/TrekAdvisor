@@ -59,7 +59,7 @@ class TrekController extends Controller
             $q->where('status', 'Available')
               ->where('start_date', '>', now())
               ->orderBy('start_date', 'asc');
-        }])->where('slug', $slug)->firstOrFail();
+        }, 'gallery'])->where('slug', $slug)->firstOrFail();
 
         // Load reviews separately to show them at the bottom
         $reviews = $trek->reviews()->with('user')->latest()->get();

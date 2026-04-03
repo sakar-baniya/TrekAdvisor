@@ -12,114 +12,40 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=4">
+        <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}?v=1">
     </head>
         @php
+            use App\Services\Dashboard\DashboardNavigation;
+
             $user = auth()->user();
             $role = $user->role;
 
-            $dashboardConfigs = [
-                'admin' => [
-                    'title' => 'TrekAdvisor Admin',
-                    'subtitle' => 'Operations center',
-                    'panel_label' => 'Admin panel',
-                    'home_route' => route('admin.dashboard'),
-                    'navigation' => [
-                        [
-                            'label' => 'Dashboard',
-                            'icon' => 'fa-chart-line',
-                            'route' => route('admin.dashboard'),
-                            'active' => request()->routeIs('admin.dashboard'),
-                        ],
-                        [
-                            'label' => 'Trek Management',
-                            'icon' => 'fa-mountain-sun',
-                            'children' => [
-                                ['label' => 'All Treks', 'route' => route('admin.treks.index'), 'active' => request()->routeIs('admin.treks.index')],
-                                ['label' => 'Add New Trek', 'route' => route('admin.treks.create'), 'active' => request()->routeIs('admin.treks.create')],
-                                ['label' => 'Departures', 'route' => route('admin.departures.index'), 'active' => request()->routeIs('admin.departures.*')],
-                                ['label' => 'Trek Bookings', 'route' => route('admin.trek-bookings.index'), 'active' => request()->routeIs('admin.trek-bookings.*')],
-                            ],
-                        ],
-                        [
-                            'label' => 'Hotel Management',
-                            'icon' => 'fa-hotel',
-                            'children' => [
-                                ['label' => 'All Hotels', 'route' => route('admin.hotels.index'), 'active' => request()->routeIs('admin.hotels.*')],
-                            ],
-                        ],
-                        [
-                            'label' => 'Gear Management',
-                            'icon' => 'fa-backpack',
-                            'children' => [
-                                ['label' => 'All Gear Items', 'route' => route('admin.gear.index'), 'active' => request()->routeIs('admin.gear.*')],
-                                ['label' => 'Add Gear Item', 'route' => route('admin.gear.create'), 'active' => request()->routeIs('admin.gear.create')],
-                                ['label' => 'Gear Rentals', 'route' => route('admin.gear-rentals.index'), 'active' => request()->routeIs('admin.gear-rentals.*')],
-                            ],
-                        ],
-                        [
-                            'label' => 'User Management',
-                            'icon' => 'fa-users',
-                            'children' => [
-                                ['label' => 'All Users', 'route' => route('admin.users.index'), 'active' => request()->routeIs('admin.users.*')],
-                                ['label' => 'Add Staff', 'route' => route('admin.users.create-staff'), 'active' => request()->routeIs('admin.users.create-staff')],
-                            ],
-                        ],
-                        [
-                            'label' => 'Payments',
-                            'icon' => 'fa-credit-card',
-                            'children' => [
-                                ['label' => 'All Payments', 'route' => route('admin.payments.index'), 'active' => request()->routeIs('admin.payments.*')],
-                            ],
-                        ],
-                        [
-                            'label' => 'Reviews',
-                            'icon' => 'fa-star',
-                            'children' => [
-                                ['label' => 'All Reviews', 'route' => route('admin.reviews.index'), 'active' => request()->routeIs('admin.reviews.index')],
-                                ['label' => 'Flagged Reviews', 'route' => route('admin.reviews.flagged'), 'active' => request()->routeIs('admin.reviews.flagged')],
-                            ],
-                        ],
-                    ],
-                ],
-                'staff' => [
-                    'title' => 'TrekAdvisor Staff',
-                    'subtitle' => 'Support desk',
-                    'panel_label' => 'Staff dashboard',
-                    'home_route' => route('staff.dashboard'),
-                    'navigation' => [
-                        [
-                            'label' => 'Dashboard',
-                            'icon' => 'fa-headset',
-                            'route' => route('staff.dashboard'),
-                            'active' => request()->routeIs('staff.dashboard'),
-                        ],
-                    ],
-                ],
-                'hotel_owner' => [
-                    'title' => 'TrekAdvisor Hotel Hub',
-                    'subtitle' => 'Partner console',
-                    'panel_label' => 'Hotel owner dashboard',
-                    'home_route' => route('hotel_owner.dashboard'),
-                    'navigation' => [
-                        [
-                            'label' => 'Dashboard',
-                            'icon' => 'fa-hotel',
-                            'route' => route('hotel_owner.dashboard'),
-                            'active' => request()->routeIs('hotel_owner.dashboard'),
-                        ],
-                    ],
-                ],
-            ];
+            // Get navigation configuration from centralized service
+            $navConfig = DashboardNavigation::getConfig($role);
+            
+            // Convert routes in navigation to actual URLs and add active states
+            $navigation = array_map(function ($item) {
+                if (isset($item['children'])) {
+                    $item['children'] = array_map(function ($child) {
+                        $child['route'] = route($child['route']);
+                        $child['active'] = DashboardNavigation::isRouteActive(explode('/', str_replace(url(''), '', $child['route']))[-1] ?? $child['route']);
+                        return $child;
+                    }, $item['children']);
+                    $item['active'] = collect($item['children'])->contains(fn ($c) => $c['active']);
+                } else {
+                    $item['route'] = route($item['route']);
+                    $item['active'] = DashboardNavigation::isRouteActive(explode('/', str_replace(url(''), '', $item['route']))[-1] ?? $item['route']);
+                }
+                return $item;
+            }, $navConfig['navigation']);
 
-            $dashboardConfig = $dashboardConfigs[$role] ?? [
-                'title' => 'TrekAdvisor Dashboard',
-                'subtitle' => 'Workspace',
-                'panel_label' => 'Dashboard',
-                'home_route' => route($user->dashboardRouteName()),
-                'navigation' => [],
+            $dashboardConfig = [
+                'title' => $navConfig['title'],
+                'subtitle' => $navConfig['subtitle'],
+                'panel_label' => $navConfig['panel_label'],
+                'home_route' => route($navConfig['home_route']),
+                'navigation' => $navigation,
             ];
-
-            $dashboardNavigation = $dashboardConfig['navigation'];
         @endphp
 
     <body class="admin-body admin-body--{{ str_replace('_', '-', $role) }}">
@@ -137,13 +63,10 @@
                 </div>
 
                 <nav class="admin-sidebar__nav">
-                    @foreach ($dashboardNavigation as $item)
+                    @foreach ($dashboardConfig['navigation'] as $item)
                         @if (isset($item['children']))
-                            @php
-                                $groupIsActive = collect($item['children'])->contains(fn ($child) => $child['active']);
-                            @endphp
-                            <section class="admin-nav-group {{ $groupIsActive ? 'is-open' : '' }}" data-nav-group>
-                                <button type="button" class="admin-nav-group__toggle" data-nav-toggle aria-expanded="{{ $groupIsActive ? 'true' : 'false' }}">
+                            <section class="admin-nav-group {{ $item['active'] ? 'is-open' : '' }}" data-nav-group>
+                                <button type="button" class="admin-nav-group__toggle" data-nav-toggle aria-expanded="{{ $item['active'] ? 'true' : 'false' }}">
                                     <i class="fas {{ $item['icon'] }}"></i>
                                     <span>{{ $item['label'] }}</span>
                                     <i class="fas fa-chevron-down admin-nav-group__chevron"></i>
@@ -172,14 +95,6 @@
                 </nav>
 
                 <div class="admin-sidebar__footer">
-                    <div class="admin-user-card">
-                        <div class="admin-user-card__avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-                        <div>
-                            <strong>{{ auth()->user()->name }}</strong>
-                            <small>{{ str_replace('_', ' ', auth()->user()->role) }}</small>
-                        </div>
-                    </div>
-
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="admin-ghost-button admin-ghost-button--full">
@@ -191,32 +106,34 @@
             </aside>
 
             <div class="admin-content">
-                <header class="admin-topbar">
-                    <div class="admin-topbar__left">
-                        <button type="button" class="admin-icon-button admin-mobile-toggle" data-sidebar-toggle>
-                            <i class="fas fa-bars"></i>
-                        </button>
-                        <div>
-                            <p class="admin-eyebrow">{{ $dashboardConfig['subtitle'] }}</p>
-                            <h1 class="admin-topbar__title">{{ $dashboardConfig['title'] }}</h1>
-                        </div>
+                <header class="dashboard-topbar">
+                    <button type="button" class="admin-icon-button admin-mobile-toggle" data-sidebar-toggle>
+                        <i class="fas fa-bars"></i>
+                    </button>
+
+                    <div class="dashboard-topbar__header">
+                        <h1 class="dashboard-topbar__title">{{ $dashboardConfig['title'] }}</h1>
+                        @if ($dashboardConfig['subtitle'])
+                            <p class="dashboard-topbar__subtitle">{{ $dashboardConfig['subtitle'] }}</p>
+                        @endif
                     </div>
 
-                    <div class="admin-topbar__right">
-                        <label class="admin-searchbar">
+                    <div class="dashboard-topbar__controls">
+                        <button type="button" class="dashboard-topbar__search-btn" data-search-toggle>
                             <i class="fas fa-magnifying-glass"></i>
-                            <input type="search" placeholder="Search pages, bookings, users" />
-                        </label>
-                        <button type="button" class="admin-icon-button">
-                            <i class="fas fa-bell"></i>
                         </button>
-                        <div class="admin-profile-chip">
-                            <div class="admin-profile-chip__avatar">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</div>
-                            <div>
-                                <strong>{{ auth()->user()->name }}</strong>
-                                <small>{{ now()->format('M d, Y') }}</small>
-                            </div>
+
+                        <div class="dashboard-topbar__search" data-search-bar>
+                            <input type="search" class="dashboard-topbar__search-input" placeholder="Search...">
+                            <i class="fas fa-magnifying-glass dashboard-topbar__search-icon"></i>
                         </div>
+
+                        <button type="button" class="dashboard-topbar__notifications-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="dashboard-topbar__notifications-badge">3</span>
+                        </button>
+
+                        <x-dashboard.profile-menu :user="auth()->user()" />
                     </div>
                 </header>
 
@@ -251,7 +168,30 @@
                         toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
                     });
                 });
+
+                // Search toggle functionality
+                const searchToggleBtn = document.querySelector('[data-search-toggle]');
+                const searchBar = document.querySelector('[data-search-bar]');
+
+                if (searchToggleBtn && searchBar) {
+                    searchToggleBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        searchBar.classList.toggle('visible');
+                        if (searchBar.classList.contains('visible')) {
+                            searchBar.querySelector('input')?.focus();
+                        }
+                    });
+
+                    document.addEventListener('click', () => {
+                        searchBar.classList.remove('visible');
+                    });
+
+                    searchBar.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                    });
+                }
             })();
         </script>
     </body>
 </html>
+

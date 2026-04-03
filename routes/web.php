@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
+use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -78,6 +79,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/hotel-owner/dashboard', [DashboardController::class, 'hotelOwner'])
         ->middleware('role:hotel_owner')
         ->name('hotel_owner.dashboard');
+    Route::middleware('role:hotel_owner')->prefix('hotel-owner')->name('hotel_owner.')->group(function () {
+        Route::resource('hotels', HotelOwnerHotelController::class)->except(['show', 'destroy']);
+    });
 
     // Customer Only
     Route::get('/customer/dashboard', [DashboardController::class, 'customer'])
@@ -101,6 +105,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments/stripe/{payment}/cancel', [StripeCheckoutController::class, 'cancel'])->name('stripe.cancel');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
