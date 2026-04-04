@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -22,8 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'approval_status',
         'phone',
-        'is_approved',
+        'is_approved', // Keep for backward compatibility, will be removed in future
     ];
 
     /**
@@ -46,7 +48,13 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'approval_status' => 'string', // enum: pending, approved, rejected
         ];
+    }
+
+    public function gearRentals(): HasMany
+    {
+        return $this->hasMany(GearRental::class);
     }
 
     public function dashboardRouteName(): string

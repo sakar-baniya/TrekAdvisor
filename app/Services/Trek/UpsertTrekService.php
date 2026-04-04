@@ -21,6 +21,10 @@ class UpsertTrekService
         return DB::transaction(function () use ($request, $validated) {
             $payload = $this->buildPayload($request, $validated);
             $trek = Trek::query()->create($payload);
+
+            // Now sync hero image to trek_images after trek exists
+            $this->trekGalleryService->syncHeroImage($request, [], $trek);
+
             $this->syncItineraries($trek, $validated['itinerary'] ?? []);
             $this->trekGalleryService->syncGallery($request, $trek);
 
@@ -54,7 +58,8 @@ class UpsertTrekService
             'status' => $validated['status'],
         ];
 
-        $this->trekGalleryService->syncHeroImage($request, $payload, $trek);
+        // Hero image is now handled separately in syncHeroImage method
+        // Don't set it in payload since treks.image field no longer exists
 
         return $payload;
     }

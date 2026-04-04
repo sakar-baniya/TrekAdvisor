@@ -15,13 +15,12 @@ class AdminGearController extends Controller
     {
         $search = $request->string('search')->toString();
         $type = $request->string('type')->toString();
-        $availability = $request->string('availability')->toString();
+        $status = $request->string('status')->toString();
 
         $gearItems = GearItem::query()
             ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($type !== '', fn ($query) => $query->where('type', $type))
-            ->when($availability === 'available', fn ($query) => $query->where('available_stock', '>', 0))
-            ->when($availability === 'out', fn ($query) => $query->where('available_stock', '<=', 0))
+            ->when($status !== '', fn ($query) => $query->where('status', $status))
             ->latest()
             ->paginate(12)
             ->withQueryString();
@@ -30,7 +29,7 @@ class AdminGearController extends Controller
             'gearItems' => $gearItems,
             'search' => $search,
             'type' => $type,
-            'availability' => $availability,
+            'status' => $status,
             'types' => GearItem::query()->select('type')->distinct()->orderBy('type')->pluck('type'),
         ]);
     }
@@ -81,7 +80,7 @@ class AdminGearController extends Controller
             'description' => ['nullable', 'string'],
             'daily_price' => ['required', 'numeric', 'min:0'],
             'total_stock' => ['required', 'integer', 'min:0'],
-            'available_stock' => ['required', 'integer', 'min:0'],
+            'status' => ['required', 'in:Active,Inactive'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
     }
@@ -96,10 +95,6 @@ class AdminGearController extends Controller
             }
 
             $payload['image'] = Storage::url($request->file('image')->store('gear', 'public'));
-        }
-
-        if ($payload['available_stock'] > $payload['total_stock']) {
-            $payload['available_stock'] = $payload['total_stock'];
         }
 
         return $payload;

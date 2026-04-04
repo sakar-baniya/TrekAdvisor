@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\GearRental;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AdminGearRentalController extends Controller
@@ -34,20 +33,23 @@ class AdminGearRentalController extends Controller
             return back()->with('success', 'Rental was already marked as returned.');
         }
 
-        DB::transaction(function () use ($gearRental) {
-            $gearRental->update([
-                'status' => 'Returned',
-            ]);
-
-            $gearItem = $gearRental->gearItem;
-
-            if ($gearItem) {
-                $gearItem->update([
-                    'available_stock' => min($gearItem->available_stock + $gearRental->quantity, $gearItem->total_stock),
-                ]);
-            }
-        });
+        $gearRental->update([
+            'status' => 'Returned',
+        ]);
 
         return back()->with('success', 'Rental marked as returned.');
+    }
+
+    public function confirm(GearRental $gearRental): RedirectResponse
+    {
+        if ($gearRental->status !== 'Pending') {
+            return back()->with('error', 'Only pending rentals can be confirmed.');
+        }
+
+        $gearRental->update([
+            'status' => 'Active',
+        ]);
+
+        return back()->with('success', 'Rental confirmed and activated.');
     }
 }

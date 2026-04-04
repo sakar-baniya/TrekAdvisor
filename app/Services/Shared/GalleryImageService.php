@@ -14,11 +14,27 @@ class GalleryImageService
             return;
         }
 
-        if ($model?->image) {
-            Storage::disk('public')->delete($this->relativePath($model->image));
-        }
+        // Get the model name to determine the gallery relationship
+        $modelClass = class_basename($model) ?: 'Trek';
+        $galleryRelation = strtolower($modelClass) . '_images';
 
-        $payload['image'] = Storage::url($request->file('image')->store($directory, 'public'));
+        // If model exists and has a hero image, remove the old one
+        if ($model) {
+            $heroImage = $model->images()->where('sort_order', 0)->first();
+            if ($heroImage) {
+                Storage::disk('public')->delete($this->relativePath($heroImage->path));
+                $heroImage->delete();
+            }
+
+            // Store new hero image with sort_order = 0 in the images table
+            $path = Storage::url($request->file('image')->store($directory, 'public'));
+            $model->images()->create([
+                'path' => $path,
+                'sort_order' => 0,
+            ]);
+        }
+        // Store in payload for creation flow (will be created after model exists)
+        // For new models, we'll handle this in the controller after creation
     }
 
     public function syncGallery(Request $request, Model $model, string $directory): void

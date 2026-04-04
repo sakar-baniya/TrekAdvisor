@@ -6,23 +6,52 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * Middleware to check user role and authorization
+ * 
+ * Usage in routes:
+ *   Route::middleware(['auth', 'role:admin'])->group(...) // Single role
+ *   Route::middleware(['auth', 'role:admin,staff'])->group(...) // Multiple roles
+ */
 class RoleManager
 {
     /**
-     * Handle an incoming request.
+     * Handle incoming request and check user role
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param Request $request
+     * @param Closure $next
+     * @param string|null $roles Comma-separated role names (e.g., 'admin' or 'admin,staff')
+     * @return Response
      */
-    public function handle(Request $request, \Closure $next, $role)
+    public function handle(Request $request, Closure $next, $roles = null): Response
     {
-        // 1. Is the user logged in?
-        // 2. Is their role NOT equal to the required role?
-        if (!auth()->check() || auth()->user()->role !== $role) {
-            
-            // If they are a customer trying to enter /admin, send them back home
+        // User must be authenticated
+        if (!auth()->check()) {
+            return redirect('/login');
+        }
+
+        // Get current user
+        $user = auth()->user();
+
+        // If no roles specified, allow any authenticated user
+        if (empty($roles)) {
+            return $next($request);
+        }
+
+        // Parse roles (comma-separated)
+        $allowedRoles = array_map('trim', explode(',', $roles));
+
+        // Check if user's role is in allowed roles
+        if (!in_array($user->role, $allowedRoles)) {
+            // User not authorized
+            if ($request->expectsJson()) {
+                return response()->json(['message' => 'Unauthorized access.'], 403);
+            }
+
             return redirect('/')->with('error', 'Unauthorized access.');
         }
 
         return $next($request);
     }
 }
+

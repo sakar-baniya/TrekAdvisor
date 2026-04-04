@@ -17,8 +17,8 @@ class GearItem extends Model
         'description',
         'daily_price',
         'total_stock',
-        'available_stock',
         'image',
+        'status',
     ];
 
     public function rentals(): HasMany

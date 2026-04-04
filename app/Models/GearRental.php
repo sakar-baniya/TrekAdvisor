@@ -14,18 +14,14 @@ class GearRental extends Model
         'user_id',
         'gear_item_id',
         'rental_reference',
-        'start_date',
-        'end_date',
         'quantity',
-        'num_days',
-        'daily_price',
-        'total_price',
         'status',
+        'notes',
+        'expected_return_date',
     ];
 
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
+        'expected_return_date' => 'date',
     ];
 
     public function user(): BelongsTo

@@ -28,6 +28,26 @@ class Trek extends Model
         return $this->morphMany(Review::class, 'reviewable');
     }
 
+    /**
+     * All images for this trek (ordered by sort_order)
+     */
+    public function images(): HasMany
+    {
+        return $this->hasMany(TrekImage::class)->orderBy('sort_order');
+    }
+
+    /**
+     * Featured/primary image (first in sort_order)
+     * Replaces old single image field
+     */
+    public function image()
+    {
+        return $this->images()->first();
+    }
+
+    /**
+     * Legacy gallery relationship (keeping for backward compatibility)
+     */
     public function gallery(): HasMany
     {
         return $this->hasMany(TrekImage::class);
