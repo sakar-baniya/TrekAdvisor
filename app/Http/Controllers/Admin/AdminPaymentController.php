@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\GearRental;
 use App\Models\HotelBooking;
 use App\Models\Payment;
 use App\Models\TrekBooking;
@@ -65,14 +64,14 @@ class AdminPaymentController extends Controller
         ]);
     }
 
-    protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|GearRental|null
+    protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|null
     {
         return match ($payment->payable_type) {
             'trek' => TrekBooking::query()->with(['departure.trek', 'user'])->find($payment->payable_id),
             'hotel' => HotelBooking::query()->with(['hotelRoom.hotel', 'user'])->find($payment->payable_id),
-            'gear' => GearRental::query()->with(['gearItem', 'user'])->find($payment->payable_id),
             default => null,
         };
     }
 }
+
 

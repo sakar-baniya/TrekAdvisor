@@ -21,7 +21,6 @@ class HotelFactory extends Factory
             'name' => fake()->company() . ' Hotel',
             'location' => fake()->city(),
             'description' => fake()->paragraphs(2, true),
-            'image' => fake()->imageUrl(640, 480, 'city', true),
             'status' => 'Active',
         ];
     }

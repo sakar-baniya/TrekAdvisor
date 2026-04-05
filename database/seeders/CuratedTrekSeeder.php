@@ -32,11 +32,20 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => $trekData['difficulty'],
                 'duration_days' => $trekData['duration_days'],
                 'max_altitude' => $trekData['max_altitude'],
-                'image' => $trek->image,
                 'status' => 'Active',
             ]);
 
             $trek->save();
+
+            // Clear existing images and add the new one if provided
+            if (isset($trekData['image'])) {
+                $trek->images()->delete();
+                $trek->images()->create([
+                    'path' => $trekData['image'],
+                    'is_primary' => true,
+                    'sort_order' => 0,
+                ]);
+            }
 
             $this->syncDepartures($trek, $trekData['base_price'], $trekData['duration_days']);
         });
@@ -55,6 +64,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Moderate',
                 'duration_days' => 10,
                 'max_altitude' => 4130,
+                'image' => 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
                 'description' => 'A classic teahouse trek through terraced villages, rhododendron forest, and the Modi Khola valley to the Annapurna Sanctuary. Most standard itineraries run 9 to 11 trekking days and reach Annapurna Base Camp at 4,130 meters, making it one of Nepal’s best-value high mountain routes.',
             ],
             [
@@ -64,6 +74,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Moderate',
                 'duration_days' => 8,
                 'max_altitude' => 3870,
+                'image' => 'https://images.unsplash.com/photo-1582234052329-87b64082f10b?auto=format&fit=crop&w=800&q=80',
                 'description' => 'The Langtang Valley Trek combines close-up alpine scenery with Tamang culture north of Kathmandu. A typical 7 to 9 day itinerary climbs gradually to Kyanjin Gompa at 3,870 meters, offering glacier views, yak pastures, and one of Nepal’s strongest short-to-mid length trekking experiences.',
             ],
             [
@@ -73,6 +84,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5106,
+                'image' => 'https://images.unsplash.com/photo-1605640840605-14ac1855827b?auto=format&fit=crop&w=800&q=80',
                 'description' => 'A longer restricted-area journey circling Mount Manaslu through remote Buddhist villages and dramatic high valley terrain. Standard programs take around 14 to 16 days and cross Larkya La at 5,106 meters, so costs are higher due to permits, guide requirements, and the trek’s logistical complexity.',
             ],
             [
@@ -82,6 +94,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Easy',
                 'duration_days' => 5,
                 'max_altitude' => 3210,
+                'image' => 'https://images.unsplash.com/photo-1570535451152-32b014798935?auto=format&fit=crop&w=800&q=80',
                 'description' => 'A short and approachable Annapurna region trek known for sunrise from Poon Hill and comfortable village lodges along the route. Most itineraries take 4 to 5 days and top out at roughly 3,210 meters, which makes it a popular introduction to trekking in Nepal.',
             ],
             [
@@ -91,6 +104,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Moderate',
                 'duration_days' => 17,
                 'max_altitude' => 4230,
+                'image' => 'https://images.unsplash.com/photo-1549488344-1f9b8d2bd1f3?auto=format&fit=crop&w=800&q=80',
                 'description' => 'Upper Mustang is a restricted trans-Himalayan route into Nepal’s former walled kingdom, known for desert landscapes, monasteries, and Tibetan-influenced culture. Public itineraries commonly run 14 to 17 days and reach around 4,230 meters, with pricing driven mainly by permits and transport.',
             ],
             [
@@ -100,6 +114,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Moderate',
                 'duration_days' => 5,
                 'max_altitude' => 4500,
+                'image' => 'https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?auto=format&fit=crop&w=800&q=80',
                 'description' => 'A compact ridge-line trek east of the Annapurna Base Camp trail, popular for forest camps, open viewpoints, and a strong mountain panorama in a shorter time frame. Most trips take 5 to 7 days and reach the Mardi Himal viewpoint or base camp area at about 4,500 meters.',
             ],
             [
@@ -109,6 +124,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Difficult',
                 'duration_days' => 13,
                 'max_altitude' => 5357,
+                'image' => 'https://images.unsplash.com/photo-1563200781-067a999a4c51?auto=format&fit=crop&w=800&q=80',
                 'description' => 'An Everest-region alternative focused on the turquoise Gokyo Lakes and the summit viewpoint of Gokyo Ri. Typical itineraries take about 12 to 13 days and rise to 5,357 meters, offering a quieter but still demanding high-altitude trek with exceptional Khumbu scenery.',
             ],
             [
@@ -118,6 +134,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Difficult',
                 'duration_days' => 20,
                 'max_altitude' => 5143,
+                'image' => 'https://images.unsplash.com/photo-1521360144391-766b1a37c02b?auto=format&fit=crop&w=800&q=80',
                 'description' => 'One of Nepal’s most remote long-distance treks, the Kanchenjunga Base Camp route visits far eastern valleys, Rai and Limbu villages, and the base camp region below the world’s third-highest mountain. Standard journeys span around 20 to 24 days and require strong endurance and logistics planning.',
             ],
             [
@@ -127,6 +144,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Easy',
                 'duration_days' => 7,
                 'max_altitude' => 3490,
+                'image' => 'https://images.unsplash.com/photo-1517411032315-54ef2cb783bb?auto=format&fit=crop&w=800&q=80',
                 'description' => 'A lower-altitude cultural trek north of Kathmandu through Sherpa and Hyolmo villages, forested ridges, and wide valley views. Most itineraries run 6 to 7 days and stay below the more technical high-Himalayan zones, making it a gentle entry point for new trekkers.',
             ],
             [
@@ -136,6 +154,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5364,
+                'image' => 'https://images.unsplash.com/photo-1533130061792-64b345e4a833?auto=format&fit=crop&w=800&q=80',
                 'description' => 'Nepal’s signature Khumbu route follows the Dudh Koshi valley through Namche, Tengboche, and Gorak Shep to Everest Base Camp. Most standard packages take 12 to 14 days and reach 5,364 meters at base camp, with the trip graded difficult because of altitude, daily elevation gain, and the length of the walk.',
             ],
             [
@@ -145,6 +164,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5416,
+                'image' => 'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=800&q=80',
                 'description' => 'The Annapurna Circuit remains one of Nepal’s benchmark long treks, linking lush lower valleys with the dry trans-Himalayan landscape beyond Manang. Most classic itineraries take around 14 days and cross Thorong La at 5,416 meters, combining big altitude, changing terrain, and broad route variety.',
             ],
         ];
