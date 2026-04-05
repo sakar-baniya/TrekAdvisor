@@ -2,29 +2,24 @@
     <section class="market-hero">
         <div class="container market-hero__inner">
             <div class="market-hero__text-box">
-                <h1 class="market-hero__title">Local Experts in Himalayan Trekking</h1>
+                <h1 class="market-hero__title">Local Experts in Himalayan<br>Trekking</h1>
                 <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
             </div>
-
             <div class="hero-search-wrapper" x-data="{
                 category: 'treks',
                 treksUrl: '{{ route('treks.index') }}',
                 hotelsUrl: '{{ route('hotels.index') }}',
-                gearUrl: '{{ route('gear.index') }}',
                 placeholder() {
                     if (this.category === 'treks') return 'Search for treks, destinations...'
-                    if (this.category === 'hotels') return 'Search for hotels, locations...'
-                    return 'Search for gear type, location...'
+                    return 'Search for hotels, locations...'
                 },
                 exploreLabel() {
                     if (this.category === 'treks') return 'Explore Treks'
-                    if (this.category === 'hotels') return 'Explore Hotels'
-                    return 'Explore Gear'
+                    return 'Explore Hotels'
                 },
                 actionUrl() {
                     if (this.category === 'treks') return this.treksUrl
-                    if (this.category === 'hotels') return this.hotelsUrl
-                    return this.gearUrl
+                    return this.hotelsUrl
                 }
             }">
                 <div class="hero-search-tabs" role="tablist" aria-label="Search category">
@@ -43,14 +38,6 @@
                         @click="category = 'hotels'"
                     >
                         Hotels
-                    </button>
-                    <button
-                        type="button"
-                        class="hero-search-tab"
-                        :class="{ 'is-active': category === 'gear' }"
-                        @click="category = 'gear'"
-                    >
-                        Gear Rental
                     </button>
                 </div>
 
@@ -73,22 +60,15 @@
 
             <div class="market-hero__stats">
                 <div>
-                    <strong>{{ $featuredTreks->count() }}+</strong>
+                    <strong>{{ \App\Models\Trek::where('status', 'active')->count() }}+</strong>
                     <span>Featured Treks</span>
                 </div>
                 <div>
-                    <strong>{{ $featuredHotels->count() }}+</strong>
+                    <strong>{{ \App\Models\Hotel::where('status', 'active')->count() }}+</strong>
                     <span>Active Hotels</span>
-                </div>
-                <div>
-                    <strong>{{ $featuredGearItems->count() }}+</strong>
-                    <span>Gear Items</span>
                 </div>
             </div>
 
-            <a href="{{ route('treks.index') }}" class="market-hero__play" aria-label="Explore treks">
-                <i class="fas fa-play"></i>
-            </a>
         </div>
     </section>
 
@@ -96,7 +76,7 @@
         <div class="container container-wide">
             <div class="booking-section__head">
                 <div class="booking-section__title">
-                    <p class="section-kicker">Top Picks</p>
+                    <p class="section-kicker">Adventure Awaits</p>
                     <h2>Featured Treks</h2>
                 </div>
                 <div class="booking-section__actions">
@@ -180,54 +160,12 @@
         </div>
     </section>
 
-    <section id="featured-gear" class="booking-section">
-        <div class="container container-wide">
-            <div class="booking-section__head">
-                <div class="booking-section__title">
-                    <p class="section-kicker">Rental Gear</p>
-                    <h2>Essentials for the Trail</h2>
-                </div>
-                <div class="booking-section__actions">
-                    <a href="{{ route('home') }}#featured-gear" class="view-all-link">View All</a>
-                    <div class="carousel-arrows">
-                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-            </div>
 
-            <div class="booking-grid">
-                @forelse ($featuredGearItems->take(3) as $item)
-                    <article class="booking-card booking-card--featured booking-card--gear">
-                        <div class="booking-card__media">
-                            @if ($item->image)
-                                <img src="{{ $item->image }}" alt="Image of {{ $item->name }}">
-                            @else
-                                <div class="booking-card__media-placeholder"><i class="fas fa-campground"></i></div>
-                            @endif
-                        </div>
-                        <div class="booking-card__body">
-                            <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> 4.7 (18 reviews)</span>
-                            </div>
-                            <h3>{{ $item->name }}</h3>
-                            <div class="booking-card__footer">
-                                <div class="booking-card__price"><strong>${{ number_format($item->daily_price, 0) }}</strong> <span>/day</span></div>
-                                <span class="btn-primary-filled booking-card__action">Rent Now</span>
-                            </div>
-                        </div>
-                    </article>
-                @empty
-                    <p class="empty-note">No gear items available yet.</p>
-                @endforelse
-            </div>
-        </div>
-    </section>
 
     <section class="market-cta">
         <div class="container market-cta__inner">
             <h2>Ready for Your Adventure?</h2>
-            <p>Join trekkers using TrekAdvisor to plan routes, stays, and rental gear in one thoughtful, premium experience.</p>
+            <p>Join trekkers using TrekAdvisor to plan routes and stays in one thoughtful, premium experience.</p>
             <a href="{{ route('treks.index') }}" class="market-cta__button">Start Planning Now</a>
         </div>
     </section>
@@ -261,7 +199,7 @@
                         <div class="market-quote-card__stars">★★★★★</div>
                         <i class="fas fa-quote-right quote-icon"></i>
                     </div>
-                    <p class="market-quote-card__text">"The clean layout made it easy to compare treks, stays, and gear without feeling overwhelmed."</p>
+                    <p class="market-quote-card__text">"The clean layout made it easy to compare treks and stays without feeling overwhelmed."</p>
                     <div class="market-quote-card__author">
                         <div class="avatar"><i class="fas fa-user"></i></div>
                         <div class="author-info">

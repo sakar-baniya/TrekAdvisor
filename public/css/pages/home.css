@@ -84,9 +84,7 @@
     align-items: stretch;
 }
 
-#featured-gear .booking-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-}
+
 
 .booking-card--featured {
     display: flex;
@@ -113,9 +111,7 @@
     background: linear-gradient(135deg, rgba(24, 78, 108, 0.92), rgba(56, 126, 162, 0.78));
 }
 
-.booking-card--gear .booking-card__media {
-    min-height: 0;
-}
+
 
 .booking-card--featured .booking-card__media img,
 .booking-card--featured .booking-card__media-placeholder {
@@ -189,19 +185,13 @@
 }
 
 .booking-card--hotel .booking-card__body,
-.booking-card--gear .booking-card__body {
-    gap: 0.6rem;
-}
+
 
 .booking-card--hotel .booking-card__meta,
-.booking-card--gear .booking-card__meta {
-    justify-content: flex-start;
-}
+
 
 .booking-card--hotel .booking-card__footer,
-.booking-card--gear .booking-card__footer {
-    padding-top: 0.35rem;
-}
+
 
 .booking-card__price {
     color: #5b7382;
@@ -245,8 +235,7 @@
 }
 
 @media (max-width: 1200px) {
-    .booking-grid,
-    #featured-gear .booking-grid {
+    .booking-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
@@ -264,8 +253,7 @@
         align-items: flex-start;
     }
 
-    .booking-grid,
-    #featured-gear .booking-grid {
+    .booking-grid {
         grid-template-columns: 1fr;
     }
 
@@ -278,3 +266,4 @@
         width: 100%;
     }
 }
+
