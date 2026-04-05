@@ -15,8 +15,8 @@ class Payment extends Model
         'transaction_id',
         'amount',
         'currency',
-        'payment_for',
-        'reference_id',
+        'payable_type',
+        'payable_id',
         'gateway',
         'stripe_session_id',
         'stripe_payment_intent_id',
@@ -37,14 +37,14 @@ class Payment extends Model
     /**
      * Get the associated booking or rental for the payment.
      */
-    public function reference()
+    public function payable()
     {
-        if ($this->payment_for === 'trek') {
-            return $this->belongsTo(TrekBooking::class, 'reference_id');
-        } elseif ($this->payment_for === 'hotel') {
-            return $this->belongsTo(HotelBooking::class, 'reference_id');
-        } elseif ($this->payment_for === 'gear') {
-            return $this->belongsTo(GearRental::class, 'reference_id');
+        if ($this->payable_type === 'trek') {
+            return $this->belongsTo(TrekBooking::class, 'payable_id');
+        } elseif ($this->payable_type === 'hotel') {
+            return $this->belongsTo(HotelBooking::class, 'payable_id');
+        } elseif ($this->payable_type === 'gear') {
+            return $this->belongsTo(GearRental::class, 'payable_id');
         }
         return null;
     }

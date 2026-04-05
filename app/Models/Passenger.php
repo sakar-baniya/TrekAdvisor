@@ -12,8 +12,8 @@ class Passenger extends Model
 
     protected $fillable = [
         'trek_booking_id',
-        'name',
-        'passport_no',
+        'full_name',
+        'passport_number',
         'age',
     ];
 

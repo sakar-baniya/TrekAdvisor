@@ -15,22 +15,11 @@ class BackfillSchemaChanges extends Command
     {
         $this->info('Starting schema backfill...');
 
-        $this->backfillApprovalStatus();
+        $pendingCount = User::query()->whereNull('approval_status')->update([
+            'approval_status' => 'pending',
+        ]);
 
+        $this->line("  - {$pendingCount} users normalized");
         $this->info('Schema backfill completed.');
-    }
-
-    protected function backfillApprovalStatus(): void
-    {
-        $this->info('Backfilling user approval_status...');
-
-        $approvedCount = User::where('is_approved', true)
-            ->update(['approval_status' => 'approved']);
-
-        $rejectedCount = User::where('is_approved', false)
-            ->update(['approval_status' => 'rejected']);
-
-        $this->line("  - {$approvedCount} users marked as approved");
-        $this->line("  - {$rejectedCount} users marked as rejected");
     }
 }

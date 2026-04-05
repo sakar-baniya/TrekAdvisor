@@ -40,8 +40,8 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
 
     public function markCheckoutCompleted(Payment $payment, ?string $paymentIntentId = null, array $sessionPayload = []): Payment
     {
-        if ($payment->status !== 'Success') {
-            $payment->status = 'Success';
+        if ($payment->status !== 'success') {
+            $payment->status = 'success';
             $payment->paid_at = now();
         }
 
@@ -61,12 +61,12 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
 
     public function markCheckoutFailed(Payment $payment, array $sessionPayload = []): Payment
     {
-        if ($payment->status === 'Success') {
+        if ($payment->status === 'success') {
             return $payment;
         }
 
         $payment->forceFill([
-            'status' => 'Failed',
+            'status' => 'failed',
             'gateway' => 'stripe',
             'gateway_response' => $sessionPayload !== [] ? json_encode($sessionPayload) : $payment->gateway_response,
         ])->save();
@@ -79,3 +79,4 @@ class EloquentPaymentRepository implements PaymentRepositoryInterface
         return $payment->fresh() ?? $payment;
     }
 }
+

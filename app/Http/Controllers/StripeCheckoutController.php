@@ -31,11 +31,11 @@ class StripeCheckoutController extends Controller
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
 
-        if ($payment->payment_for !== 'trek') {
+        if ($payment->payable_type !== 'trek') {
             abort(404);
         }
 
-        if ($payment->status === 'Success') {
+        if ($payment->status === 'success') {
             return redirect()->route('stripe.success', ['payment' => $payment, 'session_id' => $payment->stripe_session_id]);
         }
 
@@ -88,3 +88,5 @@ class StripeCheckoutController extends Controller
         return response('Webhook handled', 200);
     }
 }
+
+

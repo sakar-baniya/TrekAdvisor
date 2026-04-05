@@ -53,7 +53,7 @@
                             <tr>
                                 <td>{{ $passenger->name }}</td>
                                 <td>{{ $passenger->age }}</td>
-                                <td>{{ $passenger->passport_no ?: 'Not provided' }}</td>
+                                <td>{{ $passenger->passport_number ?: 'Not provided' }}</td>
                             </tr>
                         @empty
                             <tr>
@@ -109,3 +109,4 @@
         </aside>
     </section>
 </x-dashboard-layout>
+

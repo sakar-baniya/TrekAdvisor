@@ -57,7 +57,6 @@
                         <th>Type</th>
                         <th>Price/day</th>
                         <th>Stock</th>
-                        <th>Available</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -73,7 +72,6 @@
                             <td>{{ $item->type }}</td>
                             <td>${{ number_format($item->daily_price, 2) }}</td>
                             <td>{{ $item->total_stock }}</td>
-                            <td>{{ $item->available_stock }}</td>
                             <td>
                                 <a href="{{ route('admin.gear.edit', $item) }}" class="admin-secondary-button">
                                     <i class="fas fa-pen"></i>
@@ -83,7 +81,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="admin-table__empty">No gear items found.</td>
+                            <td colspan="5" class="admin-table__empty">No gear items found.</td>
                         </tr>
                     @endforelse
                 </tbody>

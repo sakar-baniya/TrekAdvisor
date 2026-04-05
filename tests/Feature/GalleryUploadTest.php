@@ -89,3 +89,4 @@ class GalleryUploadTest extends TestCase
         return new UploadedFile($path, $name, 'image/png', null, true);
     }
 }
+

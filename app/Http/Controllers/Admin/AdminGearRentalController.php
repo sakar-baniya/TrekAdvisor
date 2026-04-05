@@ -29,12 +29,12 @@ class AdminGearRentalController extends Controller
 
     public function markReturned(GearRental $gearRental): RedirectResponse
     {
-        if ($gearRental->status === 'Returned') {
+        if ($gearRental->status === 'returned') {
             return back()->with('success', 'Rental was already marked as returned.');
         }
 
         $gearRental->update([
-            'status' => 'Returned',
+            'status' => 'returned',
         ]);
 
         return back()->with('success', 'Rental marked as returned.');
@@ -42,14 +42,15 @@ class AdminGearRentalController extends Controller
 
     public function confirm(GearRental $gearRental): RedirectResponse
     {
-        if ($gearRental->status !== 'Pending') {
+        if ($gearRental->status !== 'pending') {
             return back()->with('error', 'Only pending rentals can be confirmed.');
         }
 
         $gearRental->update([
-            'status' => 'Active',
+            'status' => 'active',
         ]);
 
         return back()->with('success', 'Rental confirmed and activated.');
     }
 }
+

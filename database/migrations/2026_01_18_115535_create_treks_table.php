@@ -14,9 +14,9 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->text('description');
             $table->decimal('base_price', 10, 2);
-            $table->enum('difficulty', ['Easy', 'Moderate', 'Difficult', 'Extreme'])->default('Moderate');
+            $table->enum('difficulty', ['easy', 'moderate', 'difficult', 'extreme'])->default('moderate');
             $table->string('image')->nullable();
-            $table->enum('status', ['Active', 'Inactive'])->default('Active');
+            $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });
     }

@@ -90,7 +90,7 @@ class HotelAndGearSeeder extends Seeder
                 'name' => 'Hotel Owner',
                 'password' => bcrypt('password'),
                 'role' => 'hotel_owner',
-                'is_approved' => true,
+                'approval_status' => 'approved',
             ],
         );
 
@@ -100,13 +100,13 @@ class HotelAndGearSeeder extends Seeder
                 'name' => 'John Customer',
                 'password' => bcrypt('password'),
                 'role' => 'customer',
-                'is_approved' => true,
+                'approval_status' => 'approved',
             ],
         );
 
         DB::transaction(function () use ($pokharaHotels, $gearCatalog, $hotelOwner, $customer): void {
-            DB::table('payments')->where('payment_for', 'hotel')->delete();
-            DB::table('payments')->where('payment_for', 'gear')->delete();
+            DB::table('payments')->where('payable_type', 'hotel')->delete();
+            DB::table('payments')->where('payable_type', 'gear')->delete();
             DB::table('reviews')->where('reviewable_type', Hotel::class)->delete();
             DB::table('reviews')->where('reviewable_type', GearItem::class)->delete();
             DB::table('gear_rentals')->delete();
@@ -138,7 +138,7 @@ class HotelAndGearSeeder extends Seeder
             foreach ($gearCatalog as $item) {
                 $gearItems->push(GearItem::query()->create([
                     ...$item,
-                    'available_stock' => $item['total_stock'],
+                    'status' => 'Active',
                 ]));
             }
 
@@ -176,8 +176,8 @@ class HotelAndGearSeeder extends Seeder
                     'transaction_id' => 'TXN-' . strtoupper(Str::random(10)),
                     'amount' => $totalPrice,
                     'currency' => 'USD',
-                    'payment_for' => 'hotel',
-                    'reference_id' => $bookingId,
+                    'payable_type' => 'hotel',
+                    'payable_id' => $bookingId,
                     'gateway' => 'khalti',
                     'status' => 'Success',
                     'gateway_response' => null,
@@ -187,7 +187,7 @@ class HotelAndGearSeeder extends Seeder
             }
 
             foreach ($gearItems->random(min(2, $gearItems->count())) as $gearItem) {
-                $quantity = rand(1, min(2, $gearItem->available_stock));
+                $quantity = rand(1, min(2, $gearItem->total_stock));
                 $numDays = rand(3, 10);
                 $startOffset = rand(3, 12);
                 $startDate = now()->addDays($startOffset)->toDateString();
@@ -209,15 +209,13 @@ class HotelAndGearSeeder extends Seeder
                     'updated_at' => now(),
                 ]);
 
-                $gearItem->decrement('available_stock', $quantity);
-
                 DB::table('payments')->insert([
                     'user_id' => $customer->id,
                     'transaction_id' => 'TXN-' . strtoupper(Str::random(10)),
                     'amount' => $totalPrice,
                     'currency' => 'USD',
-                    'payment_for' => 'gear',
-                    'reference_id' => $rentalId,
+                    'payable_type' => 'gear',
+                    'payable_id' => $rentalId,
                     'gateway' => 'khalti',
                     'status' => 'Success',
                     'gateway_response' => null,
@@ -256,3 +254,5 @@ class HotelAndGearSeeder extends Seeder
         });
     }
 }
+
+

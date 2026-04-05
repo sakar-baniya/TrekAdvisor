@@ -12,20 +12,20 @@ class HomeController extends Controller
     public function index(): View
     {
         $featuredTreks = Trek::query()
-            ->where('status', 'Active')
+            ->where('status', 'active')
             ->latest()
             ->take(4)
             ->get();
 
         $featuredHotels = Hotel::query()
-            ->where('status', 'Active')
+            ->where('status', 'active')
             ->withMin('rooms', 'price_per_night')
             ->latest()
             ->take(4)
             ->get();
 
         $featuredGearItems = GearItem::query()
-            ->where('available_stock', '>', 0)
+            ->where('total_stock', '>', 0)
             ->latest()
             ->take(4)
             ->get();
@@ -33,3 +33,4 @@ class HomeController extends Controller
         return view('home', compact('featuredTreks', 'featuredHotels', 'featuredGearItems'));
     }
 }
+

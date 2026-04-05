@@ -12,7 +12,7 @@ class TrekController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Trek::where('status', 'Active');
+        $query = Trek::where('status', 'active');
 
         if ($request->filled('search')) {
             $search = $request->string('search')->toString();
@@ -56,7 +56,7 @@ class TrekController extends Controller
         $trek = Trek::with(['itineraries' => function($q) {
             $q->orderBy('day_number', 'asc');
         }, 'departures' => function($q) {
-            $q->where('status', 'Available')
+            $q->where('status', 'available')
               ->where('start_date', '>', now())
               ->orderBy('start_date', 'asc');
         }, 'gallery'])->where('slug', $slug)->firstOrFail();
@@ -69,3 +69,4 @@ class TrekController extends Controller
         return view('treks.show', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
     }
 }
+

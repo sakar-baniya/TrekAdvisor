@@ -37,13 +37,10 @@ class Hotel extends Model
         return $this->hasMany(HotelImage::class)->orderBy('sort_order');
     }
 
-    /**
-     * Featured/primary image (first in sort_order)
-     * Replaces old single image field
-     */
-    public function image()
+    public function getImageAttribute(): ?string
     {
-        return $this->images()->first();
+        return $this->images->first()?->path
+            ?? $this->images()->first()?->path;
     }
 
     public function gallery(): HasMany

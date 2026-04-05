@@ -15,7 +15,7 @@ class GearRentalService
     public function createRental(User $user, GearItem $gear, array $data): GearRental
     {
         // Validate gear is available
-        if ($gear->status === 'Inactive') {
+        if ($gear->status === 'inactive') {
             throw new \Exception('This gear item is not available for rental.');
         }
 
@@ -29,7 +29,7 @@ class GearRentalService
             'gear_item_id' => $gear->id,
             'rental_reference' => $this->generateRentalReference(),
             'quantity' => $data['quantity'],
-            'status' => 'Pending',
+            'status' => 'pending',
             'notes' => $data['notes'] ?? null,
             'expected_return_date' => $data['expected_return_date'] ?? null,
         ]);
@@ -40,11 +40,11 @@ class GearRentalService
      */
     public function confirmRental(GearRental $rental): void
     {
-        if ($rental->status !== 'Pending') {
+        if ($rental->status !== 'pending') {
             throw new \Exception('Only pending rentals can be confirmed.');
         }
 
-        $rental->update(['status' => 'Active']);
+        $rental->update(['status' => 'active']);
     }
 
     /**
@@ -52,11 +52,11 @@ class GearRentalService
      */
     public function markReturned(GearRental $rental): void
     {
-        if ($rental->status !== 'Active') {
+        if ($rental->status !== 'active') {
             throw new \Exception('Only active rentals can be marked as returned.');
         }
 
-        $rental->update(['status' => 'Returned']);
+        $rental->update(['status' => 'returned']);
     }
 
     /**
@@ -64,11 +64,11 @@ class GearRentalService
      */
     public function cancelRental(GearRental $rental): void
     {
-        if (!in_array($rental->status, ['Pending', 'Active'])) {
+        if (!in_array($rental->status, ['pending', 'active'])) {
             throw new \Exception("Cannot cancel a {$rental->status} rental.");
         }
 
-        $rental->update(['status' => 'Cancelled']);
+        $rental->update(['status' => 'cancelled']);
     }
 
     /**
@@ -92,10 +92,10 @@ class GearRentalService
     {
         return [
             'total_rentals' => GearRental::count(),
-            'pending_rentals' => GearRental::where('status', 'Pending')->count(),
-            'active_rentals' => GearRental::where('status', 'Active')->count(),
-            'returned_rentals' => GearRental::where('status', 'Returned')->count(),
-            'cancelled_rentals' => GearRental::where('status', 'Cancelled')->count(),
+            'pending_rentals' => GearRental::where('status', 'pending')->count(),
+            'active_rentals' => GearRental::where('status', 'active')->count(),
+            'returned_rentals' => GearRental::where('status', 'returned')->count(),
+            'cancelled_rentals' => GearRental::where('status', 'cancelled')->count(),
         ];
     }
 
@@ -111,3 +111,4 @@ class GearRentalService
         return $reference;
     }
 }
+

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('num_days');
             $table->decimal('daily_price', 10, 2);
             $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['Pending', 'Active', 'Returned', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['pending', 'active', 'returned', 'cancelled'])->default('pending');
             $table->timestamps();
         });
     }

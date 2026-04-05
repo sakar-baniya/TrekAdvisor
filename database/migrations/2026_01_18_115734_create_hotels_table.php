@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('location');
             $table->text('description');
             $table->string('image')->nullable();
-            $table->enum('status', ['Active', 'Inactive', 'Pending'])->default('Pending');
+            $table->enum('status', ['active', 'inactive', 'pending'])->default('pending');
             $table->timestamps();
         });
     }
@@ -25,3 +25,4 @@ return new class extends Migration
         Schema::dropIfExists('hotels');
     }
 };
+

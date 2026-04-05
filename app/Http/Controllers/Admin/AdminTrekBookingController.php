@@ -49,8 +49,8 @@ class AdminTrekBookingController extends Controller
         $trekBooking->load(['user', 'departure.trek', 'passengers']);
 
         $payment = Payment::query()
-            ->where('payment_for', 'trek')
-            ->where('reference_id', $trekBooking->id)
+            ->where('payable_type', 'trek')
+            ->where('payable_id', $trekBooking->id)
             ->latest()
             ->first();
 
@@ -63,7 +63,7 @@ class AdminTrekBookingController extends Controller
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', Rule::in(['Pending', 'Confirmed', 'Cancelled'])],
+            'status' => ['required', Rule::in(['pending', 'confirmed', 'cancelled'])],
         ]);
 
         $trekBooking->update([
@@ -75,3 +75,4 @@ class AdminTrekBookingController extends Controller
             ->with('success', 'Booking status updated.');
     }
 }
+

@@ -32,7 +32,7 @@ class CreateTrekBookingService
                 'price_per_person' => $data->pricePerPerson,
                 'subtotal' => $data->totalPrice(),
                 'total_price' => $data->totalPrice(),
-                'status' => 'Pending',
+                'status' => 'pending',
             ]);
 
             $this->trekBookings->createPassengers($booking, $data->passengers);
@@ -42,10 +42,10 @@ class CreateTrekBookingService
                 'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
                 'amount' => $data->totalPrice(),
                 'currency' => 'USD',
-                'payment_for' => 'trek',
-                'reference_id' => $booking->id,
+                'payable_type' => 'trek',
+                'payable_id' => $booking->id,
                 'gateway' => 'stripe',
-                'status' => 'Pending',
+                'status' => 'pending',
             ]);
 
             return [$booking, $payment];
@@ -71,3 +71,4 @@ class CreateTrekBookingService
         }
     }
 }
+

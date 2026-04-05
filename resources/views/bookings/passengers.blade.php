@@ -18,11 +18,11 @@
                         <div class="booking-passenger-grid">
                             <label>
                                 <span>Full Name</span>
-                                <input type="text" name="passengers[{{ $i }}][name]" placeholder="Enter full name" class="market-input" required>
+                                <input type="text" name="passengers[{{ $i }}][full_name]" placeholder="Enter full name" class="market-input" required>
                             </label>
                             <label>
                                 <span>Passport Number</span>
-                                <input type="text" name="passengers[{{ $i }}][passport_no]" placeholder="Passport #" class="market-input" required>
+                                <input type="text" name="passengers[{{ $i }}][passport_number]" placeholder="Passport #" class="market-input" required>
                             </label>
                             <label>
                                 <span>Age</span>

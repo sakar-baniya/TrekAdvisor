@@ -77,24 +77,24 @@
                             <h3>{{ $hotel->name }}</h3>
                             <p>{{ $hotel->location }}</p>
                         </div>
-                        <span class="admin-badge {{ $hotel->status === 'Active' ? 'is-success' : ($hotel->status === 'Pending' ? 'is-warning' : 'is-muted') }}">{{ $hotel->status }}</span>
+                        <span class="admin-badge {{ $hotel->status === 'active' ? 'is-success' : ($hotel->status === 'pending' ? 'is-warning' : 'is-muted') }}">{{ ucfirst($hotel->status) }}</span>
                     </div>
 
                     <div class="admin-list-card__meta">
                         <span>Owner: {{ $hotel->owner?->name ?? 'Unknown' }}</span>
                         <span>{{ $hotel->owner?->email ?? 'No email' }}</span>
                         <span>Room types: {{ $hotel->rooms->count() }}</span>
-                        <span>Owner approval: {{ $hotel->owner?->is_approved ? 'Approved' : 'Pending' }}</span>
+                        <span>Owner approval: {{ $hotel->owner?->approval_status === 'approved' ? 'Approved' : 'Pending' }}</span>
                     </div>
 
                     <p class="admin-list-card__excerpt">{{ \Illuminate\Support\Str::limit($hotel->description, 150) }}</p>
 
                     <div class="admin-list-card__actions">
-                        @if ($hotel->status !== 'Active')
+                        @if ($hotel->status !== 'active')
                             <form method="POST" action="{{ route('admin.hotels.status', $hotel) }}">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="status" value="Active" />
+                                <input type="hidden" name="status" value="active" />
                                 <button type="submit" class="admin-primary-button">
                                     <i class="fas fa-check"></i>
                                     <span>Approve</span>
@@ -102,11 +102,11 @@
                             </form>
                         @endif
 
-                        @if ($hotel->status !== 'Inactive')
+                        @if ($hotel->status !== 'inactive')
                             <form method="POST" action="{{ route('admin.hotels.status', $hotel) }}">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="status" value="Inactive" />
+                                <input type="hidden" name="status" value="inactive" />
                                 <button type="submit" class="admin-danger-button">
                                     <i class="fas fa-ban"></i>
                                     <span>Set Inactive</span>
@@ -114,11 +114,11 @@
                             </form>
                         @endif
 
-                        @if ($hotel->status !== 'Pending')
+                        @if ($hotel->status !== 'pending')
                             <form method="POST" action="{{ route('admin.hotels.status', $hotel) }}">
                                 @csrf
                                 @method('PATCH')
-                                <input type="hidden" name="status" value="Pending" />
+                                <input type="hidden" name="status" value="pending" />
                                 <button type="submit" class="admin-secondary-button">
                                     <i class="fas fa-clock"></i>
                                     <span>Move to Pending</span>
@@ -144,3 +144,6 @@
         <div class="admin-pagination">{{ $hotels->links() }}</div>
     @endif
 </x-dashboard-layout>
+
+
+

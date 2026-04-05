@@ -23,7 +23,7 @@ class AdminPaymentController extends Controller
         $payments = Payment::query()
             ->with('user')
             ->when($status !== '', fn ($query) => $query->where('status', $status))
-            ->when($type !== '', fn ($query) => $query->where('payment_for', $type))
+            ->when($type !== '', fn ($query) => $query->where('payable_type', $type))
             ->when($from !== '', fn ($query) => $query->whereDate('created_at', '>=', $from))
             ->when($to !== '', fn ($query) => $query->whereDate('created_at', '<=', $to))
             ->when($search !== '', function ($query) use ($search) {
@@ -46,7 +46,7 @@ class AdminPaymentController extends Controller
 
         $totalAmount = Payment::query()
             ->when($status !== '', fn ($query) => $query->where('status', $status))
-            ->when($type !== '', fn ($query) => $query->where('payment_for', $type))
+            ->when($type !== '', fn ($query) => $query->where('payable_type', $type))
             ->when($from !== '', fn ($query) => $query->whereDate('created_at', '>=', $from))
             ->when($to !== '', fn ($query) => $query->whereDate('created_at', '<=', $to))
             ->sum('amount');
@@ -67,11 +67,12 @@ class AdminPaymentController extends Controller
 
     protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|GearRental|null
     {
-        return match ($payment->payment_for) {
-            'trek' => TrekBooking::query()->with(['departure.trek', 'user'])->find($payment->reference_id),
-            'hotel' => HotelBooking::query()->with(['hotelRoom.hotel', 'user'])->find($payment->reference_id),
-            'gear' => GearRental::query()->with(['gearItem', 'user'])->find($payment->reference_id),
+        return match ($payment->payable_type) {
+            'trek' => TrekBooking::query()->with(['departure.trek', 'user'])->find($payment->payable_id),
+            'hotel' => HotelBooking::query()->with(['hotelRoom.hotel', 'user'])->find($payment->payable_id),
+            'gear' => GearRental::query()->with(['gearItem', 'user'])->find($payment->payable_id),
             default => null,
         };
     }
 }
+

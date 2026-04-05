@@ -24,7 +24,7 @@ class UpsertHotelService
                 'name' => $validated['name'],
                 'location' => $validated['location'],
                 'description' => $validated['description'],
-                'status' => 'Pending',
+                'status' => 'pending',
             ];
 
             $this->hotelGalleryService->syncHeroImage($request, $payload);
@@ -45,7 +45,7 @@ class UpsertHotelService
                 'name' => $validated['name'],
                 'location' => $validated['location'],
                 'description' => $validated['description'],
-                'status' => $hotel->status === 'Active' ? 'Pending' : $hotel->status,
+                'status' => $hotel->status === 'active' ? 'pending' : $hotel->status,
             ];
 
             $this->hotelGalleryService->syncHeroImage($request, $payload, $hotel);
@@ -57,3 +57,4 @@ class UpsertHotelService
         });
     }
 }
+

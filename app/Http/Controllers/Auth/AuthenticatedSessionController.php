@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
             ])->with('route', 'admin.login');
         }
 
-        if (($user->role === 'hotel_owner' || $user->role === 'staff') && ! $user->is_approved) {
+        if (($user->role === 'hotel_owner' || $user->role === 'staff') && ! $user->isApproved()) {
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

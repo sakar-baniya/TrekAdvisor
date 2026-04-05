@@ -21,7 +21,7 @@ return new class extends Migration
                 $table->text('description')->nullable()->after('type');
             }
             if (!Schema::hasColumn('gear_items', 'status')) {
-                $table->enum('status', ['Active', 'Inactive'])->default('Active')->after('image');
+                $table->enum('status', ['active', 'inactive'])->default('active')->after('image');
             }
         });
 
@@ -44,8 +44,8 @@ return new class extends Migration
             if (Schema::hasColumn('gear_rentals', 'status')) {
                 $table->dropColumn('status');
             }
-            $table->enum('status', ['Pending', 'Active', 'Returned', 'Cancelled'])
-                ->default('Pending')
+            $table->enum('status', ['pending', 'active', 'returned', 'cancelled'])
+                ->default('pending')
                 ->after('quantity');
         });
     }
@@ -81,7 +81,8 @@ return new class extends Migration
             $table->integer('num_days');
             $table->decimal('daily_price', 10, 2);
             $table->decimal('total_price', 10, 2);
-            $table->enum('status', ['Pending', 'Active', 'Returned', 'Cancelled'])->default('Pending');
+            $table->enum('status', ['pending', 'active', 'returned', 'cancelled'])->default('pending');
         });
     }
 };
+

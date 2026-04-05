@@ -45,14 +45,14 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
             'role' => $role,
             'phone' => $request->input('phone'),
-            'is_approved' => $role === 'customer' ? true : false,
+            'approval_status' => $role === 'customer' ? 'approved' : 'pending',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        if (($role === 'hotel_owner' || $role === 'staff') && ! $user->is_approved) {
+        if (($role === 'hotel_owner' || $role === 'staff') && ! $user->isApproved()) {
             Auth::guard('web')->logout();
             $request->session()->invalidate();
             $request->session()->regenerateToken();

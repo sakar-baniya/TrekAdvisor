@@ -19,8 +19,9 @@ class PassengerFactory extends Factory
         return [
             'trek_booking_id' => \App\Models\TrekBooking::factory(),
             'name' => fake()->name(),
-            'passport_no' => fake()->bothify('??######'),
+            'passport_number' => fake()->bothify('??######'),
             'age' => fake()->numberBetween(18, 70),
         ];
     }
 }
+

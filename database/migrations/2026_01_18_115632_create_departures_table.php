@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('price', 10, 2);
             $table->integer('capacity');
             $table->integer('booked_seats')->default(0);
-            $table->enum('status', ['Available', 'Full', 'Completed'])->default('Available');
+            $table->enum('status', ['available', 'full', 'completed'])->default('available');
             $table->timestamps();
         });
     }

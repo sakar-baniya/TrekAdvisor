@@ -14,14 +14,14 @@ return new class extends Migration
             $table->string('transaction_id')->unique();
             $table->decimal('amount', 10, 2);
             $table->string('currency', 10)->default('USD');
-            $table->enum('payment_for', ['trek', 'hotel', 'gear']);
-            $table->unsignedBigInteger('reference_id');
+            $table->enum('payable_type', ['trek', 'hotel', 'gear']);
+            $table->unsignedBigInteger('payable_id');
             $table->enum('gateway', ['stripe', 'esewa', 'khalti'])->nullable();
-            $table->enum('status', ['Pending', 'Success', 'Failed'])->default('Pending');
+            $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
             $table->text('gateway_response')->nullable();
             $table->timestamps();
 
-            $table->index(['payment_for', 'reference_id']);
+            $table->index(['payable_type', 'payable_id']);
         });
     }
 

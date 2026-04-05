@@ -11,8 +11,8 @@ return new class extends Migration
         Schema::create('passengers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('trek_booking_id')->constrained()->cascadeOnDelete();
-            $table->string('name');
-            $table->string('passport_no')->nullable();
+            $table->string('full_name');
+            $table->string('passport_number')->nullable();
             $table->integer('age');
             $table->timestamps();
         });

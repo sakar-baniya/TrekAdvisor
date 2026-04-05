@@ -16,11 +16,14 @@ class AdminGearController extends Controller
         $search = $request->string('search')->toString();
         $type = $request->string('type')->toString();
         $status = $request->string('status')->toString();
+        $availability = $request->string('availability')->toString();
 
         $gearItems = GearItem::query()
             ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($type !== '', fn ($query) => $query->where('type', $type))
             ->when($status !== '', fn ($query) => $query->where('status', $status))
+            ->when($availability === 'available', fn ($query) => $query->where('total_stock', '>', 0))
+            ->when($availability === 'out', fn ($query) => $query->where('total_stock', '<=', 0))
             ->latest()
             ->paginate(12)
             ->withQueryString();
@@ -30,6 +33,7 @@ class AdminGearController extends Controller
             'search' => $search,
             'type' => $type,
             'status' => $status,
+            'availability' => $availability,
             'types' => GearItem::query()->select('type')->distinct()->orderBy('type')->pluck('type'),
         ]);
     }
@@ -80,7 +84,7 @@ class AdminGearController extends Controller
             'description' => ['nullable', 'string'],
             'daily_price' => ['required', 'numeric', 'min:0'],
             'total_stock' => ['required', 'integer', 'min:0'],
-            'status' => ['required', 'in:Active,Inactive'],
+            'status' => ['required', 'in:active,inactive'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
         ]);
     }
@@ -100,3 +104,5 @@ class AdminGearController extends Controller
         return $payload;
     }
 }
+
+

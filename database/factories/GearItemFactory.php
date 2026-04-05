@@ -20,9 +20,10 @@ class GearItemFactory extends Factory
         return [
             'name' => fake()->words(2, true),
             'type' => fake()->randomElement(['Clothing', 'Equipment', 'Footwear', 'Camping']),
+            'description' => fake()->sentence(),
             'daily_price' => fake()->randomFloat(2, 2, 50),
             'total_stock' => $totalStock,
-            'available_stock' => $totalStock,
+            'status' => 'Active',
             'image' => fake()->imageUrl(640, 480, 'gear', true),
         ];
     }

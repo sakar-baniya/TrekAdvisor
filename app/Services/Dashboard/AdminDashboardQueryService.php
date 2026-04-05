@@ -24,14 +24,14 @@ class AdminDashboardQueryService
                 'revenue_this_month' => Payment::query()
                     ->whereMonth('created_at', now()->month)
                     ->whereYear('created_at', now()->year)
-                    ->where('status', 'Success')
+                    ->where('status', 'success')
                     ->sum('amount'),
                 'total_users' => User::query()->count(),
-                'active_treks' => Trek::query()->where('status', 'Active')->count(),
-                'active_hotels' => Hotel::query()->where('status', 'Active')->count(),
+                'active_treks' => Trek::query()->where('status', 'active')->count(),
+                'active_hotels' => Hotel::query()->where('status', 'active')->count(),
                 'gear_items' => GearItem::query()->count(),
-                'pending_hotels' => Hotel::query()->where('status', 'Pending')->count(),
-                'rented_gear' => GearRental::query()->whereIn('status', ['Pending', 'Active'])->count(),
+                'pending_hotels' => Hotel::query()->where('status', 'pending')->count(),
+                'rented_gear' => GearRental::query()->whereIn('status', ['pending', 'active'])->count(),
             ],
             'recentBookings' => $this->recentBookings()->take(10),
         ];
@@ -101,3 +101,4 @@ class AdminDashboardQueryService
             ->values();
     }
 }
+

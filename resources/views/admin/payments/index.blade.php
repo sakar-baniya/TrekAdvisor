@@ -72,7 +72,7 @@
                     @forelse ($payments as $payment)
                         <tr>
                             <td class="admin-table__ref">{{ $payment->transaction_id }}</td>
-                            <td>{{ ucfirst($payment->payment_for) }}</td>
+                            <td>{{ ucfirst($payment->payable_type) }}</td>
                             <td>
                                 <strong>{{ $payment->user?->name ?? 'Unknown customer' }}</strong>
                                 <small>{{ $payment->user?->email }}</small>
@@ -103,3 +103,4 @@
         <div class="admin-pagination">{{ $payments->links() }}</div>
     @endif
 </x-dashboard-layout>
+

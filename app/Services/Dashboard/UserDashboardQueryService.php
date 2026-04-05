@@ -45,7 +45,7 @@ class UserDashboardQueryService
             'stats' => [
                 'today_trek_bookings' => TrekBooking::query()->whereDate('created_at', today())->count(),
                 'today_hotel_bookings' => HotelBooking::query()->whereDate('created_at', today())->count(),
-                'active_gear_rentals' => GearRental::query()->where('status', 'Active')->count(),
+                'active_gear_rentals' => GearRental::query()->where('status', 'active')->count(),
             ],
         ];
     }
@@ -76,3 +76,4 @@ class UserDashboardQueryService
         ];
     }
 }
+

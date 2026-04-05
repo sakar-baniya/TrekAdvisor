@@ -18,8 +18,8 @@ class EloquentTrekBookingRepository implements TrekBookingRepositoryInterface
         foreach ($passengers as $passenger) {
             Passenger::query()->create([
                 'trek_booking_id' => $booking->id,
-                'name' => $passenger['name'],
-                'passport_no' => $passenger['passport_no'],
+                'full_name' => $passenger['full_name'],
+                'passport_number' => $passenger['passport_number'],
                 'age' => $passenger['age'],
             ]);
         }
@@ -48,8 +48,8 @@ class EloquentTrekBookingRepository implements TrekBookingRepositoryInterface
 
     public function markConfirmedAndIncrementSeats(TrekBooking $booking): TrekBooking
     {
-        if ($booking->status !== 'Confirmed') {
-            $booking->status = 'Confirmed';
+        if ($booking->status !== 'confirmed') {
+            $booking->status = 'confirmed';
             $booking->save();
 
             if ($booking->departure) {

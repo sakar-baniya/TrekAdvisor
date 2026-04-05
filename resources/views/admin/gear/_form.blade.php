@@ -46,11 +46,6 @@
                 @error('total_stock') <small class="admin-error">{{ $message }}</small> @enderror
             </label>
 
-            <label class="admin-field">
-                <span>Available Stock *</span>
-                <input type="number" min="0" name="available_stock" value="{{ old('available_stock', $gearItem->available_stock ?? $gearItem->total_stock) }}" class="admin-input" required />
-                @error('available_stock') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
         </div>
     </section>
 

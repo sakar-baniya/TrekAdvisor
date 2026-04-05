@@ -94,7 +94,7 @@
                             <td>{{ str_replace('_', ' ', $user->role) }}</td>
                             <td>
                                 @if ($user->role === 'hotel_owner')
-                                    <span class="admin-badge {{ $user->is_approved ? 'is-success' : 'is-warning' }}">{{ $user->is_approved ? 'Approved' : 'Pending' }}</span>
+                                    <span class="admin-badge {{ $user->approval_status === 'approved' ? 'is-success' : 'is-warning' }}">{{ $user->approval_status === 'approved' === 'approved' ? 'Approved' : 'Pending' }}</span>
                                 @else
                                     <span class="admin-badge is-muted">N/A</span>
                                 @endif
@@ -102,7 +102,7 @@
                             <td>{{ $user->created_at->format('M d, Y') }}</td>
                             <td>
                                 <div class="admin-inline-actions">
-                                    @if ($user->role === 'hotel_owner' && ! $user->is_approved)
+                                    @if ($user->role === 'hotel_owner' && $user->approval_status !== 'approved')
                                         <form method="POST" action="{{ route('admin.users.approve', $user) }}">
                                             @csrf
                                             @method('PATCH')
@@ -144,3 +144,7 @@
         <div class="admin-pagination">{{ $users->links() }}</div>
     @endif
 </x-dashboard-layout>
+
+
+
+

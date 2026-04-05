@@ -15,12 +15,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            
-            // TrekAdvisor custom fields
             $table->enum('role', ['admin', 'staff', 'customer', 'hotel_owner'])->default('customer');
+            $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('approved');
             $table->string('phone')->nullable();
-            $table->boolean('is_approved')->default(true);
-            
             $table->timestamps();
         });
 

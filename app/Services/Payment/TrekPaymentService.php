@@ -16,7 +16,7 @@ class TrekPaymentService
 
     public function getCheckoutBooking(Payment $payment): TrekBooking
     {
-        $booking = $this->trekBookings->findForCheckoutById((int) $payment->reference_id);
+        $booking = $this->trekBookings->findForCheckoutById((int) $payment->payable_id);
 
         if (! $booking) {
             throw new NotFoundHttpException();
@@ -27,7 +27,7 @@ class TrekPaymentService
 
     public function getDisplayBooking(Payment $payment): TrekBooking
     {
-        $booking = $this->trekBookings->findForDisplayById((int) $payment->reference_id);
+        $booking = $this->trekBookings->findForDisplayById((int) $payment->payable_id);
 
         if (! $booking) {
             throw new NotFoundHttpException();
@@ -38,11 +38,11 @@ class TrekPaymentService
 
     public function confirmBooking(Payment $payment): ?TrekBooking
     {
-        if ($payment->payment_for !== 'trek') {
+        if ($payment->payable_type !== 'trek') {
             return null;
         }
 
-        $booking = $this->trekBookings->findForDisplayById((int) $payment->reference_id);
+        $booking = $this->trekBookings->findForDisplayById((int) $payment->payable_id);
 
         if (! $booking) {
             return null;
@@ -51,3 +51,4 @@ class TrekPaymentService
         return $this->trekBookings->markConfirmedAndIncrementSeats($booking);
     }
 }
+

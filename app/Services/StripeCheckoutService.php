@@ -42,7 +42,7 @@ class StripeCheckoutService
                 'payment_id' => (string) $payment->id,
                 'booking_id' => (string) $booking->id,
                 'booking_reference' => $booking->booking_reference,
-                'payment_for' => $payment->payment_for,
+                'payable_type' => $payment->payable_type,
             ],
             'line_items' => [[
                 'quantity' => 1,
@@ -80,3 +80,4 @@ class StripeCheckoutService
         return Webhook::constructEvent($payload, $signature, $secret);
     }
 }
+

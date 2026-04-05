@@ -27,7 +27,7 @@ class TrekPolicy
         }
 
         // Customers can view active treks
-        return $trek->status === 'Active';
+        return $trek->status === 'active';
     }
 
     /**
@@ -57,3 +57,4 @@ class TrekPolicy
         return $user->role === 'admin';
     }
 }
+

@@ -34,9 +34,9 @@ class AdminHotelController extends Controller
         }
 
         $hotels = $hotelsQuery->paginate(10)->withQueryString();
-        $pendingCount = Hotel::query()->where('status', 'Pending')->count();
-        $activeCount = Hotel::query()->where('status', 'Active')->count();
-        $inactiveCount = Hotel::query()->where('status', 'Inactive')->count();
+        $pendingCount = Hotel::query()->where('status', 'pending')->count();
+        $activeCount = Hotel::query()->where('status', 'active')->count();
+        $inactiveCount = Hotel::query()->where('status', 'inactive')->count();
 
         return view('admin.hotels.index', [
             'hotels' => $hotels,
@@ -51,16 +51,16 @@ class AdminHotelController extends Controller
     public function updateStatus(Request $request, Hotel $hotel): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:Active,Inactive,Pending'],
+            'status' => ['required', 'in:active,inactive,pending'],
         ]);
 
         $hotel->update([
             'status' => $validated['status'],
         ]);
 
-        if ($validated['status'] === 'Active' && $hotel->owner && ! $hotel->owner->is_approved) {
+        if ($validated['status'] === 'active' && $hotel->owner && ! $hotel->owner->isApproved()) {
             $hotel->owner->update([
-                'is_approved' => true,
+                'approval_status' => 'approved',
             ]);
         }
 

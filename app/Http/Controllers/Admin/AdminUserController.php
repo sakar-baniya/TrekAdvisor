@@ -33,7 +33,7 @@ class AdminUserController extends Controller
         $users = $usersQuery->paginate(12)->withQueryString();
         $pendingHotelOwners = User::query()
             ->where('role', 'hotel_owner')
-            ->where('is_approved', false)
+            ->where('approval_status', 'pending')
             ->count();
 
         return view('admin.users.index', [
@@ -65,7 +65,7 @@ class AdminUserController extends Controller
             'phone' => $validated['phone'] ?? null,
             'role' => $validated['role'],
             'password' => Hash::make($validated['password']),
-            'is_approved' => true,
+            'approval_status' => 'approved',
             'email_verified_at' => now(),
         ]);
 
@@ -80,8 +80,8 @@ class AdminUserController extends Controller
             return back()->with('error', 'Only hotel owner accounts require approval.');
         }
 
-        if (! $user->is_approved) {
-            $user->update(['is_approved' => true]);
+        if (! $user->isApproved()) {
+            $user->update(['approval_status' => 'approved']);
         }
 
         return back()->with('success', 'Hotel owner approved.');
@@ -95,14 +95,14 @@ class AdminUserController extends Controller
 
         $newRole = $validated['role'];
         $wasHotelOwner = $user->role === 'hotel_owner';
-        $wasApproved = $user->is_approved;
+        $wasApproved = $user->approval_status === 'approved';
 
         $user->role = $newRole;
 
         if ($newRole === 'hotel_owner') {
-            $user->is_approved = $wasHotelOwner ? $wasApproved : false;
+            $user->approval_status = $wasHotelOwner && $wasApproved ? 'approved' : 'pending';
         } else {
-            $user->is_approved = true;
+            $user->approval_status = 'approved';
         }
 
         $user->save();

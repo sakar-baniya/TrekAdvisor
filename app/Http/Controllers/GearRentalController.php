@@ -26,7 +26,7 @@ class GearRentalController extends Controller
         $type = $request->string('type')->toString();
 
         $gearItems = GearItem::query()
-            ->where('status', 'Active')
+            ->where('status', 'active')
             ->when($search !== '', fn ($query) => $query->where('name', 'like', "%{$search}%"))
             ->when($type !== '', fn ($query) => $query->where('type', $type))
             ->paginate(12)
@@ -37,7 +37,7 @@ class GearRentalController extends Controller
             'search' => $search,
             'type' => $type,
             'types' => GearItem::query()
-                ->where('status', 'Active')
+                ->where('status', 'active')
                 ->select('type')
                 ->distinct()
                 ->orderBy('type')
@@ -50,7 +50,7 @@ class GearRentalController extends Controller
      */
     public function show(GearItem $gear): View
     {
-        if ($gear->status === 'Inactive') {
+        if ($gear->status === 'inactive') {
             abort(404);
         }
 
@@ -64,7 +64,7 @@ class GearRentalController extends Controller
      */
     public function rent(Request $request, GearItem $gear): RedirectResponse
     {
-        if ($gear->status === 'Inactive') {
+        if ($gear->status === 'inactive') {
             return back()->with('error', 'This gear item is not available.');
         }
 
@@ -79,7 +79,7 @@ class GearRentalController extends Controller
             'gear_item_id' => $gear->id,
             'rental_reference' => $this->generateRentalReference(),
             'quantity' => $validated['quantity'],
-            'status' => 'Pending',
+            'status' => 'pending',
             'notes' => $validated['notes'] ?? null,
             'expected_return_date' => $validated['expected_return_date'] ?? null,
         ]);
@@ -116,12 +116,12 @@ class GearRentalController extends Controller
             return back()->with('error', 'You are not authorized to cancel this rental.');
         }
 
-        if (!in_array($gearRental->status, ['Pending', 'Active'])) {
+        if (!in_array($gearRental->status, ['pending', 'active'])) {
             return back()->with('error', "Cannot cancel a {$gearRental->status} rental.");
         }
 
         $gearRental->update([
-            'status' => 'Cancelled',
+            'status' => 'cancelled',
         ]);
 
         return back()->with('success', 'Rental request cancelled successfully.');
@@ -139,3 +139,4 @@ class GearRentalController extends Controller
         return $reference;
     }
 }
+

@@ -68,7 +68,7 @@ class FrontendPageController extends Controller
     public function hotels(Request $request): View
     {
         $query = Hotel::query()
-            ->where('status', 'Active')
+            ->where('status', 'active')
             ->with(['rooms', 'reviews', 'gallery'])
             ->withMin('rooms', 'price_per_night');
 
@@ -134,3 +134,4 @@ class FrontendPageController extends Controller
         return view('gear.show', compact('gearItem'));
     }
 }
+

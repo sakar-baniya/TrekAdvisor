@@ -22,7 +22,7 @@
             </div>
             <div class="admin-info-list">
                 <div><span>Customer</span><strong>{{ $payment->user?->name }} ({{ $payment->user?->email }})</strong></div>
-                <div><span>Type</span><strong>{{ ucfirst($payment->payment_for) }}</strong></div>
+                <div><span>Type</span><strong>{{ ucfirst($payment->payable_type) }}</strong></div>
                 <div><span>Amount</span><strong>${{ number_format($payment->amount, 2) }} {{ $payment->currency }}</strong></div>
                 <div><span>Gateway</span><strong>{{ $payment->gateway ? ucfirst($payment->gateway) : 'N/A' }}</strong></div>
                 <div><span>Status</span><strong>{{ $payment->status }}</strong></div>
@@ -39,16 +39,16 @@
                     </div>
                 </div>
                 <div class="admin-info-list">
-                    <div><span>Reference ID</span><strong>{{ $payment->reference_id }}</strong></div>
+                    <div><span>Reference ID</span><strong>{{ $payment->payable_id }}</strong></div>
                     @if ($reference)
                         <div><span>Customer</span><strong>{{ $reference->user?->name ?? 'Unknown' }}</strong></div>
-                        @if ($payment->payment_for === 'trek')
+                        @if ($payment->payable_type === 'trek')
                             <div><span>Trek</span><strong>{{ $reference->departure?->trek?->title }}</strong></div>
                             <div><span>Booking Ref</span><strong>{{ $reference->booking_reference }}</strong></div>
-                        @elseif ($payment->payment_for === 'hotel')
+                        @elseif ($payment->payable_type === 'hotel')
                             <div><span>Hotel</span><strong>{{ $reference->hotelRoom?->hotel?->name }}</strong></div>
                             <div><span>Booking Ref</span><strong>{{ $reference->booking_reference }}</strong></div>
-                        @elseif ($payment->payment_for === 'gear')
+                        @elseif ($payment->payable_type === 'gear')
                             <div><span>Gear</span><strong>{{ $reference->gearItem?->name }}</strong></div>
                             <div><span>Rental Ref</span><strong>{{ $reference->rental_reference }}</strong></div>
                         @endif
@@ -72,3 +72,4 @@
         </aside>
     </section>
 </x-dashboard-layout>
+

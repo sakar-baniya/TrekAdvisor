@@ -13,7 +13,7 @@ class TrekImage extends Model
     protected $fillable = [
         'trek_id',
         'path',
-        'is_placeholder',
+        'is_primary',
         'sort_order',
     ];
 

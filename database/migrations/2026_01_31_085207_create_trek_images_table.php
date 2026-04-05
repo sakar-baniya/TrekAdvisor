@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('trek_id')->constrained()->cascadeOnDelete();
             $table->string('path');
-            $table->boolean('is_placeholder')->default(false);
+            $table->boolean('is_primary')->default(false);
             $table->integer('sort_order')->default(0);
             $table->timestamps();
         });
@@ -29,3 +29,4 @@ return new class extends Migration
         Schema::dropIfExists('trek_images');
     }
 };
+

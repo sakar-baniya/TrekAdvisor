@@ -62,8 +62,8 @@ class DatabaseSeeder extends Seeder
             \App\Models\Payment::factory()->create([
                 'user_id' => $customer->id,
                 'amount' => $booking->total_price,
-                'payment_for' => 'trek',
-                'reference_id' => $booking->id,
+                'payable_type' => 'trek',
+                'payable_id' => $booking->id,
             ]);
         }
 
@@ -78,3 +78,4 @@ class DatabaseSeeder extends Seeder
 
     }
 }
+

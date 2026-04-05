@@ -39,7 +39,7 @@ class AdminDepartureController extends Controller
     public function create(Request $request): View
     {
         $departure = new Departure([
-            'status' => 'Available',
+            'status' => 'available',
         ]);
 
         return view('admin.departures.create', [
@@ -104,7 +104,8 @@ class AdminDepartureController extends Controller
             'price' => ['required', 'numeric', 'min:0'],
             'capacity' => ['required', 'integer', 'min:1'],
             'booked_seats' => ['nullable', 'integer', 'min:0'],
-            'status' => ['required', Rule::in(['Available', 'Full', 'Completed'])],
+            'status' => ['required', Rule::in(['available', 'full', 'completed'])],
         ]);
     }
 }
+

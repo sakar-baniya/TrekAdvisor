@@ -30,4 +30,9 @@ class GearItem extends Model
     {
         return $this->morphMany(Review::class, 'reviewable');
     }
+
+    public function getAvailableStockAttribute(): int
+    {
+        return (int) $this->total_stock;
+    }
 }
