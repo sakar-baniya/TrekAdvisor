@@ -11,28 +11,23 @@
         <div class="container">
             <div class="market-card-grid market-card-grid--three">
                 @forelse ($hotels as $hotel)
-                    <article class="market-card market-card--hotel">
-                        <div class="market-card__media" @if($hotel->image) style="background-image: linear-gradient(rgba(16, 27, 45, 0.18), rgba(16, 27, 45, 0.45)), url('{{ $hotel->image }}');" @endif>
-                            <span class="market-badge market-badge--label market-badge--green">
-                                <i class="fas fa-bed"></i>
-                                {{ $hotel->rooms->sum('total_rooms') }} rooms
-                            </span>
+                    <article class="market-card market-card--trek">
+                        <div class="market-card__media" @if($hotel->image) style="background-image: linear-gradient(rgba(6, 78, 89, 0.25), rgba(15, 23, 42, 0.5)), url('{{ $hotel->image }}');" @endif>
                         </div>
                         <div class="market-card__body">
-                            <div class="market-card__meta">
-                                <span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span>
-                                <span><i class="fas fa-star"></i> {{ number_format($hotel->reviews->avg('rating') ?? 4.6, 1) }}</span>
-                            </div>
                             <h3>{{ $hotel->name }}</h3>
-                            <p>{{ \Illuminate\Support\Str::limit(strip_tags($hotel->description), 100) }}</p>
                             <div class="market-card__trip-meta">
-                                <span>{{ $hotel->rooms->count() }} room types</span>
-                                <span>{{ $hotel->rooms->pluck('room_type')->take(2)->implode(' • ') }}</span>
+                                <span><i class="fas fa-map-marker-alt" style="margin-right: 4px;"></i> {{ $hotel->location }}</span>
+                                <span class="market-card__reviews">
+                                    <i class="fas fa-star"></i>
+                                    {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) : 'New' }}
+                                    <em>{{ $hotel->reviews_count }} Reviews</em>
+                                </span>
                             </div>
                             <div class="market-card__footer">
-                                <div>
+                                <div class="market-card__price">
                                     <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>
-                                    <span>/night</span>
+                                    <span>per night</span>
                                 </div>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="market-button">View Details</a>
                             </div>

@@ -13,14 +13,9 @@ class TrekGalleryService
     ) {
     }
 
-    public function syncHeroImage(Request $request, array &$payload, ?Trek $trek = null): void
+    public function syncUnifiedMedia(Request $request, Trek $trek): void
     {
-        $this->galleryImageService->syncHeroImage($request, $payload, 'treks', $trek);
-    }
-
-    public function syncGallery(Request $request, Trek $trek): void
-    {
-        $this->galleryImageService->syncGallery($request, $trek, 'treks/gallery');
+        $this->galleryImageService->syncUnifiedMedia($request, $trek, 'treks/gallery');
     }
 
     public function deleteAll(Trek $trek): void

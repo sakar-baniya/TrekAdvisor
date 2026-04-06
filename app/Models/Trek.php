@@ -38,8 +38,17 @@ class Trek extends Model
 
     public function getImageAttribute(): ?string
     {
-        return $this->images->first()?->path
+        $path = $this->images->first()?->path
             ?? $this->images()->first()?->path;
+
+        if (!$path) return null;
+
+        // External URLs or already-prefixed paths must be returned as-is
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/storage/')) {
+            return $path;
+        }
+
+        return \Illuminate\Support\Facades\Storage::url($path);
     }
 
     /**

@@ -168,12 +168,13 @@
     margin: 0;
     font-size: 1.2rem;
     line-height: 1.25;
-    color: #184E6C;
+    color: #0F172A;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
+    line-clamp: 1;
 }
 
 .booking-card--featured .booking-card__footer {
@@ -184,15 +185,6 @@
     padding-top: 0.75rem;
 }
 
-.booking-card--hotel .booking-card__body,
-
-
-.booking-card--hotel .booking-card__meta,
-
-
-.booking-card--hotel .booking-card__footer,
-
-
 .booking-card__price {
     color: #5b7382;
     font-size: 0.92rem;
@@ -201,7 +193,7 @@
 .booking-card__price strong {
     font-size: 1.5rem;
     line-height: 1;
-    color: #387EA2;
+    color: #0F172A;
 }
 
 .booking-card__price span {
@@ -216,17 +208,19 @@
     min-height: 2.9rem;
     padding: 0.8rem 1.2rem;
     border-radius: 999px;
-    background: linear-gradient(135deg, #5BA3C6, #387EA2);
+    background: #0F172A;
     color: #ffffff;
     text-decoration: none;
     font-weight: 700;
     white-space: nowrap;
-    box-shadow: 0 12px 22px rgba(56, 126, 162, 0.18);
+    box-shadow: 0 12px 22px rgba(15, 23, 42, 0.1);
 }
 
 .btn-primary-filled:hover,
 .booking-card__action:hover {
-    background: linear-gradient(135deg, #69b0d1, #4b8fb2);
+    background: #1E293B;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(15, 23, 42, 0.15);
 }
 
 .booking-card__price,

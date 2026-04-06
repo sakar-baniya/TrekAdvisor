@@ -25,7 +25,7 @@
                 <option value="">All types</option>
                 <option value="trek" @selected($type === 'trek')>Treks</option>
                 <option value="hotel" @selected($type === 'hotel')>Hotels</option>
-                <option value="gear" @selected($type === 'gear')>Gear</option>
+
             </select>
             <select name="rating" class="admin-input">
                 <option value="">All ratings</option>

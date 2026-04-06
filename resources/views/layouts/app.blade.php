@@ -85,7 +85,7 @@
                             TrekAdvisor
                         </div>
                         <p class="footer-muted footer-text">
-                            Trek the Himalayas, plan stays, and rent gear from one beautiful marketplace.
+                            Trek the Himalayas and plan stays from one beautiful marketplace.
                         </p>
                     </div>
                     <div>
@@ -94,7 +94,7 @@
                             <li><a href="{{ route('home') }}">Home</a></li>
                             <li><a href="{{ route('treks.index') }}">Treks</a></li>
                             <li><a href="{{ route('hotels.index') }}">Hotels</a></li>
-                            <li><a href="{{ route('gear.index') }}">Gear Rental</a></li>
+
                         </ul>
                     </div>
                     <div>

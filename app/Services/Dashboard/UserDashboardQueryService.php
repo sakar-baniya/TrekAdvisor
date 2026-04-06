@@ -2,7 +2,6 @@
 
 namespace App\Services\Dashboard;
 
-use App\Models\GearRental;
 use App\Models\Hotel;
 use App\Models\HotelBooking;
 use App\Models\TrekBooking;
@@ -25,16 +24,9 @@ class UserDashboardQueryService
                 ->latest()
                 ->take(5)
                 ->get(),
-            'gearRentals' => GearRental::query()
-                ->with('gearItem')
-                ->where('user_id', $user->id)
-                ->latest()
-                ->take(5)
-                ->get(),
             'stats' => [
                 'trek_bookings' => TrekBooking::query()->where('user_id', $user->id)->count(),
                 'hotel_bookings' => HotelBooking::query()->where('user_id', $user->id)->count(),
-                'gear_rentals' => GearRental::query()->where('user_id', $user->id)->count(),
             ],
         ];
     }
@@ -45,7 +37,6 @@ class UserDashboardQueryService
             'stats' => [
                 'today_trek_bookings' => TrekBooking::query()->whereDate('created_at', today())->count(),
                 'today_hotel_bookings' => HotelBooking::query()->whereDate('created_at', today())->count(),
-                'active_gear_rentals' => GearRental::query()->where('status', 'active')->count(),
             ],
         ];
     }

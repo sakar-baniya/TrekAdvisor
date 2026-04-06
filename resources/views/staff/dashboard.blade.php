@@ -25,14 +25,6 @@
                 <span>Created today</span>
             </div>
         </div>
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-violet"><i class="fas fa-campground"></i></div>
-            <div>
-                <p>Gear Rentals</p>
-                <h3>{{ number_format($stats['active_gear_rentals']) }}</h3>
-                <span>Currently active</span>
-            </div>
-        </div>
     </section>
 
     <section class="admin-panel">
@@ -46,10 +38,6 @@
             <article class="admin-note-card">
                 <strong>Track same-day bookings and support follow-up</strong>
                 <span>Staff workflows can be expanded here as the operations module grows.</span>
-            </article>
-            <article class="admin-note-card">
-                <strong>Keep gear rental returns updated</strong>
-                <span>Rental status changes from the admin pages will keep inventory accurate.</span>
             </article>
         </div>
     </section>

@@ -23,6 +23,46 @@ class RegisteredUserController extends Controller
     }
 
     /**
+     * Display the hotel partner registration view.
+     */
+    public function createHotel(): View
+    {
+        return view('auth.register-hotel');
+    }
+
+    /**
+     * Handle an incoming partner registration request.
+     */
+    public function storeHotel(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'string', 'max:30'],
+            'hotel_name' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'hotel_owner',
+            'phone' => $request->phone,
+            'approval_status' => 'pending',
+        ]);
+
+        event(new Registered($user));
+
+        Auth::guard('web')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login')
+            ->with('status', 'Welcome aboard! Your Hotel Partner application is now pending admin approval. We will notify you once approved.');
+    }
+
+    /**
      * Handle an incoming registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
@@ -33,32 +73,21 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'in:customer,hotel_owner,staff'],
             'phone' => ['nullable', 'string', 'max:30'],
         ]);
-
-        $role = $request->string('role')->toString();
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $role,
+            'role' => 'customer',
             'phone' => $request->input('phone'),
-            'approval_status' => $role === 'customer' ? 'approved' : 'pending',
+            'approval_status' => 'approved',
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
-
-        if (($role === 'hotel_owner' || $role === 'staff') && ! $user->isApproved()) {
-            Auth::guard('web')->logout();
-            $request->session()->invalidate();
-            $request->session()->regenerateToken();
-
-            return redirect()->route('login')->with('status', 'Your ' . $role . ' account is pending admin approval.');
-        }
 
         return redirect(route('dashboard', absolute: false));
     }

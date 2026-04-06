@@ -1,5 +1,0 @@
-/* Custom, hand-managed styles that replace inline CSS. */
-
-[x-cloak] {
-    display: none !important;
-}

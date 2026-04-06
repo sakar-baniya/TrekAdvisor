@@ -22,11 +22,8 @@ class UpsertTrekService
             $payload = $this->buildPayload($request, $validated);
             $trek = Trek::query()->create($payload);
 
-            // Now sync hero image to trek_images after trek exists
-            $this->trekGalleryService->syncHeroImage($request, [], $trek);
-
             $this->syncItineraries($trek, $validated['itinerary'] ?? []);
-            $this->trekGalleryService->syncGallery($request, $trek);
+            $this->trekGalleryService->syncUnifiedMedia($request, $trek);
 
             return $trek;
         });
@@ -38,8 +35,9 @@ class UpsertTrekService
 
         return DB::transaction(function () use ($request, $validated, $trek) {
             $trek->update($this->buildPayload($request, $validated, $trek));
+            
             $this->syncItineraries($trek, $validated['itinerary'] ?? []);
-            $this->trekGalleryService->syncGallery($request, $trek);
+            $this->trekGalleryService->syncUnifiedMedia($request, $trek);
 
             return $trek;
         });
@@ -51,11 +49,11 @@ class UpsertTrekService
             'title' => $validated['title'],
             'slug' => $this->trekSlugService->generate($validated['title'], $trek),
             'base_price' => $validated['base_price'],
-            'difficulty' => $validated['difficulty'],
+            'difficulty' => \Illuminate\Support\Str::lower($validated['difficulty']),
             'duration_days' => $validated['duration_days'],
             'max_altitude' => $validated['max_altitude'] ?? null,
             'description' => $validated['description'],
-            'status' => $validated['status'],
+            'status' => \Illuminate\Support\Str::lower($validated['status']),
         ];
 
         // Hero image is now handled separately in syncHeroImage method

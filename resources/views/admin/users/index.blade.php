@@ -94,7 +94,7 @@
                             <td>{{ str_replace('_', ' ', $user->role) }}</td>
                             <td>
                                 @if ($user->role === 'hotel_owner')
-                                    <span class="admin-badge {{ $user->approval_status === 'approved' ? 'is-success' : 'is-warning' }}">{{ $user->approval_status === 'approved' === 'approved' ? 'Approved' : 'Pending' }}</span>
+                                    <span class="admin-badge {{ $user->approval_status === 'approved' ? 'is-success' : 'is-warning' }}">{{ $user->approval_status === 'approved' ? 'Approved' : 'Pending' }}</span>
                                 @else
                                     <span class="admin-badge is-muted">N/A</span>
                                 @endif

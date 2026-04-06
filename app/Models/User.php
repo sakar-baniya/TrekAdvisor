@@ -51,16 +51,6 @@ class User extends Authenticatable
         ];
     }
 
-    public function gearRentals(): HasMany
-    {
-        return $this->hasMany(GearRental::class);
-    }
-
-    public function isApproved(): bool
-    {
-        return $this->approval_status === 'approved';
-    }
-
     public function dashboardRouteName(): string
     {
         return match ($this->role) {
@@ -71,3 +61,4 @@ class User extends Authenticatable
         };
     }
 }
+

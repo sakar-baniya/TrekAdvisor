@@ -1,164 +1,51 @@
+/* === marketplace.css: Marketplace-scope variables ONLY === */
+/* Global colors/typography live in base.css. These are marketplace-specific. */
 :root {
-    /* === TrekAdvisor Premium Redesign === */
-    --market-primary:        #2C3E50;   /* Deep Blue */
-    --market-primary-dark:   #1a252f;
-    --market-primary-light:  #3f5973;
-    --market-green:          #28A745;   /* Success states */
-    --market-cta:            #E9C46A;   /* Soft Gold */
-    --market-cta-dark:       #d4a342;
-    --market-cta-light:      #f2dfa1;
-    --market-bg:             #F8F9FA;   /* Soft Off-White */
-    --market-text:           #343A40;   /* Charcoal Gray */
-    --market-text-muted:     #6c757d;
-    --market-border:         #CED4DA;   /* Light Gray */
-    --market-border-light:   #e9ecef;
-    /* Compat aliases */
-    --market-accent:        #2C3E50;
-    --market-cyan-50:  #F8F9FA;
-    --market-cyan-100: #e6f0fa;
-    --market-cyan-200: #cce0f5;
-    --market-cyan-500: #3f5973;
-    --market-cyan-600: #2C3E50;
-    --market-cyan-700: #1a252f;
-    --market-blue-700: #1a252f;
-    --market-slate-50:  #F8F9FA;
-    --market-slate-100: #f1f3f5;
-    --market-slate-200: #e9ecef;
-    --market-slate-300: #dee2e6;
-    --market-slate-400: #adb5bd;
-    --market-slate-500: #6c757d;
-    --market-slate-700: #495057;
-    --market-slate-900: #343A40;
-    --market-orange-400: #e9c46a;
-    --market-orange-500: #e9c46a;
-    --market-orange-600: #d4a342;
+    /* --- Himalayan Blue: Marketplace Variables --- */
+    --market-primary:       #0F172A;   /* Premium Charcoal Navy */
+    --market-primary-dark:  #020617;
+    --market-primary-light: #1E293B;
+    --market-cta:           #0F172A;   /* Standardized Navy CTA */
+    --market-cta-dark:      #020617;
+    --market-cta-light:     #334155;
+    --market-bg:            #FFFFFF;
+    --market-text:          #0F172A;
+    --market-text-muted:    #64748B;
+    --market-border:        rgba(15, 23, 42, 0.08);
+    --market-border-light:  rgba(15, 23, 42, 0.04);
+    --market-accent:        #5BA3C6;   /* Support accent only */
+    /* Scale */
+    --market-cyan-50:   #F8FAFC;
+    --market-cyan-100:  #F1F5F9;
+    --market-cyan-200:  #FFFFFF;
+    --market-cyan-500:  #64748B;
+    --market-cyan-600:  #475569;
+    --market-cyan-700:  #0F172A;
+    --market-blue-700:  #0F172A;
+    --market-slate-50:  #F8FAFC;
+    --market-slate-100: #F1F5F9;
+    --market-slate-200: #E2E8F0;
+    --market-slate-300: #CBD5E1;
+    --market-slate-400: #94A3B8;
+    --market-slate-500: #64748B;
+    --market-slate-700: #0F172A;
+    --market-slate-900: #020617;
+    /* Status */
     --market-green-100: #d4edda;
     --market-green-600: #28a745;
-    --market-red-100:    #f8d7da;
-    --market-red-600:    #dc3545;
-    --market-yellow-100: #fff3cd;
-    --market-yellow-600: #e0a800;
-    --market-shadow:      0 8px 30px rgba(44, 62, 80, 0.12);
-    --market-shadow-soft: 0 4px 16px rgba(44, 62, 80, 0.07);
-    --market-shadow-card: 0 4px 20px rgba(52, 58, 64, 0.10);
+    --market-red-100:   #f8d7da;
+    --market-red-600:   #dc3545;
+    --market-yellow-100: rgba(15, 23, 42, 0.04);
+    --market-yellow-600: #334155;
+    --market-orange-400: #0F172A;
+    --market-orange-500: #0F172A;
+    --market-orange-600: #1E293B;
+    /* Shadows */
+    --market-shadow:      0 12px 36px rgba(15, 23, 42, 0.1);
+    --market-shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+    --market-shadow-card: 0 10px 28px rgba(15, 23, 42, 0.08);
 }
 
-body.body-app,
-body.body-guest {
-    background: var(--market-bg);
-    color: var(--market-text);
-    font-family: var(--font-body);
-}
-
-h1, h2, h3, h4, h5, h6 {
-    font-family: 'Montserrat', 'Poppins', sans-serif;
-    color: var(--market-slate-900);
-}
-
-.page-content {
-    min-height: calc(100vh - 12rem);
-}
-
-.container {
-    width: min(1180px, calc(100% - 2rem));
-}
-
-.container-wide {
-    width: min(1240px, calc(100% - 2rem));
-    margin-inline: auto;
-}
-
-.nav-left,
-.nav-links,
-.nav-actions {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-.brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.8rem;
-    text-decoration: none;
-}
-
-.brand-badge,
-.footer-brand-badge,
-.guest-brand-badge {
-    width: 2.75rem;
-    height: 2.75rem;
-    border-radius: 1rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(255,255,255,0.15);
-    color: white;
-    border: 1.5px solid rgba(255,255,255,0.3);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-.brand-wordmark {
-    font-size: 28px; /* bumped from 26px */
-    font-weight: 800;
-    letter-spacing: -0.04em;
-    color: #ffffff;
-    font-family: 'Montserrat', sans-serif;
-    line-height: 1;
-}
-
-.nav-link {
-    color: rgba(255, 255, 255, 0.88);
-    text-decoration: none;
-    font-weight: 600;
-    padding: 10px 6px;
-    border-radius: 6px;
-    transition: all 0.2s ease;
-}
-
-.nav-mobile .nav-link:hover,
-.nav-mobile .nav-link.is-active {
-    color: #ffffff;
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.site-nav .nav-link {
-    font-size: 16px; /* bumped from 15px */
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 11px 18px; /* increased from 10px 14px */
-    border-radius: 8px;
-    color: rgba(255, 255, 255, 0.9);
-    background: transparent;
-    font-family: 'Inter', sans-serif;
-    text-transform: uppercase;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.site-nav .nav-link:hover {
-    color: #ffffff;
-    background: transparent;
-    opacity: 1;
-}
-
-.site-nav .nav-link.is-active {
-    color: #ffffff;
-    background: transparent;
-    font-weight: 700;
-    box-shadow: none;
-    position: relative;
-}
-
-.site-nav .nav-link.is-active::after {
-    content: "";
-    position: absolute;
-    left: 6px;
-    right: 6px;
-    bottom: 4px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--accent-highlight);
-}
 
 .btn.btn-link,
 .market-link {
@@ -191,20 +78,23 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     justify-content: center;
     gap: 0.75rem;
-    min-height: 3.75rem; /* bumped from 3.5rem */
-    padding: 1.1rem 2.6rem; /* bumped from 1rem 2.25rem */
+    min-height: 3.75rem;
+    /* bumped from 3.5rem */
+    padding: 1.1rem 2.6rem;
+    /* bumped from 1rem 2.25rem */
     border: 0;
     border-radius: 50px;
-    background: linear-gradient(135deg, var(--market-cta), var(--market-cta-dark));
-    color: var(--market-slate-900);
+    background: var(--at-secondary);
+    color: #ffffff;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem; /* bumped from 1.05rem */
+    font-size: 1.1rem;
+    /* bumped from 1.05rem */
     font-family: 'Open Sans', sans-serif;
     letter-spacing: 0.02em;
-    box-shadow: 0 8px 24px rgba(233, 196, 106, 0.3);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .btn.btn-primary:hover,
@@ -213,9 +103,9 @@ h1, h2, h3, h4, h5, h6 {
 .market-cta__button:hover,
 .auth-submit:hover {
     transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(233, 196, 106, 0.45);
-    background: linear-gradient(135deg, var(--market-cta-light), var(--market-cta));
-    color: #111;
+    background: var(--at-dark-blue);
+    color: #ffffff;
+    box-shadow: 0 12px 30px rgba(24, 78, 108, 0.3);
 }
 
 .market-button--ghost,
@@ -275,23 +165,6 @@ h1, h2, h3, h4, h5, h6 {
     position: relative;
     overflow: hidden;
     color: white;
-    background:
-        linear-gradient(rgba(11, 37, 69, 0.7), rgba(11, 37, 69, 0.5)),
-        linear-gradient(135deg, var(--market-primary-dark, #0B2545) 0%, var(--market-primary, #00B4D8) 100%);
-}
-
-.market-hero::before,
-.catalog-hero::before,
-.detail-hero::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -20%;
-    width: 100%;
-    height: 55%;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.22), transparent 60%);
-    pointer-events: none;
 }
 
 .market-hero__inner,
@@ -320,8 +193,10 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-search-wrapper {
     width: 100%;
-    max-width: 40rem; /* bumped from 38rem */
-    margin: 2.25rem auto 0; /* increased from 1.8rem */
+    max-width: 40rem;
+    /* bumped from 38rem */
+    margin: 2.25rem auto 0;
+    /* increased from 1.8rem */
 }
 
 .hero-search-tabs {
@@ -335,27 +210,29 @@ h1, h2, h3, h4, h5, h6 {
 
 .hero-search-tab {
     border-radius: 999px;
-    padding: 0.85rem 1.65rem; /* bumped from 0.75/1.45 */
-    border: 1px solid rgba(255, 255, 255, 0.35);
-    background: rgba(255, 255, 255, 0.10);
-    color: rgba(255, 255, 255, 0.92);
-    font-weight: 800;
-    font-size: 1rem; /* bumped from 0.95rem */
+    padding: 0.7rem 1.65rem;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 700;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+    transition: all 0.25s ease;
     user-select: none;
+    letter-spacing: 0.02em;
 }
 
 .hero-search-tab:hover {
-    transform: translateY(-1px);
-    background: rgba(255, 255, 255, 0.14);
+    background: rgba(255, 255, 255, 0.15);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.4);
 }
 
 .hero-search-tab.is-active {
-    background: rgba(255, 255, 255, 0.96);
-    border-color: rgba(255, 255, 255, 0.90);
-    color: #0b2545;
-    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.18);
+    background: #FFFFFF;
+    border-color: #FFFFFF;
+    color: #0F172A;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .market-hero .hero-search-bar {
@@ -367,12 +244,13 @@ h1, h2, h3, h4, h5, h6 {
     overflow: hidden;
     border: 1px solid rgba(255, 255, 255, 1);
     box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
-    padding: 0.75rem 0.75rem 0.75rem 1.85rem; /* increased base padding */
+    padding: 0.75rem 0.75rem 0.75rem 1.85rem;
+    /* increased base padding */
     gap: 1.5rem;
 }
 
 .market-hero .hero-search-bar .search-icon {
-    color: var(--market-slate-400);
+    color: #94A3B8; /* Slate 400 */
     font-size: 1.15rem;
     flex-shrink: 0;
 }
@@ -384,7 +262,7 @@ h1, h2, h3, h4, h5, h6 {
     outline: 0;
     padding: 0.45rem 0;
     font-size: 1.05rem;
-    color: var(--market-slate-900);
+    color: #0F172A; /* Deeper for readability */
     background: transparent;
 }
 
@@ -405,29 +283,30 @@ h1, h2, h3, h4, h5, h6 {
 
 .market-hero .hero-search-btn {
     border-radius: 999px;
-    padding: 1rem 2.4rem; /* bumped from 0.85/1.95 */
-    font-size: 1.15rem; /* bumped from 1.05 */
-    background: linear-gradient(135deg, var(--market-cta), var(--market-cta-dark));
-    color: var(--market-slate-900);
+    padding: 0.9rem 2.2rem;
+    font-size: 1.1rem;
+    background: #0F172A;
+    color: #FFFFFF;
     border: 0;
     font-weight: 700;
     font-family: 'Open Sans', sans-serif;
     cursor: pointer;
-    box-shadow: 0 6px 18px rgba(233, 196, 106, 0.4);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 18px rgba(15, 23, 42, 0.15);
+    transition: all 0.3s ease;
     white-space: nowrap;
 }
 
 .market-hero .hero-search-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 24px rgba(233, 196, 106, 0.55);
+    box-shadow: 0 10px 24px rgba(24, 78, 108, 0.3);
 }
 
 
 .market-hero__title,
 .catalog-hero h1,
 .detail-hero h1 {
-    font-size: clamp(2.4rem, 5.8vw, 3.5rem); /* refined from 3.85rem to fix 2-line wrap */
+    font-size: clamp(2.4rem, 5.8vw, 3.5rem);
+    /* refined from 3.85rem to fix 2-line wrap */
     line-height: 1.15;
     letter-spacing: -0.045em;
     margin: 0 auto;
@@ -453,11 +332,14 @@ h1, h2, h3, h4, h5, h6 {
 .market-hero__subtitle,
 .catalog-hero p,
 .auth-subtitle {
-    max-width: 46rem; /* increased from 42rem */
-    font-size: 1.25rem; /* bumped from 1.15rem */
+    max-width: 46rem;
+    /* increased from 42rem */
+    font-size: 1.25rem;
+    /* bumped from 1.15rem */
     line-height: 1.65;
     color: rgba(255, 255, 255, 0.85);
-    margin: 1.75rem auto 0; /* increased from 1.35rem */
+    margin: 1.75rem auto 0;
+    /* increased from 1.35rem */
     text-shadow: 0 2px 18px rgba(0, 0, 0, 0.3);
 }
 
@@ -493,15 +375,14 @@ h1, h2, h3, h4, h5, h6 {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem; /* tightened gap */
-    margin: 3.5rem auto 0;
-    padding: 0.8rem 2.2rem; /* significantly tighter padding */
-    background: rgba(255, 255, 255, 0.04);
-    backdrop-filter: blur(2px); /* minimal blur as requested */
-    -webkit-backdrop-filter: blur(2px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 1.25rem; /* cleaner, tighter rounding */
-    flex-wrap: wrap;
+    gap: 3.5rem;
+    margin: 4rem auto 0;
+    padding: 1rem 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
 }
 
 .market-hero__stats div {
@@ -511,7 +392,8 @@ h1, h2, h3, h4, h5, h6 {
 
 .market-hero__stats strong {
     display: block;
-    font-size: 2.5rem; /* refined from 2.75rem for better proportions */
+    font-size: 2.5rem;
+    /* refined from 2.75rem for better proportions */
     font-weight: 800;
     letter-spacing: -0.015em;
     color: #ffffff;
@@ -523,7 +405,8 @@ h1, h2, h3, h4, h5, h6 {
 .market-hero__stats span {
     color: rgba(255, 255, 255, 0.85);
     font-size: 0.9rem;
-    letter-spacing: 0.12em; /* wider tracking for elite guide feel */
+    letter-spacing: 0.12em;
+    /* wider tracking for elite guide feel */
     text-transform: uppercase;
     font-weight: 700;
 }
@@ -579,7 +462,7 @@ h1, h2, h3, h4, h5, h6 {
 .market-card:hover,
 .market-mini-card:hover {
     transform: translateY(-6px);
-    box-shadow: var(--market-shadow-card, 0 8px 30px rgba(52,58,64,0.14));
+    box-shadow: var(--market-shadow-card, 0 8px 30px rgba(52, 58, 64, 0.14));
 }
 
 .market-card__media {
@@ -663,7 +546,7 @@ h1, h2, h3, h4, h5, h6 {
 .market-mini-card__footer,
 .detail-departure-card__top,
 .detail-departure-card__bottom,
-.booking-price-box > div,
+.booking-price-box>div,
 .catalog-toolbar {
     display: flex;
     align-items: center;
@@ -749,7 +632,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 6rem 3rem;
     text-align: center;
     color: white;
-    background: 
+    background:
         linear-gradient(135deg, rgba(26, 37, 47, 0.95) 0%, rgba(44, 62, 80, 0.85) 60%, rgba(26, 37, 47, 0.95) 100%),
         url('https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&q=80&w=2000') no-repeat center/cover;
     box-shadow: 0 20px 60px rgba(44, 62, 80, 0.4);
@@ -793,7 +676,7 @@ h1, h2, h3, h4, h5, h6 {
 .market-cta__inner p {
     max-width: 40rem;
     margin: 0 auto 2rem;
-    color: rgba(255,255,255,0.92);
+    color: rgba(255, 255, 255, 0.92);
     font-size: 1.05rem;
     line-height: 1.7;
     position: relative;
@@ -867,7 +750,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .detail-breadcrumb a {
-    color: rgba(255,255,255,0.85);
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
 }
 
@@ -884,7 +767,7 @@ h1, h2, h3, h4, h5, h6 {
     gap: 0.5rem;
     padding: 0.7rem 1rem;
     border-radius: 999px;
-    background: rgba(255,255,255,0.13);
+    background: rgba(255, 255, 255, 0.13);
     backdrop-filter: blur(8px);
 }
 
@@ -1225,7 +1108,7 @@ h1, h2, h3, h4, h5, h6 {
     min-height: 22rem;
     background:
         linear-gradient(rgba(15, 23, 42, 0.32), rgba(15, 23, 42, 0.24)),
-        linear-gradient(135deg, rgba(8,145,178,0.9), rgba(29,78,216,0.8));
+        linear-gradient(135deg, rgba(8, 145, 178, 0.9), rgba(29, 78, 216, 0.8));
     border-radius: 2rem;
     box-shadow: var(--market-shadow);
 }
@@ -1320,6 +1203,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 1024px) {
+
     .market-card-grid--four,
     .market-card-grid--three,
     .booking-passenger-grid {
@@ -1343,6 +1227,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 860px) {
+
     .nav-links,
     .nav-actions {
         display: none;
@@ -1361,7 +1246,7 @@ h1, h2, h3, h4, h5, h6 {
         display: none;
     }
 
-    .site-nav .nav-right > :not(.nav-toggle) {
+    .site-nav .nav-right> :not(.nav-toggle) {
         display: none !important;
     }
 
@@ -1378,6 +1263,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 720px) {
+
     .market-section,
     .market-cta,
     .booking-wrap {
@@ -1398,7 +1284,7 @@ h1, h2, h3, h4, h5, h6 {
     .market-mini-card__footer,
     .detail-departure-card__top,
     .detail-departure-card__bottom,
-    .booking-price-box > div,
+    .booking-price-box>div,
     .auth-row,
     .auth-footer {
         flex-direction: column;
@@ -1624,7 +1510,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 1.4rem;
     border-radius: 1.2rem;
     border: 1px solid rgba(148, 163, 184, 0.18);
-    background: linear-gradient(180deg, rgba(255,255,255,1), rgba(248,250,252,0.95));
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(248, 250, 252, 0.95));
     transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
@@ -1714,6 +1600,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 720px) {
+
     .account-stat-grid,
     .account-meta-grid {
         grid-template-columns: 1fr;
@@ -1751,6 +1638,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 720px) {
+
     .detail-highlight-grid,
     .catalog-toolbar__actions {
         grid-template-columns: 1fr;
@@ -1812,7 +1700,7 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--market-slate-700);
 }
 
-.market-card__trip-meta > span:first-child::after {
+.market-card__trip-meta>span:first-child::after {
     content: '|';
     margin-left: 0.65rem;
     color: #b8c4d1;
@@ -1886,7 +1774,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 720px) {
-    .market-card__trip-meta > span:first-child::after {
+    .market-card__trip-meta>span:first-child::after {
         display: none;
     }
 
@@ -1955,6 +1843,7 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (max-width: 720px) {
+
     .catalog-hero .container,
     .catalog-layout {
         width: min(100%, calc(100% - 1rem));
@@ -1990,7 +1879,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-wrap: wrap;
 }
 
-.market-hero__stats > div {
+.market-hero__stats>div {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -2110,10 +1999,3 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: 0.05em;
     font-weight: 600;
 }
-
-
-
-
-
-
-

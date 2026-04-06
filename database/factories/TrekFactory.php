@@ -15,12 +15,11 @@ class TrekFactory extends Factory
             'title' => ucfirst($title),
             'slug' => Str::slug($title),
             'description' => fake()->paragraphs(3, true),
-            'base_price' => fake()->randomFloat(2, 500, 5000),
-            'difficulty' => fake()->randomElement(['Easy', 'Moderate', 'Difficult', 'Extreme']),
+            'base_price' => fake()->numberBetween(600, 4500),
+            'difficulty' => fake()->randomElement(['easy', 'moderate', 'difficult', 'extreme']),
             'duration_days' => fake()->numberBetween(5, 18),
-            'max_altitude' => fake()->numberBetween(1800, 5600),
-            'image' => fake()->imageUrl(640, 480, 'nature', true),
-            'status' => 'Active',
+            'max_altitude' => fake()->numberBetween(2500, 5600),
+            'status' => 'active',
         ];
     }
 }

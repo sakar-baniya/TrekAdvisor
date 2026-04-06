@@ -1,11 +1,11 @@
-﻿<x-app-layout>
+<x-app-layout>
     <section class="account-shell">
         <div class="container">
             <div class="account-header">
                 <div>
                     <p class="market-kicker">My Account</p>
                     <h1>Welcome back, {{ auth()->user()->name }}!</h1>
-                    <p>Track your treks, hotel stays, and gear rentals from one dashboard.</p>
+                    <p>Track your treks and hotel stays from one dashboard.</p>
                 </div>
             </div>
 
@@ -22,13 +22,6 @@
                     <div>
                         <strong>{{ $stats['hotel_bookings'] }}</strong>
                         <span>Hotel Bookings</span>
-                    </div>
-                </article>
-                <article class="account-stat-card is-violet">
-                    <div class="account-stat-card__icon"><i class="fas fa-campground"></i></div>
-                    <div>
-                        <strong>{{ $stats['gear_rentals'] }}</strong>
-                        <span>Gear Rentals</span>
                     </div>
                 </article>
             </div>
@@ -97,35 +90,6 @@
                 </div>
             </section>
 
-            <section class="account-panel">
-                <div class="account-panel__head">
-                    <div>
-                        <h2>My Gear Rentals</h2>
-                        <p>Current and recent rental items.</p>
-                    </div>
-                </div>
-
-                <div class="account-card-stack">
-                    @forelse ($gearRentals as $rental)
-                        <article class="account-booking-card">
-                            <div class="account-booking-card__top">
-                                <div>
-                                    <h3>{{ $rental->gearItem?->name ?? 'Gear Rental' }}</h3>
-                                    <div class="account-meta-grid">
-                                        <span><i class="fas fa-calendar"></i> {{ optional($rental->start_date)->format('F d, Y') }} - {{ optional($rental->end_date)->format('F d, Y') }}</span>
-                                        <span><i class="fas fa-boxes"></i> Quantity: {{ $rental->quantity }}</span>
-                                        <span><i class="fas fa-hashtag"></i> {{ $rental->rental_reference }}</span>
-                                        <span><i class="fas fa-money-bill"></i> ${{ number_format($rental->total_price, 2) }}</span>
-                                    </div>
-                                </div>
-                                <span class="account-status {{ strtolower($rental->status) === 'active' ? 'is-info' : (strtolower($rental->status) === 'returned' ? 'is-success' : 'is-warning') }}">{{ $rental->status }}</span>
-                            </div>
-                        </article>
-                    @empty
-                        <p class="empty-note">You do not have any gear rentals yet.</p>
-                    @endforelse
-                </div>
-            </section>
         </div>
     </section>
 </x-app-layout>

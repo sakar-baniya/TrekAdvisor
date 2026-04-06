@@ -66,6 +66,55 @@ class GalleryImageService
         }
     }
 
+    public function syncUnifiedMedia(Request $request, Model $model, string $directory): void
+    {
+        $model->loadMissing('images');
+
+        // Remove images the user checked
+        $imagesToRemove = $model->images
+            ->whereIn('id', collect($request->input('remove_gallery_images', []))->map(fn ($id) => (int) $id))
+            ->values();
+
+        foreach ($imagesToRemove as $image) {
+            Storage::disk('public')->delete($this->relativePath($image->path));
+            $image->delete();
+        }
+
+        // Add newly uploaded images
+        $newFiles = $request->file('gallery_images') ?? [];
+        $newlyCreatedIds = [];
+
+        foreach ($newFiles as $index => $file) {
+            $created = $model->images()->create([
+                'path' => Storage::url($file->store($directory, 'public')),
+                'sort_order' => 999, // Temp sort order
+            ]);
+            $newlyCreatedIds["new_$index"] = $created->id;
+        }
+
+        // Determine logical primary
+        $primaryRaw = $request->input('primary_image');
+        $primaryId = null;
+
+        if (is_string($primaryRaw) && str_starts_with($primaryRaw, 'new_')) {
+            $primaryId = $newlyCreatedIds[$primaryRaw] ?? null;
+        } else {
+            $primaryId = (int) $primaryRaw;
+        }
+
+        // Finalize sort_orders
+        $model->load('images');
+        $counter = 1;
+        foreach ($model->images as $image) {
+            if ($image->id === $primaryId) {
+                $image->update(['sort_order' => 0]);
+            } else {
+                $image->update(['sort_order' => $counter]);
+                $counter++;
+            }
+        }
+    }
+
     public function deleteAll(Model $model): void
     {
         if ($model->image) {

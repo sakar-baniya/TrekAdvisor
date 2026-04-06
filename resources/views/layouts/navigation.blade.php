@@ -18,7 +18,7 @@
                 <div class="nav-links">
                     <a href="{{ route('treks.index') }}" class="nav-link {{ request()->routeIs('treks.*') ? 'is-active' : '' }}">Treks</a>
                     <a href="{{ route('hotels.index') }}" class="nav-link {{ request()->routeIs('hotels.*') ? 'is-active' : '' }}">Hotels</a>
-                    <a href="{{ route('gear.index') }}" class="nav-link {{ request()->routeIs('gear.*') ? 'is-active' : '' }}">Gear Rental</a>
+
                     <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'is-active' : '' }}">About Us</a>
                     <a href="{{ route('blog') }}" class="nav-link {{ request()->routeIs('blog') ? 'is-active' : '' }}">Travel Guide</a>
                 </div>
@@ -33,7 +33,6 @@
                     </form>
                 @else
                     <a href="{{ route('login') }}" class="btn btn-auth btn-auth--ghost">Login</a>
-                    <a href="{{ route('register') }}" class="btn btn-auth btn-auth--primary">Sign Up</a>
                 @endauth
                 <button
                     type="button"
@@ -53,7 +52,7 @@
         <div class="nav-mobile-links">
             <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>
             <a href="{{ route('hotels.index') }}" class="nav-link">Hotels</a>
-            <a href="{{ route('gear.index') }}" class="nav-link">Gear Rental</a>
+
             <a href="{{ route('about') }}" class="nav-link">About</a>
             <a href="{{ route('blog') }}" class="nav-link">Travel Guide</a>
             <a href="{{ route('contact') }}" class="nav-link">Contact</a>
@@ -65,7 +64,6 @@
                 </form>
             @else
                 <a href="{{ route('login') }}" class="nav-link">Login</a>
-                <a href="{{ route('register') }}" class="btn btn-primary">Sign Up</a>
             @endauth
         </div>
     </div>

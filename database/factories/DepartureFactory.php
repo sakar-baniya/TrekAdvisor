@@ -17,16 +17,17 @@ class DepartureFactory extends Factory
     public function definition(): array
     {
         $startDate = fake()->dateTimeBetween('+1 month', '+6 months');
-        $endDate = (clone $startDate)->modify('+' . rand(5, 15) . ' days');
+        $duration = rand(5, 18);
+        $endDate = (clone $startDate)->modify('+' . $duration . ' days');
 
         return [
             'trek_id' => \App\Models\Trek::factory(),
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'price' => fake()->randomFloat(2, 500, 5000),
-            'capacity' => fake()->numberBetween(10, 30),
+            'price' => fake()->numberBetween(600, 4500),
+            'capacity' => fake()->numberBetween(10, 24),
             'booked_seats' => 0,
-            'status' => 'Available',
+            'status' => 'available',
         ];
     }
 }

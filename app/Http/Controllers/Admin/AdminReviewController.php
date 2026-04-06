@@ -71,8 +71,8 @@ class AdminReviewController extends Controller
         return match ($type) {
             'trek' => 'App\\Models\\Trek',
             'hotel' => 'App\\Models\\Hotel',
-            'gear' => 'App\\Models\\GearItem',
             default => null,
         };
     }
 }
+

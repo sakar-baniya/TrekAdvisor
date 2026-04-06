@@ -36,21 +36,21 @@ class AdminTrekQueryService
     {
         $trek = new Trek();
         $trek->setRelation('itineraries', collect());
-        $trek->setRelation('gallery', collect());
+        $trek->setRelation('images', collect());
 
         return $trek;
     }
 
     public function loadForShow(Trek $trek): Trek
     {
-        $trek->load(['itineraries', 'departures', 'gallery']);
+        $trek->load(['itineraries', 'departures', 'images']);
 
         return $trek;
     }
 
     public function loadForEdit(Trek $trek): Trek
     {
-        $trek->load(['itineraries', 'gallery']);
+        $trek->load(['itineraries', 'images']);
 
         return $trek;
     }

@@ -16,5 +16,12 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Database\QueryException $e, \Illuminate\Http\Request $request) {
+            // Check for specific database connection error (SQLSTATE[HY000] [2002])
+            if ($e->getCode() === 2002 || str_contains($e->getMessage(), 'actively refused')) {
+                return response()->view('errors.503', [
+                    'message' => 'The trail database is temporarily unreachable. Please ensure the park services (MySQL) are active.'
+                ], 503);
+            }
+        });
     })->create();

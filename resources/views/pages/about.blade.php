@@ -16,7 +16,7 @@
                 </article>
                 <article class="market-quote-card">
                     <h2>Our Vision</h2>
-                    <p>To create a platform where people can confidently explore routes, stays, and gear in one thoughtful experience.</p>
+                    <p>To create a platform where people can confidently explore routes and stays in one thoughtful experience.</p>
                 </article>
             </div>
         </div>
@@ -30,10 +30,9 @@
                     <h2>Experience designed around confidence</h2>
                 </div>
             </div>
-            <div class="market-card-grid market-card-grid--three">
+            <div class="market-card-grid market-card-grid--two">
                 <article class="market-quote-card"><strong>Expert Routes</strong><p>Curated treks with useful context, difficulty, and departure visibility.</p></article>
                 <article class="market-quote-card"><strong>Thoughtful Stays</strong><p>Hotel discovery is presented with comfort, clarity, and clean pricing cues.</p></article>
-                <article class="market-quote-card"><strong>Gear Readiness</strong><p>Rental options make preparation feel lighter and more complete.</p></article>
             </div>
         </div>
     </section>

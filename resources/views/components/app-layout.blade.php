@@ -105,7 +105,6 @@
                             <li><a href="{{ route('home') }}" class="footer-link">Home</a></li>
                             <li><a href="{{ route('treks.index') }}" class="footer-link">Explore Treks</a></li>
                             <li><a href="{{ route('hotels.index') }}" class="footer-link">Hotels</a></li>
-                            <li><a href="{{ route('gear.index') }}" class="footer-link">Gear Rental</a></li>
                         </ul>
                     </div>
 

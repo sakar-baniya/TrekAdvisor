@@ -50,15 +50,7 @@
                 actionUrl="{{ route('admin.hotels.index', ['status' => 'Pending']) }}"
             />
 
-            <x-dashboard.pending-task
-                title="{{ number_format($stats['rented_gear']) }} Active Gear Rentals"
-                amount="In Progress"
-                description="Track current equipment movement and update inventory availability fast."
-                icon="fa-backpack"
-                tag="Gear"
-                actionLabel="View Rentals"
-                actionUrl="{{ route('admin.gear-rentals.index') }}"
-            />
+
 
             <x-dashboard.pending-task
                 title="{{ number_format($stats['active_treks']) }} Trekking Products Live"

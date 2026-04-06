@@ -48,9 +48,6 @@
                         @elseif ($payment->payable_type === 'hotel')
                             <div><span>Hotel</span><strong>{{ $reference->hotelRoom?->hotel?->name }}</strong></div>
                             <div><span>Booking Ref</span><strong>{{ $reference->booking_reference }}</strong></div>
-                        @elseif ($payment->payable_type === 'gear')
-                            <div><span>Gear</span><strong>{{ $reference->gearItem?->name }}</strong></div>
-                            <div><span>Rental Ref</span><strong>{{ $reference->rental_reference }}</strong></div>
                         @endif
                     @else
                         <div><span>Linked record</span><strong>Not found</strong></div>

@@ -1,19 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Profile - {{ config('app.name', 'TrekAdvisor') }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
+<x-app-layout>
     <style>
-        * { box-sizing: border-box; }
-        body { font-family: 'Inter', sans-serif; background: #f5f7fa; }
-        
         .profile-container { max-width: 600px; margin: 3rem auto; padding: 1.5rem; }
         .profile-card { background: white; border-radius: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08); padding: 2rem; }
         
@@ -24,7 +10,7 @@
         .profile-header-info p { margin: 0.25rem 0 0; color: #6F8798; font-size: 0.95rem; }
         
         .profile-actions { display: flex; gap: 1rem; margin-bottom: 2rem; }
-        .btn { padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
+        .profile-btn { padding: 0.75rem 1.5rem; border-radius: 8px; font-size: 0.95rem; font-weight: 600; border: none; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; transition: all 0.2s ease; }
         .btn-primary { background: #184E6C; color: white; }
         .btn-primary:hover { background: #0f3449; }
         .btn-secondary { background: #e5e7eb; color: #334155; }
@@ -65,15 +51,11 @@
             .profile-edit-actions { flex-direction: column; }
         }
     </style>
-</head>
-<body class="body-app">
-    <div class="page-shell">
-        <header class="site-header">
-            @include('layouts.navigation')
-        </header>
+    
+    <div style="background: linear-gradient(135deg, #184E6C 0%, #2d6f91 100%); height: 260px; width: 100%; position: absolute; top: 0; left: 0; z-index: 0;"></div>
 
-        <main class="page-content">
-            <div class="profile-container">
+    <div style="position: relative; z-index: 10; padding-top: 100px;">
+        <div class="profile-container">
                 <div class="profile-card">
                     <!-- Header with Avatar -->
                     <div class="profile-header">
@@ -86,10 +68,10 @@
 
                     <!-- Action Buttons -->
                     <div class="profile-actions">
-                        <button type="button" id="editBtn" class="btn btn-primary" onclick="toggleEdit()">
+                        <button type="button" id="editBtn" class="profile-btn btn-primary" onclick="toggleEdit()">
                             <i class="fas fa-edit" style="margin-right: 0.5rem;"></i> Edit Profile
                         </button>
-                        <a href="{{ request()->header('Referer') ? request()->header('Referer') : route('home') }}" class="btn btn-secondary">
+                        <a href="{{ request()->header('Referer') ? request()->header('Referer') : route('home') }}" class="profile-btn btn-secondary">
                             <i class="fas fa-arrow-left" style="margin-right: 0.5rem;"></i> Back
                         </a>
                     </div>
@@ -149,10 +131,10 @@
 
                         <!-- Edit Action Buttons -->
                         <div class="profile-edit-actions" id="editActions">
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="profile-btn btn-primary">
                                 <i class="fas fa-save" style="margin-right: 0.5rem;"></i> Save Changes
                             </button>
-                            <button type="button" class="btn btn-secondary" onclick="toggleEdit()">
+                            <button type="button" class="profile-btn btn-secondary" onclick="toggleEdit()">
                                 <i class="fas fa-times" style="margin-right: 0.5rem;"></i> Cancel
                             </button>
                         </div>
@@ -207,54 +189,7 @@
                     @endif
                 </div>
             </div>
-        </main>
-    </div>
-
-    <footer class="site-footer">
-        <div class="container section">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-brand">
-                        <span class="footer-brand-badge"><i class="fas fa-mountain"></i></span>
-                        TrekAdvisor
-                    </div>
-                    <p class="footer-muted footer-text">
-                        Trek the Himalayas, plan stays, and rent gear from one beautiful marketplace.
-                    </p>
-                </div>
-                <div>
-                    <p class="footer-title">Quick Links</p>
-                    <ul class="footer-muted footer-list">
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('treks.index') }}">Treks</a></li>
-                        <li><a href="{{ route('hotels.index') }}">Hotels</a></li>
-                        <li><a href="{{ route('gear.index') }}">Gear Rental</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="footer-title">Company</p>
-                    <ul class="footer-muted footer-list">
-                        <li><a href="{{ route('about') }}">About</a></li>
-                        <li><a href="{{ route('contact') }}">Contact</a></li>
-                        <li><a href="{{ route('faq') }}">FAQ</a></li>
-                        <li><a href="{{ route('blog') }}">Blog</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="footer-title">Legal</p>
-                    <ul class="footer-muted footer-list">
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
-                        <li><a href="#">Cookie Policy</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-muted">&copy; {{ date('Y') }} TrekAdvisor. All rights reserved.</p>
-            </div>
         </div>
-    </footer>
-
     <script>
         function toggleEdit() {
             const profileView = document.getElementById('profileView');
@@ -279,5 +214,4 @@
             });
         }
     </script>
-</body>
-</html>
+</x-app-layout>

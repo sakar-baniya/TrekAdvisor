@@ -100,7 +100,7 @@
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }} ({{ $trek->reviews->count() ?: 12 }} reviews)</span>
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) : 'New' }} ({{ $trek->reviews_count }} reviews)</span>
                             </div>
                             <h3>{{ $trek->title }}</h3>
                             <div class="booking-card__footer">
@@ -134,7 +134,7 @@
 
             <div class="booking-grid">
                 @forelse ($featuredHotels->take(3) as $hotel)
-                    <article class="booking-card booking-card--featured booking-card--hotel">
+                    <article class="booking-card booking-card--featured booking-card--trek">
                         <div class="booking-card__media">
                             @if($hotel->image)
                                 <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}">
@@ -144,12 +144,12 @@
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> 4.6 (24 reviews)</span>
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) : 'New' }} ({{ $hotel->reviews_count }} reviews)</span>
                             </div>
                             <h3>{{ $hotel->name }}</h3>
                             <div class="booking-card__footer">
-                                <div class="booking-card__price"><strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
-                                <span class="btn-primary-filled booking-card__action">Book Now</span>
+                                <div class="booking-card__price">From <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
+                                <a href="{{ route('hotels.show', $hotel) }}" class="btn-primary-filled booking-card__action">View Details</a>
                             </div>
                         </div>
                     </article>
@@ -180,48 +180,26 @@
             </div>
 
             <div class="market-card-grid market-card-grid--three">
-                <article class="market-quote-card">
-                    <div class="market-quote-card__top">
-                        <div class="market-quote-card__stars">★★★★★</div>
-                        <i class="fas fa-quote-right quote-icon"></i>
-                    </div>
-                    <p class="market-quote-card__text">"Everything felt smooth and premium from picking the route to checking departure details."</p>
-                    <div class="market-quote-card__author">
-                        <div class="avatar"><i class="fas fa-user"></i></div>
-                        <div class="author-info">
-                            <strong>Sajan Gurung</strong>
-                            <span>Everest Base Camp Trek</span>
+                @foreach($testimonials as $testimonial)
+                    <article class="market-quote-card">
+                        <div class="market-quote-card__top">
+                            <div class="market-quote-card__stars">
+                                @for($i = 0; $i < 5; $i++)
+                                    {{ $i < $testimonial->rating ? '★' : '☆' }}
+                                @endfor
+                            </div>
+                            <i class="fas fa-quote-right quote-icon"></i>
                         </div>
-                    </div>
-                </article>
-                <article class="market-quote-card">
-                    <div class="market-quote-card__top">
-                        <div class="market-quote-card__stars">★★★★★</div>
-                        <i class="fas fa-quote-right quote-icon"></i>
-                    </div>
-                    <p class="market-quote-card__text">"The clean layout made it easy to compare treks and stays without feeling overwhelmed."</p>
-                    <div class="market-quote-card__author">
-                        <div class="avatar"><i class="fas fa-user"></i></div>
-                        <div class="author-info">
-                            <strong>Nirmala Rai</strong>
-                            <span>Annapurna Region</span>
+                        <p class="market-quote-card__text">"{{ Str::limit($testimonial->comment, 150) }}"</p>
+                        <div class="market-quote-card__author">
+                            <div class="avatar"><i class="fas fa-user"></i></div>
+                            <div class="author-info">
+                                <strong>{{ $testimonial->user?->name ?? 'Anonymous' }}</strong>
+                                <span>{{ $testimonial->reviewable?->title ?? $testimonial->reviewable?->name ?? 'Recent Trip' }}</span>
+                            </div>
                         </div>
-                    </div>
-                </article>
-                <article class="market-quote-card">
-                    <div class="market-quote-card__top">
-                        <div class="market-quote-card__stars">★★★★☆</div>
-                        <i class="fas fa-quote-right quote-icon"></i>
-                    </div>
-                    <p class="market-quote-card__text">"A strong booking experience with clear pricing, polished visuals, and the right information at each step."</p>
-                    <div class="market-quote-card__author">
-                        <div class="avatar"><i class="fas fa-user"></i></div>
-                        <div class="author-info">
-                            <strong>Prakash Tamang</strong>
-                            <span>Langtang Trek</span>
-                        </div>
-                    </div>
-                </article>
+                    </article>
+                @endforeach
             </div>
         </div>
     </section>

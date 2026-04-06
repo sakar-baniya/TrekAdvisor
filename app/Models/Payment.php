@@ -43,9 +43,8 @@ class Payment extends Model
             return $this->belongsTo(TrekBooking::class, 'payable_id');
         } elseif ($this->payable_type === 'hotel') {
             return $this->belongsTo(HotelBooking::class, 'payable_id');
-        } elseif ($this->payable_type === 'gear') {
-            return $this->belongsTo(GearRental::class, 'payable_id');
         }
         return null;
     }
 }
+

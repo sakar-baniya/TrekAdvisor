@@ -1,153 +1,191 @@
-﻿/* Treks pages */
-.treks-page {
-    padding: 64px 0;
-    font-family: 'Inter', sans-serif;
+/* -------------------------------------------------------------------------- */
+/* 1. Catalog Layout (Refined Listing)                                        */
+/* -------------------------------------------------------------------------- */
+.catalog-main {
+    padding-top: 3.5rem;
+    padding-bottom: 6rem;
 }
 
-.treks-header {
-    text-align: center;
-    margin-bottom: 64px;
+/* Horizontal Filter Bar - Compact Polish */
+.catalog-filter-bar {
+    background: #FFFFFF;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    border-radius: 12px;
+    padding: 1rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.04);
 }
 
-.treks-title {
-    font-size: 3rem;
-    font-weight: 800;
-    color: #0f172a;
-    margin-bottom: 16px;
-    letter-spacing: -0.02em;
-}
-
-.treks-title-accent {
-    color: #2563eb;
-}
-
-.treks-subtitle {
-    font-size: 1.2rem;
-    color: #64748b;
-    max-width: 640px;
-    margin: 0 auto;
-    font-weight: 600;
-    line-height: 1.6;
-}
-
-.treks-filters {
-    margin-bottom: 40px;
-}
-
-.filters-grid {
-    display: grid;
-    gap: 16px;
-    align-items: center;
-}
-
-.filter-field {
-    position: relative;
-}
-
-.filter-input,
-.filter-select {
-    width: 100%;
-    padding: 12px 16px;
-    border-radius: 999px;
-    border: 1px solid #e2e8f0;
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: #334155;
-    background: #ffffff;
-    outline: none;
-    transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.filter-input:focus,
-.filter-select:focus {
-    border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
-}
-
-.filter-icon {
-    position: absolute;
-    left: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    font-size: 0.75rem;
-}
-
-.filter-icon.right {
-    left: auto;
-    right: 16px;
-}
-
-.filter-field .filter-input {
-    padding-left: 44px;
-}
-
-.filter-select {
-    padding-right: 36px;
-    appearance: none;
-}
-
-.filter-actions {
+.horizontal-filter-form {
     display: flex;
     align-items: center;
-    gap: 12px;
+    justify-content: center; /* Centered grouping */
+    gap: 1rem;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
 }
 
-.filter-apply {
-    padding: 12px 20px;
-    border-radius: 999px;
-    background: #0f172a;
-    color: #ffffff;
-    font-size: 0.7rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    border: 0;
+.filter-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.filter-group i {
+    position: absolute;
+    left: 1rem;
+    color: #94A3B8;
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+
+.minimal-input,
+.minimal-select {
+    height: 44px; /* More compact height */
+    padding: 0 1rem;
+    border-radius: 8px;
+    border: 1.5px solid rgba(15, 23, 42, 0.06);
+    background: #F8FAFC;
+    color: #1E293B;
+    font-size: 0.88rem;
+    font-weight: 600;
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.filter-search .minimal-input {
+    padding-left: 2.5rem;
+    min-width: 220px;
+}
+
+.minimal-input:focus,
+.minimal-select:focus {
+    background: #FFFFFF;
+    border-color: #0F172A;
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.05);
+}
+
+.minimal-select {
     cursor: pointer;
-    transition: background 0.2s ease;
+    min-width: 140px;
+    padding-right: 2rem;
 }
 
-.filter-apply:hover {
-    background: #2563eb;
+.filter-price {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
 }
 
-.filter-clear {
-    font-size: 0.65rem;
-    font-weight: 800;
-    color: #2563eb;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
+.filter-price .minimal-input {
+    width: 85px;
+    text-align: center;
+    padding: 0 0.5rem;
 }
 
-.filter-clear:hover {
-    color: #1d4ed8;
+.price-dash {
+    color: #CBD5E1;
 }
 
-.trek-grid {
+.btn-filter-apply {
+    height: 44px;
+    padding: 0 1.5rem;
+    border-radius: 8px;
+    background: #0F172A;
+    color: #FFFFFF;
+    font-weight: 750;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.btn-filter-apply:hover {
+    background: #1E293B;
+    transform: translateY(-1px);
+}
+
+.btn-filter-reset {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    background: #F1F5F9;
+    color: #475569;
+    transition: all 0.2s ease;
+}
+
+/* Results Header */
+.catalog-results-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding: 0 0.25rem;
+}
+
+.results-count {
+    color: #64748B;
+    font-size: 0.95rem;
+}
+
+.results-count strong {
+    color: #0F172A;
+}
+
+.sort-selector {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Catalog Card Override (Premium 3-Column) */
+.catalog-content-full .market-card-grid {
     display: grid;
-    gap: 32px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* Locked to 3 columns for premium feel */
+    gap: 2.25rem;
+}
+
+@media (max-width: 1100px) {
+    .catalog-content-full .market-card-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    .catalog-content-full .market-card-grid {
+        grid-template-columns: 1fr;
+    }
+    .horizontal-filter-form {
+        justify-content: flex-start;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .filter-group, .minimal-input, .minimal-select { width: 100% !important; }
 }
 
 .trek-card {
     background: #ffffff;
-    border-radius: 16px;
+    border-radius: 12px;
     overflow: hidden;
-    border: 1px solid rgba(34, 139, 34, 0.08);
-    box-shadow: 0 2px 8px rgba(34, 139, 34, 0.1);
+    border: 1px solid rgba(15, 23, 42, 0.08); /* Matches new theme */
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
     display: flex;
     flex-direction: column;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .trek-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 30px rgba(34, 139, 34, 0.15);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.1);
 }
 
 .trek-image {
     position: relative;
-    height: 256px;
+    height: 200px; /* Reduced from 256 for better balance */
     overflow: hidden;
 }
 
@@ -236,26 +274,102 @@
 .trek-cta {
     width: 100%;
     text-align: center;
-    padding: 14px 16px;
-    border-radius: 18px;
+    padding: 11px 16px; /* Slightly less bulky */
+    border-radius: 8px; /* Sharper rounded corners */
     background: #0f172a;
     color: #ffffff;
-    font-size: 0.6rem;
-    font-weight: 800;
+    font-size: 0.75rem;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.3em;
-    transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+    letter-spacing: 0.1em;
+    transition: all 0.2s ease;
 }
 
 .trek-cta:hover {
-    background: #2563eb;
-    box-shadow: 0 12px 24px rgba(37, 99, 235, 0.2);
+    background: #1E293B;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.2);
 }
 
-.treks-pagination {
-    margin-top: 64px;
+.treks-pagination,
+.catalog-pagination {
+    margin-top: 3rem; /* Reduced from 4rem */
     display: flex;
     justify-content: center;
+    border-top: 1px solid rgba(15, 23, 42, 0.05);
+    padding: 2rem 0; /* Balanced padding */
+}
+
+/* Scoped Fix for Broken Laravel/Tailwind Pagination */
+.catalog-pagination nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0; /* Remove outer gap */
+}
+
+.catalog-pagination nav div:first-child {
+    display: none !important;
+}
+
+.catalog-pagination nav div:last-child {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem !important; /* Unified gap for all buttons */
+    /* Removed flex-direction row as it was the default */
+}
+
+/* Unified Button Style System */
+.catalog-pagination span[aria-current="page"] span,
+.catalog-pagination span[aria-disabled="true"] span,
+.catalog-pagination a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px; /* Fixed square sizing */
+    height: 40px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    border: 1px solid rgba(15, 23, 42, 0.08);
+    background: #FFFFFF;
+    color: #334155;
+    text-decoration: none;
+    box-sizing: border-box;
+}
+
+.catalog-pagination a:hover {
+    background: #F8FAFC;
+    color: #0F172A;
+    border-color: #0F172A;
+    transform: translateY(-1px);
+}
+
+.catalog-pagination span[aria-current="page"] span {
+    background: #0F172A;
+    color: #FFFFFF;
+    border-color: #0F172A;
+    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
+}
+
+.catalog-pagination span[aria-disabled="true"] span {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+/* Perfecting Icons */
+.catalog-pagination svg {
+    width: 1rem !important; /* Slightly smaller for premium feel */
+    height: 1rem !important;
+}
+
+@media (max-width: 600px) {
+    .catalog-pagination span:not([aria-hidden="true"]):not([rel="prev"]):not([rel="next"]),
+    .catalog-pagination a:not([rel="prev"]):not([rel="next"]) {
+        display: none !important; 
+    }
 }
 
 /* Trek show page */
@@ -266,12 +380,49 @@
 
 .trek-hero {
     position: relative;
-    min-height: 60vh;
+    min-height: 32vh;
     display: flex;
-    align-items: flex-end;
-    padding: 80px 0 64px;
+    align-items: center;
+    padding: 5rem 0 4rem;
     color: #ffffff;
+    background: #020617 url('/images/ui/trekCatalogHero.png') no-repeat center 40%/cover;
     overflow: hidden;
+}
+
+.trek-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.6) 0%, #0F172A 100%);
+    z-index: 1;
+}
+
+.trek-hero .container {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.trek-hero .market-kicker {
+    margin-bottom: 0.75rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.trek-hero h1 {
+    font-size: clamp(2.2rem, 5vw, 3.8rem);
+    margin: 0;
+    line-height: 1.05;
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.trek-hero p {
+    margin-top: 1.25rem;
+    max-width: 680px;
+    margin-inline: auto;
+    font-size: 1.15rem;
+    color: rgba(255, 255, 255, 0.95);
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
 .trek-hero-bg {
@@ -288,7 +439,7 @@
 .trek-hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.65) 100%);
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%);
 }
 
 .trek-hero-content {

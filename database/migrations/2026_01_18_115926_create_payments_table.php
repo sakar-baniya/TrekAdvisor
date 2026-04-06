@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('transaction_id')->unique();
             $table->decimal('amount', 10, 2);
             $table->string('currency', 10)->default('USD');
-            $table->enum('payable_type', ['trek', 'hotel', 'gear']);
+            $table->enum('payable_type', ['trek', 'hotel']);
             $table->unsignedBigInteger('payable_id');
             $table->enum('gateway', ['stripe', 'esewa', 'khalti'])->nullable();
             $table->enum('status', ['pending', 'success', 'failed'])->default('pending');
@@ -30,3 +30,4 @@ return new class extends Migration
         Schema::dropIfExists('payments');
     }
 };
+

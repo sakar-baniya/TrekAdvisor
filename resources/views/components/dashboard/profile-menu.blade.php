@@ -32,12 +32,7 @@
                 </a>
             </li>
 
-            <li class="dashboard-profile-dropdown__item">
-                <a href="{{ route('profile.edit') }}" class="dashboard-profile-dropdown__link">
-                    <i class="fas fa-edit"></i>
-                    <span>Edit Profile</span>
-                </a>
-            </li>
+
         </ul>
 
         <div class="dashboard-profile-dropdown__logout">

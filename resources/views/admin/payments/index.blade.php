@@ -37,7 +37,7 @@
             </select>
             <select name="type" class="admin-input">
                 <option value="">All types</option>
-                @foreach (['trek' => 'Trek', 'hotel' => 'Hotel', 'gear' => 'Gear'] as $value => $label)
+                @foreach (['trek' => 'Trek', 'hotel' => 'Hotel'] as $value => $label)
                     <option value="{{ $value }}" @selected($type === $value)>{{ $label }}</option>
                 @endforeach
             </select>
@@ -51,7 +51,7 @@
         <div class="admin-panel__header">
             <div>
                 <h3>Transactions</h3>
-                <p>Payment records across trek, hotel, and gear bookings</p>
+                <p>Payment records across trek and hotel bookings</p>
             </div>
         </div>
 

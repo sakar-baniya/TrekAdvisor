@@ -10,7 +10,7 @@
                 <span><i class="fas fa-map-marker-alt"></i> {{ $hotel->location }}</span>
                 <span><i class="fas fa-hotel"></i> {{ $hotel->rooms->count() }} room types</span>
                 <span><i class="fas fa-bed"></i> {{ $hotel->rooms->sum('total_rooms') }} total rooms</span>
-                <span><i class="fas fa-star"></i> {{ number_format($hotel->reviews->avg('rating') ?? 4.6, 1) }} ({{ $hotel->reviews->count() }})</span>
+                <span><i class="fas fa-star"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) : 'New' }} ({{ $hotel->reviews_count }})</span>
             </div>
         </div>
     </section>

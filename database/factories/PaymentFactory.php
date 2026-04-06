@@ -22,7 +22,7 @@ class PaymentFactory extends Factory
             'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
             'amount' => fake()->randomFloat(2, 50, 5000),
             'currency' => 'USD',
-            'payable_type' => fake()->randomElement(['trek', 'hotel', 'gear']),
+            'payable_type' => fake()->randomElement(['trek', 'hotel']),
             'payable_id' => 1, // Override in seeder
             'gateway' => fake()->randomElement(['stripe', 'esewa', 'khalti']),
             'status' => 'Success',
@@ -30,4 +30,5 @@ class PaymentFactory extends Factory
         ];
     }
 }
+
 

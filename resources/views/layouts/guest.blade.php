@@ -22,13 +22,13 @@
             $authVisual = match (true) {
                 request()->routeIs('register') => [
                     'eyebrow' => 'Adventure starts here',
-                    'title' => 'Book treks, stays, and gear from one beautiful basecamp.',
+                    'title' => 'Book treks and stays from one beautiful basecamp.',
                     'body' => 'Create your TrekAdvisor account to plan Himalayan journeys, compare options, and keep every booking in one place.',
                 ],
                 request()->routeIs('password.request') => [
                     'eyebrow' => 'Account recovery',
                     'title' => 'Get back to your TrekAdvisor plans without the stress.',
-                    'body' => 'We will help you reset access so you can return to upcoming departures, hotel bookings, and rental plans.',
+                    'body' => 'We will help you reset access so you can return to upcoming departures and hotel bookings.',
                 ],
                 request()->routeIs('admin.login') => [
                     'eyebrow' => 'Operations access',
@@ -43,42 +43,12 @@
             };
         @endphp
 
-        <div class="guest-shell guest-shell--auth">
-            <div class="guest-auth-stage">
-                <div class="guest-auth-shell">
-                    <aside class="auth-visual-panel">
-                        <a href="{{ route('home') }}" class="auth-back-link">
-                            <i class="fas fa-arrow-left"></i>
-                            <span>Back to website</span>
-                        </a>
-
-                        <div class="auth-visual-panel__media">
-                            <div class="auth-visual-panel__overlay"></div>
-                            <div class="auth-visual-panel__copy">
-                                <p class="auth-visual-panel__eyebrow">{{ $authVisual['eyebrow'] }}</p>
-                                <h2>{{ $authVisual['title'] }}</h2>
-                                <p>{{ $authVisual['body'] }}</p>
-                            </div>
-                            <div class="auth-visual-panel__dots" aria-hidden="true">
-                                <span class="is-active"></span>
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </aside>
-
-                    <section class="auth-form-panel">
-                        <div class="auth-card auth-card--centered">
-                            {{ $slot }}
-                        </div>
-
-                        <p class="auth-note auth-note--centered">
-                            By continuing, you agree to TrekAdvisor terms and privacy policy.
-                        </p>
-                    </section>
-                </div>
+        <div class="guest-shell--auth">
+            <div class="guest-auth-shell">
+                {{ $slot }}
             </div>
         </div>
+
     </body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

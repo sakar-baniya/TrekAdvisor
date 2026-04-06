@@ -43,7 +43,13 @@ class TrekController extends Controller
             $query->where('base_price', '<=', $request->input('max_price'));
         }
 
-        $treks = $query->latest()->paginate(9)->withQueryString();
+        $treks = $query
+            ->withCount('reviews')
+            ->withAvg('reviews', 'rating')
+            ->with('images')
+            ->latest()
+            ->paginate(9)
+            ->withQueryString();
 
         return view('treks.index', compact('treks'));
     }

@@ -52,7 +52,7 @@
                 <span>Difficulty *</span>
                 <select name="difficulty" class="admin-input" required>
                     @foreach (['Easy', 'Moderate', 'Difficult', 'Extreme'] as $option)
-                        <option value="{{ $option }}" @selected(old('difficulty', $trek->difficulty ?: 'Easy') === $option)>{{ $option }}</option>
+                        <option value="{{ $option }}" @selected(old('difficulty', ucfirst($trek->difficulty) ?: 'Easy') === $option)>{{ $option }}</option>
                     @endforeach
                 </select>
                 @error('difficulty') <small class="admin-error">{{ $message }}</small> @enderror
@@ -75,7 +75,7 @@
                 <div class="admin-choice-row">
                     @foreach (['Active', 'Inactive'] as $option)
                         <label class="admin-choice-pill">
-                            <input type="radio" name="status" value="{{ $option }}" @checked(old('status', $trek->status ?: 'Active') === $option)>
+                            <input type="radio" name="status" value="{{ $option }}" @checked(old('status', ucfirst($trek->status) ?: 'Active') === $option)>
                             <span>{{ $option }}</span>
                         </label>
                     @endforeach
@@ -88,32 +88,8 @@
     <section class="admin-panel">
         <div class="admin-panel__header">
             <div>
-                <h3>Trek Image</h3>
-                <p>Upload a main hero image for cards and detail pages</p>
-            </div>
-        </div>
-        <div class="admin-form-grid admin-form-grid--media">
-            <label class="admin-upload-card">
-                <input type="file" name="image" accept="image/png,image/jpeg,image/jpg,image/webp" hidden data-image-input>
-                <span class="admin-secondary-button">Choose Image</span>
-                <small>Max 2MB. JPG, PNG, or WEBP.</small>
-            </label>
-            <div class="admin-image-preview" data-image-preview>
-                @if ($imagePreview)
-                    <img src="{{ $imagePreview }}" alt="Trek preview">
-                @else
-                    <span>No image selected yet</span>
-                @endif
-            </div>
-        </div>
-        @error('image') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
-    </section>
-
-    <section class="admin-panel">
-        <div class="admin-panel__header">
-            <div>
-                <h3>Trek Gallery</h3>
-                <p>Add multiple supporting photos for the trek detail page.</p>
+                <h3>Trek Media</h3>
+                <p>Upload all photos here. Select one to be your primary "Hero" image.</p>
             </div>
         </div>
         <div class="admin-form-grid">
@@ -123,15 +99,25 @@
                 <small>Upload multiple JPG, PNG, or WEBP files. Max 4MB each.</small>
             </label>
 
-            @if ($galleryImages->isNotEmpty())
+            <!-- Show existing combined images -->
+            @if ($trek->images->isNotEmpty())
                 <div class="admin-gallery-grid">
-                    @foreach ($galleryImages as $image)
-                        <label class="admin-gallery-card">
-                            <img src="{{ $image->path }}" alt="Trek gallery image {{ $loop->iteration }}">
-                            <span class="admin-gallery-card__footer">
-                                <input type="checkbox" name="remove_gallery_images[]" value="{{ $image->id }}">
-                                <span>Remove</span>
-                            </span>
+                    @foreach ($trek->images as $image)
+                        <label class="admin-gallery-card" style="position: relative;">
+                            <img src="{{ $image->path }}" alt="Trek image {{ $loop->iteration }}">
+                            
+                            <!-- Remove Checkbox styled as an X button -->
+                            <label style="position: absolute; top: 8px; right: 8px; background: rgba(220, 38, 38, 0.9); color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: background 0.2s;" onmouseover="this.style.background='rgb(220, 38, 38)'" onmouseout="this.style.background='rgba(220, 38, 38, 0.9)'" title="Mark for removal">
+                                <input type="checkbox" name="remove_gallery_images[]" value="{{ $image->id }}" hidden onchange="this.parentElement.parentElement.style.opacity = this.checked ? '0.4' : '1'">
+                                <i class="fas fa-xmark"></i>
+                            </label>
+
+                            <div class="admin-gallery-card__footer" style="padding-top: 8px;">
+                                <label style="display:flex; align-items:center; gap: 6px; cursor: pointer; font-weight: 500;">
+                                    <input type="radio" name="primary_image" value="{{ $image->id }}" @checked($image->sort_order === 0)>
+                                    <span>Primary Cover</span>
+                                </label>
+                            </div>
                         </label>
                     @endforeach
                 </div>
@@ -141,6 +127,7 @@
         </div>
         @error('gallery_images') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
         @error('gallery_images.*') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
+        @error('primary_image') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
     </section>
 
     <section class="admin-panel">
@@ -228,8 +215,7 @@
     (() => {
         const slugSource = document.querySelector('[data-slug-source]');
         const slugTarget = document.querySelector('[data-slug-target]');
-        const imageInput = document.querySelector('[data-image-input]');
-        const imagePreview = document.querySelector('[data-image-preview]');
+
         const galleryInput = document.querySelector('[data-gallery-input]');
         const galleryPreview = document.querySelector('[data-gallery-preview]');
         const list = document.querySelector('[data-itinerary-list]');
@@ -256,19 +242,7 @@
             slugTarget.value = slugify(slugSource.value);
         });
 
-        imageInput?.addEventListener('change', () => {
-            const [file] = imageInput.files || [];
 
-            if (!file || !imagePreview) {
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                imagePreview.innerHTML = `<img src="${event.target.result}" alt="Preview">`;
-            };
-            reader.readAsDataURL(file);
-        });
 
         galleryInput?.addEventListener('change', () => {
             if (!galleryPreview) {
@@ -283,10 +257,14 @@
                     const card = document.createElement('div');
                     card.className = 'admin-gallery-card admin-gallery-card--pending';
                     card.innerHTML = `
-                        <img src="${event.target.result}" alt="New gallery preview ${index + 1}">
-                        <span class="admin-gallery-card__footer">
-                            <span>${file.name}</span>
-                        </span>
+                        <img src="${event.target.result}" alt="New preview ${index + 1}">
+                        <div class="admin-gallery-card__footer" style="flex-direction: column; gap: 4px; align-items: flex-start;">
+                            <div>
+                                <input type="radio" name="primary_image" value="new_${index}">
+                                <span>${file.name}</span>
+                            </div>
+                            <small class="admin-input--muted">(Primary?)</small>
+                        </div>
                     `;
                     galleryPreview.appendChild(card);
                 };

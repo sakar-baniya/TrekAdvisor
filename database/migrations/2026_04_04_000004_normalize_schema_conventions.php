@@ -86,13 +86,7 @@ return new class extends Migration
         DB::table('hotel_bookings')->where('status', 'Confirmed')->update(['status' => 'confirmed']);
         DB::table('hotel_bookings')->where('status', 'Cancelled')->update(['status' => 'cancelled']);
 
-        DB::table('gear_items')->where('status', 'Active')->update(['status' => 'active']);
-        DB::table('gear_items')->where('status', 'Inactive')->update(['status' => 'inactive']);
 
-        DB::table('gear_rentals')->where('status', 'Pending')->update(['status' => 'pending']);
-        DB::table('gear_rentals')->where('status', 'Active')->update(['status' => 'active']);
-        DB::table('gear_rentals')->where('status', 'Returned')->update(['status' => 'returned']);
-        DB::table('gear_rentals')->where('status', 'Cancelled')->update(['status' => 'cancelled']);
 
         DB::table('payments')->where('status', 'Pending')->update(['status' => 'pending']);
         DB::table('payments')->where('status', 'Success')->update(['status' => 'success']);
@@ -104,8 +98,6 @@ return new class extends Migration
         DB::statement("ALTER TABLE trek_bookings MODIFY status ENUM('pending','confirmed','cancelled') NOT NULL DEFAULT 'pending'");
         DB::statement("ALTER TABLE hotels MODIFY status ENUM('active','inactive','pending') NOT NULL DEFAULT 'pending'");
         DB::statement("ALTER TABLE hotel_bookings MODIFY status ENUM('pending','confirmed','cancelled') NOT NULL DEFAULT 'pending'");
-        DB::statement("ALTER TABLE gear_items MODIFY status ENUM('active','inactive') NOT NULL DEFAULT 'active'");
-        DB::statement("ALTER TABLE gear_rentals MODIFY status ENUM('pending','active','returned','cancelled') NOT NULL DEFAULT 'pending'");
         DB::statement("ALTER TABLE payments MODIFY status ENUM('pending','success','failed') NOT NULL DEFAULT 'pending'");
     }
 
@@ -156,3 +148,4 @@ return new class extends Migration
         }
     }
 };
+

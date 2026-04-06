@@ -1,48 +1,47 @@
-/* Base styles */
+/* --- TrekAdvisor Premium Base Styles --- */
 :root {
-    /* === TrekAdvisor Premium Palette === */
-    --color-primary:       #2C3E50;   /* Deep Blue */
-    --color-primary-dark:  #1a252f;
-    --color-primary-light: #3f5973;
-    --color-green:         #28a745;   /* Kept for success states */
-    --color-cta:           #E9C46A;   /* Soft Gold */
-    --color-cta-dark:      #d4a342;
-    --color-cta-light:     #f2dfa1;
-    --color-background:    #F8F9FA;   /* Soft Off-White */
+    /* --- Premium Charcoal Navy (Primary) --- */
+    --at-primary:    #0F172A;
+    --at-secondary:  #1E293B;
+    --at-dark-blue:  #0F172A;
+    --at-light-blue: #F8FAFC;
+    --at-highlight:  #5BA3C6; /* Himalayan blue as accent only */
+
+    /* Semantic Aliases */
+    --color-primary:       var(--at-primary);
+    --color-primary-dark:  #020617;
+    --color-primary-light: var(--at-highlight);
+    --color-background:    #FFFFFF;
     --color-surface:       #ffffff;
-    --color-surface-muted: #f4f6f8;   /* Tinted blue-white */
-    --color-text-primary:  #343A40;   /* Charcoal Gray */
-    --color-text-secondary:#6c757d;
-    --color-border:        #CED4DA;   /* Light Gray */
-    --color-border-light:  #e9ecef;
+    --color-text-primary:  var(--at-dark-blue);
+    --color-text-secondary:#5b7382;
+    --color-border:        rgba(24, 78, 108, 0.14);
+    
+    /* Functional Colors */
     --color-success: #28a745;
     --color-warning: #e9c46a;
     --color-error:   #e74c3c;
     --color-info:    #0ea5e9;
-    --color-gold:    #e9c46a;
-    /* === Typography === */
-    --font-display: 'Inter', sans-serif;  /* Headings */
-    --font-body:    'Inter', sans-serif;  /* Body */
-    /* === Shadows === */
-    --shadow-sm: 0 2px 8px rgba(44, 62, 80, 0.08);
-    --shadow-md: 0 6px 20px rgba(44, 62, 80, 0.14);
-    --shadow-lg: 0 12px 36px rgba(44, 62, 80, 0.18);
-    --shadow-card: 0 4px 16px rgba(52, 58, 64, 0.10);
-    /* === Border Radius === */
-    --radius-sm:  8px;
+
+    /* Typography */
+    --font-display: 'Montserrat', 'Poppins', sans-serif;
+    --font-body:    'Open Sans', 'Inter', sans-serif;
+
+    /* Shadows */
+    --shadow-sm: 0 4px 12px rgba(24, 78, 108, 0.08);
+    --shadow-md: 0 10px 28px rgba(24, 78, 108, 0.1);
+    --shadow-lg: 0 16px 48px rgba(24, 78, 108, 0.15);
+
+    /* Radii */
+    --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
-    --radius-xl: 28px;
+    --radius-xl: 999px;
 }
 
-* {
-    box-sizing: border-box;
-}
-
-html {
-    font-size: 16px;
-    scroll-behavior: smooth;
-}
+/* --- Global Resets & Basics --- */
+* { box-sizing: border-box; }
+html { font-size: 16px; scroll-behavior: smooth; }
 
 body {
     margin: 0;
@@ -50,173 +49,52 @@ body {
     color: var(--color-text-primary);
     background: var(--color-background);
     line-height: 1.6;
-    letter-spacing: 0.3px;
+    -webkit-font-smoothing: antialiased;
 }
 
-img,
-svg,
-video {
-    max-width: 100%;
-    display: block;
-}
-
-a {
-    color: inherit;
-    text-decoration: none;
-    transition: color 0.2s ease, text-decoration-color 0.2s ease;
-}
-
-button,
-input,
-select,
-textarea {
-    font: inherit;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
+h1, h2, h3, h4, h5, h6 {
     margin-top: 0;
     margin-bottom: 0.75em;
     font-family: var(--font-display);
-    color: var(--color-text-primary);
+    color: var(--at-dark-blue);
     line-height: 1.2;
-    letter-spacing: -0.02em;
-    font-weight: 700;
+    font-weight: 800;
 }
 
-h1 {
-    font-size: clamp(1.875rem, 5vw, 3.5rem);
-}
+a { color: var(--at-secondary); text-decoration: none; transition: 0.25s ease; }
+a:hover { color: var(--at-primary); }
 
-h2 {
-    font-size: clamp(1.5rem, 4vw, 2.5rem);
-}
+img { max-width: 100%; display: block; border-radius: inherit; }
 
-h3 {
-    font-size: clamp(1.25rem, 3vw, 1.875rem);
-}
-
-h4 {
-    font-size: 1.125rem;
-}
-
-p {
-    margin-top: 0;
-    margin-bottom: 1.25em;
-    line-height: 1.75;
-}
-
+/* --- Layout Utility --- */
 .container {
-    width: 100%;
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: min(100% - 40px, 1400px);
+    margin-inline: auto;
 }
 
 .container-wide {
-    width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    padding: 0 20px;
+    width: min(100% - 40px, 1600px);
+    margin-inline: auto;
 }
 
-.section {
-    padding: 80px 0;
-}
-
-@media (max-width: 768px) {
-    .section {
-        padding: 60px 0;
-    }
-}
-
-.text-center {
-    text-align: center;
-}
-
-.text-right {
-    text-align: right;
-}
-
-.page-title {
-    font-size: 1.5rem;
-    font-weight: 800;
-    color: var(--color-text-primary);
-}
-
-.hidden {
-    display: none !important;
-}
-
-.is-hidden {
-    display: none !important;
-}
-
-.is-inline-flex {
-    display: inline-flex !important;
-}
-
-.icon-20 {
-    width: 20px;
-    height: 20px;
-}
-
-.icon-24 {
-    width: 24px;
-    height: 24px;
-}
-
-.overflow-y-hidden {
-    overflow-y: hidden;
-}
-
-.sr-only {
+/* --- Accessibility Core (Merged from accessibility.css) --- */
+.skip-to-main {
     position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
+    top: -100px;
+    left: 20px;
+    background: var(--at-primary);
+    color: white;
+    padding: 10px 20px;
+    z-index: 1000;
+    border-radius: 0 0 10px 10px;
+}
+.skip-to-main:focus { top: 0; }
+
+*:focus-visible {
+    outline: 3px solid var(--at-highlight);
+    outline-offset: 3px;
 }
 
-.badge {
-    display: inline-flex;
-    align-items: center;
-    border-radius: 999px;
-    padding: 2px 8px;
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-}
-
-.badge-success {
-    color: var(--color-success);
-    background: rgba(34, 197, 94, 0.14);
-}
-
-.badge-warning {
-    color: var(--color-warning);
-    background: rgba(245, 158, 11, 0.14);
-}
-
-.badge-info {
-    color: var(--color-info);
-    background: rgba(59, 130, 246, 0.14);
-}
-
-.badge-muted {
-    color: var(--color-text-secondary);
-    background: var(--color-surface-muted);
-}
-
-[x-cloak] {
-    display: none !important;
+@media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
 }

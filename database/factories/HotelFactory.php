@@ -18,10 +18,10 @@ class HotelFactory extends Factory
     {
         return [
             'owner_id' => \App\Models\User::factory(),
-            'name' => fake()->company() . ' Hotel',
-            'location' => fake()->city(),
+            'name' => fake()->company() . ' Lodge',
+            'location' => fake()->randomElement(['Kathmandu, Thamel', 'Pokhara, Lakeside', 'Lukla, Everest Region', 'Namche, Khumbu', 'Ghandruk, Annapurna']),
             'description' => fake()->paragraphs(2, true),
-            'status' => 'Active',
+            'status' => 'active',
         ];
     }
 }

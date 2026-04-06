@@ -9,8 +9,6 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
-use App\Http\Controllers\Admin\AdminGearController;
-use App\Http\Controllers\Admin\AdminGearRentalController;
 use App\Http\Controllers\Admin\AdminPaymentController;
 use App\Http\Controllers\Admin\AdminReviewController;
 use App\Http\Controllers\Admin\AdminTrekController;
@@ -28,8 +26,7 @@ Route::get('/faq', [FrontendPageController::class, 'faq'])->name('faq');
 Route::get('/blog', [FrontendPageController::class, 'blog'])->name('blog');
 Route::get('/hotels', [FrontendPageController::class, 'hotels'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [FrontendPageController::class, 'hotelShow'])->name('hotels.show');
-Route::get('/gear', [FrontendPageController::class, 'gear'])->name('gear.index');
-Route::get('/gear/{gearItem}', [FrontendPageController::class, 'gearShow'])->name('gear.show');
+
 
 Route::get('/dashboard', function () {
     return redirect()->route(auth()->user()->dashboardRouteName());
@@ -50,9 +47,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('trek-bookings', [AdminTrekBookingController::class, 'index'])->name('trek-bookings.index');
         Route::get('trek-bookings/{trekBooking}', [AdminTrekBookingController::class, 'show'])->name('trek-bookings.show');
         Route::patch('trek-bookings/{trekBooking}/status', [AdminTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
-        Route::resource('gear', AdminGearController::class)->except(['show', 'destroy']);
-        Route::get('gear-rentals', [AdminGearRentalController::class, 'index'])->name('gear-rentals.index');
-        Route::patch('gear-rentals/{gearRental}/return', [AdminGearRentalController::class, 'markReturned'])->name('gear-rentals.return');
         Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
         Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
         Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
@@ -104,8 +98,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments/stripe/{payment}/success', [StripeCheckoutController::class, 'success'])->name('stripe.success');
     Route::get('/payments/stripe/{payment}/cancel', [StripeCheckoutController::class, 'cancel'])->name('stripe.cancel');
 
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });

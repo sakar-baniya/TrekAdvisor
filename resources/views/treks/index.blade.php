@@ -1,5 +1,6 @@
 <x-app-layout>
-    <section class="catalog-hero catalog-hero--treks">
+    <section class="trek-hero">
+        <div class="trek-hero-overlay"></div>
         <div class="container">
             <p class="market-kicker">Trek Collection</p>
             <h1>Discover Amazing Treks</h1>
@@ -7,45 +8,52 @@
         </div>
     </section>
 
-    <div class="container catalog-layout">
-        <aside class="catalog-sidebar">
-            <div class="catalog-panel">
-                <h3>Filters</h3>
-                <form action="{{ route('treks.index') }}" method="GET" class="catalog-filter-form">
-                    <label>
-                        <span>Search</span>
-                        <input name="search" value="{{ request('search') }}" placeholder="Search treks" class="market-input">
-                    </label>
-                    <label>
-                        <span>Difficulty</span>
-                        <select name="difficulty" class="market-input">
-                            <option value="">All Difficulty</option>
-                            <option value="Easy" {{ request('difficulty') == 'Easy' ? 'selected' : '' }}>Easy</option>
-                            <option value="Moderate" {{ request('difficulty') == 'Moderate' ? 'selected' : '' }}>Moderate</option>
-                            <option value="Difficult" {{ request('difficulty') == 'Difficult' ? 'selected' : '' }}>Difficult</option>
-                            <option value="Extreme" {{ request('difficulty') == 'Extreme' ? 'selected' : '' }}>Extreme</option>
-                        </select>
-                    </label>
-                    <label>
-                        <span>Min Price</span>
-                        <input name="min_price" value="{{ request('min_price') }}" type="number" min="0" step="1" class="market-input" placeholder="$0">
-                    </label>
-                    <label>
-                        <span>Max Price</span>
-                        <input name="max_price" value="{{ request('max_price') }}" type="number" min="0" step="1" class="market-input" placeholder="$3000">
-                    </label>
-                    <button type="submit" class="market-search-btn market-search-btn--full">Apply Filters</button>
-                    <a href="{{ route('treks.index') }}" class="catalog-reset-link">Reset Filters</a>
-                </form>
-            </div>
-        </aside>
+    <div class="container catalog-main">
+        <div class="catalog-filter-bar flex-filters">
+            <form action="{{ route('treks.index') }}" method="GET" class="horizontal-filter-form">
+                <div class="filter-group filter-search">
+                    <i class="fas fa-search"></i>
+                    <input name="search" value="{{ request('search') }}" placeholder="Search treks..." class="minimal-input">
+                </div>
+                
+                <div class="filter-group">
+                    <select name="difficulty" class="minimal-select">
+                        <option value="">All Difficulty</option>
+                        <option value="Easy" {{ request('difficulty') == 'Easy' ? 'selected' : '' }}>Easy</option>
+                        <option value="Moderate" {{ request('difficulty') == 'Moderate' ? 'selected' : '' }}>Moderate</option>
+                        <option value="Difficult" {{ request('difficulty') == 'Difficult' ? 'selected' : '' }}>Difficult</option>
+                        <option value="Extreme" {{ request('difficulty') == 'Extreme' ? 'selected' : '' }}>Extreme</option>
+                    </select>
+                </div>
 
-        <section class="catalog-content">
-            <div class="catalog-toolbar">
-                <p>Showing {{ $treks->count() }} of {{ $treks->total() }} treks</p>
-                <div class="catalog-toolbar__actions">
-                    <span class="catalog-toolbar__chip">Most Popular</span>
-                    <span class="catalog-toolbar__chip">Premium Trails</span>
+                <div class="filter-group filter-price">
+                    <input name="min_price" value="{{ request('min_price') }}" type="number" min="0" class="minimal-input" placeholder="Min $">
+                    <span class="price-dash">—</span>
+                    <input name="max_price" value="{{ request('max_price') }}" type="number" min="0" class="minimal-input" placeholder="Max $">
+                </div>
+
+                <div class="filter-actions-inline">
+                    <button type="submit" class="btn-filter-apply">Apply</button>
+                    @if(request()->anyFilled(['search', 'difficulty', 'min_price', 'max_price']))
+                        <a href="{{ route('treks.index') }}" class="btn-filter-reset" title="Reset">
+                            <i class="fas fa-redo-alt"></i>
+                        </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
+        <section class="catalog-content-full">
+            <div class="catalog-results-header">
+                <div class="results-left">
+                    <span class="results-count"><strong>{{ $treks->total() }}</strong> Treks found</span>
+                </div>
+                <div class="results-right">
+                    <div class="sort-selector">
+                        <span>Sort by:</span>
+                        <strong>Popularity</strong>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
                 </div>
             </div>
 
@@ -53,10 +61,6 @@
                 @forelse($treks as $trek)
                     <article class="market-card market-card--trek">
                         <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(6, 78, 89, 0.25), rgba(15, 23, 42, 0.5)), url('{{ $trek->image }}');" @endif>
-                            <span class="market-badge market-badge--label {{ strtolower($trek->difficulty) === 'easy' ? 'market-badge--green' : (strtolower($trek->difficulty) === 'moderate' ? 'market-badge--orange' : 'market-badge--red') }}">
-                                <i class="fas fa-users"></i>
-                                {{ strtolower($trek->difficulty) === 'easy' ? 'Easy Route' : (strtolower($trek->difficulty) === 'moderate' ? 'Group Tours' : 'High Trail') }}
-                            </span>
                         </div>
                         <div class="market-card__body">
                             <h3>{{ $trek->title }}</h3>
@@ -64,13 +68,13 @@
                                 <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
                                 <span class="market-card__reviews">
                                     <i class="fas fa-star"></i>
-                                    {{ number_format($trek->reviews->avg('rating') ?? 4.8, 1) }}
-                                    <em>{{ $trek->reviews->count() ?: 12 }} Reviews</em>
+                                    {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) : 'New' }}
+                                    <em>{{ $trek->reviews_count }} Reviews</em>
                                 </span>
                             </div>
                             <div class="market-card__footer">
                                 <div class="market-card__price">
-                                    <strong>US ${{ number_format($trek->base_price, 0) }}</strong>
+                                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
                                     <span>per person</span>
                                 </div>
                                 <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>

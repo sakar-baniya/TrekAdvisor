@@ -3,8 +3,6 @@
 namespace App\Providers;
 
 use App\Models\Departure;
-use App\Models\GearItem;
-use App\Models\GearRental;
 use App\Models\Hotel;
 use App\Models\HotelBooking;
 use App\Models\HotelRoom;
@@ -16,8 +14,6 @@ use App\Models\Trek;
 use App\Models\TrekBooking;
 use App\Models\User;
 use App\Policies\DeparturePolicy;
-use App\Policies\GearItemPolicy;
-use App\Policies\GearRentalPolicy;
 use App\Policies\HotelBookingPolicy;
 use App\Policies\HotelPolicy;
 use App\Policies\HotelRoomPolicy;
@@ -67,8 +63,7 @@ class AppServiceProvider extends ServiceProvider
         Gate::policy(Hotel::class, HotelPolicy::class);
         Gate::policy(HotelRoom::class, HotelRoomPolicy::class);
         Gate::policy(HotelBooking::class, HotelBookingPolicy::class);
-        Gate::policy(GearItem::class, GearItemPolicy::class);
-        Gate::policy(GearRental::class, GearRentalPolicy::class);
+
         Gate::policy(Review::class, ReviewPolicy::class);
 
         // Define custom gates for non-model policies
@@ -123,3 +118,4 @@ class AppServiceProvider extends ServiceProvider
         });
     }
 }
+

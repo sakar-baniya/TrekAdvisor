@@ -34,7 +34,7 @@ class TrekBookingFactory extends Factory
             'discount_percent' => $discountPercent,
             'discount_amount' => $discountAmount,
             'total_price' => $totalPrice,
-            'status' => 'Pending',
+            'status' => 'pending',
         ];
     }
 }

@@ -53,15 +53,6 @@ class DashboardNavigation
                     ],
                 ],
                 [
-                    'label' => 'Gear Management',
-                    'icon' => 'fa-backpack',
-                    'children' => [
-                        ['label' => 'All Gear Items', 'route' => 'admin.gear.index'],
-                        ['label' => 'Add Gear Item', 'route' => 'admin.gear.create'],
-                        ['label' => 'Gear Rentals', 'route' => 'admin.gear-rentals.index'],
-                    ],
-                ],
-                [
                     'label' => 'User Management',
                     'icon' => 'fa-users',
                     'children' => [
@@ -188,3 +179,4 @@ class DashboardNavigation
         }, $navigation);
     }
 }
+

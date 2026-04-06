@@ -32,7 +32,7 @@ class CuratedItinerarySeeder extends Seeder
     {
         return [
             'annapurna-base-camp' => [
-                ['title' => 'Drive to Pokhara and prepare for the trail', 'description' => 'Travel from Kathmandu to Pokhara and use the afternoon to check permits, sort gear, and brief with your guide before the trek begins.'],
+                ['title' => 'Drive to Pokhara and prepare for the trail', 'description' => 'Travel from Kathmandu to Pokhara and use the afternoon to check permits, organize your bags, and brief with your guide before the trek begins.'],
                 ['title' => 'Drive to Nayapul and trek to Ghandruk', 'description' => 'A short drive brings you to the trailhead at Nayapul. Climb through terraced fields and village paths to Ghandruk, a large Gurung settlement with broad views of Annapurna South and Machhapuchhre.'],
                 ['title' => 'Trek from Ghandruk to Chhomrong', 'description' => 'Descend to the Kimrong Khola and climb steadily to Chhomrong, the main gateway village for the Annapurna Sanctuary route. The trail balances stone steps, forest, and ridge views.'],
                 ['title' => 'Continue from Chhomrong to Dovan', 'description' => 'Drop to Chhomrong Khola, climb through bamboo and rhododendron forest past Sinuwa and Bamboo, and continue into the narrower upper valley to Dovan for an overnight stop.'],
@@ -174,7 +174,7 @@ class CuratedItinerarySeeder extends Seeder
                 ['title' => 'Cross Thorong La and descend to Muktinath', 'description' => 'Start before dawn to cross Thorong La Pass at 5,416 meters, then descend carefully to the pilgrimage town of Muktinath.'],
                 ['title' => 'Travel from Muktinath to Jomsom', 'description' => 'Continue down the dry Kali Gandaki corridor by trek or road transfer to Jomsom, the transport hub of lower Mustang.'],
                 ['title' => 'Move from Jomsom to Pokhara', 'description' => 'Fly or drive back to Pokhara after leaving the high trail network behind.'],
-                ['title' => 'Rest day in Pokhara', 'description' => 'Use the day for recovery by Phewa Lake, gear sorting, and a break after the circuit\'s long pass crossing and travel transitions.'],
+                ['title' => 'Rest day in Pokhara', 'description' => 'Use the day for recovery by Phewa Lake, repacking, and a break after the circuit\'s long pass crossing and travel transitions.'],
                 ['title' => 'Return from Pokhara to Kathmandu', 'description' => 'Travel back to Kathmandu, completing the classic cross-region outline of the Annapurna Circuit.'],
                 ['title' => 'Flexible reserve day', 'description' => 'Keep one spare day for weather, road conditions, or extra rest after the circuit.'],
                 ['title' => 'Departure or sightseeing day', 'description' => 'Use the second buffer day for departure or additional city sightseeing depending on overall travel timing.'],
