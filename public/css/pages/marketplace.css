@@ -1,47 +1,106 @@
 /* === marketplace.css: Marketplace-scope variables ONLY === */
+/* Catalog Hero Component (Shared by Treks, Hotels, etc.) */
+.catalog-hero {
+    position: relative;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    padding: 6rem 0 5rem;
+    color: #ffffff;
+    background: #0F172A url('/images/ui/hero.webp') no-repeat center center/cover;
+    overflow: hidden;
+    text-align: center;
+}
+
+.catalog-hero.catalog-hero--hotels {
+    background-image: url('/images/ui/HotelHero.webp');
+    background-position: center 82%;
+}
+
+.catalog-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(15, 23, 42, 0.45) 0%, rgba(15, 23, 42, 0.85) 100%);
+    z-index: 1;
+}
+
+.catalog-hero .container {
+    position: relative;
+    z-index: 2;
+    width: min(1200px, calc(100% - 2rem));
+    margin: 0 auto;
+}
+
+.market-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff;
+    font-size: 0.78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+    opacity: 0.85;
+}
+
+.catalog-hero h1 {
+    font-size: clamp(2.5rem, 6vw, 4.2rem);
+    font-weight: 850;
+    letter-spacing: -0.04em;
+    margin: 0;
+    line-height: 1.1;
+    color: #FFFFFF !important;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.catalog-hero p {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    max-width: 720px;
+    margin-inline: auto;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
 /* Global colors/typography live in base.css. These are marketplace-specific. */
 :root {
     /* --- Himalayan Blue: Marketplace Variables --- */
-    --market-primary:       #0F172A;   /* Premium Charcoal Navy */
-    --market-primary-dark:  #020617;
+    --market-primary: #0F172A;
+    /* Premium Charcoal Navy */
+    --market-primary-dark: #020617;
     --market-primary-light: #1E293B;
-    --market-cta:           #0F172A;   /* Standardized Navy CTA */
-    --market-cta-dark:      #020617;
-    --market-cta-light:     #334155;
-    --market-bg:            #FFFFFF;
-    --market-text:          #0F172A;
-    --market-text-muted:    #64748B;
-    --market-border:        rgba(15, 23, 42, 0.08);
-    --market-border-light:  rgba(15, 23, 42, 0.04);
-    --market-accent:        #5BA3C6;   /* Support accent only */
-    /* Scale */
-    --market-cyan-50:   #F8FAFC;
-    --market-cyan-100:  #F1F5F9;
-    --market-cyan-200:  #FFFFFF;
-    --market-cyan-500:  #64748B;
-    --market-cyan-600:  #475569;
-    --market-cyan-700:  #0F172A;
-    --market-blue-700:  #0F172A;
-    --market-slate-50:  #F8FAFC;
+    --market-cta: #0F172A;
+    /* Standardized Navy CTA */
+    --market-cta-dark: #020617;
+    --market-cta-light: #334155;
+    --market-bg: #FFFFFF;
+    --market-text: #0F172A;
+    --market-text-muted: #64748B;
+    --market-border: rgba(15, 23, 42, 0.08);
+    --market-secondary: #0ea5e9;
+    --market-accent: #f59e0b;
+    --market-bg: #FFFFFF;
+    --market-border: #E2E8F0;
+    --market-border-light: rgba(226, 232, 240, 0.5);
+    --market-text: #334155;
+    --market-text-muted: #64748B;
+    --market-slate-50: #F8FAFC;
     --market-slate-100: #F1F5F9;
     --market-slate-200: #E2E8F0;
     --market-slate-300: #CBD5E1;
     --market-slate-400: #94A3B8;
     --market-slate-500: #64748B;
-    --market-slate-700: #0F172A;
-    --market-slate-900: #020617;
-    /* Status */
-    --market-green-100: #d4edda;
-    --market-green-600: #28a745;
-    --market-red-100:   #f8d7da;
-    --market-red-600:   #dc3545;
+    --market-red-100: #f8d7da;
+    --market-red-600: #dc3545;
     --market-yellow-100: rgba(15, 23, 42, 0.04);
     --market-yellow-600: #334155;
     --market-orange-400: #0F172A;
     --market-orange-500: #0F172A;
     --market-orange-600: #1E293B;
     /* Shadows */
-    --market-shadow:      0 12px 36px rgba(15, 23, 42, 0.1);
+    --market-shadow: 0 12px 36px rgba(15, 23, 42, 0.1);
     --market-shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
     --market-shadow-card: 0 10px 28px rgba(15, 23, 42, 0.08);
 }
@@ -147,7 +206,6 @@
     gap: 0.75rem;
 }
 
-.market-kicker,
 .auth-kicker {
     display: inline-flex;
     align-items: center;
@@ -250,7 +308,8 @@
 }
 
 .market-hero .hero-search-bar .search-icon {
-    color: #94A3B8; /* Slate 400 */
+    color: #94A3B8;
+    /* Slate 400 */
     font-size: 1.15rem;
     flex-shrink: 0;
 }
@@ -262,7 +321,8 @@
     outline: 0;
     padding: 0.45rem 0;
     font-size: 1.05rem;
-    color: #0F172A; /* Deeper for readability */
+    color: #0F172A;
+    /* Deeper for readability */
     background: transparent;
 }
 
@@ -466,6 +526,7 @@
 }
 
 .market-card__media {
+    position: relative;
     min-height: 15rem;
     padding: 1rem;
     display: flex;
@@ -474,6 +535,46 @@
     background: linear-gradient(135deg, #0891b2, #1d4ed8);
     background-size: cover;
     background-position: center;
+}
+
+/* Luxury Difficulty Badge System */
+.difficulty-badge {
+    position: absolute !important;
+    top: 12px !important;
+    right: 12px !important;
+    padding: 6px 12px !important;
+    border-radius: 999px !important;
+    font-size: 0.72rem !important;
+    font-weight: 800 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15) !important;
+    z-index: 10 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    pointer-events: none;
+}
+
+.difficulty-badge.badge--easy {
+    background: #DCFCE7 !important;
+    color: #166534 !important;
+}
+
+.difficulty-badge.badge--moderate {
+    background: #FEF3C7 !important;
+    color: #92400E !important;
+}
+
+.difficulty-badge.badge--difficult {
+    background: #FEE2E2 !important;
+    color: #991B1B !important;
+}
+
+.difficulty-badge.badge--extreme {
+    background: #F1F5F9 !important;
+    color: #0F172A !important;
 }
 
 .market-card__media--icon,
@@ -495,6 +596,27 @@
     border-radius: 1.2rem;
     margin-bottom: 1rem;
     font-size: 2.8rem;
+}
+
+.close-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: #F1F5F9;
+    color: #475569;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.close-btn:hover {
+    background: #E2E8F0;
+    color: #0F172A;
 }
 
 .market-card__body,
@@ -1654,32 +1776,37 @@
 
 
 /* Trek card proportion fix */
-.market-card--trek {
+.market-card--trek,
+.market-card--hotel {
     display: flex;
     flex-direction: column;
 }
 
-.market-card--trek .market-card__media {
+.market-card--trek .market-card__media,
+.market-card--hotel .market-card__media {
     min-height: 12.5rem;
     aspect-ratio: 4 / 3;
     align-items: flex-start;
     justify-content: flex-end;
 }
 
-.market-card--trek .market-card__body {
+.market-card--trek .market-card__body,
+.market-card--hotel .market-card__body {
     display: flex;
     flex-direction: column;
     gap: 0.8rem;
     padding: 1.15rem 1.1rem 1.2rem;
 }
 
-.market-card--trek .market-card__body h3 {
+.market-card--trek .market-card__body h3,
+.market-card--hotel .market-card__body h3 {
     margin: 0;
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.25;
 }
 
-.market-card--trek .market-card__body p {
+.market-card--trek .market-card__body p,
+.market-card--hotel .market-card__body p {
     margin: 0;
     font-size: 0.92rem;
     line-height: 1.6;
@@ -1688,6 +1815,12 @@
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
+}
+
+.market-card--trek .market-card__footer,
+.market-card--hotel .market-card__footer {
+    margin-top: auto;
+    align-items: flex-end;
 }
 
 .market-card__trip-meta {

@@ -15,6 +15,7 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
+        @stack('styles')
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -145,6 +146,8 @@
                 </div>
             </div>
         </footer>
+        
+        @stack('scripts')
     </body>
 </html>
 

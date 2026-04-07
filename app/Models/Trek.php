@@ -12,6 +12,7 @@ class Trek extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $appends = ['image'];
 
     public function itineraries(): HasMany
     {

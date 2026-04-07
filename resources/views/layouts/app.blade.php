@@ -55,6 +55,7 @@
                 });
             });
         </script>
+        @stack('styles')
     </head>
     <body class="body-app">
         <div class="page-shell">
@@ -120,5 +121,6 @@
                 </div>
             </div>
         </footer>
+        @stack('scripts')
     </body>
 </html>

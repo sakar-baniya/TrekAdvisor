@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Customer;
+
+use App\Http\Controllers\Controller;
 
 use App\DTOs\CreateTrekBookingData;
 use App\Http\Requests\ConfirmBookingRequest;

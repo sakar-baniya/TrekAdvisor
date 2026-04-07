@@ -27,7 +27,7 @@ class CuratedTrekSeeder extends Seeder
                 'difficulty' => $data['difficulty'],
                 'duration_days' => $data['duration_days'],
                 'max_altitude' => $data['max_altitude'],
-                'status' => 'Active',
+                'status' => 'active',
             ]);
 
             // Image — use provided URL or fallback

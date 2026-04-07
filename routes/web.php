@@ -1,11 +1,11 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TrekController;
-use App\Http\Controllers\BookingController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\FrontendPageController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HotelController;
+use App\Http\Controllers\Customer\BookingController;
+use App\Http\Controllers\Customer\DashboardController;
+use App\Http\Controllers\Customer\ProfileController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
@@ -19,13 +19,13 @@ use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [FrontendPageController::class, 'about'])->name('about');
-Route::get('/contact', [FrontendPageController::class, 'contact'])->name('contact');
-Route::get('/faq', [FrontendPageController::class, 'faq'])->name('faq');
-Route::get('/blog', [FrontendPageController::class, 'blog'])->name('blog');
-Route::get('/hotels', [FrontendPageController::class, 'hotels'])->name('hotels.index');
-Route::get('/hotels/{hotel}', [FrontendPageController::class, 'hotelShow'])->name('hotels.show');
+Route::get('/', [PageController::class, 'home'])->name('home');
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/faq', [PageController::class, 'faq'])->name('faq');
+Route::get('/blog', [PageController::class, 'blog'])->name('blog');
+Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
+Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
 
 
 Route::get('/dashboard', function () {

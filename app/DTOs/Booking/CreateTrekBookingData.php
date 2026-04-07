@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DTOs;
+namespace App\DTOs\Booking;
 
 use App\Http\Requests\ConfirmBookingRequest;
 

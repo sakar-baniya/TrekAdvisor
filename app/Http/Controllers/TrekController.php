@@ -20,15 +20,12 @@ class TrekController extends Controller
                 $q->where('title', 'like', "%{$search}%")
                     ->orWhere('description', 'like', "%{$search}%");
             });
-        }
 
-        if ($request->filled('location')) {
-            $location = $request->string('location')->toString();
-            $query->where(function ($q) use ($location) {
-                // Location isn't a dedicated column; use title/description match to keep the filter useful.
-                $q->where('title', 'like', "%{$location}%")
-                    ->orWhere('description', 'like', "%{$location}%");
-            });
+            // Prioritize title matches
+            $query->orderByRaw("CASE WHEN title LIKE ? THEN 1 WHEN title LIKE ? THEN 2 ELSE 3 END ASC", [
+                "{$search}%",
+                "%{$search}%"
+            ]);
         }
 
         if ($request->filled('difficulty')) {
@@ -43,13 +40,47 @@ class TrekController extends Controller
             $query->where('base_price', '<=', $request->input('max_price'));
         }
 
+        if (!$request->filled('search')) {
+            $sortBy = $request->input('sort', 'popularity');
+            
+            switch ($sortBy) {
+                case 'price_low':
+                    $query->orderBy('base_price', 'asc');
+                    break;
+                case 'price_high':
+                    $query->orderBy('base_price', 'desc');
+                    break;
+                case 'rating':
+                    $query->withAvg('reviews', 'rating')->orderByDesc('reviews_avg_rating');
+                    break;
+                case 'duration':
+                    $query->orderBy('duration_days', 'asc');
+                    break;
+                case 'popularity':
+                default:
+                    $query->withCount('reviews')->orderByDesc('reviews_count');
+                    break;
+            }
+        }
+
         $treks = $query
             ->withCount('reviews')
             ->withAvg('reviews', 'rating')
             ->with('images')
-            ->latest()
             ->paginate(9)
             ->withQueryString();
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'data' => $treks->items(),
+                'meta' => [
+                    'current_page' => $treks->currentPage(),
+                    'last_page' => $treks->lastPage(),
+                    'per_page' => $treks->perPage(),
+                    'total' => $treks->total(),
+                ],
+            ]);
+        }
 
         return view('treks.index', compact('treks'));
     }
@@ -75,4 +106,3 @@ class TrekController extends Controller
         return view('treks.show', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
     }
 }
-
