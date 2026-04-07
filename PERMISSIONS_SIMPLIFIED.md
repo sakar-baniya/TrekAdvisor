@@ -24,8 +24,6 @@ Admin has FULL access to everything:
 | Hotels | ✅ | ✅ | ✅ | ✅ | Creates all hotels |
 | Hotel Rooms | ✅ | ✅ | ✅ | ✅ | Manages rooms |
 | Hotel Bookings | ✅ | ✅ | ✅ | ✅ | Full hotel booking control |
-| Gear Items | ✅ | ✅ | ✅ | ✅ | Creates gear catalog |
-| Gear Rentals | ✅ | ✅ | ✅ | ✅ | Manages all rentals |
 | Payments | 🔴 | ✅ | ✅ | 🔴 | Views & refunds (system creates) |
 | Reviews | 🔴 | ✅ | ✅ | ✅ | Can delete inappropriate reviews |
 | Settings | ✅ | ✅ | ✅ | ✅ | Payment gateway, email, integrations |
@@ -50,8 +48,6 @@ Staff handles all operational work with restrictions on user management and sett
 | Hotels | 🔴 | ✅ | ✅ | 🔴 | Manage all hotels |
 | Hotel Rooms | 🔴 | ✅ | ✅ | 🔴 | Manage all rooms |
 | Hotel Bookings | 🔴 | ✅ | ✅ | 🔴 | View & manage status |
-| Gear Items | 🔴 | ✅ | ✅ | 🔴 | Manage (but admin creates) |
-| Gear Rentals | 🔴 | ✅ | ✅ | 🔴 | Confirm pickup, mark returned |
 | Payments | 🔴 | ✅ | 🔴 | 🔴 | **View-only** for verification |
 | Reviews | 🔴 | ✅ | 🔴 | 🔴 | View & moderate (flag/hide) |
 
@@ -101,7 +97,7 @@ Staff handles all operational work with restrictions on user management and sett
 ## Key Design Decisions
 
 ### 1. Admin Creates Everything
-- **ADMIN** creates all treks, departures, gear items
+- **ADMIN** creates all treks, departures, hotels
 - This ensures data consistency and prevents staff from creating isolated resources
 - Staff can manage/edit but not create or delete
 
@@ -201,8 +197,6 @@ class SettingsPolicy {
 - ✅ HotelPolicy - Hotel management (staff can edit, admin creates/deletes)
 - ✅ HotelRoomPolicy - Room management (staff can edit, admin creates/deletes)
 - ✅ HotelBookingPolicy - Hotel bookings (staff can manage)
-- ✅ GearItemPolicy - Gear management (staff can edit, admin creates/deletes)
-- ✅ GearRentalPolicy - Rental management (staff can manage)
 - ✅ ReviewPolicy - Review moderation (staff can moderate, not delete)
 - ✅ SettingsPolicy - **ADMIN ONLY** (critical security)
 

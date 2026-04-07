@@ -19,10 +19,8 @@ A **clean, practical, production-ready permission system** with:
 4. ✅ `TrekBookingPolicy.php` - Booking status management
 5. ✅ `PaymentPolicy.php` - VIEW-ONLY for staff (critical security)
 6. ✅ `HotelPolicy.php` - Hotel + owner + staff + customer
-7. ✅ `GearItemPolicy.php` - Gear item CRUD
-8. ✅ `GearRentalPolicy.php` - Rental management
-9. ✅ `ReviewPolicy.php` - Review moderation
-10. ✅ `HotelBookingPolicy.php` - (will create separately if needed)
+7. ✅ `ReviewPolicy.php` - Review moderation
+8. ✅ `HotelBookingPolicy.php` - (will create separately if needed)
 
 ### Middleware
 1. ✅ `app/Http/Middleware/CheckRole.php` - Route-level role protection
@@ -43,7 +41,6 @@ A **clean, practical, production-ready permission system** with:
 ✅ Manage all treks, departures, bookings
 ✅ Manage all hotels, rooms, bookings
 ✅ View all payments (status + transaction + response)
-✅ Manage gear items and rentals
 ✅ Moderate reviews
 ✅ Access settings
 ✅ ONLY approve hotel owner applications
@@ -57,7 +54,6 @@ A **clean, practical, production-ready permission system** with:
   ✓ Manage departures for own treks
   ✓ View & confirm bookings for own treks
   ✓ View passengers for own bookings
-  ✓ Manage gear items/rentals
   ✓ View payment status + transaction_id (verification only)
   ✓ Moderate reviews
 
@@ -126,12 +122,11 @@ This means:
 
 ### What "Staff" Means
 
-Staff is a **limited admin specifically for trek/gear operations**:
+Staff is a **limited admin specifically for trek operations**:
 
 ```
 Think of them as:
 - Trek operators who manage their own offerings
-- Gear coordinators
 - Booking processors (for their treks)
 - Review moderators
 ```

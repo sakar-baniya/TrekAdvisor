@@ -17,8 +17,6 @@ protected $policies = [
     Hotel::class => HotelPolicy::class,
     HotelRoom::class => HotelRoomPolicy::class,
     HotelBooking::class => HotelBookingPolicy::class,
-    GearItem::class => GearItemPolicy::class,
-    GearRental::class => GearRentalPolicy::class,
     Review::class => ReviewPolicy::class,
 ];
 ```

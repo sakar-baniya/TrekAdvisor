@@ -29,7 +29,7 @@ enum UserRole: string
     {
         return match ($this) {
             self::ADMIN => 'Full system access',
-            self::STAFF => 'Manage treks, departures, bookings, gear',
+            self::STAFF => 'Manage treks, departures, bookings',
             self::CUSTOMER => 'Book treks and hotels',
             self::HOTEL_OWNER => 'Manage own hotel',
         };

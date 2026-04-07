@@ -35,8 +35,6 @@ PaymentPolicy.php           → Payment viewing (staff view-only) ⭐ CRITICAL S
 HotelPolicy.php             → Hotel management
 HotelRoomPolicy.php         → Room management
 HotelBookingPolicy.php      → Hotel booking operations
-GearItemPolicy.php          → Gear item management
-GearRentalPolicy.php        → Gear rental operations
 ReviewPolicy.php            → Review moderation
 SettingsPolicy.php          → System settings (admin only) ⭐ CRITICAL SECURITY
 ```
@@ -344,7 +342,7 @@ class TrekAuthorizationTest extends TestCase
 - `app/Policies/HotelPolicy.php`
 - `app/Policies/HotelRoomPolicy.php`
 - `app/Policies/HotelBookingPolicy.php`
-- `app/Policies/GearItemPolicy.php`... (14 total)
+- `app/Policies/HotelBookingPolicy.php`... (12 total)
 - `app/Services/Authorization/AuthorizationHelper.php`
 - `PERMISSIONS_SIMPLIFIED.md`
 - `IMPLEMENTATION_GUIDE_PERMISSIONS.md`

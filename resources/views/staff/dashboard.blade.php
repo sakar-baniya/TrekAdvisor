@@ -3,7 +3,7 @@
         <div class="admin-page-heading">
             <div>
                 <p class="admin-eyebrow">Staff Dashboard</p>
-                <h2 class="admin-page-title">Monitor today's operations across bookings and rentals</h2>
+                <h2 class="admin-page-title">Monitor today's operations across bookings</h2>
             </div>
         </div>
     </x-slot>

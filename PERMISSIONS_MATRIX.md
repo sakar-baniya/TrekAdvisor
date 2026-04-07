@@ -5,7 +5,7 @@
 | Role | Purpose | Dashboard | System Access |
 |------|---------|-----------|----------------|
 | **ADMIN** | Full system control | `/admin` | All features |
-| **STAFF** | Operational management | `/staff` | Treks, bookings, gear, reviews |
+| **STAFF** | Operational management | `/staff` | Treks, bookings, reviews |
 | **CUSTOMER** | User/booking | `/customer` | Browse & book |
 | **HOTEL_OWNER** | Hotel management | `/hotel-owner` | Manage own hotel |
 
@@ -46,14 +46,6 @@
 - ✅ View gateway responses (technical details)
 - ✅ ❌ Process refunds (manual, requires documented process)
 - ✅ ❌ Modify completed payments
-
-### Gear
-- ✅ Create gear items
-- ✅ Edit gear items
-- ✅ Delete gear items
-- ✅ View all gear rentals
-- ✅ Confirm/cancel rentals
-- ✅ Mark items as returned
 
 ### Reviews
 - ✅ View all reviews
@@ -97,14 +89,6 @@
 - ✅ Manage passengers (add/remove)
 - ✅ View booking notes/requests
 
-#### Gear Management ✅
-- ✅ Create gear items
-- ✅ Edit gear items
-- ✅ View all gear rentals
-- ✅ Confirm rental requests (Pending → Active)
-- ✅ Mark rents as returned
-- ✅ Cancel rentals if needed
-
 #### Hotels ✅
 - ✅ View hotels (for operational context)
 - ✅ Edit hotel details
@@ -123,7 +107,6 @@
 - ✅ View all reviews
 - ✅ Moderate reviews (flag/unflag)
 - ✅ Delete flagged reviews
-- ✅ See comments on own trek/gear reviews
 
 ### What Staff CANNOT Do ❌
 
@@ -166,9 +149,7 @@
 - ✅ View trek details, images, itinerary
 - ✅ Book trek (create booking)
 - ✅ View own trek bookings
-- ✅ View own gear rentals
 - ✅ Cancel own booking (if Pending/Confirmed)
-- ✅ Cancel own gear rental (if Pending/Active)
 
 ### Browse Hotels ✅
 - ✅ View active hotels
@@ -239,10 +220,7 @@ app/Policies/
   ├── HotelPolicy.php          (hotel CRUD)
   ├── HotelBookingPolicy.php   (hotel booking)
   ├── PaymentPolicy.php        (payment VIEW-ONLY for staff)
-  ├── GearItemPolicy.php       (gear CRUD)
-  ├── GearRentalPolicy.php     (rental management)
-  ├── ReviewPolicy.php         (review moderation)
-  └── GearRentalPolicy.php     (gear rentals)
+  └── ReviewPolicy.php         (review moderation)
 ```
 
 ### Usage in Controllers
@@ -367,5 +345,4 @@ $customer->can('view', $payment);          // Only own payment
 | Process Refund | ❌ Manual | ❌ | ❌ | ❌ |
 | Manage Settings | ✅ | ❌ | ❌ | ❌ |
 | Moderate Reviews | ✅ | ✅ | ❌ | ❌ |
-| Manage Gear | ✅ | ✅ | ❌ | ❌ |
 | Manage Hotel | ✅ | ✅ | ❌ | ✅ own |
