@@ -37,8 +37,25 @@ class UserDashboardQueryService
             'stats' => [
                 'today_trek_bookings' => TrekBooking::query()->whereDate('created_at', today())->count(),
                 'today_hotel_bookings' => HotelBooking::query()->whereDate('created_at', today())->count(),
+                'pending_hotels' => Hotel::query()->where('status', 'pending')->count(),
             ],
+            'charts' => [
+                'activity' => $this->getStaffActivityTrend(),
+            ]
         ];
+    }
+
+    private function getStaffActivityTrend(): array
+    {
+        $days = collect([]);
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i);
+            $dayName = $date->format('D');
+            $count = TrekBooking::query()->whereDate('created_at', $date)->count()
+                    + HotelBooking::query()->whereDate('created_at', $date)->count();
+            $days->push(['label' => $dayName, 'count' => $count]);
+        }
+        return $days->toArray();
     }
 
     public function hotelOwnerData(User $user): array
@@ -60,11 +77,36 @@ class UserDashboardQueryService
             'stats' => [
                 'hotels' => $hotels->count(),
                 'rooms' => (int) $hotels->sum('rooms_count'),
-                'bookings' => HotelBooking::query()
+                'bookings_this_month' => HotelBooking::query()
                     ->whereHas('hotelRoom.hotel', fn ($query) => $query->where('owner_id', $user->id))
+                    ->whereMonth('created_at', now()->month)
                     ->count(),
+                'revenue_this_month' => (float) HotelBooking::query()
+                   ->whereHas('hotelRoom.hotel', fn ($query) => $query->where('owner_id', $user->id))
+                   ->whereMonth('created_at', now()->month)
+                   ->sum('total_price'),
             ],
+            'charts' => [
+                'revenue' => $this->getHotelOwnerRevenueTrend($user),
+            ]
         ];
+    }
+
+    private function getHotelOwnerRevenueTrend(User $user): array
+    {
+        $weeks = collect([]);
+        for ($i = 3; $i >= 0; $i--) {
+            $start = now()->subWeeks($i)->startOfWeek();
+            $end = now()->subWeeks($i)->endOfWeek();
+            
+            $revenue = HotelBooking::query()
+                ->whereHas('hotelRoom.hotel', fn ($query) => $query->where('owner_id', $user->id))
+                ->whereBetween('created_at', [$start, $end])
+                ->sum('total_price');
+
+            $weeks->push(['label' => 'Week ' . (4 - $i), 'revenue' => (float)$revenue]);
+        }
+        return $weeks->toArray();
     }
 }
 

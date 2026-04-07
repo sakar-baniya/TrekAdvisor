@@ -1,80 +1,41 @@
-{{-- resources/views/components/dashboard/profile-menu.blade.php --}}
+@props(['user'])
 
-@php
-    $user = auth()->user();
-@endphp
-
-<div class="dashboard-profile-menu">
-    <button type="button" class="dashboard-profile-menu__trigger" data-profile-menu-toggle>
-        <div class="dashboard-profile-menu__avatar">
+<div class="position-relative">
+    <button type="button" class="topbar-control" id="profileMenuTrigger">
+        <div class="topbar-control__avatar">
             {{ strtoupper(substr($user->name, 0, 1)) }}
         </div>
-        <span class="dashboard-profile-menu__name">{{ $user->name }}</span>
-        <i class="fas fa-chevron-down dashboard-profile-menu__chev"></i>
+        <span class="topbar-control__name">{{ $user->name }}</span>
+        <i class="fas fa-chevron-down ms-1" style="font-size: 0.7rem; opacity: 0.3;"></i>
     </button>
 
-    <div class="dashboard-profile-dropdown" data-profile-menu-dropdown>
-        <div class="dashboard-profile-dropdown__header">
-            <div class="dashboard-profile-dropdown__avatar">
-                {{ strtoupper(substr($user->name, 0, 1)) }}
-            </div>
-            <div class="dashboard-profile-dropdown__info">
-                <p class="dashboard-profile-dropdown__name">{{ $user->name }}</p>
-                <p class="dashboard-profile-dropdown__email">{{ $user->email }}</p>
-            </div>
+    <div class="v-dropdown shadow-lg" id="profileDropdown">
+        <div class="v-dropdown__header">
+            <h4 class="mb-0 fs-6 fw-bold text-navy">{{ $user->name }}</h4>
+            <p class="mb-0 text-muted" style="font-size: 0.75rem;">{{ $user->email }}</p>
         </div>
 
-        <ul class="dashboard-profile-dropdown__menu">
-            <li class="dashboard-profile-dropdown__item">
-                <a href="{{ route('profile.show') }}" class="dashboard-profile-dropdown__link">
-                    <i class="fas fa-user-circle"></i>
-                    <span>View Profile</span>
+        <ul class="list-unstyled mb-0 py-1">
+            <li>
+                <a href="{{ route('profile.show') }}" class="v-dropdown__link">
+                    <i class="fas fa-cog opacity-50"></i> Profile Settings
                 </a>
             </li>
-
-
+            <li class="border-top my-1 opacity-25"></li>
+            <li>
+                <a href="{{ route('home') }}" class="v-dropdown__link">
+                    <i class="fas fa-home opacity-50"></i> Back to Website
+                </a>
+            </li>
         </ul>
 
-        <div class="dashboard-profile-dropdown__logout">
+        <div class="border-top py-1">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="dashboard-profile-dropdown__button">
-                    <i class="fas fa-right-from-bracket"></i>
-                    <span>Sign Out</span>
+                <button type="submit" class="v-dropdown__link w-100 border-0 bg-transparent text-start">
+                    <i class="fas fa-sign-out-alt opacity-50"></i> Sign Out
                 </button>
             </form>
         </div>
     </div>
 </div>
-
-<script>
-    (() => {
-        const trigger = document.querySelector('[data-profile-menu-toggle]');
-        const dropdown = document.querySelector('[data-profile-menu-dropdown]');
-
-        if (!trigger || !dropdown) return;
-
-        trigger.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const isOpen = dropdown.classList.toggle('open');
-            trigger.classList.toggle('open', isOpen);
-        });
-
-        document.addEventListener('click', () => {
-            dropdown.classList.remove('open');
-            trigger.classList.remove('open');
-        });
-
-        dropdown.addEventListener('click', (e) => {
-            e.stopPropagation();
-        });
-
-        // Close on ESC key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                dropdown.classList.remove('open');
-                trigger.classList.remove('open');
-            }
-        });
-    })();
-</script>

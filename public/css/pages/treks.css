@@ -459,83 +459,18 @@
     /* Balanced padding */
 }
 
-/* Scoped Fix for Broken Laravel/Tailwind Pagination */
-.catalog-pagination nav {
+
+/* -------------------------------------------------------------------------- */
+/* 2. Pagination (Refined for Marketplace)                                     */
+/* -------------------------------------------------------------------------- */
+.catalog-pagination {
+    margin-top: 3rem;
     display: flex;
-    align-items: center;
     justify-content: center;
-    gap: 0;
-    /* Remove outer gap */
+    border-top: 1px solid rgba(15, 23, 42, 0.05);
+    padding: 2.5rem 0;
 }
 
-.catalog-pagination nav div:first-child {
-    display: none !important;
-}
-
-.catalog-pagination nav div:last-child {
-    display: flex !important;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem !important;
-    /* Unified gap for all buttons */
-    /* Removed flex-direction row as it was the default */
-}
-
-/* Unified Button Style System */
-.catalog-pagination span[aria-current="page"] span,
-.catalog-pagination span[aria-disabled="true"] span,
-.catalog-pagination a {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    /* Fixed square sizing */
-    height: 40px;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 700;
-    transition: all 0.25s ease;
-    border: 1px solid rgba(15, 23, 42, 0.08);
-    background: #FFFFFF;
-    color: #334155;
-    text-decoration: none;
-    box-sizing: border-box;
-}
-
-.catalog-pagination a:hover {
-    background: #F8FAFC;
-    color: #0F172A;
-    border-color: #0F172A;
-    transform: translateY(-1px);
-}
-
-.catalog-pagination span[aria-current="page"] span {
-    background: #0F172A;
-    color: #FFFFFF;
-    border-color: #0F172A;
-    box-shadow: 0 4px 10px rgba(15, 23, 42, 0.15);
-}
-
-.catalog-pagination span[aria-disabled="true"] span {
-    opacity: 0.4;
-    cursor: not-allowed;
-    background: transparent;
-}
-
-/* Perfecting Icons */
-.catalog-pagination svg {
-    width: 1rem !important;
-    /* Slightly smaller for premium feel */
-    height: 1rem !important;
-}
-
-@media (max-width: 600px) {
-
-    .catalog-pagination span:not([aria-hidden="true"]):not([rel="prev"]):not([rel="next"]),
-    .catalog-pagination a:not([rel="prev"]):not([rel="next"]) {
-        display: none !important;
-    }
-}
 
 /* Trek show page */
 .trek-show {
