@@ -1,15 +1,13 @@
 <x-dashboard-layout>
     <!-- 1️⃣ Header Area -->
-    <div class="page-header">
-        <div class="page-header__content">
-            <h1>Overview</h1>
-            <p>Track your platform performance and activity.</p>
-        </div>
-        <div class="page-header__actions">
-            <button class="btn btn-secondary">
+    <!-- Reduced header for dashboard: no hero/banner, just compact actions -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;gap:1.5rem;">
+        <h2 class="fw-bold text-navy mb-0" style="font-size:1.35rem;">Dashboard Overview</h2>
+        <div style="display:flex;gap:0.75rem;">
+            <button class="u-btn u-btn--secondary">
                 <i class="fas fa-file-export"></i> Export Report
             </button>
-            <a href="{{ route('admin.treks.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.treks.create') }}" class="u-btn u-btn--primary">
                 <i class="fas fa-plus"></i> New Trek
             </a>
         </div>

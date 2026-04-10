@@ -13,6 +13,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=11">
         <link rel="stylesheet" href="{{ asset('css/pages/dashboard.css') }}?v=11">
+        <link rel="stylesheet" href="{{ asset('css/components/confirmation-modal.css') }}">
         <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     </head>
     @php
@@ -61,15 +62,7 @@
                     @endforeach
                 </nav>
 
-                <div class="admin-sidebar__footer">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="admin-footer-btn">
-                            <i class="fas fa-right-from-bracket"></i>
-                            <span>Sign Out</span>
-                        </button>
-                    </form>
-                </div>
+                <!-- Sidebar footer intentionally left blank: navigation only -->
             </aside>
 
             <!-- Main Content: Refined Hierarchy -->
@@ -125,7 +118,12 @@
                 }
             });
         </script>
-        
+
+        <!-- Confirmation Modal Component -->
+        <x-confirmation-modal />
+
+        <script src="{{ asset('js/modules/confirmation-modal.js') }}"></script>
+
         <style>
             @media (max-width: 1024px) {
                 .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }

@@ -44,15 +44,15 @@
                     <form method="POST" action="{{ route('admin.reviews.flag', $review) }}">
                         @csrf
                         @method('PATCH')
-                        <button type="submit" class="admin-secondary-button admin-primary-button--fit">
+                        <button type="button" class="admin-secondary-button admin-primary-button--fit" data-confirm="{{ $review->is_flagged ? 'unflag-review' : 'flag-review' }}">
                             <i class="fas fa-flag"></i>
                             <span>{{ $review->is_flagged ? 'Remove Flag' : 'Flag Review' }}</span>
                         </button>
                     </form>
-                    <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}" onsubmit="return confirm('Delete this review?')">
+                    <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="admin-danger-button">
+                        <button type="button" class="admin-danger-button" data-confirm="delete-review">
                             <i class="fas fa-trash"></i>
                             <span>Delete Review</span>
                         </button>

@@ -63,7 +63,7 @@ class AdminTrekBookingController extends Controller
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', Rule::in(['pending', 'confirmed', 'cancelled'])],
+            'status' => ['required', Rule::in(['pending', 'confirmed', 'cancellation_requested', 'completed', 'cancelled'])],
         ]);
 
         $trekBooking->update([

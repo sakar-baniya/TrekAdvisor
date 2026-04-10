@@ -118,8 +118,8 @@
                 <p>Loading treks...</p>
             </div>
 
-            <div id="trek-pagination" class="catalog-pagination">
-                {{ $treks->links() }}
+            <div id="trek-pagination" class="catalog-pagination trek-pagination-wrap">
+                {{ $treks->links('components.pagination') }}
             </div>
         </section>
     </div>

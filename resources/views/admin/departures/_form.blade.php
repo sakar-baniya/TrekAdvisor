@@ -28,8 +28,8 @@
             <label class="admin-field">
                 <span>Status *</span>
                 <select name="status" class="admin-input" required>
-                    @foreach (['Available', 'Full', 'Completed'] as $option)
-                        <option value="{{ $option }}" @selected(old('status', $departure->status) === $option)>{{ $option }}</option>
+                    @foreach (['available' => 'Available', 'full' => 'Full', 'completed' => 'Completed'] as $value => $label)
+                        <option value="{{ $value }}" @selected(old('status', $departure->status) === $value)>{{ $label }}</option>
                     @endforeach
                 </select>
                 @error('status') <small class="admin-error">{{ $message }}</small> @enderror
@@ -72,7 +72,7 @@
             <i class="fas fa-arrow-left"></i>
             <span>Back to Departures</span>
         </a>
-        <button type="submit" class="admin-primary-button">
+        <button type="button" class="admin-primary-button" data-confirm="{{ $departure->exists ? 'update-departure' : 'save-departure' }}">
             <i class="fas fa-floppy-disk"></i>
             <span>{{ $departure->exists ? 'Update Departure' : 'Create Departure' }}</span>
         </button>

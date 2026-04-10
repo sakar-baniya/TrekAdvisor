@@ -95,12 +95,12 @@
                     <label class="admin-field">
                         <span>Booking Status</span>
                         <select name="status" class="admin-input">
-                            @foreach (['Pending', 'Confirmed', 'Cancelled'] as $option)
-                                <option value="{{ $option }}" @selected($booking->status === $option)>{{ $option }}</option>
+                            @foreach (['pending' => 'Pending', 'confirmed' => 'Confirmed', 'cancellation_requested' => 'Cancellation Requested', 'completed' => 'Completed', 'cancelled' => 'Cancelled'] as $value => $label)
+                                <option value="{{ $value }}" @selected($booking->status === $value)>{{ $label }}</option>
                             @endforeach
                         </select>
                     </label>
-                    <button type="submit" class="admin-primary-button admin-primary-button--fit">
+                    <button type="button" class="admin-primary-button admin-primary-button--fit" data-confirm="update-booking-status">
                         <i class="fas fa-floppy-disk"></i>
                         <span>Save Status</span>
                     </button>

@@ -3,14 +3,15 @@
         $galleryImages = $trek->gallery->pluck('path')->prepend($trek->image)->filter()->unique()->values();
     @endphp
 
-    <section class="detail-hero" @if($trek->image) style="background-image: linear-gradient(rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.5)), url('{{ $trek->image }}');" @endif>
+    <section class="detail-hero" @if($trek->image) style="background-image: url('{{ $trek->image }}');" @endif>
+        <div class="detail-hero__overlay"></div>
         <div class="container detail-hero__content">
             <h1>{{ $trek->title }}</h1>
             <div class="detail-hero__stats">
                 <span><i class="fas fa-clock"></i> {{ $trek->duration_days ?? $trek->itineraries->count() }} Days</span>
                 <span><i class="fas fa-signal"></i> {{ $trek->difficulty }}</span>
                 <span><i class="fas fa-mountain"></i> {{ $trek->max_altitude ? number_format($trek->max_altitude) . 'm' : 'High-altitude route' }}</span>
-                <span><i class="fas fa-star"></i> {{ $avgRating ?? 'New' }} ({{ $reviewCount }})</span>
+                <span><i class="fas fa-star"></i> {{ $avgRating ? number_format($avgRating, 1) . ' - ' . $reviewCount . ' reviews' : 'New' }}</span>
             </div>
         </div>
     </section>
@@ -66,7 +67,7 @@
                     @foreach($trek->itineraries as $itinerary)
                         <div class="detail-timeline__item">
                             <div class="detail-timeline__day">Day {{ $itinerary->day_number }}</div>
-                            <div>
+                            <div class="detail-timeline__content">
                                 <h3>{{ $itinerary->title }}</h3>
                                 <p>{{ $itinerary->description }}</p>
                             </div>
@@ -107,14 +108,14 @@
                     <strong>${{ number_format($trek->base_price, 0) }}</strong>
                     <small>per person</small>
                 </div>
-                <div class="detail-discount-box">
-                    <strong>Group Discounts Available</strong>
+                <details class="detail-discount-box">
+                    <summary>Group discounts</summary>
                     <ul>
                         <li>3-5 people: 5% off</li>
                         <li>6-9 people: 10% off</li>
                         <li>10+ people: 15% off</li>
                     </ul>
-                </div>
+                </details>
                 <h3>Available Departures</h3>
                 <div class="detail-departure-list">
                     @forelse($trek->departures as $departure)
@@ -124,7 +125,7 @@
                                     <strong>{{ $departure->start_date->format('M d') }} - {{ $departure->end_date->format('M d, Y') }}</strong>
                                     <span>{{ $departure->capacity - $departure->booked_seats }} / {{ $departure->capacity }} seats left</span>
                                 </div>
-                                <span class="market-stock {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'is-good' : 'is-low' }}">{{ $departure->status }}</span>
+                                <span class="detail-status-badge {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'is-good' : 'is-low' }}">{{ $departure->status }}</span>
                             </div>
                             <div class="detail-departure-card__bottom">
                                 <span>${{ number_format($departure->price, 0) }}</span>

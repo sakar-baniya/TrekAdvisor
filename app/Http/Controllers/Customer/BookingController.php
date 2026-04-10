@@ -4,13 +4,15 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 
-use App\DTOs\CreateTrekBookingData;
+use App\DTOs\Booking\CreateTrekBookingData;
 use App\Http\Requests\ConfirmBookingRequest;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Departure;
 use App\Services\Booking\BookingSessionService;
 use App\Services\Booking\CreateTrekBookingService;
 use App\Services\Booking\StartTrekBookingService;
+use App\Models\HotelBooking;
+use App\Models\TrekBooking;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use RuntimeException;
@@ -87,5 +89,23 @@ class BookingController extends Controller
         }
 
         return redirect()->away($result->checkoutUrl);
+    }
+
+    public function showTrekBooking(TrekBooking $trekBooking): View
+    {
+        abort_unless($trekBooking->user_id === auth()->id(), 403);
+
+        return view('customer.trek-booking-show', [
+            'booking' => $trekBooking->load(['departure.trek']),
+        ]);
+    }
+
+    public function showHotelBooking(HotelBooking $hotelBooking): View
+    {
+        abort_unless($hotelBooking->user_id === auth()->id(), 403);
+
+        return view('customer.hotel-booking-show', [
+            'booking' => $hotelBooking->load(['hotelRoom.hotel']),
+        ]);
     }
 }

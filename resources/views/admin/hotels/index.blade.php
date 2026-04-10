@@ -95,7 +95,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="active" />
-                                <button type="submit" class="admin-primary-button">
+                                <button type="button" class="admin-primary-button" data-confirm="approve-hotel">
                                     <i class="fas fa-check"></i>
                                     <span>Approve</span>
                                 </button>
@@ -107,7 +107,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="inactive" />
-                                <button type="submit" class="admin-danger-button">
+                                <button type="button" class="admin-danger-button" data-confirm="reject-hotel">
                                     <i class="fas fa-ban"></i>
                                     <span>Set Inactive</span>
                                 </button>
@@ -119,7 +119,7 @@
                                 @csrf
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="pending" />
-                                <button type="submit" class="admin-secondary-button">
+                                <button type="button" class="admin-secondary-button" data-confirm="pending-hotel">
                                     <i class="fas fa-clock"></i>
                                     <span>Move to Pending</span>
                                 </button>

@@ -38,4 +38,10 @@ class TrekBooking extends Model
     {
         return $this->hasMany(Passenger::class);
     }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class, 'payable_id')
+            ->where('payable_type', 'trek');
+    }
 }

@@ -27,6 +27,16 @@ class UserDashboardQueryService
             'stats' => [
                 'trek_bookings' => TrekBooking::query()->where('user_id', $user->id)->count(),
                 'hotel_bookings' => HotelBooking::query()->where('user_id', $user->id)->count(),
+                'upcoming_trips' => TrekBooking::query()
+                    ->where('user_id', $user->id)
+                    ->whereIn('status', ['pending', 'confirmed', 'cancellation_requested'])
+                    ->whereHas('departure', fn ($query) => $query->whereDate('start_date', '>=', today()))
+                    ->count()
+                    + HotelBooking::query()
+                        ->where('user_id', $user->id)
+                        ->whereIn('status', ['pending', 'confirmed', 'cancellation_requested'])
+                        ->whereDate('check_in', '>=', today())
+                        ->count(),
             ],
         ];
     }
@@ -36,12 +46,18 @@ class UserDashboardQueryService
         return [
             'stats' => [
                 'today_trek_bookings' => TrekBooking::query()->whereDate('created_at', today())->count(),
-                'today_hotel_bookings' => HotelBooking::query()->whereDate('created_at', today())->count(),
-                'pending_hotels' => Hotel::query()->where('status', 'pending')->count(),
+                'pending_trek_bookings' => TrekBooking::query()->where('status', 'pending')->count(),
+                'cancellation_requests' => TrekBooking::query()->where('status', 'cancellation_requested')->count(),
             ],
             'charts' => [
                 'activity' => $this->getStaffActivityTrend(),
             ]
+            ,
+            'recentTrekBookings' => TrekBooking::query()
+                ->with(['user', 'departure.trek'])
+                ->latest()
+                ->take(8)
+                ->get(),
         ];
     }
 

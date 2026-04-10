@@ -72,19 +72,16 @@
         </div>
     </section>
 
-    <section class="booking-section">
+    <section class="booking-section booking-section--tinted">
         <div class="container container-wide">
             <div class="booking-section__head">
                 <div class="booking-section__title">
                     <p class="section-kicker">Adventure Awaits</p>
                     <h2>Featured Treks</h2>
+                    <p class="section-subtitle">Curated Himalayan routes with trusted local guides.</p>
                 </div>
                 <div class="booking-section__actions">
-                    <a href="{{ route('treks.index') }}" class="view-all-link">View All</a>
-                    <div class="carousel-arrows">
-                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-                    </div>
+                    <a href="{{ route('treks.index') }}" class="view-all-link">View all</a>
                 </div>
             </div>
 
@@ -100,12 +97,18 @@
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) : 'New' }} ({{ $trek->reviews_count }} reviews)</span>
+                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> {{ $trek->duration_days ? $trek->duration_days . ' days' : 'Multi-day' }}</span>
+                                <span><i class="fas fa-mountain" aria-hidden="true"></i> {{ ucfirst($trek->difficulty ?? 'moderate') }}</span>
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) . ' • ' . $trek->reviews_count . ' reviews' : 'New' }}</span>
                             </div>
                             <h3>{{ $trek->title }}</h3>
                             <div class="booking-card__footer">
-                                <div class="booking-card__price">From <strong>${{ number_format($trek->base_price, 0) }}</strong> <span>/person</span></div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="btn-primary-filled booking-card__action">View Details</a>
+                                <div class="booking-card__price">
+                                    <span class="booking-card__price-label">From</span>
+                                    <span class="booking-card__price-amount">${{ number_format($trek->base_price, 0) }}</span>
+                                    <span class="booking-card__price-unit">per person</span>
+                                </div>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="booking-card__action">View details</a>
                             </div>
                         </div>
                     </article>
@@ -116,19 +119,16 @@
         </div>
     </section>
 
-    <section id="featured-hotels" class="booking-section booking-section--soft">
+    <section id="featured-hotels" class="booking-section booking-section--tinted">
         <div class="container container-wide">
             <div class="booking-section__head">
                 <div class="booking-section__title">
                     <p class="section-kicker">Stay Options</p>
                     <h2>Featured Hotels</h2>
+                    <p class="section-subtitle">Handpicked stays with comfort, charm, and mountain views.</p>
                 </div>
                 <div class="booking-section__actions">
-                    <a href="{{ route('home') }}#featured-hotels" class="view-all-link">View All</a>
-                    <div class="carousel-arrows">
-                        <button class="arrow-btn" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
-                        <button class="arrow-btn" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
-                    </div>
+                    <a href="{{ route('hotels.index') }}" class="view-all-link">View all</a>
                 </div>
             </div>
 
@@ -144,12 +144,16 @@
                         </div>
                         <div class="booking-card__body">
                             <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) : 'New' }} ({{ $hotel->reviews_count }} reviews)</span>
+                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) . ' • ' . $hotel->reviews_count . ' reviews' : 'New' }}</span>
                             </div>
                             <h3>{{ $hotel->name }}</h3>
                             <div class="booking-card__footer">
-                                <div class="booking-card__price">From <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong> <span>/night</span></div>
-                                <a href="{{ route('hotels.show', $hotel) }}" class="btn-primary-filled booking-card__action">View Details</a>
+                                <div class="booking-card__price">
+                                    <span class="booking-card__price-label">From</span>
+                                    <span class="booking-card__price-amount">${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
+                                    <span class="booking-card__price-unit">per night</span>
+                                </div>
+                                <a href="{{ route('hotels.show', $hotel) }}" class="booking-card__action">View details</a>
                             </div>
                         </div>
                     </article>

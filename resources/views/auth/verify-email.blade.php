@@ -25,8 +25,12 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
-            <button type="submit" class="auth-link">
-                {{ __('Log Out') }}
+            <button
+                type="button"
+                class="auth-link"
+                onclick="if (window.showConfirm) { showConfirm({ title: 'Sign Out', message: 'Are you sure you want to sign out?', buttonText: 'Sign Out', buttonClass: 'confirm-btn--secondary', form: this.closest('form') }); } else { this.closest('form').submit(); }"
+            >
+                {{ __('Sign Out') }}
             </button>
         </form>
     </div>

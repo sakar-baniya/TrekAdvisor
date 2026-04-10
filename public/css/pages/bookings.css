@@ -41,7 +41,7 @@
     background: #ebf8ff;
 }
 
-.booking-card {
+.booking-flow-container .booking-card {
     background: #ffffff;
     border-radius: 32px;
     overflow: hidden;
@@ -329,7 +329,7 @@
         grid-template-columns: 1fr;
     }
 
-    .booking-card,
+    .booking-flow-container .booking-card,
     .success-card {
         padding: 32px;
     }

@@ -3,7 +3,7 @@
 /* -------------------------------------------------------------------------- */
 .catalog-main {
     padding-top: 3.5rem;
-    padding-bottom: 6rem;
+    padding-bottom: 1.5rem;
 }
 
 /* Horizontal Filter Bar - Balanced Spacious Layout */
@@ -450,25 +450,11 @@
 
 .treks-pagination,
 .catalog-pagination {
-    margin-top: 3rem;
-    /* Reduced from 4rem */
+    margin-top: 1rem;
     display: flex;
     justify-content: center;
     border-top: 1px solid rgba(15, 23, 42, 0.05);
-    padding: 2rem 0;
-    /* Balanced padding */
-}
-
-
-/* -------------------------------------------------------------------------- */
-/* 2. Pagination (Refined for Marketplace)                                     */
-/* -------------------------------------------------------------------------- */
-.catalog-pagination {
-    margin-top: 3rem;
-    display: flex;
-    justify-content: center;
-    border-top: 1px solid rgba(15, 23, 42, 0.05);
-    padding: 2.5rem 0;
+    padding: 1.1rem 0 0.85rem;
 }
 
 

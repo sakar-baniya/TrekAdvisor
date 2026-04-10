@@ -60,5 +60,10 @@ class User extends Authenticatable
             default => 'customer.dashboard',
         };
     }
+
+    public function isApproved(): bool
+    {
+        return ($this->approval_status ?? 'pending') === 'approved';
+    }
 }
 

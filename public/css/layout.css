@@ -1,16 +1,25 @@
 /* --- TrekAdvisor Premium Layout --- */
 
 /* 1. Global Viewport Control */
-.page-shell, .guest-shell, .dashboard-shell {
+body.body-app {
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.page-shell, .guest-shell, .dashboard-shell {
     display: flex;
     flex-direction: column;
     background: var(--color-background);
 }
 
+.page-shell {
+    flex: 1 0 auto;
+}
+
 .page-content, .dashboard-main {
     flex: 1;
-    padding-bottom: 4rem;
+    padding-bottom: 2.5rem;
 }
 
 /* 2. Navigation System (High Tier Design) */
@@ -115,6 +124,10 @@
     font-weight: 750; /* Enhanced visual weight for active state */
 }
 
+.nav-account-dropdown .dropdown-item {
+    cursor: pointer;
+}
+
 /* Actions Section */
 .nav-actions {
     display: flex;
@@ -159,6 +172,7 @@
     background: #1a252f !important;
     padding: 5rem 0 2rem;
     color: rgba(255, 255, 255, 0.8) !important;
+    margin-top: auto;
 }
 
 .footer-grid {
@@ -208,8 +222,8 @@
 /* 4. WhatsApp Floating Button */
 .floating-whatsapp {
     position: fixed;
-    bottom: 30px;
-    right: 30px;
+    bottom: max(24px, env(safe-area-inset-bottom));
+    right: max(24px, env(safe-area-inset-right));
     width: 60px;
     height: 60px;
     background-color: #25d366;
@@ -220,7 +234,7 @@
     justify-content: center;
     font-size: 30px;
     box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.2);
-    z-index: 9999;
+    z-index: 1200;
     text-decoration: none;
     transition: all 0.3s ease;
 }
@@ -229,4 +243,10 @@
     background-color: #128c7e;
     transform: scale(1.1);
     color: #FFFFFF !important;
+}
+
+@media (min-width: 1024px) {
+    .floating-whatsapp {
+        bottom: 120px;
+    }
 }

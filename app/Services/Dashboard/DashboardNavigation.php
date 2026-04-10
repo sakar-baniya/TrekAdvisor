@@ -92,6 +92,11 @@ class DashboardNavigation
                     'icon' => 'fa-headset',
                     'route' => 'staff.dashboard',
                 ],
+                [
+                    'label' => 'Trek Bookings',
+                    'icon' => 'fa-mountain-sun',
+                    'route' => 'staff.trek-bookings.index',
+                ],
             ],
         ];
     }

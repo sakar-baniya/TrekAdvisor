@@ -57,6 +57,12 @@
                         name="phone" 
                         value="{{ old('phone', $user->phone ?? '') }}"
                         class="dashboard-form-input @error('phone') error @enderror"
+                        pattern="[0-9]{7,15}"
+                        inputmode="numeric"
+                        maxlength="15"
+                        required
+                        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
+                        placeholder="Digits only"
                     />
                     @error('phone')
                         <span class="dashboard-form-error">{{ $message }}</span>

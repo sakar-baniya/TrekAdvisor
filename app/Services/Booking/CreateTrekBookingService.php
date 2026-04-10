@@ -2,8 +2,8 @@
 
 namespace App\Services\Booking;
 
-use App\DTOs\BookingCheckoutResult;
-use App\DTOs\CreateTrekBookingData;
+use App\DTOs\Booking\BookingCheckoutResult;
+use App\DTOs\Booking\CreateTrekBookingData;
 use App\Repositories\Contracts\PaymentRepositoryInterface;
 use App\Repositories\Contracts\TrekBookingRepositoryInterface;
 use App\Services\Payment\StripeCheckoutWorkflowService;

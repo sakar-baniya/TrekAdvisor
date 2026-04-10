@@ -34,8 +34,8 @@
 
             <select name="status" class="admin-input">
                 <option value="">All status</option>
-                @foreach (['Available', 'Full', 'Completed'] as $option)
-                    <option value="{{ $option }}" @selected($selectedStatus === $option)>{{ $option }}</option>
+                @foreach (['available' => 'Available', 'full' => 'Full', 'completed' => 'Completed'] as $value => $label)
+                    <option value="{{ $value }}" @selected($selectedStatus === $value)>{{ $label }}</option>
                 @endforeach
             </select>
 

@@ -14,7 +14,8 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
+        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=4">
+        <link rel="stylesheet" href="{{ asset('css/components/confirmation-modal.css') }}">
         @stack('styles')
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script>
@@ -147,6 +148,65 @@
             </div>
         </footer>
         
+        <!-- Confirmation Modal Component -->
+        <x-confirmation-modal />
+
+        <script src="{{ asset('js/modules/confirmation-modal.js') }}"></script>
+        <script>
+            if (typeof window.showConfirm !== 'function') {
+                window.showConfirm = function (options) {
+                    var modal = document.getElementById('confirmModal');
+                    var title = document.getElementById('confirmTitle');
+                    var message = document.getElementById('confirmMessage');
+                    var warning = document.getElementById('confirmWarning');
+                    var actionBtn = document.getElementById('confirmActionBtn');
+
+                    if (!modal || !actionBtn) {
+                        if (options && options.form) {
+                            options.form.submit();
+                        }
+                        return;
+                    }
+
+                    title.textContent = (options && options.title) || 'Confirm Action';
+                    message.textContent = (options && options.message) || 'Are you sure?';
+
+                    if (options && options.warning) {
+                        warning.textContent = options.warning;
+                        warning.style.display = 'block';
+                    } else if (warning) {
+                        warning.style.display = 'none';
+                    }
+
+                    actionBtn.textContent = (options && options.buttonText) || 'Confirm';
+                    actionBtn.className = 'confirm-btn ' + ((options && options.buttonClass) || '');
+                    actionBtn.onclick = function () {
+                        if (options && options.form) {
+                            options.form.submit();
+                        }
+                    };
+
+                    modal.style.display = 'flex';
+                };
+            }
+
+            document.addEventListener('submit', function (event) {
+                var form = event.target;
+                if (!form || !form.matches('[data-logout-confirm]')) {
+                    return;
+                }
+
+                event.preventDefault();
+                window.showConfirm({
+                    title: 'Sign Out',
+                    message: 'Are you sure you want to sign out?',
+                    buttonText: 'Sign Out',
+                    buttonClass: 'confirm-btn--secondary',
+                    form: form
+                });
+            }, true);
+        </script>
+
         @stack('scripts')
     </body>
 </html>

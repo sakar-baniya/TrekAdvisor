@@ -5,6 +5,10 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProfileController;
+use App\Http\Controllers\Account\BookingsController as AccountBookingsController;
+use App\Http\Controllers\Account\PaymentsController as AccountPaymentsController;
+use App\Http\Controllers\Account\ProfileController as AccountProfileController;
+use App\Http\Controllers\Account\ReviewsController as AccountReviewsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -16,6 +20,7 @@ use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
 use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController;
+use App\Http\Controllers\Staff\StaffTrekBookingController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
@@ -69,6 +74,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->middleware('role:staff')
         ->name('staff.dashboard');
 
+    Route::middleware('role:staff')->prefix('staff')->name('staff.')->group(function () {
+        Route::get('trek-bookings', [StaffTrekBookingController::class, 'index'])->name('trek-bookings.index');
+        Route::get('trek-bookings/{trekBooking}', [StaffTrekBookingController::class, 'show'])->name('trek-bookings.show');
+        Route::patch('trek-bookings/{trekBooking}/status', [StaffTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
+    });
+
     // Hotel Owner Only
     Route::get('/hotel-owner/dashboard', [DashboardController::class, 'hotelOwner'])
         ->middleware('role:hotel_owner')
@@ -81,6 +92,37 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/customer/dashboard', [DashboardController::class, 'customer'])
         ->middleware('role:customer')
         ->name('customer.dashboard');
+
+    Route::middleware('role:customer')->group(function () {
+        Route::get('/customer/trek-bookings/{trekBooking}', [BookingController::class, 'showTrekBooking'])
+            ->name('customer.trek-bookings.show');
+        Route::get('/customer/hotel-bookings/{hotelBooking}', [BookingController::class, 'showHotelBooking'])
+            ->name('customer.hotel-bookings.show');
+    });
+
+    Route::middleware('role:customer')->prefix('account')->name('account.')->group(function () {
+        Route::get('/bookings', [AccountBookingsController::class, 'index'])->name('bookings.index');
+        Route::get('/bookings/treks/{trekBooking}', [AccountBookingsController::class, 'showTrek'])->name('bookings.treks.show');
+        Route::patch('/bookings/treks/{trekBooking}/passengers', [AccountBookingsController::class, 'updatePassengers'])->name('bookings.treks.passengers');
+        Route::get('/bookings/hotels/{hotelBooking}', [AccountBookingsController::class, 'showHotel'])->name('bookings.hotels.show');
+        Route::patch('/bookings/treks/{trekBooking}/cancel', [AccountBookingsController::class, 'cancelTrek'])->name('bookings.treks.cancel');
+        Route::patch('/bookings/treks/{trekBooking}/cancel-withdraw', [AccountBookingsController::class, 'withdrawTrekCancellation'])->name('bookings.treks.cancel-withdraw');
+        Route::patch('/bookings/hotels/{hotelBooking}/cancel', [AccountBookingsController::class, 'cancelHotel'])->name('bookings.hotels.cancel');
+        Route::patch('/bookings/hotels/{hotelBooking}/cancel-withdraw', [AccountBookingsController::class, 'withdrawHotelCancellation'])->name('bookings.hotels.cancel-withdraw');
+        Route::get('/bookings/treks/{trekBooking}/receipt', [AccountBookingsController::class, 'trekReceipt'])->name('bookings.treks.receipt');
+        Route::get('/bookings/hotels/{hotelBooking}/receipt', [AccountBookingsController::class, 'hotelReceipt'])->name('bookings.hotels.receipt');
+
+        Route::get('/payments', [AccountPaymentsController::class, 'index'])->name('payments.index');
+
+        Route::get('/profile', [AccountProfileController::class, 'show'])->name('profile.show');
+        Route::patch('/profile', [AccountProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profile/password', [AccountProfileController::class, 'updatePassword'])->name('profile.password');
+
+        Route::post('/reviews/treks/{trek}', [AccountReviewsController::class, 'storeTrek'])->name('reviews.treks.store');
+        Route::post('/reviews/hotels/{hotel}', [AccountReviewsController::class, 'storeHotel'])->name('reviews.hotels.store');
+        Route::patch('/reviews/{review}', [AccountReviewsController::class, 'update'])->name('reviews.update');
+        Route::delete('/reviews/{review}', [AccountReviewsController::class, 'destroy'])->name('reviews.destroy');
+    });
 
 });
 

@@ -10,18 +10,25 @@
             </div>
 
             <div class="account-stat-grid">
-                <article class="account-stat-card is-cyan">
+                <article class="account-stat-card">
                     <div class="account-stat-card__icon"><i class="fas fa-mountain"></i></div>
-                    <div>
+                    <div class="account-stat-card__body">
                         <strong>{{ $stats['trek_bookings'] }}</strong>
                         <span>Trek Bookings</span>
                     </div>
                 </article>
-                <article class="account-stat-card is-green">
+                <article class="account-stat-card">
                     <div class="account-stat-card__icon"><i class="fas fa-hotel"></i></div>
-                    <div>
+                    <div class="account-stat-card__body">
                         <strong>{{ $stats['hotel_bookings'] }}</strong>
                         <span>Hotel Bookings</span>
+                    </div>
+                </article>
+                <article class="account-stat-card">
+                    <div class="account-stat-card__icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="account-stat-card__body">
+                        <strong>{{ $stats['upcoming_trips'] }}</strong>
+                        <span>Upcoming Trips</span>
                     </div>
                 </article>
             </div>
@@ -36,6 +43,14 @@
 
                 <div class="account-card-stack">
                     @forelse ($trekBookings as $booking)
+                        @php
+                            $statusClass = match (strtolower($booking->status)) {
+                                'confirmed' => 'is-success',
+                                'pending' => 'is-warning',
+                                'cancelled' => 'is-danger',
+                                default => 'is-info',
+                            };
+                        @endphp
                         <article class="account-booking-card">
                             <div class="account-booking-card__top">
                                 <div>
@@ -47,11 +62,11 @@
                                         <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
                                     </div>
                                 </div>
-                                <span class="account-status {{ strtolower($booking->status) === 'confirmed' ? 'is-success' : 'is-warning' }}">{{ $booking->status }}</span>
+                                <span class="account-status {{ $statusClass }}">{{ $booking->status }}</span>
                             </div>
                             <div class="account-actions">
-                                <a href="{{ route('treks.show', $booking->departure?->trek?->slug ?? '#') }}" class="market-button">View Trek</a>
-                                <a href="{{ route('profile.edit') }}" class="account-outline-button">Manage Profile</a>
+                                <a href="{{ route('account.bookings.treks.show', $booking) }}" class="market-button">View Booking</a>
+                                <a href="{{ route('treks.show', $booking->departure?->trek?->slug ?? '#') }}" class="account-outline-button">View Trek</a>
                             </div>
                         </article>
                     @empty
@@ -70,6 +85,14 @@
 
                 <div class="account-card-stack">
                     @forelse ($hotelBookings as $booking)
+                        @php
+                            $statusClass = match (strtolower($booking->status)) {
+                                'confirmed' => 'is-success',
+                                'pending' => 'is-warning',
+                                'cancelled' => 'is-danger',
+                                default => 'is-info',
+                            };
+                        @endphp
                         <article class="account-booking-card">
                             <div class="account-booking-card__top">
                                 <div>
@@ -79,13 +102,23 @@
                                         <span><i class="fas fa-calendar-times"></i> Check-out: {{ optional($booking->check_out)->format('F d, Y') }}</span>
                                         <span><i class="fas fa-bed"></i> {{ $booking->num_rooms }} Rooms x {{ $booking->num_nights }} Nights</span>
                                         <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                                        @if(!empty($booking->booking_reference))
+                                            <span><i class="fas fa-hashtag"></i> {{ $booking->booking_reference }}</span>
+                                        @endif
                                     </div>
                                 </div>
-                                <span class="account-status {{ strtolower($booking->status) === 'confirmed' ? 'is-success' : 'is-warning' }}">{{ $booking->status }}</span>
+                                <span class="account-status {{ $statusClass }}">{{ $booking->status }}</span>
+                            </div>
+                            <div class="account-actions">
+                                <a href="{{ route('account.bookings.hotels.show', $booking) }}" class="market-button">View Booking</a>
+                                <a href="{{ route('hotels.show', $booking->hotelRoom?->hotel ?? '#') }}" class="account-outline-button">View Hotel</a>
                             </div>
                         </article>
                     @empty
-                        <p class="empty-note">You do not have any hotel bookings yet.</p>
+                        <div class="account-empty">
+                            <p>You do not have any hotel bookings yet.</p>
+                            <a href="{{ route('hotels.index') }}" class="market-button">Browse Hotels</a>
+                        </div>
                     @endforelse
                 </div>
             </section>

@@ -23,67 +23,7 @@
 @endif
 
 <div class="admin-form-stack">
-    <section class="admin-panel">
-        <div class="admin-panel__header">
-            <div>
-                <h3>Basic Information</h3>
-                <p>Core details that power search and bookings</p>
-            </div>
-        </div>
-        <div class="admin-form-grid admin-form-grid--two">
-            <label class="admin-field">
-                <span>Trek Title *</span>
-                <input type="text" name="title" value="{{ old('title', $trek->title) }}" class="admin-input" data-slug-source required />
-                @error('title') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
-
-            <label class="admin-field">
-                <span>Slug</span>
-                <input type="text" value="{{ old('slug', $trek->slug) }}" class="admin-input admin-input--muted" data-slug-target readonly />
-            </label>
-
-            <label class="admin-field">
-                <span>Base Price (USD) *</span>
-                <input type="number" step="0.01" min="0" name="base_price" value="{{ old('base_price', $trek->base_price) }}" class="admin-input" required />
-                @error('base_price') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
-
-            <label class="admin-field">
-                <span>Difficulty *</span>
-                <select name="difficulty" class="admin-input" required>
-                    @foreach (['Easy', 'Moderate', 'Difficult', 'Extreme'] as $option)
-                        <option value="{{ $option }}" @selected(old('difficulty', ucfirst($trek->difficulty) ?: 'Easy') === $option)>{{ $option }}</option>
-                    @endforeach
-                </select>
-                @error('difficulty') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
-
-            <label class="admin-field">
-                <span>Duration (days) *</span>
-                <input type="number" min="1" name="duration_days" value="{{ old('duration_days', $trek->duration_days) }}" class="admin-input" required />
-                @error('duration_days') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
-
-            <label class="admin-field">
-                <span>Max Altitude (m)</span>
-                <input type="number" min="0" name="max_altitude" value="{{ old('max_altitude', $trek->max_altitude) }}" class="admin-input" />
-                @error('max_altitude') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
-
-            <fieldset class="admin-field admin-field--full">
-                <span>Status</span>
-                <div class="admin-choice-row">
-                    @foreach (['Active', 'Inactive'] as $option)
-                        <label class="admin-choice-pill">
-                            <input type="radio" name="status" value="{{ $option }}" @checked(old('status', ucfirst($trek->status) ?: 'Active') === $option)>
-                            <span>{{ $option }}</span>
-                        </label>
-                    @endforeach
-                </div>
-                @error('status') <small class="admin-error">{{ $message }}</small> @enderror
-            </fieldset>
-        </div>
-    </section>
+    <x-dashboard.basic-information-section :trek="$trek" :edit="isset($edit) ? $edit : false" :errors="$errors ?? null" />
 
     <section class="admin-panel">
         <div class="admin-panel__header">
@@ -101,24 +41,9 @@
 
             <!-- Show existing combined images -->
             @if ($trek->images->isNotEmpty())
-                <div class="admin-gallery-grid">
+                <div class="media-gallery-grid">
                     @foreach ($trek->images as $image)
-                        <label class="admin-gallery-card" style="position: relative;">
-                            <img src="{{ $image->path }}" alt="Trek image {{ $loop->iteration }}">
-                            
-                            <!-- Remove Checkbox styled as an X button -->
-                            <label style="position: absolute; top: 8px; right: 8px; background: rgba(220, 38, 38, 0.9); color: white; width: 28px; height: 28px; display: flex; align-items: center; justify-content: center; border-radius: 50%; cursor: pointer; border: 2px solid white; box-shadow: 0 2px 4px rgba(0,0,0,0.2); transition: background 0.2s;" onmouseover="this.style.background='rgb(220, 38, 38)'" onmouseout="this.style.background='rgba(220, 38, 38, 0.9)'" title="Mark for removal">
-                                <input type="checkbox" name="remove_gallery_images[]" value="{{ $image->id }}" hidden onchange="this.parentElement.parentElement.style.opacity = this.checked ? '0.4' : '1'">
-                                <i class="fas fa-xmark"></i>
-                            </label>
-
-                            <div class="admin-gallery-card__footer" style="padding-top: 8px;">
-                                <label style="display:flex; align-items:center; gap: 6px; cursor: pointer; font-weight: 500;">
-                                    <input type="radio" name="primary_image" value="{{ $image->id }}" @checked($image->sort_order === 0)>
-                                    <span>Primary Cover</span>
-                                </label>
-                            </div>
-                        </label>
+                        <x-dashboard.media-card :image="$image" :isPrimary="$image->sort_order === 0" />
                     @endforeach
                 </div>
             @endif
@@ -180,16 +105,7 @@
         </div>
     </section>
 
-    <div class="admin-form-actions">
-        <a href="{{ route('admin.treks.index') }}" class="admin-secondary-button">
-            <i class="fas fa-arrow-left"></i>
-            <span>Back to Treks</span>
-        </a>
-        <button type="submit" class="admin-primary-button">
-            <i class="fas fa-floppy-disk"></i>
-            <span>{{ $trek->exists ? 'Update Trek' : 'Save Trek' }}</span>
-        </button>
-    </div>
+    <!-- No form actions here; sticky action bar is used in parent -->
 </div>
 
 <template id="itinerary-template">

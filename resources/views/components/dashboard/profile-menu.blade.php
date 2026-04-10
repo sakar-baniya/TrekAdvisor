@@ -15,25 +15,25 @@
             <p class="mb-0 text-muted" style="font-size: 0.75rem;">{{ $user->email }}</p>
         </div>
 
-        <ul class="list-unstyled mb-0 py-1">
-            <li>
-                <a href="{{ route('profile.show') }}" class="v-dropdown__link">
-                    <i class="fas fa-cog opacity-50"></i> Profile Settings
-                </a>
-            </li>
-            <li class="border-top my-1 opacity-25"></li>
-            <li>
-                <a href="{{ route('home') }}" class="v-dropdown__link">
-                    <i class="fas fa-home opacity-50"></i> Back to Website
-                </a>
-            </li>
-        </ul>
-
-        <div class="border-top py-1">
-            <form method="POST" action="{{ route('logout') }}">
+        <div class="v-dropdown__menu" style="display: flex; flex-direction: column; gap: 0; padding: 8px 0;">
+            <a href="{{ route('profile.show') }}" class="v-dropdown__link" style="min-height:44px;">
+                <i class="fas fa-cog opacity-50"></i>
+                <span>Profile Settings</span>
+            </a>
+            <a href="{{ route('home') }}" class="v-dropdown__link" style="min-height:44px;">
+                <i class="fas fa-home opacity-50"></i>
+                <span>Back to Website</span>
+            </a>
+            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
                 @csrf
-                <button type="submit" class="v-dropdown__link w-100 border-0 bg-transparent text-start">
-                    <i class="fas fa-sign-out-alt opacity-50"></i> Sign Out
+                <button
+                    type="button"
+                    class="v-dropdown__link w-100 border-0 bg-transparent text-start"
+                    style="min-height:44px;"
+                    onclick="if (window.showConfirm) { showConfirm({ title: 'Sign Out', message: 'Are you sure you want to sign out?', buttonText: 'Sign Out', buttonClass: 'confirm-btn--secondary', form: this.closest('form') }); } else { this.closest('form').submit(); }"
+                >
+                    <i class="fas fa-sign-out-alt opacity-50"></i>
+                    <span>Sign Out</span>
                 </button>
             </form>
         </div>
