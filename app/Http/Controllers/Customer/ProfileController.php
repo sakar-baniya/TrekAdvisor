@@ -8,13 +8,86 @@ use App\Services\User\UserProfileService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
     public function __construct(
         private readonly UserProfileService $profileService
     ) {
+    }
+
+    public function settingsProfile(Request $request): View
+    {
+        $user = $request->user();
+        $profile = $this->profileService->getProfile($user);
+
+        return view('settings.profile', compact('user', 'profile'));
+    }
+
+    public function settingsSecurity(Request $request): View
+    {
+        return view('settings.security', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function settingsSecurityPassword(Request $request): View
+    {
+        return view('settings.security-password', [
+            'user' => $request->user(),
+        ]);
+    }
+
+    public function updateSecurityPassword(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'current_password' => ['required', 'current_password'],
+            'password' => ['required', Password::defaults(), 'confirmed'],
+        ]);
+
+        $request->user()->update([
+            'password' => Hash::make($validated['password']),
+        ]);
+
+        return back()->with('status', 'password-updated');
+    }
+
+    public function storeAvatar(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'avatar' => ['required', 'image', 'max:2048'],
+        ]);
+
+        $user = $request->user();
+
+        if ($user->avatar_path) {
+            Storage::disk('public')->delete($user->avatar_path);
+        }
+
+        $path = $validated['avatar']->store('avatars', 'public');
+
+        $user->update([
+            'avatar_path' => $path,
+        ]);
+
+        return back()->with('status', 'avatar-updated');
+    }
+
+    public function destroyAvatar(Request $request): RedirectResponse
+    {
+        $user = $request->user();
+
+        if ($user->avatar_path) {
+            Storage::disk('public')->delete($user->avatar_path);
+            $user->update(['avatar_path' => null]);
+        }
+
+        return back()->with('status', 'avatar-removed');
     }
 
 

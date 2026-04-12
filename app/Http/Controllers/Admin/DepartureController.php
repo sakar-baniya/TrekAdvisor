@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class AdminDepartureController extends Controller
+class DepartureController extends Controller
 {
     public function index(Request $request): View
     {

@@ -8,7 +8,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PageController extends Controller
+class HomeController extends Controller
 {
     /**
      * Display the home page.

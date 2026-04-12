@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
-class AdminUserController extends Controller
+class UserController extends Controller
 {
     public function index(Request $request): View
     {

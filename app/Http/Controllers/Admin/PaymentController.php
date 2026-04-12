@@ -9,7 +9,7 @@ use App\Models\TrekBooking;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminPaymentController extends Controller
+class PaymentController extends Controller
 {
     public function index(Request $request): View
     {

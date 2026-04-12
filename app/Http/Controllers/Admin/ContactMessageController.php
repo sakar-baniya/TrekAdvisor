@@ -7,7 +7,7 @@ use App\Models\ContactMessage;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminContactMessageController extends Controller
+class ContactMessageController extends Controller
 {
     public function index(Request $request): View
     {

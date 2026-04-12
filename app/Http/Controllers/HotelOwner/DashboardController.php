@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Customer;
+namespace App\Http\Controllers\HotelOwner;
 
 use App\Http\Controllers\Controller;
-
 use App\Services\Dashboard\UserDashboardQueryService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -15,17 +14,7 @@ class DashboardController extends Controller
     ) {
     }
 
-    public function customer(Request $request): View
-    {
-        return view('dashboard.customer-dashboard', $this->userDashboardQueryService->customerData($request->user()));
-    }
-
-    public function staff(): View
-    {
-        return view('dashboard.staff-dashboard', $this->userDashboardQueryService->staffData());
-    }
-
-    public function hotelOwner(Request $request): View
+    public function index(Request $request): View
     {
         return view('dashboard.owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
     }

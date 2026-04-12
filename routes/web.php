@@ -3,37 +3,34 @@
 use App\Http\Controllers\TrekController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\Customer\BookingController;
+use App\Http\Controllers\Customer\AccountBookingsController;
+use App\Http\Controllers\Customer\AccountReviewsController;
 use App\Http\Controllers\Customer\DashboardController;
+use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Customer\ProfileController;
-use App\Http\Controllers\Account\BookingsController as AccountBookingsController;
-use App\Http\Controllers\Account\PaymentsController as AccountPaymentsController;
-use App\Http\Controllers\Account\ReviewsController as AccountReviewsController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\StripeCheckoutController;
-use App\Http\Controllers\Admin\AdminDashboardController;
-use App\Http\Controllers\Admin\AdminDepartureController;
-use App\Http\Controllers\Admin\AdminPaymentController;
-use App\Http\Controllers\Admin\AdminReviewController;
-use App\Http\Controllers\Admin\AdminTrekController;
-use App\Http\Controllers\Admin\AdminTrekBookingController;
-use App\Http\Controllers\Admin\AdminUserController;
-use App\Http\Controllers\Admin\AdminHotelController;
-use App\Http\Controllers\Admin\AdminContactMessageController;
+use App\Http\Controllers\Admin\DepartureController;
+use App\Http\Controllers\Admin\ReviewController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController;
-use App\Http\Controllers\Staff\StaffTrekBookingController;
-use App\Http\Controllers\Settings\ProfileController as SettingsProfileController;
-use App\Http\Controllers\Settings\SecurityController as SettingsSecurityController;
+use App\Http\Controllers\HotelOwner\DashboardController as HotelOwnerDashboardController;
+use App\Http\Controllers\HotelOwner\RoomController as HotelOwnerRoomController;
+use App\Http\Controllers\Staff\BookingController as StaffBookingController;
+use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
+use App\Http\Controllers\Staff\DepartureController as StaffDepartureController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [PageController::class, 'home'])->name('home');
-Route::get('/about', [PageController::class, 'about'])->name('about');
-Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::get('/', [HomeController::class, 'home'])->name('home');
+Route::get('/about', [HomeController::class, 'about'])->name('about');
+Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
-Route::get('/faq', [PageController::class, 'faq'])->name('faq');
-Route::get('/blog', [PageController::class, 'blog'])->name('blog');
+Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+Route::get('/blog', [HomeController::class, 'blog'])->name('blog');
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');
 
@@ -43,13 +40,13 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->prefix('settings')->name('settings.')->group(function () {
-    Route::get('/profile', [SettingsProfileController::class, 'show'])->name('profile.show');
-    Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
-    Route::get('/security', [SettingsSecurityController::class, 'show'])->name('security.show');
-    Route::get('/security/password', [SettingsSecurityController::class, 'showPassword'])->name('security.password.show');
-    Route::patch('/security/password', [SettingsSecurityController::class, 'updatePassword'])->name('security.password');
-    Route::post('/avatar', [SettingsProfileController::class, 'storeAvatar'])->name('avatar.store');
-    Route::delete('/avatar', [SettingsProfileController::class, 'destroyAvatar'])->name('avatar.destroy');
+    Route::get('/profile', [ProfileController::class, 'settingsProfile'])->name('profile.show');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/security', [ProfileController::class, 'settingsSecurity'])->name('security.show');
+    Route::get('/security/password', [ProfileController::class, 'settingsSecurityPassword'])->name('security.password.show');
+    Route::patch('/security/password', [ProfileController::class, 'updateSecurityPassword'])->name('security.password');
+    Route::post('/avatar', [ProfileController::class, 'storeAvatar'])->name('avatar.store');
+    Route::delete('/avatar', [ProfileController::class, 'destroyAvatar'])->name('avatar.destroy');
 });
 
 Route::middleware(['auth', 'role:admin,staff,hotel_owner'])->get('/search', SearchController::class)->name('search');
@@ -59,52 +56,54 @@ Route::middleware(['auth', 'role:admin,staff,hotel_owner'])->get('/search', Sear
 Route::middleware(['auth', 'verified'])->group(function () {
     
     // Admin Only
-    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+    Route::get('/admin/dashboard', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])
         ->middleware('role:admin')
         ->name('admin.dashboard');
 
     Route::middleware('role:admin')->prefix('admin')->name('admin.')->group(function () {
-        Route::resource('treks', AdminTrekController::class);
-        Route::resource('departures', AdminDepartureController::class)->except(['destroy']);
-        Route::get('trek-bookings', [AdminTrekBookingController::class, 'index'])->name('trek-bookings.index');
-        Route::get('trek-bookings/{trekBooking}', [AdminTrekBookingController::class, 'show'])->name('trek-bookings.show');
-        Route::patch('trek-bookings/{trekBooking}/status', [AdminTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
-        Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
-        Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
-        Route::get('contact-messages', [AdminContactMessageController::class, 'index'])->name('contact-messages.index');
-        Route::get('contact-messages/{contactMessage}', [AdminContactMessageController::class, 'show'])->name('contact-messages.show');
-        Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
-        Route::get('reviews/flagged', [AdminReviewController::class, 'flagged'])->name('reviews.flagged');
-        Route::get('reviews/{review}', [AdminReviewController::class, 'show'])->name('reviews.show');
-        Route::patch('reviews/{review}/flag', [AdminReviewController::class, 'toggleFlag'])->name('reviews.flag');
-        Route::delete('reviews/{review}', [AdminReviewController::class, 'destroy'])->name('reviews.destroy');
-        Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
-        Route::get('users/create-staff', [AdminUserController::class, 'createStaff'])->name('users.create-staff');
-        Route::post('users/create-staff', [AdminUserController::class, 'storeStaff'])->name('users.store-staff');
-        Route::patch('users/{user}/approve', [AdminUserController::class, 'approve'])->name('users.approve');
-        Route::patch('users/{user}/role', [AdminUserController::class, 'updateRole'])->name('users.role');
+        Route::resource('treks', \App\Http\Controllers\Admin\TrekController::class);
+        Route::resource('departures', DepartureController::class)->except(['destroy']);
+        Route::get('trek-bookings', [\App\Http\Controllers\Admin\BookingController::class, 'index'])->name('trek-bookings.index');
+        Route::get('trek-bookings/{trekBooking}', [\App\Http\Controllers\Admin\BookingController::class, 'show'])->name('trek-bookings.show');
+        Route::patch('trek-bookings/{trekBooking}/status', [\App\Http\Controllers\Admin\BookingController::class, 'updateStatus'])->name('trek-bookings.status');
+        Route::get('payments', [\App\Http\Controllers\Admin\PaymentController::class, 'index'])->name('payments.index');
+        Route::get('payments/{payment}', [\App\Http\Controllers\Admin\PaymentController::class, 'show'])->name('payments.show');
+        Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
+        Route::get('contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
+        Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
+        Route::get('reviews/flagged', [ReviewController::class, 'flagged'])->name('reviews.flagged');
+        Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+        Route::patch('reviews/{review}/flag', [ReviewController::class, 'toggleFlag'])->name('reviews.flag');
+        Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+        Route::get('users', [UserController::class, 'index'])->name('users.index');
+        Route::get('users/create-staff', [UserController::class, 'createStaff'])->name('users.create-staff');
+        Route::post('users/create-staff', [UserController::class, 'storeStaff'])->name('users.store-staff');
+        Route::patch('users/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
+        Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.role');
 
-        Route::get('hotels', [AdminHotelController::class, 'index'])->name('hotels.index');
-        Route::patch('hotels/{hotel}/status', [AdminHotelController::class, 'updateStatus'])->name('hotels.status');
+        Route::get('hotels', [\App\Http\Controllers\Admin\HotelController::class, 'index'])->name('hotels.index');
+        Route::patch('hotels/{hotel}/status', [\App\Http\Controllers\Admin\HotelController::class, 'updateStatus'])->name('hotels.status');
     });
 
     // Staff Only
-    Route::get('/staff/dashboard', [DashboardController::class, 'staff'])
+    Route::get('/staff/dashboard', [StaffDashboardController::class, 'index'])
         ->middleware('role:staff')
         ->name('staff.dashboard');
 
     Route::middleware('role:staff')->prefix('staff')->name('staff.')->group(function () {
-        Route::get('trek-bookings', [StaffTrekBookingController::class, 'index'])->name('trek-bookings.index');
-        Route::get('trek-bookings/{trekBooking}', [StaffTrekBookingController::class, 'show'])->name('trek-bookings.show');
-        Route::patch('trek-bookings/{trekBooking}/status', [StaffTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
+        Route::get('trek-bookings', [StaffBookingController::class, 'index'])->name('trek-bookings.index');
+        Route::get('trek-bookings/{trekBooking}', [StaffBookingController::class, 'show'])->name('trek-bookings.show');
+        Route::patch('trek-bookings/{trekBooking}/status', [StaffBookingController::class, 'updateStatus'])->name('trek-bookings.status');
+        Route::resource('departures', StaffDepartureController::class)->except(['destroy']);
     });
 
     // Hotel Owner Only
-    Route::get('/hotel-owner/dashboard', [DashboardController::class, 'hotelOwner'])
+    Route::get('/hotel-owner/dashboard', [HotelOwnerDashboardController::class, 'index'])
         ->middleware('role:hotel_owner')
         ->name('hotel_owner.dashboard');
     Route::middleware('role:hotel_owner')->prefix('hotel-owner')->name('hotel_owner.')->group(function () {
         Route::resource('hotels', HotelOwnerHotelController::class)->except(['show', 'destroy']);
+        Route::resource('hotels.rooms', HotelOwnerRoomController::class)->except(['show', 'destroy']);
     });
 
     // Customer Only
@@ -131,13 +130,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/bookings/treks/{trekBooking}/receipt', [AccountBookingsController::class, 'trekReceipt'])->name('bookings.treks.receipt');
         Route::get('/bookings/hotels/{hotelBooking}/receipt', [AccountBookingsController::class, 'hotelReceipt'])->name('bookings.hotels.receipt');
 
-        Route::get('/payments', [AccountPaymentsController::class, 'index'])->name('payments.index');
+        Route::get('/payments', [CustomerPaymentController::class, 'index'])->name('payments.index');
 
         Route::get('/profile', function () {
             return redirect()->route('settings.profile.show');
         })->name('profile.show');
-        Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
-        Route::patch('/profile/password', [SettingsSecurityController::class, 'updatePassword'])->name('profile.password');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profile/password', [ProfileController::class, 'updateSecurityPassword'])->name('profile.password');
 
         Route::post('/reviews/treks/{trek}', [AccountReviewsController::class, 'storeTrek'])->name('reviews.treks.store');
         Route::post('/reviews/hotels/{hotel}', [AccountReviewsController::class, 'storeHotel'])->name('reviews.hotels.store');
@@ -164,7 +163,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', function () {
         return redirect()->route('settings.profile.show');
     })->name('profile.show');
-    Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

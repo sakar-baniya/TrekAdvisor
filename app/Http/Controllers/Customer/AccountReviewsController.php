@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Account;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hotel;
@@ -11,7 +11,7 @@ use App\Models\TrekBooking;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
-class ReviewsController extends Controller
+class AccountReviewsController extends Controller
 {
     public function storeTrek(Request $request, Trek $trek): RedirectResponse
     {

@@ -8,7 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminReviewController extends Controller
+class ReviewController extends Controller
 {
     public function index(Request $request): View
     {

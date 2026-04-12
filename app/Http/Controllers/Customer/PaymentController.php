@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Account;
+namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class PaymentsController extends Controller
+class PaymentController extends Controller
 {
     public function index(Request $request): View
     {

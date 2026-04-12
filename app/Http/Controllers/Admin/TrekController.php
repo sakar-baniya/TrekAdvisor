@@ -13,7 +13,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AdminTrekController extends Controller
+class TrekController extends Controller
 {
     public function __construct(
         private readonly AdminTrekQueryService $adminTrekQueryService,

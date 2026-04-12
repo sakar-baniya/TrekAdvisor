@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Staff;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Payment;
 use App\Models\Trek;
 use App\Models\TrekBooking;
 use Illuminate\Http\RedirectResponse;
@@ -10,7 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
-class StaffTrekBookingController extends Controller
+class BookingController extends Controller
 {
     public function index(Request $request): View
     {
@@ -34,7 +35,7 @@ class StaffTrekBookingController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        return view('staff.trek-bookings.index', [
+        return view('admin.trek-bookings.index', [
             'bookings' => $bookings,
             'treks' => Trek::query()->orderBy('title')->get(),
             'search' => $search,
@@ -45,10 +46,17 @@ class StaffTrekBookingController extends Controller
 
     public function show(TrekBooking $trekBooking): View
     {
-        $trekBooking->load(['user', 'departure.trek', 'passengers', 'payments']);
+        $trekBooking->load(['user', 'departure.trek', 'passengers']);
 
-        return view('staff.trek-bookings.show', [
+        $payment = Payment::query()
+            ->where('payable_type', 'trek')
+            ->where('payable_id', $trekBooking->id)
+            ->latest()
+            ->first();
+
+        return view('admin.trek-bookings.show', [
             'booking' => $trekBooking,
+            'payment' => $payment,
         ]);
     }
 
@@ -63,7 +71,8 @@ class StaffTrekBookingController extends Controller
         ]);
 
         return redirect()
-            ->route('staff.trek-bookings.show', $trekBooking)
+            ->route('admin.trek-bookings.show', $trekBooking)
             ->with('success', 'Booking status updated.');
     }
 }
+
