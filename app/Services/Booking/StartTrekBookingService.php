@@ -3,27 +3,27 @@
 namespace App\Services\Booking;
 
 use App\Models\Departure;
-use App\Repositories\Contracts\DepartureRepositoryInterface;
 use RuntimeException;
 
 class StartTrekBookingService
 {
     public function __construct(
-        private readonly DepartureRepositoryInterface $departures,
         private readonly BookingSessionService $bookingSessionService,
     ) {
     }
 
     public function loadDeparture(Departure $departure): Departure
     {
-        return $this->departures->loadTrek($departure);
+        $departure->load('trek');
+
+        return $departure;
     }
 
     public function handle(int $departureId, int $totalPassengers): void
     {
-        $departure = $this->departures->findOrFail($departureId);
+        $departure = Departure::query()->findOrFail($departureId);
 
-        if (! $this->departures->hasCapacity($departure, $totalPassengers)) {
+        if (($departure->booked_seats + $totalPassengers) > $departure->capacity) {
             throw new RuntimeException('Not enough slots available for this departure.');
         }
 

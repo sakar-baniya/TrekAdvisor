@@ -3,42 +3,65 @@
 namespace App\Services\Payment;
 
 use App\Models\Payment;
-use App\Repositories\Contracts\PaymentRepositoryInterface;
 use Illuminate\Support\Facades\DB;
 
 class StripePaymentStateService
 {
     public function __construct(
-        private readonly PaymentRepositoryInterface $payments,
         private readonly TrekPaymentService $trekPaymentService,
     ) {
     }
 
     public function markCheckoutCompleted(string $sessionId, ?string $paymentIntentId = null, array $sessionPayload = []): ?Payment
     {
-        $payment = $this->payments->findByStripeSessionId($sessionId);
+        $payment = Payment::query()->where('stripe_session_id', $sessionId)->first();
 
         if (! $payment) {
             return null;
         }
 
         DB::transaction(function () use ($payment, $paymentIntentId, $sessionPayload) {
-            $payment = $this->payments->refresh($payment);
-            $this->payments->markCheckoutCompleted($payment, $paymentIntentId, $sessionPayload);
+            $payment = $payment->fresh() ?? $payment;
+
+            if ($payment->status !== 'success') {
+                $payment->status = 'success';
+                $payment->paid_at = now();
+            }
+
+            if ($paymentIntentId) {
+                $payment->stripe_payment_intent_id = $paymentIntentId;
+            }
+
+            if ($sessionPayload !== []) {
+                $payment->gateway_response = json_encode($sessionPayload);
+            }
+
+            $payment->gateway = 'stripe';
+            $payment->save();
             $this->trekPaymentService->confirmBooking($payment);
         });
 
-        return $this->payments->refresh($payment);
+        return $payment->fresh() ?? $payment;
     }
 
     public function markCheckoutFailed(string $sessionId, array $sessionPayload = []): ?Payment
     {
-        $payment = $this->payments->findByStripeSessionId($sessionId);
+        $payment = Payment::query()->where('stripe_session_id', $sessionId)->first();
 
         if (! $payment) {
             return null;
         }
 
-        return $this->payments->markCheckoutFailed($payment, $sessionPayload);
+        if ($payment->status === 'success') {
+            return $payment;
+        }
+
+        $payment->forceFill([
+            'status' => 'failed',
+            'gateway' => 'stripe',
+            'gateway_response' => $sessionPayload !== [] ? json_encode($sessionPayload) : $payment->gateway_response,
+        ])->save();
+
+        return $payment;
     }
 }

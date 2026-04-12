@@ -3,7 +3,6 @@
 namespace App\Services\Payment;
 
 use App\Models\Payment;
-use App\Repositories\Contracts\PaymentRepositoryInterface;
 use App\Services\StripeCheckoutService;
 use Stripe\Event;
 
@@ -13,7 +12,6 @@ class StripeCheckoutWorkflowService
         private readonly StripeCheckoutService $stripeCheckoutService,
         private readonly StripePaymentStateService $stripePaymentStateService,
         private readonly TrekPaymentService $trekPaymentService,
-        private readonly PaymentRepositoryInterface $payments,
     ) {
     }
 
@@ -28,7 +26,16 @@ class StripeCheckoutWorkflowService
             route('stripe.cancel', ['payment' => $payment])
         );
 
-        $this->payments->saveCheckoutSession($payment, $session->id, $session->url);
+        $gatewayResponse = ['checkout_session_created' => $session->id];
+        if ($session->url !== null) {
+            $gatewayResponse['checkout_url'] = $session->url;
+        }
+
+        $payment->forceFill([
+            'gateway' => 'stripe',
+            'stripe_session_id' => $session->id,
+            'gateway_response' => json_encode($gatewayResponse),
+        ])->save();
 
         return $session->url;
     }
@@ -36,20 +43,20 @@ class StripeCheckoutWorkflowService
     public function syncSuccessfulPayment(Payment $payment, string $sessionId): Payment
     {
         if ($sessionId === '') {
-            return $this->payments->refresh($payment);
+            return $payment->fresh() ?? $payment;
         }
 
         $session = $this->stripeCheckoutService->retrieveSession($sessionId);
 
         if ($session->payment_status !== 'paid') {
-            return $this->payments->refresh($payment);
+            return $payment->fresh() ?? $payment;
         }
 
         return $this->stripePaymentStateService->markCheckoutCompleted(
             $session->id,
             is_string($session->payment_intent) ? $session->payment_intent : null,
             $session->toArray()
-        ) ?? $this->payments->refresh($payment);
+        ) ?? ($payment->fresh() ?? $payment);
     }
 
     public function createWebhookEvent(string $payload, string $signature): Event

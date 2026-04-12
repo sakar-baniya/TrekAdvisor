@@ -4,8 +4,9 @@ namespace App\Services\Booking;
 
 use App\DTOs\Booking\BookingCheckoutResult;
 use App\DTOs\Booking\CreateTrekBookingData;
-use App\Repositories\Contracts\PaymentRepositoryInterface;
-use App\Repositories\Contracts\TrekBookingRepositoryInterface;
+use App\Models\Passenger;
+use App\Models\Payment;
+use App\Models\TrekBooking;
 use App\Services\Payment\StripeCheckoutWorkflowService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -14,8 +15,6 @@ use Throwable;
 class CreateTrekBookingService
 {
     public function __construct(
-        private readonly TrekBookingRepositoryInterface $trekBookings,
-        private readonly PaymentRepositoryInterface $payments,
         private readonly StripeCheckoutWorkflowService $stripeCheckoutWorkflowService,
         private readonly BookingSessionService $bookingSessionService,
     ) {
@@ -24,7 +23,7 @@ class CreateTrekBookingService
     public function handle(CreateTrekBookingData $data): BookingCheckoutResult
     {
         [$booking, $payment] = DB::transaction(function () use ($data) {
-            $booking = $this->trekBookings->create([
+            $booking = TrekBooking::query()->create([
                 'user_id' => $data->userId,
                 'departure_id' => $data->departureId,
                 'booking_reference' => 'TB-' . strtoupper(Str::random(8)),
@@ -35,9 +34,16 @@ class CreateTrekBookingService
                 'status' => 'pending',
             ]);
 
-            $this->trekBookings->createPassengers($booking, $data->passengers);
+            foreach ($data->passengers as $passenger) {
+                Passenger::query()->create([
+                    'trek_booking_id' => $booking->id,
+                    'full_name' => $passenger['full_name'],
+                    'passport_number' => $passenger['passport_number'],
+                    'age' => $passenger['age'],
+                ]);
+            }
 
-            $payment = $this->payments->create([
+            $payment = Payment::query()->create([
                 'user_id' => $data->userId,
                 'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
                 'amount' => $data->totalPrice(),

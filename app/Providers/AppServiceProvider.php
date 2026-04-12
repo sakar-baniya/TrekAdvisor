@@ -25,12 +25,6 @@ use App\Policies\SettingsPolicy;
 use App\Policies\TrekBookingPolicy;
 use App\Policies\TrekPolicy;
 use App\Policies\UserPolicy;
-use App\Repositories\Contracts\DepartureRepositoryInterface;
-use App\Repositories\Contracts\PaymentRepositoryInterface;
-use App\Repositories\Contracts\TrekBookingRepositoryInterface;
-use App\Repositories\Eloquent\EloquentDepartureRepository;
-use App\Repositories\Eloquent\EloquentPaymentRepository;
-use App\Repositories\Eloquent\EloquentTrekBookingRepository;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
@@ -42,9 +36,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(DepartureRepositoryInterface::class, EloquentDepartureRepository::class);
-        $this->app->bind(TrekBookingRepositoryInterface::class, EloquentTrekBookingRepository::class);
-        $this->app->bind(PaymentRepositoryInterface::class, EloquentPaymentRepository::class);
+        // Intentionally left minimal in Pass B; business services use Eloquent directly.
     }
 
     /**
