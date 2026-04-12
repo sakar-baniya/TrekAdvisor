@@ -8,8 +8,11 @@
 
         @php
             $paymentStatus = $payment->status ?? 'Pending';
-            $isPaid = $paymentStatus === 'Success';
+            $isPaid = strtolower((string) $paymentStatus) === 'success';
             $isCancelled = $checkoutCancelled ?? false;
+            $gateway = strtolower((string) ($payment->gateway ?? 'stripe'));
+            $gatewayLabel = strtoupper($gateway);
+            $retryRoute = $gateway === 'esewa' ? route('esewa.retry', $payment) : route('stripe.retry', $payment);
         @endphp
 
         <div class="booking-success-card">
@@ -19,11 +22,11 @@
             <h1>{{ $isPaid ? 'Payment Received!' : ($isCancelled ? 'Checkout Cancelled' : 'Payment Pending') }}</h1>
             <p>
                 @if ($isPaid)
-                    Your trek booking is confirmed and your Stripe payment has been recorded successfully.
+                    Your trek booking is confirmed and your {{ $gatewayLabel }} payment has been recorded successfully.
                 @elseif ($isCancelled)
-                    Your booking was saved as pending. You can retry the Stripe checkout any time from the button below.
+                    Your booking was saved as pending. You can retry the {{ $gatewayLabel }} checkout any time from the button below.
                 @else
-                    Your booking has been created and we are waiting for payment confirmation from Stripe.
+                    Your booking has been created and we are waiting for payment confirmation from {{ $gatewayLabel }}.
                 @endif
             </p>
 
@@ -36,7 +39,7 @@
 
             <div class="booking-success-actions">
                 @if (! $isPaid)
-                    <a href="{{ route('stripe.retry', $payment) }}" class="market-search-btn market-search-btn--full">Retry Payment</a>
+                    <a href="{{ $retryRoute }}" class="market-search-btn market-search-btn--full">Retry Payment</a>
                 @else
                     <a href="{{ route('customer.dashboard') }}" class="market-search-btn market-search-btn--full">View My Bookings</a>
                 @endif

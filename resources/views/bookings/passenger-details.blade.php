@@ -41,6 +41,23 @@
                     </ul>
                 </div>
 
+                <div class="booking-note-card">
+                    <strong>Payment method</strong>
+                    <div style="margin-top: 12px; display: flex; gap: 16px; flex-wrap: wrap;">
+                        <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
+                            <input type="radio" name="payment_method" value="stripe" checked>
+                            <span>Stripe (Card)</span>
+                        </label>
+                        <label style="display: inline-flex; align-items: center; gap: 8px; font-weight: 600;">
+                            <input type="radio" name="payment_method" value="esewa">
+                            <span>eSewa</span>
+                        </label>
+                    </div>
+                    @error('payment_method')
+                        <p style="color: #dc2626; margin-top: 8px; font-size: 0.9rem;">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 <button type="submit" class="market-search-btn market-search-btn--full">Complete Booking & Pay</button>
             </form>
         </div>

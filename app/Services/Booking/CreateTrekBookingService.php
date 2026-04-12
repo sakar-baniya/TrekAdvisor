@@ -2,11 +2,10 @@
 
 namespace App\Services\Booking;
 
-use App\DTOs\Booking\BookingCheckoutResult;
-use App\DTOs\Booking\CreateTrekBookingData;
 use App\Models\Passenger;
 use App\Models\Payment;
 use App\Models\TrekBooking;
+use App\Services\Payment\EsewaCheckoutWorkflowService;
 use App\Services\Payment\StripeCheckoutWorkflowService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -16,25 +15,34 @@ class CreateTrekBookingService
 {
     public function __construct(
         private readonly StripeCheckoutWorkflowService $stripeCheckoutWorkflowService,
+        private readonly EsewaCheckoutWorkflowService $esewaCheckoutWorkflowService,
         private readonly BookingSessionService $bookingSessionService,
     ) {
     }
 
-    public function handle(CreateTrekBookingData $data): BookingCheckoutResult
+    public function handle(int $userId, array $bookingData, array $passengers): array
     {
-        [$booking, $payment] = DB::transaction(function () use ($data) {
+        $departureId = (int) $bookingData['departure_id'];
+        $totalPassengers = (int) $bookingData['total_passengers'];
+        $pricePerPerson = (float) $bookingData['price_per_person'];
+        $totalPrice = $pricePerPerson * $totalPassengers;
+        $paymentMethod = in_array(($bookingData['payment_method'] ?? 'stripe'), ['stripe', 'esewa'], true)
+            ? $bookingData['payment_method']
+            : 'stripe';
+
+        [$booking, $payment] = DB::transaction(function () use ($userId, $departureId, $totalPassengers, $pricePerPerson, $totalPrice, $passengers, $paymentMethod) {
             $booking = TrekBooking::query()->create([
-                'user_id' => $data->userId,
-                'departure_id' => $data->departureId,
+                'user_id' => $userId,
+                'departure_id' => $departureId,
                 'booking_reference' => 'TB-' . strtoupper(Str::random(8)),
-                'total_passengers' => $data->totalPassengers,
-                'price_per_person' => $data->pricePerPerson,
-                'subtotal' => $data->totalPrice(),
-                'total_price' => $data->totalPrice(),
+                'total_passengers' => $totalPassengers,
+                'price_per_person' => $pricePerPerson,
+                'subtotal' => $totalPrice,
+                'total_price' => $totalPrice,
                 'status' => 'pending',
             ]);
 
-            foreach ($data->passengers as $passenger) {
+            foreach ($passengers as $passenger) {
                 Passenger::query()->create([
                     'trek_booking_id' => $booking->id,
                     'full_name' => $passenger['full_name'],
@@ -44,13 +52,13 @@ class CreateTrekBookingService
             }
 
             $payment = Payment::query()->create([
-                'user_id' => $data->userId,
+                'user_id' => $userId,
                 'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
-                'amount' => $data->totalPrice(),
+                'amount' => $totalPrice,
                 'currency' => 'USD',
                 'payable_type' => 'trek',
                 'payable_id' => $booking->id,
-                'gateway' => 'stripe',
+                'gateway' => $paymentMethod,
                 'status' => 'pending',
             ]);
 
@@ -58,22 +66,25 @@ class CreateTrekBookingService
         });
 
         try {
-            $checkoutUrl = $this->stripeCheckoutWorkflowService->createRetrySession($payment);
+            $checkoutUrl = $paymentMethod === 'esewa'
+                ? $this->esewaCheckoutWorkflowService->createRetryUrl($payment)
+                : $this->stripeCheckoutWorkflowService->createRetrySession($payment);
 
             $this->bookingSessionService->clear();
 
-            return new BookingCheckoutResult(
-                payment: $payment,
-                checkoutUrl: $checkoutUrl,
-            );
+            return [
+                'payment' => $payment,
+                'checkout_url' => $checkoutUrl,
+                'error_message' => null,
+            ];
         } catch (Throwable) {
             $this->bookingSessionService->clear();
 
-            return new BookingCheckoutResult(
-                payment: $payment,
-                checkoutUrl: null,
-                errorMessage: 'We saved your booking, but could not start Stripe checkout. Please try again.',
-            );
+            return [
+                'payment' => $payment,
+                'checkout_url' => null,
+                'error_message' => 'We saved your booking, but could not start checkout. Please try again.',
+            ];
         }
     }
 }

@@ -78,7 +78,9 @@ class BookingController extends Controller
 
         $result = $this->createTrekBookingService->handle(
             (int) $request->user()->id,
-            $bookingData,
+            array_merge($bookingData, [
+                'payment_method' => $request->validated('payment_method'),
+            ]),
             $request->validated('passengers', [])
         );
 
