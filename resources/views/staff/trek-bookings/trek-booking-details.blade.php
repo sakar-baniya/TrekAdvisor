@@ -74,10 +74,10 @@
                     </div>
                 </div>
                 <div class="admin-info-list">
-                    <div><span>Base Price</span><strong>${{ number_format($booking->price_per_person, 2) }} x {{ $booking->total_passengers }}</strong></div>
-                    <div><span>Subtotal</span><strong>${{ number_format($booking->subtotal, 2) }}</strong></div>
-                    <div><span>Discount</span><strong>{{ $booking->discount_percent }}% (-${{ number_format($booking->discount_amount, 2) }})</strong></div>
-                    <div><span>Final Total</span><strong>${{ number_format($booking->total_price, 2) }}</strong></div>
+                    <div><span>Base Price</span><strong>NPR {{ number_format($booking->price_per_person, 2) }} x {{ $booking->total_passengers }}</strong></div>
+                    <div><span>Subtotal</span><strong>NPR {{ number_format($booking->subtotal, 2) }}</strong></div>
+                    <div><span>Discount</span><strong>{{ $booking->discount_percent }}% (-NPR {{ number_format($booking->discount_amount, 2) }})</strong></div>
+                    <div><span>Final Total</span><strong>NPR {{ number_format($booking->total_price, 2) }}</strong></div>
                 </div>
             </section>
 

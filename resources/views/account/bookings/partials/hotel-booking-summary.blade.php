@@ -28,7 +28,7 @@
             </div>
             <div class="account-summary-row">
                 <span class="account-summary-label">Total price</span>
-                <span class="account-summary-price">${{ number_format($booking->total_price, 2) }}</span>
+                <span class="account-summary-price">NPR {{ number_format($booking->total_price, 2) }}</span>
             </div>
             @if ($payment)
                 <div class="account-summary-row">

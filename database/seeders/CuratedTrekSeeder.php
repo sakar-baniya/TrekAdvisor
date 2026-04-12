@@ -48,7 +48,7 @@ class CuratedTrekSeeder extends Seeder
         return [
             [
                 'title' => 'Everest Base Camp Trek',
-                'base_price' => 1399.00,
+                'base_price' => 9800.00,
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5364,
@@ -57,7 +57,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Annapurna Circuit Trek',
-                'base_price' => 1190.00,
+                'base_price' => 9200.00,
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5416,
@@ -66,7 +66,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Annapurna Base Camp',
-                'base_price' => 780.00,
+                'base_price' => 7800.00,
                 'difficulty' => 'Moderate',
                 'duration_days' => 10,
                 'max_altitude' => 4130,
@@ -75,7 +75,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Langtang Valley Trek',
-                'base_price' => 720.00,
+                'base_price' => 6500.00,
                 'difficulty' => 'Moderate',
                 'duration_days' => 8,
                 'max_altitude' => 3870,
@@ -84,7 +84,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Manaslu Circuit Trek',
-                'base_price' => 1390.00,
+                'base_price' => 9600.00,
                 'difficulty' => 'Difficult',
                 'duration_days' => 14,
                 'max_altitude' => 5106,
@@ -93,7 +93,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Ghorepani Poon Hill Trek',
-                'base_price' => 325.00,
+                'base_price' => 5400.00,
                 'difficulty' => 'Easy',
                 'duration_days' => 5,
                 'max_altitude' => 3210,
@@ -102,7 +102,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Upper Mustang Trek',
-                'base_price' => 2235.00,
+                'base_price' => 10000.00,
                 'difficulty' => 'Moderate',
                 'duration_days' => 17,
                 'max_altitude' => 4230,
@@ -111,7 +111,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Mardi Himal Trek',
-                'base_price' => 450.00,
+                'base_price' => 6000.00,
                 'difficulty' => 'Moderate',
                 'duration_days' => 5,
                 'max_altitude' => 4500,
@@ -120,7 +120,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Gokyo Lakes Trek',
-                'base_price' => 1150.00,
+                'base_price' => 9000.00,
                 'difficulty' => 'Difficult',
                 'duration_days' => 13,
                 'max_altitude' => 5357,
@@ -129,7 +129,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Kanchenjunga Base Camp Trek',
-                'base_price' => 2400.00,
+                'base_price' => 9900.00,
                 'difficulty' => 'Difficult',
                 'duration_days' => 20,
                 'max_altitude' => 5143,
@@ -138,7 +138,7 @@ class CuratedTrekSeeder extends Seeder
             ],
             [
                 'title' => 'Helambu Trek',
-                'base_price' => 550.00,
+                'base_price' => 5600.00,
                 'difficulty' => 'Easy',
                 'duration_days' => 7,
                 'max_altitude' => 3490,

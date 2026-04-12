@@ -87,14 +87,14 @@ class HotelSeeder extends Seeder
             HotelRoom::create([
                 'hotel_id' => $hotel->id,
                 'room_type' => 'Standard Double',
-                'price_per_night' => rand(60, 110),
+                'price_per_night' => rand(2000, 5000),
                 'total_rooms' => 12,
             ]);
 
             HotelRoom::create([
                 'hotel_id' => $hotel->id,
                 'room_type' => 'Deluxe Suite',
-                'price_per_night' => rand(150, 300),
+                'price_per_night' => rand(5000, 8000),
                 'total_rooms' => 4,
             ]);
         }

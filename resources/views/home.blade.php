@@ -105,7 +105,7 @@
                             <div class="booking-card__footer">
                                 <div class="booking-card__price">
                                     <span class="booking-card__price-label">From</span>
-                                    <span class="booking-card__price-amount">${{ number_format($trek->base_price, 0) }}</span>
+                                    <span class="booking-card__price-amount">NPR {{ number_format($trek->base_price, 0) }}</span>
                                     <span class="booking-card__price-unit">per person</span>
                                 </div>
                                 <a href="{{ route('treks.show', $trek->slug) }}" class="booking-card__action">View details</a>
@@ -150,7 +150,7 @@
                             <div class="booking-card__footer">
                                 <div class="booking-card__price">
                                     <span class="booking-card__price-label">From</span>
-                                    <span class="booking-card__price-amount">${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
+                                    <span class="booking-card__price-amount">NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
                                     <span class="booking-card__price-unit">per night</span>
                                 </div>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="booking-card__action">View details</a>

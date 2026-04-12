@@ -46,7 +46,7 @@
                                 </div>
                             </div>
                             <div class="detail-departure-card__bottom">
-                                <span>${{ number_format($room->price_per_night, 0) }}/night</span>
+                                <span>NPR {{ number_format($room->price_per_night, 0) }}/night</span>
                                 <span class="market-button market-button--ghost">Book Soon</span>
                             </div>
                         </div>
@@ -61,7 +61,7 @@
             <div class="detail-booking-card">
                 <div class="detail-price-block">
                     <span>Starting from</span>
-                    <strong>${{ number_format($hotel->rooms->min('price_per_night') ?? 0, 0) }}</strong>
+                    <strong>NPR {{ number_format($hotel->rooms->min('price_per_night') ?? 0, 0) }}</strong>
                     <small>per night</small>
                 </div>
                 <div class="detail-discount-box">

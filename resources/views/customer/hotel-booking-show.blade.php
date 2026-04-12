@@ -31,7 +31,7 @@
                     <span><i class="fas fa-calendar-check"></i> Check-in: {{ optional($booking->check_in)->format('F d, Y') }}</span>
                     <span><i class="fas fa-calendar-times"></i> Check-out: {{ optional($booking->check_out)->format('F d, Y') }}</span>
                     <span><i class="fas fa-bed"></i> {{ $booking->num_rooms }} Rooms x {{ $booking->num_nights }} Nights</span>
-                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                 </div>
 
                 <div class="account-actions">

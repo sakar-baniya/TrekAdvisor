@@ -18,7 +18,7 @@ class TrekBookingFactory extends Factory
     public function definition(): array
     {
         $totalPassengers = fake()->numberBetween(1, 4);
-        $pricePerPerson = fake()->randomFloat(2, 500, 5000);
+        $pricePerPerson = fake()->randomFloat(2, 5000, 10000);
         $subtotal = $totalPassengers * $pricePerPerson;
         $discountPercent = fake()->randomElement([0, 5, 10]);
         $discountAmount = ($subtotal * $discountPercent) / 100;

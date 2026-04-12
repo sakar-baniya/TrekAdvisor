@@ -17,7 +17,7 @@
     <section class="stat-grid">
         <x-dashboard.stat-card 
             label="Monthly Revenue"
-            value="${{ number_format($stats['revenue_this_month'], 0) }}"
+            value="NPR {{ number_format($stats['revenue_this_month'], 0) }}"
             meta="{{ number_format($stats['bookings_this_month']) }} bookings"
             icon="fa-wallet"
             trend="+12%"
@@ -112,7 +112,7 @@
                                     <div class="fw-bold text-navy">{{ $booking->title }}</div>
                                     <div class="text-muted small mt-1">#{{ $booking->reference }} &bull; {{ $booking->customer }}</div>
                                 </td>
-                                <td><span class="fw-bold text-navy">${{ number_format($booking->amount, 0) }}</span></td>
+                                <td><span class="fw-bold text-navy">NPR {{ number_format($booking->amount, 0) }}</span></td>
                                 <td>
                                     @php
                                         $statusClass = match(strtolower($booking->status)) {
@@ -196,7 +196,7 @@
                         y: { 
                             beginAtZero: true, 
                             grid: { color: '#f1f5f9' },
-                            ticks: { color: '#94a3b8', font: { size: 11 }, callback: v => '$' + v.toLocaleString() } 
+                            ticks: { color: '#94a3b8', font: { size: 11 }, callback: v => 'NPR ' + v.toLocaleString() }
                         },
                         x: { 
                             grid: { display: false }, 

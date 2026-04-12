@@ -22,7 +22,7 @@
                     @forelse($rooms as $room)
                         <tr>
                             <td>{{ $room->room_type }}</td>
-                            <td>${{ number_format($room->price_per_night, 2) }}</td>
+                            <td>NPR {{ number_format($room->price_per_night, 2) }}</td>
                             <td>{{ $room->total_rooms }}</td>
                             <td>
                                 <a href="{{ route('hotel_owner.hotels.rooms.edit', [$hotel, $room]) }}" class="admin-secondary-button">Edit</a>

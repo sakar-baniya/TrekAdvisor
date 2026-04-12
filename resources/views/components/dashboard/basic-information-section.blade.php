@@ -38,9 +38,9 @@
         </div>
         <!-- Numeric Fields Row: Base Price, Duration, Max Altitude -->
         <div class="form-group">
-            <label for="base_price">Base Price (USD) {!! $required !!}</label>
+            <label for="base_price">Base Price (NPR) {!! $required !!}</label>
             <div class="input-prefix-row">
-                <span class="input-prefix">$</span>
+                <span class="input-prefix">NPR</span>
                 <input type="number" name="base_price" id="base_price" class="u-input @error('base_price') error @enderror" value="{{ old('base_price', $trek->base_price ?? '') }}" min="0" step="0.01" required>
             </div>
             @error('base_price')<span class="form-error">{{ $message }}</span>@enderror

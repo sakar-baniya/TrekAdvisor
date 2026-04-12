@@ -105,7 +105,7 @@
             <div class="detail-booking-card">
                 <div class="detail-price-block">
                     <span>Starting from</span>
-                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
+                    <strong>NPR {{ number_format($trek->base_price, 0) }}</strong>
                     <small>per person</small>
                 </div>
                 <details class="detail-discount-box">
@@ -128,7 +128,7 @@
                                 <span class="detail-status-badge {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'is-good' : 'is-low' }}">{{ $departure->status }}</span>
                             </div>
                             <div class="detail-departure-card__bottom">
-                                <span>${{ number_format($departure->price, 0) }}</span>
+                                <span>NPR {{ number_format($departure->price, 0) }}</span>
                                 <a href="{{ route('bookings.create', $departure->id) }}" class="market-button">Book Now</a>
                             </div>
                         </div>

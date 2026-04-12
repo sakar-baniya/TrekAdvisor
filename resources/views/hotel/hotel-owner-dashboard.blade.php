@@ -16,7 +16,7 @@
     <section class="stat-grid">
         <x-dashboard.stat-card 
             label="Monthly Revenue"
-            value="${{ number_format($stats['revenue_this_month'], 0) }}"
+            value="NPR {{ number_format($stats['revenue_this_month'], 0) }}"
             meta="This month"
             icon="fa-wallet"
             trend="+15%"
@@ -108,7 +108,7 @@
                             </td>
                             <td><span style="font-family: monospace; font-size: 0.85rem; color: var(--u-text-muted);">#{{ $booking->booking_reference }}</span></td>
                             <td><span class="fw-bold text-navy">{{ $booking->check_in->format('M d, Y') }}</span></td>
-                            <td><span class="fw-bold text-navy">${{ number_format($booking->total_price, 0) }}</span></td>
+                            <td><span class="fw-bold text-navy">NPR {{ number_format($booking->total_price, 0) }}</span></td>
                             <td>
                                 <span class="badge {{ strtolower($booking->status) === 'confirmed' ? 'badge-success' : 'badge-warning' }}">
                                     {{ $booking->status }}

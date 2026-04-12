@@ -27,7 +27,7 @@
                     <span>{{ $trek->difficulty }}</span>
                     <span>{{ $trek->duration_days ?? 'N/A' }} days</span>
                     <span>Max {{ $trek->max_altitude ? number_format($trek->max_altitude) . 'm' : 'Not set' }}</span>
-                    <span>${{ number_format($trek->base_price, 2) }}</span>
+                    <span>NPR {{ number_format($trek->base_price, 2) }}</span>
                 </div>
                 <p>{{ $trek->description }}</p>
             </div>

@@ -47,7 +47,7 @@ class StripeCheckoutService
             'line_items' => [[
                 'quantity' => 1,
                 'price_data' => [
-                    'currency' => strtolower($payment->currency ?: 'USD'),
+                    'currency' => strtolower($payment->currency ?: 'NPR'),
                     'unit_amount' => (int) round(((float) $payment->amount) * 100),
                     'product_data' => [
                         'name' => $booking->departure?->trek?->title ?? 'Trek Booking',

@@ -100,7 +100,7 @@
                             </div>
                             <div class="market-card__footer">
                                 <div class="market-card__price">
-                                    <strong>${{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>
+                                    <strong>NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</strong>
                                     <span>per night</span>
                                 </div>
                                 <a href="{{ route('hotels.show', $hotel) }}" class="market-button">View Details</a>
@@ -220,7 +220,7 @@
                     </div>
                     <div class="market-card__footer">
                         <div class="market-card__price">
-                            <strong>$${Number(price).toLocaleString()}</strong>
+                            <strong>NPR ${Number(price).toLocaleString()}</strong>
                             <span>per night</span>
                         </div>
                         <a href="/hotels/${hotel.slug || hotel.id}" class="market-button">View Details</a>

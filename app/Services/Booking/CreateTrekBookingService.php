@@ -55,7 +55,7 @@ class CreateTrekBookingService
                 'user_id' => $userId,
                 'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
                 'amount' => $totalPrice,
-                'currency' => 'USD',
+                'currency' => 'NPR',
                 'payable_type' => 'trek',
                 'payable_id' => $booking->id,
                 'gateway' => $paymentMethod,

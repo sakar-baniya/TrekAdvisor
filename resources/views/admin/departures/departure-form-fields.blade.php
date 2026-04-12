@@ -48,7 +48,7 @@
             </label>
 
             <label class="admin-field">
-                <span>Price (USD) *</span>
+                <span>Price (NPR) *</span>
                 <input type="number" step="0.01" min="0" name="price" value="{{ old('price', $departure->price) }}" class="admin-input" required />
                 @error('price') <small class="admin-error">{{ $message }}</small> @enderror
             </label>

@@ -29,7 +29,7 @@
             </div>
         </div>
         <div class="trek-card__stats">
-            <div class="trek-stat"><span class="stat-label">Base Price</span><span class="stat-value">${{ number_format($trek->base_price, 0) }}</span></div>
+            <div class="trek-stat"><span class="stat-label">Base Price</span><span class="stat-value">NPR {{ number_format($trek->base_price, 0) }}</span></div>
             <div class="trek-stat"><span class="stat-label">Departures</span><span class="stat-value">{{ $trek->departures_count }} Active</span></div>
             <div class="trek-stat"><span class="stat-label">Total Bookings</span><span class="stat-value">{{ (int) $trek->total_booked_seats }}</span></div>
         </div>

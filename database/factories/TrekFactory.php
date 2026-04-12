@@ -15,7 +15,7 @@ class TrekFactory extends Factory
             'title' => ucfirst($title),
             'slug' => Str::slug($title),
             'description' => fake()->paragraphs(3, true),
-            'base_price' => fake()->numberBetween(600, 4500),
+            'base_price' => fake()->numberBetween(5000, 10000),
             'difficulty' => fake()->randomElement(['easy', 'moderate', 'difficult', 'extreme']),
             'duration_days' => fake()->numberBetween(5, 18),
             'max_altitude' => fake()->numberBetween(2500, 5600),

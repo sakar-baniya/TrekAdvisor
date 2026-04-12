@@ -20,8 +20,8 @@ class PaymentFactory extends Factory
         return [
             'user_id' => \App\Models\User::factory(),
             'transaction_id' => 'TXN-' . strtoupper(Str::random(12)),
-            'amount' => fake()->randomFloat(2, 50, 5000),
-            'currency' => 'USD',
+            'amount' => fake()->randomFloat(2, 2000, 80000),
+            'currency' => 'NPR',
             'payable_type' => fake()->randomElement(['trek', 'hotel']),
             'payable_id' => 1, // Override in seeder
             'gateway' => fake()->randomElement(['stripe', 'esewa', 'khalti']),

@@ -71,7 +71,7 @@
                                 <small>{{ $booking->user?->email }}</small>
                             </td>
                             <td>{{ $booking->total_passengers }}</td>
-                            <td>${{ number_format($booking->total_price, 2) }}</td>
+                            <td>NPR {{ number_format($booking->total_price, 2) }}</td>
                             <td>
                                 <span class="admin-badge {{ $booking->status === 'Confirmed' ? 'is-success' : ($booking->status === 'Pending' ? 'is-warning' : 'is-muted') }}">{{ $booking->status }}</span>
                             </td>

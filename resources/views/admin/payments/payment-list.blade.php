@@ -13,7 +13,7 @@
             <div class="admin-stat-card__icon is-green"><i class="fas fa-wallet"></i></div>
             <div>
                 <p>Total Amount</p>
-                <h3>${{ number_format($totalAmount, 2) }}</h3>
+                <h3>NPR {{ number_format($totalAmount, 2) }}</h3>
                 <span>Filtered records</span>
             </div>
         </div>
@@ -77,7 +77,7 @@
                                 <strong>{{ $payment->user?->name ?? 'Unknown customer' }}</strong>
                                 <small>{{ $payment->user?->email }}</small>
                             </td>
-                            <td>${{ number_format($payment->amount, 2) }}</td>
+                            <td>NPR {{ number_format($payment->amount, 2) }}</td>
                             <td>{{ $payment->gateway ? ucfirst($payment->gateway) : 'N/A' }}</td>
                             <td>
                                 <span class="admin-badge {{ $payment->status === 'Success' ? 'is-success' : ($payment->status === 'Pending' ? 'is-warning' : 'is-muted') }}">{{ $payment->status }}</span>

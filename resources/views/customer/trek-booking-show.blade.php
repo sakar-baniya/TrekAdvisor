@@ -31,7 +31,7 @@
                     <span><i class="fas fa-calendar"></i> {{ optional($booking->departure?->start_date)->format('F d, Y') }} - {{ optional($booking->departure?->end_date)->format('F d, Y') }}</span>
                     <span><i class="fas fa-users"></i> {{ $booking->total_passengers }} Passengers</span>
                     <span><i class="fas fa-hashtag"></i> {{ $booking->booking_reference }}</span>
-                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                 </div>
 
                 <div class="account-actions">

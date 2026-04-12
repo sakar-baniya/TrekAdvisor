@@ -48,7 +48,7 @@
                                     <span><i class="fas fa-calendar"></i> {{ optional($booking->departure?->start_date)->format('F d, Y') }} - {{ optional($booking->departure?->end_date)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-users"></i> {{ $booking->total_passengers }} Passengers</span>
                                     <span><i class="fas fa-hashtag"></i> {{ $booking->booking_reference }}</span>
-                                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                                     <span><i class="fas fa-credit-card"></i> {{ $payment['label'] }}</span>
                                 </x-slot>
                                 <x-slot name="actions">
@@ -83,7 +83,7 @@
                                     <span><i class="fas fa-calendar-check"></i> Check-in: {{ optional($booking->check_in)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-calendar-times"></i> Check-out: {{ optional($booking->check_out)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-bed"></i> {{ $booking->num_rooms }} Rooms x {{ $booking->num_nights }} Nights</span>
-                                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                                     <span><i class="fas fa-credit-card"></i> {{ $payment['label'] }}</span>
                                 </x-slot>
                                 <x-slot name="actions">
@@ -122,7 +122,7 @@
                                     <span><i class="fas fa-calendar"></i> {{ optional($booking->departure?->start_date)->format('F d, Y') }} - {{ optional($booking->departure?->end_date)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-users"></i> {{ $booking->total_passengers }} Passengers</span>
                                     <span><i class="fas fa-hashtag"></i> {{ $booking->booking_reference }}</span>
-                                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                                     <span><i class="fas fa-credit-card"></i> {{ $payment['label'] }}</span>
                                 </x-slot>
                                 <x-slot name="actions">
@@ -169,7 +169,7 @@
                                     <span><i class="fas fa-calendar-check"></i> Check-in: {{ optional($booking->check_in)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-calendar-times"></i> Check-out: {{ optional($booking->check_out)->format('F d, Y') }}</span>
                                     <span><i class="fas fa-bed"></i> {{ $booking->num_rooms }} Rooms x {{ $booking->num_nights }} Nights</span>
-                                    <span><i class="fas fa-money-bill"></i> ${{ number_format($booking->total_price, 2) }}</span>
+                                    <span><i class="fas fa-money-bill"></i> NPR {{ number_format($booking->total_price, 2) }}</span>
                                     <span><i class="fas fa-credit-card"></i> {{ $payment['label'] }}</span>
                                 </x-slot>
                                 <x-slot name="actions">

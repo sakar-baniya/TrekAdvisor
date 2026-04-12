@@ -13,7 +13,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('transaction_id')->unique();
             $table->decimal('amount', 10, 2);
-            $table->string('currency', 10)->default('USD');
+            $table->string('currency', 10)->default('NPR');
             $table->enum('payable_type', ['trek', 'hotel']);
             $table->unsignedBigInteger('payable_id');
             $table->enum('gateway', ['stripe', 'esewa', 'khalti'])->nullable();

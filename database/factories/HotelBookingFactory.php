@@ -20,7 +20,7 @@ class HotelBookingFactory extends Factory
         $checkIn = fake()->dateTimeBetween('+1 week', '+3 months');
         $numNights = fake()->numberBetween(1, 7);
         $checkOut = (clone $checkIn)->modify('+' . $numNights . ' nights');
-        $pricePerNight = fake()->randomFloat(2, 20, 500);
+        $pricePerNight = fake()->randomFloat(2, 2000, 8000);
         $numRooms = fake()->numberBetween(1, 2);
         $totalPrice = $pricePerNight * $numNights * $numRooms;
 

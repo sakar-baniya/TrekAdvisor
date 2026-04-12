@@ -65,9 +65,9 @@ class HotelCatalogSeeder extends Seeder
                     'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'rooms' => [
-                    ['room_type' => 'Deluxe Room',       'price_per_night' => 85,  'total_rooms' => 12],
-                    ['room_type' => 'Super Deluxe Room', 'price_per_night' => 100, 'total_rooms' => 10],
-                    ['room_type' => 'Suite',              'price_per_night' => 250, 'total_rooms' => 4],
+                    ['room_type' => 'Deluxe Room',       'price_per_night' => 6200, 'total_rooms' => 12],
+                    ['room_type' => 'Super Deluxe Room', 'price_per_night' => 7400, 'total_rooms' => 10],
+                    ['room_type' => 'Suite',             'price_per_night' => 8000, 'total_rooms' => 4],
                 ],
             ],
             [
@@ -80,9 +80,9 @@ class HotelCatalogSeeder extends Seeder
                     'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'rooms' => [
-                    ['room_type' => 'Standard Double Room',          'price_per_night' => 45, 'total_rooms' => 8],
-                    ['room_type' => 'Deluxe Double or Twin Room',    'price_per_night' => 62, 'total_rooms' => 9],
-                    ['room_type' => 'Family Room',                   'price_per_night' => 88, 'total_rooms' => 5],
+                    ['room_type' => 'Standard Double Room',       'price_per_night' => 3500, 'total_rooms' => 8],
+                    ['room_type' => 'Deluxe Double or Twin Room', 'price_per_night' => 5200, 'total_rooms' => 9],
+                    ['room_type' => 'Family Room',                'price_per_night' => 7000, 'total_rooms' => 5],
                 ],
             ],
             [
@@ -95,9 +95,9 @@ class HotelCatalogSeeder extends Seeder
                     'https://images.unsplash.com/photo-1571896349842-33c89424de2d?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'rooms' => [
-                    ['room_type' => 'Deluxe Room',      'price_per_night' => 167, 'total_rooms' => 11],
-                    ['room_type' => 'Junior Suite',     'price_per_night' => 220, 'total_rooms' => 6],
-                    ['room_type' => 'Executive Suite',  'price_per_night' => 290, 'total_rooms' => 3],
+                    ['room_type' => 'Deluxe Room',     'price_per_night' => 6800, 'total_rooms' => 11],
+                    ['room_type' => 'Junior Suite',    'price_per_night' => 7600, 'total_rooms' => 6],
+                    ['room_type' => 'Executive Suite', 'price_per_night' => 8000, 'total_rooms' => 3],
                 ],
             ],
             [
@@ -110,9 +110,9 @@ class HotelCatalogSeeder extends Seeder
                     'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'rooms' => [
-                    ['room_type' => 'Deluxe Room',                'price_per_night' => 51, 'total_rooms' => 7],
-                    ['room_type' => 'Deluxe Room with Balcony',   'price_per_night' => 68, 'total_rooms' => 8],
-                    ['room_type' => 'Suite Room',                 'price_per_night' => 96, 'total_rooms' => 3],
+                    ['room_type' => 'Deluxe Room',              'price_per_night' => 4500, 'total_rooms' => 7],
+                    ['room_type' => 'Deluxe Room with Balcony', 'price_per_night' => 5800, 'total_rooms' => 8],
+                    ['room_type' => 'Suite Room',               'price_per_night' => 7600, 'total_rooms' => 3],
                 ],
             ],
             [
@@ -125,9 +125,9 @@ class HotelCatalogSeeder extends Seeder
                     'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?auto=format&fit=crop&w=1200&q=80',
                 ],
                 'rooms' => [
-                    ['room_type' => 'Deluxe Room',          'price_per_night' => 58,  'total_rooms' => 10],
-                    ['room_type' => 'Premium Deluxe Room',  'price_per_night' => 82,  'total_rooms' => 12],
-                    ['room_type' => 'Junior Suite',         'price_per_night' => 128, 'total_rooms' => 4],
+                    ['room_type' => 'Deluxe Room',         'price_per_night' => 5000, 'total_rooms' => 10],
+                    ['room_type' => 'Premium Deluxe Room', 'price_per_night' => 6500, 'total_rooms' => 12],
+                    ['room_type' => 'Junior Suite',        'price_per_night' => 7800, 'total_rooms' => 4],
                 ],
             ],
         ];

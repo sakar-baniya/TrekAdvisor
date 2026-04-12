@@ -23,7 +23,7 @@
             <div class="admin-info-list">
                 <div><span>Customer</span><strong>{{ $payment->user?->name }} ({{ $payment->user?->email }})</strong></div>
                 <div><span>Type</span><strong>{{ ucfirst($payment->payable_type) }}</strong></div>
-                <div><span>Amount</span><strong>${{ number_format($payment->amount, 2) }} {{ $payment->currency }}</strong></div>
+                <div><span>Amount</span><strong>{{ $payment->currency ?? 'NPR' }} {{ number_format($payment->amount, 2) }}</strong></div>
                 <div><span>Gateway</span><strong>{{ $payment->gateway ? ucfirst($payment->gateway) : 'N/A' }}</strong></div>
                 <div><span>Status</span><strong>{{ $payment->status }}</strong></div>
                 <div><span>Created</span><strong>{{ $payment->created_at->format('M d, Y h:i A') }}</strong></div>

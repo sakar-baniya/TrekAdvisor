@@ -19,7 +19,7 @@ class HotelRoomFactory extends Factory
         return [
             'hotel_id' => \App\Models\Hotel::factory(),
             'room_type' => fake()->randomElement(['Single', 'Double', 'Twin', 'Suite', 'Deluxe', 'Standard']),
-            'price_per_night' => fake()->randomFloat(2, 20, 500),
+            'price_per_night' => fake()->randomFloat(2, 2000, 8000),
             'total_rooms' => fake()->numberBetween(5, 50),
         ];
     }

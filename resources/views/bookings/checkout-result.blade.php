@@ -34,7 +34,7 @@
                 <div><span>Reference Number</span><strong>{{ $booking->booking_reference }}</strong></div>
                 <div><span>Departure Date</span><strong>{{ $booking->departure->start_date->format('M d, Y') }}</strong></div>
                 <div><span>Status</span><strong>{{ $booking->status }}</strong></div>
-                <div class="total"><span>Total</span><strong>${{ number_format($booking->total_price, 0) }}</strong></div>
+                <div class="total"><span>Total</span><strong>NPR {{ number_format($booking->total_price, 0) }}</strong></div>
             </div>
 
             <div class="booking-success-actions">

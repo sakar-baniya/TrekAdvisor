@@ -41,7 +41,7 @@
 
                 <div class="account-receipt__section">
                     <h2>Payment</h2>
-                    <p><strong>Amount:</strong> {{ $payment?->currency ?? 'USD' }} {{ number_format($booking->total_price, 2) }}</p>
+                    <p><strong>Amount:</strong> {{ $payment?->currency ?? 'NPR' }} {{ number_format($booking->total_price, 2) }}</p>
                     <p><strong>Status:</strong> {{ $payment?->status ?? 'unpaid' }}</p>
                     <p><strong>Gateway:</strong> {{ strtoupper($payment?->gateway ?? 'N/A') }}</p>
                 </div>

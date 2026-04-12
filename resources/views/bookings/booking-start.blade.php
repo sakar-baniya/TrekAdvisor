@@ -12,7 +12,7 @@
                 <div>
                     <h1>{{ $departure->trek->title }}</h1>
                     <p><i class="fas fa-calendar"></i> {{ $departure->start_date->format('M d, Y') }} - {{ $departure->end_date->format('M d, Y') }}</p>
-                    <p><i class="fas fa-tag"></i> ${{ number_format($departure->price, 0) }} per person</p>
+                    <p><i class="fas fa-tag"></i> NPR {{ number_format($departure->price, 0) }} per person</p>
                 </div>
             </div>
 
@@ -30,10 +30,10 @@
                 <p class="booking-subtext">{{ $departure->capacity - $departure->booked_seats }} slots available</p>
 
                 <div class="booking-price-box">
-                    <div><span>Price per person</span><strong>${{ number_format($departure->price, 0) }}</strong></div>
+                    <div><span>Price per person</span><strong>NPR {{ number_format($departure->price, 0) }}</strong></div>
                     <div><span>Passengers</span><strong id="display_passengers">1</strong></div>
                     <div><span>Discount</span><strong id="display_discount">0%</strong></div>
-                    <div class="total"><span>Estimated Total</span><strong id="estimated_price" data-price="{{ $departure->price }}">${{ number_format($departure->price, 0) }}</strong></div>
+                    <div class="total"><span>Estimated Total</span><strong id="estimated_price" data-price="{{ $departure->price }}">NPR {{ number_format($departure->price, 0) }}</strong></div>
                 </div>
 
                 <div class="booking-note-card">
@@ -82,7 +82,7 @@
             let total = subtotal - ((subtotal * discount) / 100);
             document.getElementById('display_passengers').innerText = count;
             document.getElementById('display_discount').innerText = discount + '%';
-            document.getElementById('estimated_price').innerText = '$' + total.toLocaleString();
+            document.getElementById('estimated_price').innerText = 'NPR ' + total.toLocaleString();
         }
         updatePrice();
     </script>

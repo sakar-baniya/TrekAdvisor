@@ -99,7 +99,7 @@
                             </div>
                             <div class="market-card__footer">
                                 <div class="market-card__price">
-                                    <strong>${{ number_format($trek->base_price, 0) }}</strong>
+                                    <strong>NPR {{ number_format($trek->base_price, 0) }}</strong>
                                     <span>per person</span>
                                 </div>
                                 <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
@@ -225,7 +225,7 @@
                 </div>
                 <div class="market-card__footer">
                     <div class="market-card__price">
-                        <strong>$${Number(trek.base_price).toLocaleString()}</strong>
+                        <strong>NPR ${Number(trek.base_price).toLocaleString()}</strong>
                         <span>per person</span>
                     </div>
                     <a href="/treks/${trek.slug}" class="market-button">View Details</a>

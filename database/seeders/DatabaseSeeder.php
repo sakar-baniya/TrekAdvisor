@@ -125,8 +125,8 @@ class DatabaseSeeder extends Seeder
                     'total_passengers' => 2,
                     'price_per_person' => $dep->price,
                     'subtotal' => $dep->price * 2,
-                    'discount_amount' => 50,
-                    'total_price' => ($dep->price * 2) - 50,
+                    'discount_amount' => 1000,
+                    'total_price' => ($dep->price * 2) - 1000,
                     'status' => 'confirmed',
                 ]);
 
@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
                     'payable_type' => 'trek',
                     'transaction_id' => 'TXN-' . strtoupper(\Illuminate\Support\Str::random(10)),
                     'amount' => $booking->total_price,
-                    'currency' => 'USD',
+                    'currency' => 'NPR',
                     'gateway' => 'stripe',
                     'status' => 'success',
                     'paid_at' => now(),

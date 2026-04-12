@@ -63,7 +63,7 @@
                     </div>
 
                     <div class="admin-list-card__meta">
-                        <span>Price: ${{ number_format($departure->price, 2) }}</span>
+                        <span>Price: NPR {{ number_format($departure->price, 2) }}</span>
                         <span>Capacity: {{ $departure->capacity }}</span>
                         <span>Booked: {{ $departure->booked_seats }}</span>
                         <span>Available: {{ max($departure->capacity - $departure->booked_seats, 0) }}</span>

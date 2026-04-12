@@ -24,7 +24,7 @@ class DepartureFactory extends Factory
             'trek_id' => \App\Models\Trek::factory(),
             'start_date' => $startDate,
             'end_date' => $endDate,
-            'price' => fake()->numberBetween(600, 4500),
+            'price' => fake()->numberBetween(5000, 10000),
             'capacity' => fake()->numberBetween(10, 24),
             'booked_seats' => 0,
             'status' => 'available',
