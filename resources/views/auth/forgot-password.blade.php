@@ -14,7 +14,7 @@
         <!-- Email Address -->
         <div class="auth-field">
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autofocus />
+            <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autofocus maxlength="255" />
             <x-input-error :messages="$errors->get('email')" />
         </div>
 

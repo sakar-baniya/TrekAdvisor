@@ -40,7 +40,7 @@ class UserProfileService
         $rules = [
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
+            'phone' => 'nullable|digits:10',
             'address' => 'nullable|string|max:500',
         ];
 

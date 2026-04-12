@@ -24,13 +24,13 @@
         <div class="auth-grid auth-grid--two">
             <div class="auth-field">
                 <x-input-label for="name" :value="__('Owner Full Name')" />
-                <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="eg: Rajesh Hamal" />
+                <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="eg: Rajesh Hamal" maxlength="80" />
                 <x-input-error :messages="$errors->get('name')" />
             </div>
 
             <div class="auth-field">
-                <x-input-label for="phone" :value="__('Business Phone')" />
-                <x-text-input id="phone" class="auth-input" type="text" name="phone" :value="old('phone')" required autocomplete="tel" placeholder="eg: +977 1 4400..." />
+                <x-input-label for="phone" :value="__('Business Phone (optional)')" />
+                <x-text-input id="phone" class="auth-input" type="tel" name="phone" :value="old('phone')" autocomplete="tel" placeholder="eg: 9800012345" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10" />
                 <x-input-error :messages="$errors->get('phone')" />
             </div>
         </div>
@@ -38,13 +38,13 @@
         <div class="auth-grid auth-grid--two">
             <div class="auth-field">
                 <x-input-label for="email" :value="__('Business Email')" />
-                <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="eg: property@everest.com" />
+                <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="eg: property@everest.com" maxlength="255" />
                 <x-input-error :messages="$errors->get('email')" />
             </div>
 
             <div class="auth-field">
                 <x-input-label for="hotel_name" :value="__('Hotel/Property Name')" />
-                <x-text-input id="hotel_name" class="auth-input" type="text" name="hotel_name" :value="old('hotel_name')" required placeholder="eg: Hotel Everest View" />
+                <x-text-input id="hotel_name" class="auth-input" type="text" name="hotel_name" :value="old('hotel_name')" required placeholder="eg: Hotel Everest View" maxlength="255" />
                 <x-input-error :messages="$errors->get('hotel_name')" />
             </div>
         </div>
@@ -56,8 +56,12 @@
                 <div class="auth-input-wrap">
                     <x-text-input id="password" class="auth-input auth-input-password"
                                     type="password"
-                                    name="password"
+                                    name="password" minlength="8"
                                     required autocomplete="new-password" placeholder="Min. 8 chars" />
+                    <button type="button" class="auth-password-toggle" data-toggle-password data-target="password" aria-label="Show password">
+                        <i class="fas fa-eye" data-icon="show"></i>
+                        <i class="fas fa-eye-slash is-hidden" data-icon="hide"></i>
+                    </button>
                 </div>
                 <x-input-error :messages="$errors->get('password')" />
             </div>
@@ -67,7 +71,11 @@
                 <div class="auth-input-wrap">
                     <x-text-input id="password_confirmation" class="auth-input auth-input-password"
                                     type="password"
-                                    name="password_confirmation" required autocomplete="new-password" placeholder="Verify password" />
+                                    name="password_confirmation" required autocomplete="new-password" placeholder="Verify password" minlength="8" />
+                    <button type="button" class="auth-password-toggle" data-toggle-password data-target="password_confirmation" aria-label="Show password confirmation">
+                        <i class="fas fa-eye" data-icon="show"></i>
+                        <i class="fas fa-eye-slash is-hidden" data-icon="hide"></i>
+                    </button>
                 </div>
                 <x-input-error :messages="$errors->get('password_confirmation')" />
             </div>

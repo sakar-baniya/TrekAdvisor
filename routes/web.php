@@ -7,9 +7,9 @@ use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\ProfileController;
 use App\Http\Controllers\Account\BookingsController as AccountBookingsController;
 use App\Http\Controllers\Account\PaymentsController as AccountPaymentsController;
-use App\Http\Controllers\Account\ProfileController as AccountProfileController;
 use App\Http\Controllers\Account\ReviewsController as AccountReviewsController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\StripeCheckoutController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\AdminDepartureController;
@@ -19,14 +19,19 @@ use App\Http\Controllers\Admin\AdminTrekController;
 use App\Http\Controllers\Admin\AdminTrekBookingController;
 use App\Http\Controllers\Admin\AdminUserController;
 use App\Http\Controllers\Admin\AdminHotelController;
+use App\Http\Controllers\Admin\AdminContactMessageController;
 use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController;
 use App\Http\Controllers\Staff\StaffTrekBookingController;
+use App\Http\Controllers\Settings\ProfileController as SettingsProfileController;
+use App\Http\Controllers\Settings\SecurityController as SettingsSecurityController;
+use App\Http\Controllers\SearchController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PageController::class, 'home'])->name('home');
 Route::get('/about', [PageController::class, 'about'])->name('about');
 Route::get('/contact', [PageController::class, 'contact'])->name('contact');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
 Route::get('/faq', [PageController::class, 'faq'])->name('faq');
 Route::get('/blog', [PageController::class, 'blog'])->name('blog');
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
@@ -36,6 +41,18 @@ Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.sh
 Route::get('/dashboard', function () {
     return redirect()->route(auth()->user()->dashboardRouteName());
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->prefix('settings')->name('settings.')->group(function () {
+    Route::get('/profile', [SettingsProfileController::class, 'show'])->name('profile.show');
+    Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
+    Route::get('/security', [SettingsSecurityController::class, 'show'])->name('security.show');
+    Route::get('/security/password', [SettingsSecurityController::class, 'showPassword'])->name('security.password.show');
+    Route::patch('/security/password', [SettingsSecurityController::class, 'updatePassword'])->name('security.password');
+    Route::post('/avatar', [SettingsProfileController::class, 'storeAvatar'])->name('avatar.store');
+    Route::delete('/avatar', [SettingsProfileController::class, 'destroyAvatar'])->name('avatar.destroy');
+});
+
+Route::middleware(['auth', 'role:admin,staff,hotel_owner'])->get('/search', SearchController::class)->name('search');
 
 // --- ROLE-BASED DASHBOARDS (THE LOCKED DOORS) ---
 
@@ -54,6 +71,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('trek-bookings/{trekBooking}/status', [AdminTrekBookingController::class, 'updateStatus'])->name('trek-bookings.status');
         Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
         Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
+        Route::get('contact-messages', [AdminContactMessageController::class, 'index'])->name('contact-messages.index');
+        Route::get('contact-messages/{contactMessage}', [AdminContactMessageController::class, 'show'])->name('contact-messages.show');
         Route::get('reviews', [AdminReviewController::class, 'index'])->name('reviews.index');
         Route::get('reviews/flagged', [AdminReviewController::class, 'flagged'])->name('reviews.flagged');
         Route::get('reviews/{review}', [AdminReviewController::class, 'show'])->name('reviews.show');
@@ -114,9 +133,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         Route::get('/payments', [AccountPaymentsController::class, 'index'])->name('payments.index');
 
-        Route::get('/profile', [AccountProfileController::class, 'show'])->name('profile.show');
-        Route::patch('/profile', [AccountProfileController::class, 'update'])->name('profile.update');
-        Route::patch('/profile/password', [AccountProfileController::class, 'updatePassword'])->name('profile.password');
+        Route::get('/profile', function () {
+            return redirect()->route('settings.profile.show');
+        })->name('profile.show');
+        Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/profile/password', [SettingsSecurityController::class, 'updatePassword'])->name('profile.password');
 
         Route::post('/reviews/treks/{trek}', [AccountReviewsController::class, 'storeTrek'])->name('reviews.treks.store');
         Route::post('/reviews/hotels/{hotel}', [AccountReviewsController::class, 'storeHotel'])->name('reviews.hotels.store');
@@ -140,8 +161,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/payments/stripe/{payment}/success', [StripeCheckoutController::class, 'success'])->name('stripe.success');
     Route::get('/payments/stripe/{payment}/cancel', [StripeCheckoutController::class, 'cancel'])->name('stripe.cancel');
 
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile', function () {
+        return redirect()->route('settings.profile.show');
+    })->name('profile.show');
+    Route::patch('/profile', [SettingsProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

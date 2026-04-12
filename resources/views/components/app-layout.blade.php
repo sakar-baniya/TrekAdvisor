@@ -205,6 +205,27 @@
                     form: form
                 });
             }, true);
+
+            document.addEventListener('click', function (event) {
+                var trigger = event.target.closest('[data-confirm="signout"]');
+                if (!trigger) {
+                    return;
+                }
+
+                event.preventDefault();
+                var form = trigger.closest('form');
+                if (!form) {
+                    return;
+                }
+
+                window.showConfirm({
+                    title: 'Sign Out',
+                    message: 'Are you sure you want to sign out?',
+                    buttonText: 'Sign Out',
+                    buttonClass: 'confirm-btn--secondary',
+                    form: form
+                });
+            }, true);
         </script>
 
         @stack('scripts')

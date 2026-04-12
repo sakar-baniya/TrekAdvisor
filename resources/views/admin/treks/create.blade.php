@@ -22,7 +22,7 @@
         <div class="sticky-action-bar">
             <div class="sticky-action-bar__inner">
                 <a href="{{ route('admin.treks.index') }}" class="admin-secondary-button">Back to Treks</a>
-                <button type="button" class="admin-primary-button" data-confirm="create-trek">Create Trek</button>
+                <button type="submit" class="admin-primary-button">Create Trek</button>
             </div>
         </div>
     </form>

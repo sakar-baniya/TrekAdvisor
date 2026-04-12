@@ -35,7 +35,7 @@
                         </button>
                         <div class="nav-account-dropdown" id="navAccountDropdown" style="display:none;position:absolute;right:0;top:calc(100%+8px);min-width:180px;background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(15,23,42,0.13);z-index:1201;padding:0.5rem 0;">
                             @if ($userRole === 'customer')
-                                <a href="{{ route('account.profile.show') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
+                                <a href="{{ route('settings.profile.show') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
                                     <i class="fas fa-user-circle opacity-50"></i> Profile
                                 </a>
                                 <a href="{{ route('account.bookings.index') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
@@ -73,6 +73,7 @@
                                     type="submit"
                                     class="dropdown-item"
                                     style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;background:none;border:none;width:100%;text-align:left;font-weight:600;"
+                                    data-confirm="signout"
                                 >
                                     <i class="fas fa-sign-out-alt opacity-50"></i> Sign Out
                                 </button>
@@ -110,6 +111,7 @@
                 });
             }
         });
+
         </script>
         </div>
     </nav>
@@ -125,7 +127,7 @@
             @auth
                 @if ($userRole === 'customer')
                     <a href="{{ route('account.bookings.index') }}" class="nav-link">My Bookings</a>
-                    <a href="{{ route('account.profile.show') }}" class="nav-link">Profile</a>
+                    <a href="{{ route('settings.profile.show') }}" class="nav-link">Profile</a>
                     <a href="{{ route('account.payments.index') }}" class="nav-link">Payments</a>
                 @elseif ($userRole === 'staff')
                     <a href="{{ route('staff.dashboard') }}" class="nav-link">Staff Dashboard</a>
@@ -140,7 +142,9 @@
                 @endif
                 <form method="POST" action="{{ route('logout') }}" data-logout-confirm>
                     @csrf
-                    <button type="submit" class="btn btn-link">Sign Out</button>
+                    <button type="submit" class="btn btn-link" data-confirm="signout">
+                        Sign Out
+                    </button>
                 </form>
             @else
                 <a href="{{ route('login') }}" class="nav-link">Login</a>

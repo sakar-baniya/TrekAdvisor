@@ -1,0 +1,14 @@
+/* --- TrekAdvisor Main CSS Bundle --- */
+/* Load order: base → layout → components → pages (scoped) */
+
+@import url("base.css");        /* Colors, resets, accessibility */
+@import url("layout.css");      /* Nav, footer, page shells */
+@import url("components.css");  /* Buttons, cards, badges, forms */
+@import url("pages/home.css");       /* Homepage featured cards */
+@import url("pages/auth.css");       /* Auth pages ONLY */
+@import url("pages/marketplace.css"); /* Public marketplace + home */
+@import url("pages/bookings.css");   /* Booking flow */
+@import url("pages/treks.css");      /* Trek catalog/detail */
+@import url("pages/profile.css");    /* User profile */
+@import url("pages/admin.css");      /* Admin dashboard */
+@import url("pages/footer.css");     /* Footer extras */

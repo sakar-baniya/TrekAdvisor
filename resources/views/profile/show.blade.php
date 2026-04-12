@@ -77,7 +77,7 @@
                     </div>
 
                     <!-- Profile Form (for editing) -->
-                    <form id="profileForm" method="POST" action="{{ route('profile.update') }}" style="display: none;">
+                    <form id="profileForm" method="POST" action="{{ route('settings.profile.update') }}" style="display: none;">
                         @csrf
                         @method('PATCH')
 
@@ -86,7 +86,7 @@
                             <div class="profile-field" data-field="name">
                                 <span class="profile-field-label">Full Name</span>
                                 <div class="profile-field-value">{{ $user->name }}</div>
-                                <input type="text" class="profile-field-input" name="name" value="{{ old('name', $user->name) }}" required>
+                                <input type="text" class="profile-field-input" name="name" value="{{ old('name', $user->name) }}" required maxlength="255">
                                 @error('name')
                                     <span class="form-error">{{ $message }}</span>
                                 @enderror
@@ -95,7 +95,7 @@
                             <div class="profile-field" data-field="email">
                                 <span class="profile-field-label">Email Address</span>
                                 <div class="profile-field-value">{{ $user->email }}</div>
-                                <input type="email" class="profile-field-input" name="email" value="{{ old('email', $user->email) }}" required>
+                                <input type="email" class="profile-field-input" name="email" value="{{ old('email', $user->email) }}" required maxlength="255">
                                 @error('email')
                                     <span class="form-error">{{ $message }}</span>
                                 @enderror
@@ -106,7 +106,8 @@
                                 <div class="profile-field-value {{ !$user->phone ? 'empty' : '' }}">
                                     {{ $user->phone ?? 'Not provided' }}
                                 </div>
-                                <input type="tel" class="profile-field-input" name="phone" value="{{ old('phone', $user->phone ?? '') }}">
+                                <input type="tel" class="profile-field-input" name="phone" value="{{ old('phone', $user->phone ?? '') }}" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10" placeholder="10-digit phone">
+                                <small class="form-hint">Optional. Use a 10-digit phone number.</small>
                                 @error('phone')
                                     <span class="form-error">{{ $message }}</span>
                                 @enderror
@@ -122,7 +123,7 @@
                                 <div class="profile-field-value {{ !$user->address ? 'empty' : '' }}">
                                     {{ $user->address ?? 'Not provided' }}
                                 </div>
-                                <textarea class="profile-field-textarea" name="address">{{ old('address', $user->address ?? '') }}</textarea>
+                                <textarea class="profile-field-textarea" name="address" maxlength="500">{{ old('address', $user->address ?? '') }}</textarea>
                                 @error('address')
                                     <span class="form-error">{{ $message }}</span>
                                 @enderror

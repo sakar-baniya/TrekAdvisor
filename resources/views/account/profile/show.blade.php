@@ -17,26 +17,27 @@
                     </div>
                 </div>
 
-                <form method="POST" action="{{ route('account.profile.update') }}" class="account-form">
+                <form method="POST" action="{{ route('settings.profile.update') }}" class="account-form">
                     @csrf
                     @method('PATCH')
 
                     <div class="account-form__grid">
                         <label>
                             <span>Name</span>
-                            <input type="text" name="name" value="{{ old('name', $user->name) }}" required>
+                            <input type="text" name="name" value="{{ old('name', $user->name) }}" required maxlength="255">
                         </label>
                         <label>
                             <span>Email</span>
-                            <input type="email" name="email" value="{{ old('email', $user->email) }}" required>
+                            <input type="email" name="email" value="{{ old('email', $user->email) }}" required maxlength="255">
                         </label>
                         <label>
                             <span>Phone</span>
-                            <input type="text" name="phone" value="{{ old('phone', $user->phone) }}">
+                            <input type="tel" name="phone" value="{{ old('phone', $user->phone) }}" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10" placeholder="10-digit phone">
+                            <small class="account-form__hint">Optional. Use a 10-digit phone number.</small>
                         </label>
                         <label class="account-form__full">
                             <span>Address</span>
-                            <textarea name="address" rows="3">{{ old('address', $user->address) }}</textarea>
+                            <textarea name="address" rows="3" maxlength="500">{{ old('address', $user->address) }}</textarea>
                         </label>
                     </div>
 

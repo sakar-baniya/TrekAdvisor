@@ -106,7 +106,7 @@
                                         <form method="POST" action="{{ route('admin.users.approve', $user) }}">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="button" class="admin-secondary-button" data-confirm="approve-user">
+                                            <button type="submit" class="admin-secondary-button">
                                                 <i class="fas fa-check"></i>
                                                 <span>Approve</span>
                                             </button>
@@ -122,7 +122,7 @@
                                             <option value="customer" @selected($user->role === 'customer')>Customer</option>
                                             <option value="hotel_owner" @selected($user->role === 'hotel_owner')>Hotel Owner</option>
                                         </select>
-                                        <button type="button" class="admin-secondary-button" data-confirm="update-user-role">
+                                        <button type="submit" class="admin-secondary-button">
                                             <i class="fas fa-rotate"></i>
                                             <span>Update</span>
                                         </button>

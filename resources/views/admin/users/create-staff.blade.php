@@ -70,7 +70,7 @@
                     <i class="fas fa-arrow-left"></i>
                     <span>Back to Users</span>
                 </a>
-                <button type="button" class="admin-primary-button" data-confirm="create-user">
+                <button type="submit" class="admin-primary-button">
                     <i class="fas fa-user-plus"></i>
                     <span>Create User</span>
                 </button>

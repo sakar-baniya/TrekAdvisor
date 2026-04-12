@@ -72,7 +72,7 @@
             <i class="fas fa-arrow-left"></i>
             <span>Back to Departures</span>
         </a>
-        <button type="button" class="admin-primary-button" data-confirm="{{ $departure->exists ? 'update-departure' : 'save-departure' }}">
+        <button type="submit" class="admin-primary-button">
             <i class="fas fa-floppy-disk"></i>
             <span>{{ $departure->exists ? 'Update Departure' : 'Create Departure' }}</span>
         </button>

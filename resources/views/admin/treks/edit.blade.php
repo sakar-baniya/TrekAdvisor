@@ -32,7 +32,7 @@
         <div class="sticky-action-bar">
             <div class="sticky-action-bar__inner">
                 <a href="{{ route('admin.treks.index') }}" class="admin-secondary-button">Cancel</a>
-                <button type="button" class="admin-primary-button" data-confirm="update-trek">Save Changes</button>
+                <button type="submit" class="admin-primary-button">Save Changes</button>
             </div>
         </div>
     </form>

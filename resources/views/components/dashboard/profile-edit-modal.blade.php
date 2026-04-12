@@ -12,7 +12,7 @@
         </div>
 
         <div class="dashboard-modal__body">
-            <form method="POST" action="{{ route('profile.update') }}" id="profile-edit-form">
+            <form method="POST" action="{{ route('settings.profile.update') }}" id="profile-edit-form">
                 @csrf
                 @method('PATCH')
 
@@ -26,6 +26,7 @@
                         value="{{ old('name', $user->name) }}"
                         class="dashboard-form-input @error('name') error @enderror"
                         required
+                        maxlength="255"
                     />
                     @error('name')
                         <span class="dashboard-form-error">{{ $message }}</span>
@@ -42,6 +43,7 @@
                         value="{{ old('email', $user->email) }}"
                         class="dashboard-form-input @error('email') error @enderror"
                         required
+                        maxlength="255"
                     />
                     @error('email')
                         <span class="dashboard-form-error">{{ $message }}</span>
@@ -57,13 +59,13 @@
                         name="phone" 
                         value="{{ old('phone', $user->phone ?? '') }}"
                         class="dashboard-form-input @error('phone') error @enderror"
-                        pattern="[0-9]{7,15}"
+                        pattern="\d{10}"
                         inputmode="numeric"
-                        maxlength="15"
-                        required
-                        oninput="this.value=this.value.replace(/[^0-9]/g,'')"
-                        placeholder="Digits only"
+                        minlength="10"
+                        maxlength="10"
+                        placeholder="10-digit phone"
                     />
+                    <small class="dashboard-form-hint">Optional. Use a 10-digit phone number.</small>
                     @error('phone')
                         <span class="dashboard-form-error">{{ $message }}</span>
                     @enderror
@@ -77,6 +79,7 @@
                         name="address" 
                         class="dashboard-form-textarea @error('address') error @enderror"
                         rows="3"
+                        maxlength="500"
                     >{{ old('address', $user->address ?? '') }}</textarea>
                     @error('address')
                         <span class="dashboard-form-error">{{ $message }}</span>

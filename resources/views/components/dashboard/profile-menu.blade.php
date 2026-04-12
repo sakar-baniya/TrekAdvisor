@@ -1,9 +1,18 @@
 @props(['user'])
 
+@php
+    use Illuminate\Support\Facades\Storage;
+    $avatarUrl = $user->avatar_path ? Storage::url($user->avatar_path) : null;
+@endphp
+
 <div class="position-relative">
     <button type="button" class="topbar-control" id="profileMenuTrigger">
         <div class="topbar-control__avatar">
-            {{ strtoupper(substr($user->name, 0, 1)) }}
+            @if ($avatarUrl)
+                <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+            @else
+                {{ strtoupper(substr($user->name, 0, 1)) }}
+            @endif
         </div>
         <span class="topbar-control__name">{{ $user->name }}</span>
         <i class="fas fa-chevron-down ms-1" style="font-size: 0.7rem; opacity: 0.3;"></i>
@@ -16,7 +25,7 @@
         </div>
 
         <div class="v-dropdown__menu" style="display: flex; flex-direction: column; gap: 0; padding: 8px 0;">
-            <a href="{{ route('profile.show') }}" class="v-dropdown__link" style="min-height:44px;">
+            <a href="{{ route('settings.profile.show') }}" class="v-dropdown__link" style="min-height:44px;">
                 <i class="fas fa-cog opacity-50"></i>
                 <span>Profile Settings</span>
             </a>

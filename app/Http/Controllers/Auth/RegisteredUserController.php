@@ -39,8 +39,8 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['required', 'string', 'max:30'],
-            'hotel_name' => ['nullable', 'string', 'max:255'],
+            'phone' => ['nullable', 'digits:10'],
+            'hotel_name' => ['required', 'string', 'max:255'],
         ]);
 
         $user = User::create([
@@ -48,7 +48,7 @@ class RegisteredUserController extends Controller
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => 'hotel_owner',
-            'phone' => $request->phone,
+            'phone' => $request->input('phone'),
             'approval_status' => 'pending',
         ]);
 
@@ -73,7 +73,7 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'phone' => ['nullable', 'string', 'max:30'],
+            'phone' => ['nullable', 'digits:10'],
         ]);
 
         $user = User::create([

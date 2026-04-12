@@ -25,7 +25,7 @@
         <!-- Email Address -->
         <div class="auth-field">
             <x-input-label for="email" :value="__('Email Address')" />
-            <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="eg: sumeet.admin@gmail.com" />
+            <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autofocus autocomplete="username" placeholder="eg: sumeet.admin@gmail.com" maxlength="255" />
             <x-input-error :messages="$errors->get('email')" />
         </div>
 
@@ -44,6 +44,10 @@
                                 type="password"
                                 name="password"
                                 required autocomplete="current-password" placeholder="Enter secure password" />
+                <button type="button" class="auth-password-toggle" data-toggle-password data-target="password" aria-label="Show password">
+                    <i class="fas fa-eye" data-icon="show"></i>
+                    <i class="fas fa-eye-slash is-hidden" data-icon="hide"></i>
+                </button>
             </div>
             <x-input-error :messages="$errors->get('password')" />
         </div>

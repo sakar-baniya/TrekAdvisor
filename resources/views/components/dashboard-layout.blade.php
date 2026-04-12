@@ -65,17 +65,14 @@
                 <!-- Sidebar footer intentionally left blank: navigation only -->
             </aside>
 
+
             <!-- Main Content: Refined Hierarchy -->
             <div class="admin-content">
                 <header class="dashboard-topbar">
-                    <button type="button" class="d-lg-none me-3" style="background:none; border:none; font-size: 1.25rem;" onclick="document.getElementById('adminSidebar').classList.toggle('open')">
-                        <i class="fas fa-bars"></i>
-                    </button>
-
-                    <div class="dashboard-topbar__search">
+                    <form class="dashboard-topbar__search" action="{{ route('search') }}" method="GET">
                         <i class="fas fa-search dashboard-topbar__search-icon" style="opacity: 0.4;"></i>
-                        <input type="search" class="dashboard-topbar__search-input" placeholder="Search parameters, treks, or users...">
-                    </div>
+                        <input type="search" class="dashboard-topbar__search-input" name="q" value="{{ request('q') }}" placeholder="Search parameters, treks, or users..." aria-label="Search">
+                    </form>
 
                     <div class="dashboard-topbar__actions">
                         <button type="button" class="u-btn u-btn--secondary" style="width: 42px; height: 42px; padding: 0; display: flex; align-items: center; justify-content: center; border-radius: 50%; position: relative;">
@@ -87,24 +84,15 @@
                     </div>
                 </header>
 
-                <main class="admin-main" style="padding: 2.5rem; flex: 1;">
-                    {{ $slot }}
+                <main class="admin-main">
+                    <div class="admin-main__inner">
+                        {{ $slot }}
+                    </div>
                 </main>
             </div>
         </div>
 
         <script>
-            // Sidebar Mobile Toggle
-            document.addEventListener('click', (e) => {
-                const sidebar = document.getElementById('adminSidebar');
-                const trigger = e.target.closest('.d-lg-none');
-                if (trigger) return;
-                
-                if (window.innerWidth < 1024 && sidebar.classList.contains('open') && !sidebar.contains(e.target)) {
-                    sidebar.classList.remove('open');
-                }
-            });
-
             // Enhanced Profile Dropdown
             document.addEventListener('click', (e) => {
                 const trigger = document.getElementById('profileMenuTrigger');
@@ -127,7 +115,6 @@
         <style>
             @media (max-width: 1024px) {
                 .admin-sidebar { transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-                .admin-sidebar.open { transform: translateX(0); }
                 .admin-content { margin-left: 0; }
             }
         </style>

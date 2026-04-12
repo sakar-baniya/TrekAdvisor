@@ -67,7 +67,7 @@
                         <form method="POST" action="{{ route('admin.reviews.flag', $review) }}">
                             @csrf
                             @method('PATCH')
-                            <button type="button" class="admin-secondary-button" data-confirm="{{ $review->is_flagged ? 'unflag-review' : 'flag-review' }}">
+                            <button type="submit" class="admin-secondary-button">
                                 <i class="fas fa-flag"></i>
                                 <span>{{ $review->is_flagged ? 'Unflag' : 'Flag' }}</span>
                             </button>

@@ -68,6 +68,13 @@ class DashboardNavigation
                     ],
                 ],
                 [
+                    'label' => 'Contact Messages',
+                    'icon' => 'fa-envelope-open-text',
+                    'children' => [
+                        ['label' => 'Inbox', 'route' => 'admin.contact-messages.index'],
+                    ],
+                ],
+                [
                     'label' => 'Reviews',
                     'icon' => 'fa-star',
                     'children' => [
