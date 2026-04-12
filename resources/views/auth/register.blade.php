@@ -1,48 +1,50 @@
 <x-guest-layout>
     <a href="{{ route('home') }}" class="auth-back-link">
         <i class="fas fa-arrow-left"></i>
-        <span>Back to camp</span>
+        <span>Back</span>
     </a>
 
-    <div class="auth-brand-area" >
-        <div class="auth-brand-mark">⛰</div>
+    <div class="auth-brand-area auth-brand-area--signin">
+        <div class="auth-brand-mark"><img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" /></div>
         <span>TrekAdvisor</span>
     </div>
 
     <!-- Session Status -->
     <x-auth-session-status class="auth-status" :status="session('status')" />
 
-    <div class="auth-header">
-        <p class="auth-kicker">New Account</p>
-        <h1 class="auth-title">Join TrekAdvisor</h1>
-        <p class="auth-subtitle">Create your account to book treks, manage stays, and explore the Himalayas.</p>
+    <div class="auth-header auth-header--signin-simple">
+        <h1 class="auth-title auth-title--signin">
+            <i class="fas fa-user-plus"></i>
+            <span>Sign Up</span>
+        </h1>
+        <div class="auth-divider" aria-hidden="true"></div>
     </div>
 
     <form method="POST" action="{{ route('register') }}" class="auth-form">
         @csrf
 
-        <div class="auth-grid auth-grid--two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
-            <div class="auth-field" style="margin-bottom: 0;">
+        <div class="auth-grid auth-grid--two">
+            <div class="auth-field">
                 <x-input-label for="name" :value="__('Full Name')" />
                 <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="eg: Suman Shrestha" maxlength="80" />
                 <x-input-error :messages="$errors->get('name')" />
             </div>
 
-            <div class="auth-field" style="margin-bottom: 0;">
+            <div class="auth-field">
                 <x-input-label for="phone" :value="__('Phone (optional)')" />
                 <x-text-input id="phone" class="auth-input" type="tel" name="phone" :value="old('phone')" autocomplete="tel" placeholder="eg: 9800012345" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10" />
                 <x-input-error :messages="$errors->get('phone')" />
             </div>
         </div>
 
-        <div class="auth-field" style="margin-bottom: 24px;">
+        <div class="auth-field">
             <x-input-label for="email" :value="__('Email Address')" />
             <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="eg: suman.nepal@gmail.com" maxlength="255" />
             <x-input-error :messages="$errors->get('email')" />
         </div>
 
-        <div class="auth-grid auth-grid--two" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px;">
-            <div class="auth-field" style="margin-bottom: 0;">
+        <div class="auth-grid auth-grid--two">
+            <div class="auth-field">
                 <x-input-label for="password" :value="__('Password')" />
                 <div class="auth-input-wrap">
                     <x-text-input id="password" class="auth-input auth-input-password"
@@ -57,7 +59,7 @@
                 <x-input-error :messages="$errors->get('password')" />
             </div>
 
-            <div class="auth-field" style="margin-bottom: 0;">
+            <div class="auth-field">
                 <x-input-label for="password_confirmation" :value="__('Confirm')" />
                 <div class="auth-input-wrap">
                     <x-text-input id="password_confirmation" class="auth-input auth-input-password"
@@ -76,14 +78,14 @@
             {{ __('Secure Sign Up') }}
         </button>
 
-        <div class="auth-footer" style="margin-top: 32px; border-top: 1.5px solid #f1f5f9; padding-top: 24px;">
+        <div class="auth-footer auth-footer--stacked">
             <div class="auth-footer-copy">
                 Are you a service provider? 
                 <a class="auth-link" href="{{ route('register.hotel') }}">
                     Partner with TrekAdvisor
                 </a>
             </div>
-            <div class="auth-footer-copy" style="margin-top: 12px;">
+            <div class="auth-footer-copy auth-footer-copy--spaced">
                 Already have an account?
                 <a class="auth-link" href="{{ route('login') }}">
                     Sign in

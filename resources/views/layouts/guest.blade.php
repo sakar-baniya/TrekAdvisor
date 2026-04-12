@@ -96,18 +96,35 @@
                 const input = document.getElementById(targetId);
                 if (!input) return;
 
+                button.setAttribute('aria-controls', targetId);
+                button.setAttribute('aria-pressed', 'false');
+                button.setAttribute('aria-label', 'Show password');
+
                 const showIcon = button.querySelector('[data-icon="show"]');
                 const hideIcon = button.querySelector('[data-icon="hide"]');
 
                 button.addEventListener('click', () => {
                     const isPassword = input.getAttribute('type') === 'password';
                     input.setAttribute('type', isPassword ? 'text' : 'password');
+                    button.setAttribute('aria-pressed', isPassword ? 'true' : 'false');
+                    button.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
                     if (showIcon && hideIcon) {
                         showIcon.classList.toggle('is-hidden', isPassword);
                         hideIcon.classList.toggle('is-hidden', !isPassword);
                     }
                 });
             });
+
+            if (document.body.classList.contains('body-auth-page')) {
+                document.querySelectorAll('.form-error').forEach((errorBlock) => {
+                    const message = errorBlock.textContent.replace(/\s+/g, ' ').trim();
+                    if (message === 'These credentials do not match our records.') {
+                        setTimeout(() => {
+                            errorBlock.style.display = 'none';
+                        }, 4000);
+                    }
+                });
+            }
         });
     </script>
 </html>

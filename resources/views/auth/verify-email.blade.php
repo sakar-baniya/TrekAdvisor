@@ -2,7 +2,6 @@
     <div class="auth-header auth-header--centered">
         <p class="auth-kicker">Verify Email</p>
         <h1 class="auth-title">Check your inbox</h1>
-        <p class="auth-subtitle">{{ __('Before getting started, please verify your email address using the link we just sent you.') }}</p>
     </div>
 
     @if (session('status') == 'verification-link-sent')

@@ -206,18 +206,6 @@
     gap: 0.75rem;
 }
 
-.auth-kicker {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.45rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    font-size: 0.76rem;
-    font-weight: 800;
-    color: var(--market-cyan-600);
-    margin-bottom: 0.75rem;
-}
-
 .catalog-hero,
 .detail-hero {
     position: relative;
@@ -387,18 +375,8 @@
     max-width: none;
 }
 
-.auth-title {
-    font-size: 1.75rem;
-    line-height: 1.2;
-    letter-spacing: -0.03em;
-    margin-top: 0.5rem;
-    font-weight: 800;
-    color: var(--market-cyan-700);
-}
-
 .market-hero__subtitle,
-.catalog-hero p,
-.auth-subtitle {
+.catalog-hero p {
     max-width: 46rem;
     /* increased from 42rem */
     font-size: 1.25rem;
@@ -645,8 +623,7 @@
 .detail-review-card p,
 .booking-subtext,
 .booking-success-card p,
-.auth-note,
-.auth-subtitle {
+.auth-note {
     color: var(--market-slate-500);
 }
 
@@ -852,14 +829,12 @@
     padding: 1.5rem;
 }
 
-.catalog-filter-form,
-.auth-form {
+.catalog-filter-form {
     display: grid;
     gap: 1rem;
 }
 
 .catalog-filter-form label,
-.auth-field,
 .booking-passenger-grid label {
     display: grid;
     gap: 0.45rem;
@@ -1417,19 +1392,6 @@
     text-decoration: none;
     color: var(--market-slate-900);
     font-weight: 800;
-}
-
-.auth-header {
-    margin-bottom: 1.5rem;
-}
-
-.auth-title {
-    color: var(--market-slate-900);
-    font-size: clamp(2.2rem, 4vw, 3.4rem);
-}
-
-.auth-subtitle {
-    color: var(--market-slate-500);
 }
 
 .auth-row,

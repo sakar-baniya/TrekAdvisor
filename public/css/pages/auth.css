@@ -23,16 +23,22 @@
 /* 3. White card */
 .guest-auth-shell {
     display: block;
-    width: 100%;
-    max-width: 520px;
-    margin-top: 20px;
+    width: calc(100% - 32px);
+    max-width: 550px;
+    margin-top: 0;
     background: #ffffff;
     border-radius: 12px;
     box-shadow: 0 40px 120px -20px rgba(0, 0, 0, 0.5);
-    padding: 48px 56px;
-    position: relative;
+    padding: 60px 70px;
+    position: fixed;
+    inset: 0;
+    margin: auto;
+    height: fit-content;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
     z-index: 10;
     box-sizing: border-box;
+    min-height: 700px;
 }
 
 /* 4. Typography inside the card */
@@ -46,27 +52,43 @@
 .auth-brand-area {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     margin-bottom: 24px;
 }
 
 .auth-brand-mark {
-    width: 36px;
-    height: 36px;
-    border-radius: 8px;
-    background: var(--at-light-blue);
+    width: 44px;
+    height: 44px;
+    border-radius: 999px;
+    background: #ffffff;
+    overflow: hidden;
+    border: 1px solid rgba(15, 23, 42, 0.14);
     display: grid;
     place-items: center;
 }
 
+.auth-brand-mark img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transform: scale(1.12);
+}
+
 .auth-brand-area span {
     font-weight: 850;
-    font-size: 1.4rem;
+    font-size: 1.55rem;
     color: var(--at-dark-blue);
 }
 
+.auth-brand-area--signin {
+    justify-content: center;
+}
+
 /* 5. Auth header text */
-.auth-header { margin-bottom: 24px; }
+.auth-header {
+    margin-bottom: 24px;
+}
 
 .auth-kicker {
     font-size: 0.7rem;
@@ -78,11 +100,28 @@
 }
 
 .auth-title {
-    font-size: 1.75rem;
-    font-weight: 900;
+    font-size: 1.5rem;
+    font-weight: 800;
     line-height: 1.2;
     margin: 0;
     color: var(--at-dark-blue);
+}
+
+.auth-header--signin-simple {
+    text-align: center;
+}
+
+.auth-title--signin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.auth-divider {
+    height: 1px;
+    margin-top: 10px;
+    background: rgba(15, 23, 42, 0.1);
 }
 
 .auth-subtitle {
@@ -129,6 +168,45 @@
     box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.06);
 }
 
+.body-auth-page .form-error {
+    margin: 6px 0 0;
+    padding: 0;
+    list-style: none;
+    color: #dc2626;
+    font-size: 0.84rem;
+    font-weight: 600;
+}
+
+.body-auth-page .form-error li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    color: #dc2626;
+}
+
+.auth-input-wrap {
+    position: relative;
+}
+
+.auth-input-password {
+    padding-right: 2.5rem;
+}
+
+.auth-password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0.6rem;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: #5b7382;
+    cursor: pointer;
+}
+
+.auth-password-toggle .is-hidden {
+    display: none;
+}
+
 /* Grid layout for side-by-side fields */
 .auth-grid {
     display: grid;
@@ -148,11 +226,23 @@
     margin-bottom: 16px;
 }
 
+.auth-row--tight {
+    margin-bottom: 8px;
+}
+
 .auth-link {
     color: var(--at-secondary);
     font-weight: 800;
     font-size: 0.82rem;
     cursor: pointer;
+}
+
+.auth-link--subtle {
+    font-size: 0.85rem;
+}
+
+.auth-link--strong {
+    font-weight: 700;
 }
 
 .auth-link:hover,
@@ -163,19 +253,9 @@
     background: transparent !important;
 }
 
-.auth-checkbox {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 0.85rem;
-}
-
-.auth-checkbox input {
-    width: 15px;
-    height: 15px;
-    accent-color: var(--at-primary);
+.auth-row--forgot {
+    justify-content: flex-end;
+    margin-top: -4px;
 }
 
 /* 8. Submit button */
@@ -221,6 +301,26 @@
     font-size: 0.82rem;
 }
 
+.auth-status--note {
+    margin-bottom: 24px;
+    padding: 16px;
+    background: #fffbeb;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: #92410e;
+    border: 1px solid #fef3c7;
+}
+
+.auth-footer--stacked {
+    margin-top: 32px;
+    border-top: 1px solid #d9e4ee;
+    padding-top: 24px;
+}
+
+.auth-footer-copy--spaced {
+    margin-top: 12px;
+}
+
 /* 10. Floating back button */
 .auth-back-link {
     position: fixed;
@@ -242,7 +342,6 @@
 
 .auth-back-link:hover {
     background: #f8fafc;
-    transform: translateX(-2px);
 }
 
 .auth-back-link * {
@@ -261,5 +360,11 @@
         max-width: 100%;
         padding: 32px 24px;
         margin: 0;
+        min-height: auto;
+        position: static;
+        inset: auto;
+        height: auto;
+        max-height: none;
+        overflow-y: visible;
     }
 }

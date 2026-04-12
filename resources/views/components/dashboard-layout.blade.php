@@ -31,7 +31,9 @@
             <aside class="admin-sidebar" id="adminSidebar">
                 <div class="admin-sidebar__brand">
                     <a href="{{ route('home') }}" class="admin-brandmark">
-                        <div class="admin-brandmark__badge">TA</div>
+                        <div class="admin-brandmark__badge">
+                            <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
+                        </div>
                         <strong>TrekAdvisor</strong>
                     </a>
                 </div>

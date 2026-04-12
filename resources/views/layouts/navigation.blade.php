@@ -12,7 +12,9 @@
         <div class="container nav-inner">
             <div class="nav-section nav-left">
                 <a href="{{ route('home') }}" class="brand">
-                    <span class="brand-badge"><i class="fas fa-mountain-sun"></i></span>
+                    <span class="brand-badge">
+                        <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
+                    </span>
                     <span class="brand-wordmark">TrekAdvisor</span>
                 </a>
             </div>

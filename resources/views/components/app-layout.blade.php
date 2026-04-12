@@ -86,7 +86,9 @@
                     <!-- Brand Section -->
                     <div class="footer-section-brand">
                         <a href="{{ route('home') }}" class="footer-brand">
-                            <span class="footer-brand-icon"><i class="fas fa-mountain-sun"></i></span>
+                            <span class="footer-brand-icon">
+                                <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
+                            </span>
                             <span>TrekAdvisor</span>
                         </a>
                         <p class="footer-description">

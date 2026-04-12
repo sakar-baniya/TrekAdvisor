@@ -2,7 +2,6 @@
     <div class="auth-header auth-header--centered">
         <p class="auth-kicker">Secure Area</p>
         <h1 class="auth-title">Confirm your password</h1>
-        <p class="auth-subtitle">{{ __('This action needs an extra confirmation before you continue.') }}</p>
     </div>
 
     <form method="POST" action="{{ route('password.confirm') }}" class="auth-form">

@@ -82,7 +82,9 @@
                 <div class="footer-grid">
                     <div>
                         <div class="footer-brand">
-                            <span class="footer-brand-badge"><i class="fas fa-mountain"></i></span>
+                            <span class="footer-brand-badge">
+                                <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
+                            </span>
                             TrekAdvisor
                         </div>
                         <p class="footer-muted footer-text">

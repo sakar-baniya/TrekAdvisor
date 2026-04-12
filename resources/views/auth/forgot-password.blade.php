@@ -2,7 +2,6 @@
     <div class="auth-header auth-header--split">
         <p class="auth-kicker">Reset Password</p>
         <h1 class="auth-title">Forgot your password?</h1>
-        <p class="auth-subtitle">{{ __('Enter your email address and we will send you a reset link so you can choose a new password.') }}</p>
     </div>
 
     <!-- Session Status -->
