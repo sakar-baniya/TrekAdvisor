@@ -10,6 +10,6 @@
 
     <form action="{{ route('hotel_owner.hotels.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        @include('hotels.owner._form')
+            @include('hotels.owner.hotel-form-fields')
     </form>
 </x-dashboard-layout>

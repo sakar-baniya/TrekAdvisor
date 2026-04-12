@@ -16,7 +16,7 @@
 
     <form action="{{ route('admin.treks.store') }}" method="POST" enctype="multipart/form-data" id="create-trek-form">
         @csrf
-        @include('admin.treks._form')
+        @include('admin.treks.trek-form-fields')
 
         <!-- Sticky Action Bar -->
         <div class="sticky-action-bar">

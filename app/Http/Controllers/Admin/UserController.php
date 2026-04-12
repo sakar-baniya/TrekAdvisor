@@ -36,7 +36,7 @@ class UserController extends Controller
             ->where('approval_status', 'pending')
             ->count();
 
-        return view('admin.users.index', [
+        return view('admin.users.user-list', [
             'users' => $users,
             'pendingHotelOwners' => $pendingHotelOwners,
             'search' => $search,

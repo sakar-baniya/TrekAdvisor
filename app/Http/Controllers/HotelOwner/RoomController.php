@@ -13,7 +13,7 @@ class RoomController extends Controller
 {
     public function index(Hotel $hotel): View
     {
-        return view('hotels.owner.rooms.index', [
+        return view('hotels.owner.rooms.room-list', [
             'hotel' => $hotel,
             'rooms' => $hotel->rooms()->latest()->paginate(10),
         ]);
@@ -21,7 +21,7 @@ class RoomController extends Controller
 
     public function create(Hotel $hotel): View
     {
-        return view('hotels.owner.rooms.create', [
+        return view('hotels.owner.rooms.create-room', [
             'hotel' => $hotel,
             'room' => new HotelRoom(),
         ]);
@@ -45,7 +45,7 @@ class RoomController extends Controller
     {
         abort_unless((int) $room->hotel_id === (int) $hotel->id, 404);
 
-        return view('hotels.owner.rooms.edit', [
+        return view('hotels.owner.rooms.edit-room', [
             'hotel' => $hotel,
             'room' => $room,
         ]);

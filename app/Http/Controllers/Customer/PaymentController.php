@@ -16,7 +16,7 @@ class PaymentController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('account.payments.index', [
+        return view('account.payments.payment-list', [
             'payments' => $payments,
         ]);
     }

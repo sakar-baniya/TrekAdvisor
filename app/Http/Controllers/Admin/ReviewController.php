@@ -24,7 +24,7 @@ class ReviewController extends Controller
     {
         $review->load(['user', 'reviewable']);
 
-        return view('admin.reviews.show', compact('review'));
+        return view('admin.reviews.review-details', compact('review'));
     }
 
     public function toggleFlag(Review $review): RedirectResponse
@@ -58,7 +58,7 @@ class ReviewController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        return view('admin.reviews.index', [
+        return view('admin.reviews.review-list', [
             'reviews' => $reviews,
             'type' => $type,
             'rating' => $rating,

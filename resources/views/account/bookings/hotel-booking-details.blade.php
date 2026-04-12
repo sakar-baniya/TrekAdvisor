@@ -6,17 +6,17 @@
 
     <section class="account-shell" id="review">
         <div class="container">
-            @include('account.bookings.partials.hotel-header', ['booking' => $booking])
-            @include('account.bookings.partials.hotel-summary', [
+            @include('account.bookings.partials.hotel-booking-header', ['booking' => $booking])
+            @include('account.bookings.partials.hotel-booking-summary', [
                 'booking' => $booking,
                 'payment' => $payment,
                 'paymentStatus' => $paymentStatus,
             ])
-            @include('account.bookings.partials.hotel-actions', [
+            @include('account.bookings.partials.hotel-booking-actions', [
                 'booking' => $booking,
                 'payment' => $payment,
             ])
-            @include('account.bookings.partials.hotel-review', [
+            @include('account.bookings.partials.hotel-booking-review', [
                 'booking' => $booking,
                 'review' => $review,
                 'isLocked' => $isLocked,

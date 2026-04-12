@@ -82,7 +82,7 @@ class TrekController extends Controller
             ]);
         }
 
-        return view('treks.index', compact('treks'));
+        return view('treks.trek-list', compact('treks'));
     }
 
     /**
@@ -103,6 +103,6 @@ class TrekController extends Controller
         $reviewCount = $trek->reviews()->count();
         $avgRating = $reviewCount > 0 ? round($trek->reviews()->avg('rating'), 1) : null;
 
-        return view('treks.show', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
+        return view('treks.trek-details', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
     }
 }

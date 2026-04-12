@@ -27,7 +27,7 @@ class DepartureController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.departures.index', [
+        return view('admin.departures.departure-list', [
             'departures' => $departures,
             'treks' => Trek::query()->orderBy('title')->get(),
             'selectedTrek' => $trekId,
@@ -42,7 +42,7 @@ class DepartureController extends Controller
             'status' => 'available',
         ]);
 
-        return view('admin.departures.create', [
+        return view('admin.departures.create-departure', [
             'departure' => $departure,
             'treks' => Trek::query()->orderBy('title')->get(),
             'selectedTrekId' => $request->integer('trek_id') ?: null,
@@ -71,7 +71,7 @@ class DepartureController extends Controller
     {
         $departure->load('trek');
 
-        return view('admin.departures.edit', [
+        return view('admin.departures.edit-departure', [
             'departure' => $departure,
             'treks' => Trek::query()->orderBy('title')->get(),
             'selectedTrekId' => $departure->trek_id,

@@ -33,5 +33,5 @@
 
     <p class="account-note">Cancellation requests within 14 days of departure may incur fees. Our team will confirm eligibility and refund details.</p>
 
-    @include('account.bookings.partials.confirm-modal')
+    @include('account.bookings.partials.cancel-confirmation-modal')
 </section>

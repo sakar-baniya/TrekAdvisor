@@ -60,7 +60,7 @@ class AccountBookingsController extends Controller
             ->get()
             ->keyBy('reviewable_id');
 
-        return view('account.bookings.index', compact(
+        return view('account.bookings.bookings-list', compact(
             'trekUpcoming',
             'trekPast',
             'hotelUpcoming',
@@ -82,7 +82,7 @@ class AccountBookingsController extends Controller
             ->where('reviewable_id', $trekBooking->id)
             ->first();
 
-        return view('account.bookings.trek-show', [
+        return view('account.bookings.trek-booking-details', [
             'booking' => $trekBooking,
             'payment' => $payment,
             'review' => $review,
@@ -133,7 +133,7 @@ class AccountBookingsController extends Controller
             ->where('reviewable_id', $hotelBooking->id)
             ->first();
 
-        return view('account.bookings.hotel-show', [
+        return view('account.bookings.hotel-booking-details', [
             'booking' => $hotelBooking,
             'payment' => $payment,
             'review' => $review,

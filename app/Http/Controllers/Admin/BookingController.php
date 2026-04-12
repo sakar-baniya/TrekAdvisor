@@ -35,7 +35,7 @@ class BookingController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        return view('admin.trek-bookings.index', [
+        return view('admin.trek-bookings.trek-booking-list', [
             'bookings' => $bookings,
             'treks' => Trek::query()->orderBy('title')->get(),
             'search' => $search,
@@ -54,7 +54,7 @@ class BookingController extends Controller
             ->latest()
             ->first();
 
-        return view('admin.trek-bookings.show', [
+        return view('admin.trek-bookings.trek-booking-details', [
             'booking' => $trekBooking,
             'payment' => $payment,
         ]);

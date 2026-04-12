@@ -7,21 +7,21 @@
 
     <section class="account-shell" id="review">
         <div class="container">
-            @include('account.bookings.partials.trek-header', ['booking' => $booking])
-            @include('account.bookings.partials.trek-summary', [
+                @include('account.bookings.partials.trek-booking-header', ['booking' => $booking])
+                @include('account.bookings.partials.trek-booking-summary', [
                 'booking' => $booking,
                 'payment' => $payment,
                 'paymentStatus' => $paymentStatus,
             ])
-            @include('account.bookings.partials.trek-actions', [
+                @include('account.bookings.partials.trek-booking-actions', [
                 'booking' => $booking,
                 'payment' => $payment,
             ])
-            @include('account.bookings.partials.trek-review', [
+                @include('account.bookings.partials.trek-booking-review', [
                 'booking' => $booking,
                 'review' => $review,
             ])
-            @include('account.bookings.partials.trek-passengers', [
+                @include('account.bookings.partials.trek-booking-passengers', [
                 'booking' => $booking,
                 'canEditPassengers' => $canEditPassengers,
                 'isLocked' => $isLocked,

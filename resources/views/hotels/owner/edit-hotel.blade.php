@@ -19,6 +19,6 @@
     <form action="{{ route('hotel_owner.hotels.update', $hotel) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        @include('hotels.owner._form')
+            @include('hotels.owner.hotel-form-fields')
     </form>
 </x-dashboard-layout>

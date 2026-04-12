@@ -38,7 +38,7 @@ class HotelController extends Controller
         $activeCount = Hotel::query()->where('status', 'active')->count();
         $inactiveCount = Hotel::query()->where('status', 'inactive')->count();
 
-        return view('admin.hotels.index', [
+        return view('admin.hotels.hotel-list', [
             'hotels' => $hotels,
             'pendingCount' => $pendingCount,
             'activeCount' => $activeCount,

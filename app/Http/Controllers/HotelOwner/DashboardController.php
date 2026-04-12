@@ -16,6 +16,6 @@ class DashboardController extends Controller
 
     public function index(Request $request): View
     {
-        return view('dashboard.owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
+        return view('hotel.hotel-owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
     }
 }

@@ -26,7 +26,7 @@
     <form action="{{ route('admin.treks.update', $trek) }}" method="POST" enctype="multipart/form-data" id="edit-trek-form">
         @csrf
         @method('PUT')
-        @include('admin.treks._form')
+        @include('admin.treks.trek-form-fields')
 
         <!-- Sticky Action Bar -->
         <div class="sticky-action-bar">

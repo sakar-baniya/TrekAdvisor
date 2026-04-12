@@ -25,7 +25,7 @@ class ContactMessageController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        return view('admin.contact-messages.index', [
+        return view('admin.contact-messages.message-list', [
             'messages' => $messages,
             'search' => $search,
         ]);
@@ -33,7 +33,7 @@ class ContactMessageController extends Controller
 
     public function show(ContactMessage $contactMessage): View
     {
-        return view('admin.contact-messages.show', [
+        return view('admin.contact-messages.message-details', [
             'message' => $contactMessage,
         ]);
     }

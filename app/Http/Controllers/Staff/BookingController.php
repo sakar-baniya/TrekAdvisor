@@ -34,7 +34,7 @@ class BookingController extends Controller
             ->paginate(12)
             ->withQueryString();
 
-        return view('staff.trek-bookings.index', [
+        return view('staff.trek-bookings.trek-booking-list', [
             'bookings' => $bookings,
             'treks' => Trek::query()->orderBy('title')->get(),
             'search' => $search,
@@ -47,7 +47,7 @@ class BookingController extends Controller
     {
         $trekBooking->load(['user', 'departure.trek', 'passengers', 'payments']);
 
-        return view('staff.trek-bookings.show', [
+        return view('staff.trek-bookings.trek-booking-details', [
             'booking' => $trekBooking,
         ]);
     }

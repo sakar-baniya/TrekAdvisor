@@ -24,12 +24,12 @@ class TrekController extends Controller
 
     public function index(Request $request): View
     {
-        return view('admin.treks.index', $this->adminTrekQueryService->paginate($request));
+        return view('admin.treks.trek-list', $this->adminTrekQueryService->paginate($request));
     }
 
     public function create(): View
     {
-        return view('admin.treks.create', [
+        return view('admin.treks.create-trek', [
             'trek' => $this->adminTrekQueryService->makeDraft(),
         ]);
     }
@@ -45,14 +45,14 @@ class TrekController extends Controller
 
     public function show(Trek $trek): View
     {
-        return view('admin.treks.show', [
+        return view('admin.treks.trek-details', [
             'trek' => $this->adminTrekQueryService->loadForShow($trek),
         ]);
     }
 
     public function edit(Trek $trek): View
     {
-        return view('admin.treks.edit', [
+        return view('admin.treks.edit-trek', [
             'trek' => $this->adminTrekQueryService->loadForEdit($trek),
         ]);
     }

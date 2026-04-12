@@ -40,7 +40,7 @@ class SearchController extends Controller
             }
         }
 
-        return view('search.index', [
+        return view('search.search-results', [
             'query' => $query,
             'treks' => $treks,
             'hotels' => $hotels,

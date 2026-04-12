@@ -15,6 +15,6 @@ class DashboardController extends Controller
 
     public function index(): View
     {
-        return view('dashboard.admin-dashboard', $this->adminDashboardQueryService->data());
+        return view('admin.admin-dashboard', $this->adminDashboardQueryService->data());
     }
 }

@@ -17,16 +17,16 @@ class DashboardController extends Controller
 
     public function customer(Request $request): View
     {
-        return view('dashboard.customer-dashboard', $this->userDashboardQueryService->customerData($request->user()));
+        return view('customer.customer-dashboard', $this->userDashboardQueryService->customerData($request->user()));
     }
 
     public function staff(): View
     {
-        return view('dashboard.staff-dashboard', $this->userDashboardQueryService->staffData());
+        return view('staff.staff-dashboard', $this->userDashboardQueryService->staffData());
     }
 
     public function hotelOwner(Request $request): View
     {
-        return view('dashboard.owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
+        return view('hotel.hotel-owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
     }
 }

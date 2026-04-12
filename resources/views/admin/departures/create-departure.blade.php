@@ -10,6 +10,6 @@
 
     <form action="{{ route('admin.departures.store') }}" method="POST">
         @csrf
-        @include('admin.departures._form')
+            @include('admin.departures.departure-form-fields')
     </form>
 </x-dashboard-layout>

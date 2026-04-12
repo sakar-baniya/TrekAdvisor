@@ -50,7 +50,7 @@ class PaymentController extends Controller
             ->when($to !== '', fn ($query) => $query->whereDate('created_at', '<=', $to))
             ->sum('amount');
 
-        return view('admin.payments.index', compact('payments', 'status', 'type', 'search', 'from', 'to', 'totalAmount'));
+        return view('admin.payments.payment-list', compact('payments', 'status', 'type', 'search', 'from', 'to', 'totalAmount'));
     }
 
     public function show(Payment $payment): View
@@ -58,7 +58,7 @@ class PaymentController extends Controller
         $payment->load('user');
         $reference = $this->resolveReference($payment);
 
-        return view('admin.payments.show', [
+        return view('admin.payments.payment-details', [
             'payment' => $payment,
             'reference' => $reference,
         ]);

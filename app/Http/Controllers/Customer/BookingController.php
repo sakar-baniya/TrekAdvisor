@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-
-use App\DTOs\Booking\CreateTrekBookingData;
 use App\Http\Requests\ConfirmBookingRequest;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Departure;
@@ -31,7 +29,7 @@ class BookingController extends Controller
      */
     public function create(Departure $departure): View
     {
-        return view('bookings.create', [
+        return view('bookings.booking-start', [
             'departure' => $this->startTrekBookingService->loadDeparture($departure),
         ]);
     }
@@ -64,7 +62,7 @@ class BookingController extends Controller
             return redirect()->route('treks.index');
         }
 
-        return view('bookings.passengers', compact('bookingData'));
+        return view('bookings.passenger-details', compact('bookingData'));
     }
 
     /**
@@ -79,16 +77,18 @@ class BookingController extends Controller
         }
 
         $result = $this->createTrekBookingService->handle(
-            CreateTrekBookingData::fromRequest($request, $bookingData)
+            (int) $request->user()->id,
+            $bookingData,
+            $request->validated('passengers', [])
         );
 
-        if (! $result->checkoutStarted()) {
+        if (! filled($result['checkout_url'])) {
             return redirect()
-                ->route('stripe.cancel', $result->payment)
-                ->with('error', $result->errorMessage);
+                ->route('stripe.cancel', $result['payment'])
+                ->with('error', $result['error_message']);
         }
 
-        return redirect()->away($result->checkoutUrl);
+        return redirect()->away($result['checkout_url']);
     }
 
     public function showTrekBooking(TrekBooking $trekBooking): View

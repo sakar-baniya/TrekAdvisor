@@ -33,5 +33,5 @@
 
     <p class="account-note">Cancellations requested within 48 hours of check-in may incur fees. Our team will confirm eligibility and refund details.</p>
 
-    @include('account.bookings.partials.confirm-modal')
+    @include('account.bookings.partials.cancel-confirmation-modal')
 </section>

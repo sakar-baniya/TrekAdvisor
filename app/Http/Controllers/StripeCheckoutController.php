@@ -54,7 +54,7 @@ class StripeCheckoutController extends Controller
             (string) $request->query('session_id', '')
         );
 
-        return view('bookings.success', [
+        return view('bookings.checkout-result', [
             'booking' => $this->trekPaymentService->getDisplayBooking($payment),
             'payment' => $payment,
             'checkoutCancelled' => false,
@@ -65,7 +65,7 @@ class StripeCheckoutController extends Controller
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
 
-        return view('bookings.success', [
+        return view('bookings.checkout-result', [
             'booking' => $this->trekPaymentService->getDisplayBooking($payment),
             'payment' => $payment,
             'checkoutCancelled' => true,
