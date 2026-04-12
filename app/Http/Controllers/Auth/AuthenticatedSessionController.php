@@ -37,8 +37,8 @@ class AuthenticatedSessionController extends Controller
             $request->session()->regenerateToken();
 
             return redirect()->route('login')->withErrors([
-                'email' => 'Administrators must use the admin login portal.',
-            ])->with('route', 'admin.login');
+                'email' => 'These credentials do not match our records.',
+            ]);
         }
 
         if (($user->role === 'hotel_owner' || $user->role === 'staff') && ! $user->isApproved()) {

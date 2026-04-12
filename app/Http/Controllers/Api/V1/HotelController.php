@@ -15,7 +15,11 @@ class HotelController extends Controller
     public function index(Request $request): JsonResponse
     {
         try {
-            $filters = \App\DTOs\Hotel\HotelFilterData::fromRequest($request);
+            $search = $request->input('search');
+            $location = $request->input('location');
+            $minPrice = $request->filled('min_price') ? (float) $request->input('min_price') : null;
+            $maxPrice = $request->filled('max_price') ? (float) $request->input('max_price') : null;
+            $sortBy = $request->input('sort', 'popularity');
 
             $query = Hotel::query()
                 ->where('status', 'active')
@@ -24,8 +28,7 @@ class HotelController extends Controller
                 ->withAvg('reviews', 'rating')
                 ->withMin('rooms', 'price_per_night');
 
-            if ($filters->search) {
-                $search = $filters->search;
+            if ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('name', 'like', "%{$search}%")
                         ->orWhere('location', 'like', "%{$search}%")
@@ -39,24 +42,24 @@ class HotelController extends Controller
                 ]);
             }
 
-            if ($filters->location) {
-                $query->where('location', 'like', "%{$filters->location}%");
+            if ($location) {
+                $query->where('location', 'like', "%{$location}%");
             }
 
-            if ($filters->minPrice !== null) {
-                $query->whereHas('rooms', function ($q) use ($filters) {
-                    $q->where('price_per_night', '>=', $filters->minPrice);
+            if ($minPrice !== null) {
+                $query->whereHas('rooms', function ($q) use ($minPrice) {
+                    $q->where('price_per_night', '>=', $minPrice);
                 });
             }
 
-            if ($filters->maxPrice !== null) {
-                $query->whereHas('rooms', function ($q) use ($filters) {
-                    $q->where('price_per_night', '<=', $filters->maxPrice);
+            if ($maxPrice !== null) {
+                $query->whereHas('rooms', function ($q) use ($maxPrice) {
+                    $q->where('price_per_night', '<=', $maxPrice);
                 });
             }
 
-            if (!$filters->search) {
-                switch ($filters->sortBy) {
+            if (! $search) {
+                switch ($sortBy) {
                     case 'price_low':
                         $query->orderBy('rooms_min_price_per_night', 'asc');
                         break;
