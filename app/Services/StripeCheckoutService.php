@@ -12,8 +12,21 @@ use Stripe\Exception\SignatureVerificationException;
 use Stripe\StripeClient;
 use Stripe\Webhook;
 
+
+/**
+ * Yo StripeCheckoutService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class StripeCheckoutService
 {
+    /**
+     * Yo method le client ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function client(): StripeClient
     {
         $secret = config('services.stripe.secret');
@@ -26,7 +39,10 @@ class StripeCheckoutService
     }
 
     /**
-     * @throws ApiErrorException
+     * Yo method le createTrekCheckoutSession related business flow execute garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
      */
     public function createTrekCheckoutSession(Payment $payment, TrekBooking $booking, string $successUrl, string $cancelUrl): Session
     {
@@ -59,7 +75,10 @@ class StripeCheckoutService
     }
 
     /**
-     * @throws ApiErrorException
+     * Yo method le retrieveSession ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
      */
     public function retrieveSession(string $sessionId): Session
     {
@@ -67,7 +86,10 @@ class StripeCheckoutService
     }
 
     /**
-     * @throws SignatureVerificationException
+     * Yo method le constructWebhookEvent ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
      */
     public function constructWebhookEvent(string $payload, string $signature): Event
     {
@@ -80,4 +102,10 @@ class StripeCheckoutService
         return Webhook::constructEvent($payload, $signature, $secret);
     }
 }
+
+
+
+
+
+
 

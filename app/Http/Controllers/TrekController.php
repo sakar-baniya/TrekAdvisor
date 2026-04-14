@@ -5,6 +5,12 @@ namespace App\Http\Controllers;
 use App\Models\Trek;
 use Illuminate\Http\Request;
 
+/**
+ * Yo TrekController controller le trek controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class TrekController extends Controller
 {
     /**
@@ -106,3 +112,4 @@ class TrekController extends Controller
         return view('treks.trek-details', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
     }
 }
+

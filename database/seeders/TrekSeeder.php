@@ -22,7 +22,7 @@ class TrekSeeder extends Seeder
                 'duration_days' => 12,
                 'max_altitude' => 5364,
                 'itinerary' => [
-                    ['Day 1', 'Arrival & Kathmandu Entry', 'Meet our team and prep your gear for the high altitude.'],
+                    ['Day 1', 'Arrival & Kathmandu Entry', 'Meet our team and prepare for the high altitude journey.'],
                     ['Day 2', 'Lukla Flight & Phakding', 'A thrilling flight to 2,860m and a gentle river-side walk.'],
                     ['Day 3', 'Namche Bazaar (3,440m)', 'Gateway to Everest. The steep climb rewards you with the first peak views.'],
                     ['Day 4', 'Acclimatization in Namche', 'Explore the world\'s highest museum and see Everest View Hotel.'],
@@ -44,7 +44,7 @@ class TrekSeeder extends Seeder
                 'duration_days' => 14,
                 'max_altitude' => 5416,
                 'itinerary' => [
-                    ['Day 1', 'Arrival in Kathmandu', 'Full briefing and gear check over dinner.'],
+                    ['Day 1', 'Arrival in Kathmandu', 'Full trek briefing over dinner.'],
                     ['Day 2', 'Drive to Dharapani', 'Scenic road trip through the Marsyangdi River valley.'],
                     ['Day 3', 'Chame (2,670m)', 'Walk along the river through apple orchards and pine forests.'],
                     ['Day 4', 'Upper Pisang', 'The landscape turns drier as you enter the rain-shadow area.'],

@@ -5,13 +5,21 @@ namespace App\Services\Payment;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Yo StripePaymentStateService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class StripePaymentStateService
 {
-    public function __construct(
-        private readonly TrekPaymentService $trekPaymentService,
-    ) {
-    }
-
+    /**
+     * Yo method le markCheckoutCompleted related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function markCheckoutCompleted(string $sessionId, ?string $paymentIntentId = null, array $sessionPayload = []): ?Payment
     {
         $payment = Payment::query()->where('stripe_session_id', $sessionId)->first();
@@ -44,6 +52,12 @@ class StripePaymentStateService
         return $payment->fresh() ?? $payment;
     }
 
+    /**
+     * Yo method le markCheckoutFailed related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function markCheckoutFailed(string $sessionId, array $sessionPayload = []): ?Payment
     {
         $payment = Payment::query()->where('stripe_session_id', $sessionId)->first();
@@ -65,3 +79,8 @@ class StripePaymentStateService
         return $payment;
     }
 }
+
+
+
+
+

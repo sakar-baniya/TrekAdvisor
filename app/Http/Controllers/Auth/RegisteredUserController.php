@@ -12,6 +12,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
+/**
+ * Yo RegisteredUserController controller le registered user controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class RegisteredUserController extends Controller
 {
     /**
@@ -92,3 +98,4 @@ class RegisteredUserController extends Controller
         return redirect(route('dashboard', absolute: false));
     }
 }
+

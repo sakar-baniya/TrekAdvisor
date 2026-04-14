@@ -100,9 +100,29 @@ class DashboardNavigation
                     'route' => 'staff.dashboard',
                 ],
                 [
+                    'label' => 'Departures',
+                    'icon' => 'fa-calendar-days',
+                    'route' => 'staff.departures.index',
+                ],
+                [
                     'label' => 'Trek Bookings',
                     'icon' => 'fa-mountain-sun',
                     'route' => 'staff.trek-bookings.index',
+                ],
+                [
+                    'label' => 'Hotel Bookings',
+                    'icon' => 'fa-bed',
+                    'route' => 'staff.hotel-bookings.index',
+                ],
+                [
+                    'label' => 'Payments Queue',
+                    'icon' => 'fa-receipt',
+                    'route' => 'staff.payments.index',
+                ],
+                [
+                    'label' => 'Contact Inbox',
+                    'icon' => 'fa-inbox',
+                    'route' => 'staff.contact-messages.index',
                 ],
             ],
         ];
@@ -117,13 +137,24 @@ class DashboardNavigation
             'home_route' => 'hotel_owner.dashboard',
             'navigation' => [
                 [
-                    'label' => 'Dashboard',
+                    'label' => 'Overview',
                     'icon' => 'fa-hotel',
-                    'children' => [
-                        ['label' => 'Overview', 'route' => 'hotel_owner.dashboard'],
-                        ['label' => 'My Hotels', 'route' => 'hotel_owner.hotels.index'],
-                        ['label' => 'Add Hotel', 'route' => 'hotel_owner.hotels.create'],
-                    ],
+                    'route' => 'hotel_owner.dashboard',
+                ],
+                [
+                    'label' => 'My Hotels',
+                    'icon' => 'fa-building',
+                    'route' => 'hotel_owner.hotels.index',
+                ],
+                [
+                    'label' => 'Hotel Bookings',
+                    'icon' => 'fa-bed',
+                    'route' => 'hotel_owner.bookings.index',
+                ],
+                [
+                    'label' => 'Add Hotel',
+                    'icon' => 'fa-plus',
+                    'route' => 'hotel_owner.hotels.create',
                 ],
             ],
         ];
@@ -180,6 +211,16 @@ class DashboardNavigation
                     $child['active'] = self::isRouteActive($child['route']);
                     return $child;
                 }, $item['children']);
+
+                // Flatten single-child groups so sidebar stays simple.
+                if (count($item['children']) === 1) {
+                    $singleChild = $item['children'][0];
+                    $item['route'] = $singleChild['route'];
+                    $item['active'] = $singleChild['active'];
+                    unset($item['children']);
+
+                    return $item;
+                }
 
                 // Parent is active if any child is active
                 $item['active'] = collect($item['children'])->contains(fn ($c) => $c['active']);

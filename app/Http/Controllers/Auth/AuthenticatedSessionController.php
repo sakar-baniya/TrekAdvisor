@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+/**
+ * Yo AuthenticatedSessionController controller le authenticated session controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -68,3 +74,4 @@ class AuthenticatedSessionController extends Controller
         return redirect('/');
     }
 }
+

@@ -7,13 +7,21 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Yo UpsertHotelService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class UpsertHotelService
 {
-    public function __construct(
-        private readonly HotelGalleryService $hotelGalleryService,
-    ) {
-    }
-
+    /**
+     * Yo method le create related business flow execute garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function create(Request $request, User $owner): Hotel
     {
         $validated = $request->validated();
@@ -36,6 +44,12 @@ class UpsertHotelService
         });
     }
 
+    /**
+     * Yo method le update related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function update(Request $request, Hotel $hotel): Hotel
     {
         $validated = $request->validated();
@@ -57,4 +71,9 @@ class UpsertHotelService
         });
     }
 }
+
+
+
+
+
 

@@ -6,15 +6,21 @@ use App\Models\Payment;
 use App\Services\StripeCheckoutService;
 use Stripe\Event;
 
+
+/**
+ * Yo StripeCheckoutWorkflowService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class StripeCheckoutWorkflowService
 {
-    public function __construct(
-        private readonly StripeCheckoutService $stripeCheckoutService,
-        private readonly StripePaymentStateService $stripePaymentStateService,
-        private readonly TrekPaymentService $trekPaymentService,
-    ) {
-    }
-
+    /**
+     * Yo method le failed/pending payment retry flow ko naya checkout link/session banaucha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function createRetrySession(Payment $payment): string
     {
         $booking = $this->trekPaymentService->getCheckoutBooking($payment);
@@ -40,6 +46,12 @@ class StripeCheckoutWorkflowService
         return $session->url;
     }
 
+    /**
+     * Yo method le success callback pachi payment ra booking state sync garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function syncSuccessfulPayment(Payment $payment, string $sessionId): Payment
     {
         if ($sessionId === '') {
@@ -59,11 +71,23 @@ class StripeCheckoutWorkflowService
         ) ?? ($payment->fresh() ?? $payment);
     }
 
+    /**
+     * Yo method le createWebhookEvent related business flow execute garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function createWebhookEvent(string $payload, string $signature): Event
     {
         return $this->stripeCheckoutService->constructWebhookEvent($payload, $signature);
     }
 
+    /**
+     * Yo method le gateway webhook event parse garera payment state update trigger garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function handleWebhookEvent(Event $event): void
     {
         $object = $event->data->object;
@@ -85,3 +109,9 @@ class StripeCheckoutWorkflowService
         }
     }
 }
+
+
+
+
+
+

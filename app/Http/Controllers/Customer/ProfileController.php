@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
+/**
+ * Yo ProfileController controller le profile controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class ProfileController extends Controller
 {
     public function __construct(
@@ -21,6 +27,12 @@ class ProfileController extends Controller
     ) {
     }
 
+    /**
+     * Yo function le settings profile ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function settingsProfile(Request $request): View
     {
         $user = $request->user();
@@ -29,6 +41,12 @@ class ProfileController extends Controller
         return view('settings.profile', compact('user', 'profile'));
     }
 
+    /**
+     * Yo function le settings security ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function settingsSecurity(Request $request): View
     {
         return view('settings.security', [
@@ -36,6 +54,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le settings security password ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function settingsSecurityPassword(Request $request): View
     {
         return view('settings.security-password', [
@@ -43,6 +67,12 @@ class ProfileController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le update security password ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function updateSecurityPassword(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -57,6 +87,12 @@ class ProfileController extends Controller
         return back()->with('status', 'password-updated');
     }
 
+    /**
+     * Yo function le store avatar ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function storeAvatar(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -78,6 +114,12 @@ class ProfileController extends Controller
         return back()->with('status', 'avatar-updated');
     }
 
+    /**
+     * Yo function le destroy avatar ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function destroyAvatar(Request $request): RedirectResponse
     {
         $user = $request->user();
@@ -131,3 +173,6 @@ class ProfileController extends Controller
         return Redirect::to('/');
     }
 }
+
+
+

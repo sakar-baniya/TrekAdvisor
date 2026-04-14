@@ -4,7 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * Yo ContactMessage model le contact inbox ko data structure ra relation define garcha.
+ *
+ * Why:
+ * Staff support inbox ma read state, response note, ra responder tracking ko data yehi model bata manage huncha.
+ */
 class ContactMessage extends Model
 {
     use HasFactory;
@@ -15,5 +22,27 @@ class ContactMessage extends Model
         'email',
         'subject',
         'message',
+        'is_read',
+        'read_at',
+        'staff_response',
+        'responded_by_staff_id',
+        'responded_at',
     ];
+
+    protected $casts = [
+        'is_read' => 'boolean',
+        'read_at' => 'datetime',
+        'responded_at' => 'datetime',
+    ];
+
+    /**
+     * Yo relation method le model lai respondedByStaff relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le respondedByStaff sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
+    public function respondedByStaff(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'responded_by_staff_id');
+    }
 }

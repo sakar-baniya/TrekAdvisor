@@ -6,14 +6,21 @@ use App\Models\Trek;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Yo UpsertTrekService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class UpsertTrekService
 {
-    public function __construct(
-        private readonly TrekSlugService $trekSlugService,
-        private readonly TrekGalleryService $trekGalleryService,
-    ) {
-    }
-
+    /**
+     * Yo method le create related business flow execute garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function create(Request $request): Trek
     {
         $validated = $request->validated();
@@ -29,6 +36,12 @@ class UpsertTrekService
         });
     }
 
+    /**
+     * Yo method le update related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function update(Request $request, Trek $trek): Trek
     {
         $validated = $request->validated();
@@ -79,3 +92,8 @@ class UpsertTrekService
         }
     }
 }
+
+
+
+
+

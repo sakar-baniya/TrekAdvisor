@@ -11,8 +11,20 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
+/**
+ * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class BookingController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
@@ -44,6 +56,12 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le show ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function show(TrekBooking $trekBooking): View
     {
         $trekBooking->load(['user', 'departure.trek', 'passengers']);
@@ -60,6 +78,12 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le update status ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
         $validated = $request->validate([
@@ -75,4 +99,7 @@ class BookingController extends Controller
             ->with('success', 'Booking status updated.');
     }
 }
+
+
+
 

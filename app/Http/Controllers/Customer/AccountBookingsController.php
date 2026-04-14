@@ -11,8 +11,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Yo AccountBookingsController controller le account bookings controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class AccountBookingsController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $user = $request->user();
@@ -70,6 +82,12 @@ class AccountBookingsController extends Controller
         ));
     }
 
+    /**
+     * Yo function le show trek ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function showTrek(TrekBooking $trekBooking): View
     {
         $this->authorize('view', $trekBooking);
@@ -89,6 +107,12 @@ class AccountBookingsController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le update passengers ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function updatePassengers(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
         $this->authorize('view', $trekBooking);
@@ -121,6 +145,12 @@ class AccountBookingsController extends Controller
         return back()->with('success', 'Passenger details updated.');
     }
 
+    /**
+     * Yo function le show hotel ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function showHotel(HotelBooking $hotelBooking): View
     {
         $this->authorize('view', $hotelBooking);
@@ -140,6 +170,12 @@ class AccountBookingsController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le cancel trek ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function cancelTrek(TrekBooking $trekBooking): RedirectResponse
     {
         $this->authorize('view', $trekBooking);
@@ -157,6 +193,12 @@ class AccountBookingsController extends Controller
         return back()->with('success', 'Cancellation request submitted.');
     }
 
+    /**
+     * Yo function le withdraw trek cancellation ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function withdrawTrekCancellation(TrekBooking $trekBooking): RedirectResponse
     {
         $this->authorize('view', $trekBooking);
@@ -170,6 +212,12 @@ class AccountBookingsController extends Controller
         return back()->with('success', 'Cancellation request withdrawn.');
     }
 
+    /**
+     * Yo function le cancel hotel ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function cancelHotel(HotelBooking $hotelBooking): RedirectResponse
     {
         $this->authorize('view', $hotelBooking);
@@ -187,6 +235,12 @@ class AccountBookingsController extends Controller
         return back()->with('success', 'Cancellation request submitted.');
     }
 
+    /**
+     * Yo function le withdraw hotel cancellation ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function withdrawHotelCancellation(HotelBooking $hotelBooking): RedirectResponse
     {
         $this->authorize('view', $hotelBooking);
@@ -200,6 +254,12 @@ class AccountBookingsController extends Controller
         return back()->with('success', 'Cancellation request withdrawn.');
     }
 
+    /**
+     * Yo function le trek receipt ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function trekReceipt(TrekBooking $trekBooking): View
     {
         $this->authorize('view', $trekBooking);
@@ -211,6 +271,12 @@ class AccountBookingsController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le hotel receipt ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function hotelReceipt(HotelBooking $hotelBooking): View
     {
         $this->authorize('view', $hotelBooking);
@@ -227,3 +293,6 @@ class AccountBookingsController extends Controller
         return $payments->sortByDesc(fn ($payment) => $payment->paid_at ?? $payment->created_at)->first();
     }
 }
+
+
+

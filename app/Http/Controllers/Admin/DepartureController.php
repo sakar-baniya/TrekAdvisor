@@ -10,8 +10,20 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
+/**
+ * Yo DepartureController controller le departure controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class DepartureController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $trekId = $request->string('trek_id')->toString();
@@ -36,6 +48,12 @@ class DepartureController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le create ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function create(Request $request): View
     {
         $departure = new Departure([
@@ -49,6 +67,12 @@ class DepartureController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le store ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function store(Request $request): RedirectResponse
     {
         $validated = $this->validateRequest($request);
@@ -62,11 +86,23 @@ class DepartureController extends Controller
             ->with('success', 'Departure added.');
     }
 
+    /**
+     * Yo function le show ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function show(Departure $departure): RedirectResponse
     {
         return redirect()->route('admin.departures.edit', $departure);
     }
 
+    /**
+     * Yo function le edit ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function edit(Departure $departure): View
     {
         $departure->load('trek');
@@ -78,6 +114,12 @@ class DepartureController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le update ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function update(Request $request, Departure $departure): RedirectResponse
     {
         $validated = $this->validateRequest($request);
@@ -95,6 +137,12 @@ class DepartureController extends Controller
             ->with('success', 'Departure updated.');
     }
 
+    /**
+     * Yo function le validate request ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     protected function validateRequest(Request $request): array
     {
         return $request->validate([
@@ -108,4 +156,7 @@ class DepartureController extends Controller
         ]);
     }
 }
+
+
+
 

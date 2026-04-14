@@ -17,6 +17,12 @@ class HotelRoom extends Model
         'total_rooms',
     ];
 
+    /**
+     * Yo relation method le model lai hotel relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le hotel sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function hotel(): BelongsTo
     {
         return $this->belongsTo(Hotel::class);

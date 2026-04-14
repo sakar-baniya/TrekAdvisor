@@ -17,6 +17,7 @@ class StoreHotelRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'location' => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'booking_policy' => ['nullable', 'string', 'max:2000'],
             'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
             'gallery_images' => ['nullable', 'array'],
             'gallery_images.*' => ['image', 'mimes:jpeg,png,jpg,webp', 'max:4096'],

@@ -35,7 +35,7 @@
                 <div class="admin-panel__header">
                     <div>
                         <h3>Reference</h3>
-                        <p>Linked booking or rental</p>
+                        <p>Linked booking</p>
                     </div>
                 </div>
                 <div class="admin-info-list">

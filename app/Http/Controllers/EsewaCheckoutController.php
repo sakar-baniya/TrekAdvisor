@@ -10,6 +10,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+/**
+ * Yo EsewaCheckoutController controller le esewa checkout controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class EsewaCheckoutController extends Controller
 {
     public function __construct(
@@ -19,6 +25,12 @@ class EsewaCheckoutController extends Controller
     ) {
     }
 
+    /**
+     * Yo function le retry ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function retry(Payment $payment): View
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
@@ -44,6 +56,12 @@ class EsewaCheckoutController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le success ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function success(Request $request, Payment $payment): View
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
@@ -57,6 +75,12 @@ class EsewaCheckoutController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le failure ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function failure(Request $request, Payment $payment): View
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
@@ -70,3 +94,6 @@ class EsewaCheckoutController extends Controller
         ]);
     }
 }
+
+
+

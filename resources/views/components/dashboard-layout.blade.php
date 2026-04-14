@@ -43,9 +43,8 @@
                         @if (isset($item['children']))
                             <div class="admin-nav-group {{ $item['active'] ? 'is-open' : '' }}">
                                 <button type="button" class="admin-nav-group__toggle" onclick="this.parentElement.classList.toggle('is-open')">
-                                    <i class="fas {{ $item['icon'] }}"></i>
                                     <span>{{ $item['label'] }}</span>
-                                    <i class="fas fa-chevron-down ms-auto" style="font-size: 0.7rem; opacity: 0.3;"></i>
+                                    <span class="admin-nav-caret" aria-hidden="true">v</span>
                                 </button>
                                 <div class="admin-nav-group__menu">
                                     @foreach ($item['children'] as $child)
@@ -57,7 +56,6 @@
                             </div>
                         @else
                             <a href="{{ route($item['route']) }}" class="admin-nav-link {{ $item['active'] ? 'is-active' : '' }}">
-                                <i class="fas {{ $item['icon'] }}"></i>
                                 <span>{{ $item['label'] }}</span>
                             </a>
                         @endif
@@ -100,8 +98,10 @@
                 const trigger = document.getElementById('profileMenuTrigger');
                 const dropdown = document.getElementById('profileDropdown');
                 if (trigger && dropdown) {
+                    // Click on avatar toggles menu open/close.
                     if (trigger.contains(e.target)) {
                         dropdown.classList.toggle('show');
+                    // Click outside closes the menu.
                     } else if (!dropdown.contains(e.target)) {
                         dropdown.classList.remove('show');
                     }

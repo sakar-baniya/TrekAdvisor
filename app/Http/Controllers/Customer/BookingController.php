@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConfirmBookingRequest;
+use App\Http\Requests\StoreHotelBookingRequest;
 use App\Http\Requests\StoreBookingRequest;
 use App\Models\Departure;
+use App\Models\Hotel;
+use App\Services\Booking\CreateHotelBookingService;
 use App\Services\Booking\BookingSessionService;
 use App\Services\Booking\CreateTrekBookingService;
 use App\Services\Booking\StartTrekBookingService;
@@ -15,11 +18,18 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use RuntimeException;
 
+/**
+ * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class BookingController extends Controller
 {
     public function __construct(
         protected StartTrekBookingService $startTrekBookingService,
         protected CreateTrekBookingService $createTrekBookingService,
+        protected CreateHotelBookingService $createHotelBookingService,
         protected BookingSessionService $bookingSessionService,
     ) {
     }
@@ -93,6 +103,12 @@ class BookingController extends Controller
         return redirect()->away($result['checkout_url']);
     }
 
+    /**
+     * Yo function le show trek booking ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function showTrekBooking(TrekBooking $trekBooking): View
     {
         abort_unless($trekBooking->user_id === auth()->id(), 403);
@@ -102,6 +118,12 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le show hotel booking ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function showHotelBooking(HotelBooking $hotelBooking): View
     {
         abort_unless($hotelBooking->user_id === auth()->id(), 403);
@@ -110,4 +132,29 @@ class BookingController extends Controller
             'booking' => $hotelBooking->load(['hotelRoom.hotel']),
         ]);
     }
+
+    /**
+     * Create a hotel booking without online payment checkout.
+     */
+    public function storeHotelBooking(StoreHotelBookingRequest $request, Hotel $hotel): RedirectResponse
+    {
+        $this->authorizeCreate(HotelBooking::class);
+
+        try {
+            $booking = $this->createHotelBookingService->handle(
+                $request->user(),
+                $hotel,
+                $request->validated()
+            );
+        } catch (RuntimeException $exception) {
+            return back()->withInput()->with('error', $exception->getMessage());
+        }
+
+        return redirect()
+            ->route('account.bookings.hotels.show', $booking)
+            ->with('success', 'Hotel booking request submitted. We will confirm it shortly.');
+    }
 }
+
+
+

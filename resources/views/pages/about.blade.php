@@ -1,39 +1,35 @@
 <x-app-layout>
-    <section class="catalog-hero">
-        <div class="container">
-            <p class="market-kicker">About TrekAdvisor</p>
-            <h1>Built for calmer, smarter adventure planning</h1>
-            <p>We design trekking journeys with clarity, warmth, and a premium digital experience from discovery to booking.</p>
-        </div>
-    </section>
+    <section>
+        <div class="container" style="max-width: 900px; padding: 48px 20px;">
+            <h1 style="margin-bottom: 12px;">About TrekAdvisor</h1>
+            <p style="margin-bottom: 28px; color: #475569;">
+                Built for calmer, smarter adventure planning.
+            </p>
 
-    <section class="market-section">
-        <div class="container">
-            <div class="market-card-grid market-card-grid--two">
-                <article class="market-quote-card">
-                    <h2>Our Mission</h2>
-                    <p>To make trekking discovery, planning, and booking feel clear, trusted, and beautifully organized for modern adventurers.</p>
-                </article>
-                <article class="market-quote-card">
-                    <h2>Our Vision</h2>
-                    <p>To create a platform where people can confidently explore routes and stays in one thoughtful experience.</p>
-                </article>
-            </div>
-        </div>
-    </section>
+            <h2 style="margin-bottom: 8px;">Our Mission</h2>
+            <p style="margin-bottom: 24px; color: #475569;">
+                To make trekking discovery, planning, and booking feel clear, trusted, and beautifully organized for modern adventurers.
+            </p>
 
-    <section class="market-section market-section--soft">
-        <div class="container">
-            <div class="market-section__head">
-                <div>
-                    <p class="market-kicker">Why Choose Us</p>
-                    <h2>Experience designed around confidence</h2>
-                </div>
-            </div>
-            <div class="market-card-grid market-card-grid--two">
-                <article class="market-quote-card"><strong>Expert Routes</strong><p>Curated treks with useful context, difficulty, and departure visibility.</p></article>
-                <article class="market-quote-card"><strong>Thoughtful Stays</strong><p>Hotel discovery is presented with comfort, clarity, and clean pricing cues.</p></article>
-            </div>
+            <h2 style="margin-bottom: 8px;">Our Vision</h2>
+            <p style="margin-bottom: 24px; color: #475569;">
+                To create a platform where people can confidently explore routes and stays in one thoughtful experience.
+            </p>
+
+            <h2 style="margin-bottom: 8px;">Why Choose Us</h2>
+            <p style="margin-bottom: 12px; color: #475569;">
+                Experience designed around confidence.
+            </p>
+            <ul style="margin: 0; padding-left: 20px; color: #475569;">
+                <li style="margin-bottom: 10px;">
+                    <strong style="color: #0f172a;">Expert Routes:</strong>
+                    Curated treks with useful context, difficulty, and departure visibility.
+                </li>
+                <li>
+                    <strong style="color: #0f172a;">Thoughtful Stays:</strong>
+                    Hotel discovery is presented with comfort, clarity, and clean pricing cues.
+                </li>
+            </ul>
         </div>
     </section>
 </x-app-layout>

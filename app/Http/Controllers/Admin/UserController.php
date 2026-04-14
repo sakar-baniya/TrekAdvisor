@@ -9,8 +9,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
+/**
+ * Yo UserController controller le user controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class UserController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
@@ -44,11 +56,23 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le create staff ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function createStaff(): View
     {
         return view('admin.users.create-staff');
     }
 
+    /**
+     * Yo function le store staff ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function storeStaff(Request $request): RedirectResponse
     {
         $validated = $request->validate([
@@ -74,6 +98,12 @@ class UserController extends Controller
             ->with('success', 'Staff user added.');
     }
 
+    /**
+     * Yo function le approve ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function approve(User $user): RedirectResponse
     {
         if ($user->role !== 'hotel_owner') {
@@ -87,6 +117,12 @@ class UserController extends Controller
         return back()->with('success', 'Hotel owner approved.');
     }
 
+    /**
+     * Yo function le update role ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function updateRole(Request $request, User $user): RedirectResponse
     {
         $validated = $request->validate([
@@ -110,3 +146,6 @@ class UserController extends Controller
         return back()->with('success', 'User role updated.');
     }
 }
+
+
+

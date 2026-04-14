@@ -10,8 +10,17 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
+/**
+ * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class BookingController extends Controller
 {
+    /**
+     * Show trek bookings for staff with search and filters.
+     */
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
@@ -21,9 +30,10 @@ class BookingController extends Controller
         $bookings = TrekBooking::query()
             ->with(['user', 'departure.trek'])
             ->when($search !== '', function ($query) use ($search) {
-                $query->where(function ($inner) use ($search) {
-                    $inner->where('booking_reference', 'like', "%{$search}%")
-                        ->orWhereHas('user', fn ($userQuery) => $userQuery
+                // Match booking reference or customer identity.
+                $query->where(function ($searchQuery) use ($search) {
+                    $searchQuery->where('booking_reference', 'like', "%{$search}%")
+                        ->orWhereHas('user', fn ($customerQuery) => $customerQuery
                             ->where('name', 'like', "%{$search}%")
                             ->orWhere('email', 'like', "%{$search}%"));
                 });
@@ -43,6 +53,9 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Show one trek booking with passengers and payments.
+     */
     public function show(TrekBooking $trekBooking): View
     {
         $trekBooking->load(['user', 'departure.trek', 'passengers', 'payments']);
@@ -52,6 +65,9 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Update only the booking status from staff panel.
+     */
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
         $validated = $request->validate([
@@ -67,3 +83,4 @@ class BookingController extends Controller
             ->with('success', 'Booking status updated.');
     }
 }
+

@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
+/**
+ * Yo PasswordController controller le password controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class PasswordController extends Controller
 {
     /**
@@ -27,3 +33,4 @@ class PasswordController extends Controller
         return back()->with('status', 'password-updated');
     }
 }
+

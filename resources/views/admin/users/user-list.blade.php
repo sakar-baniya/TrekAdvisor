@@ -2,11 +2,9 @@
     <x-slot name="header">
         <div class="admin-page-heading admin-page-heading--split">
             <div>
-                <p class="admin-eyebrow">User Management</p>
                 <h2 class="admin-page-title">All Users</h2>
             </div>
             <a href="{{ route('admin.users.create-staff') }}" class="admin-primary-button">
-                <i class="fas fa-user-plus"></i>
                 <span>Add Staff User</span>
             </a>
         </div>
@@ -19,25 +17,6 @@
     @if (session('error'))
         <div class="admin-flash error">{{ session('error') }}</div>
     @endif
-
-    <section class="admin-stats-grid">
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-violet"><i class="fas fa-users"></i></div>
-            <div>
-                <p>Total Users</p>
-                <h3>{{ number_format($users->total()) }}</h3>
-                <span>Across all roles</span>
-            </div>
-        </div>
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-amber"><i class="fas fa-user-clock"></i></div>
-            <div>
-                <p>Pending Hotel Owners</p>
-                <h3>{{ number_format($pendingHotelOwners) }}</h3>
-                <span>Need approval</span>
-            </div>
-        </div>
-    </section>
 
     <section class="admin-panel">
         <div class="admin-panel__header">
@@ -55,13 +34,6 @@
                     <option value="{{ $value }}" @selected($role === $value)>{{ $label }}</option>
                 @endforeach
             </select>
-            <div class="admin-filter-tabs">
-                <a href="{{ route('admin.users.index') }}" class="admin-filter-tab {{ $role === '' ? 'is-active' : '' }}">All Users</a>
-                <a href="{{ route('admin.users.index', ['role' => 'admin']) }}" class="admin-filter-tab {{ $role === 'admin' ? 'is-active' : '' }}">Admins</a>
-                <a href="{{ route('admin.users.index', ['role' => 'staff']) }}" class="admin-filter-tab {{ $role === 'staff' ? 'is-active' : '' }}">Staff</a>
-                <a href="{{ route('admin.users.index', ['role' => 'customer']) }}" class="admin-filter-tab {{ $role === 'customer' ? 'is-active' : '' }}">Customers</a>
-                <a href="{{ route('admin.users.index', ['role' => 'hotel_owner']) }}" class="admin-filter-tab {{ $role === 'hotel_owner' ? 'is-active' : '' }}">Hotel Owners</a>
-            </div>
             <button type="submit" class="admin-primary-button admin-primary-button--fit">Apply</button>
         </form>
     </section>
@@ -94,9 +66,9 @@
                             <td>{{ str_replace('_', ' ', $user->role) }}</td>
                             <td>
                                 @if ($user->role === 'hotel_owner')
-                                    <span class="admin-badge {{ $user->approval_status === 'approved' ? 'is-success' : 'is-warning' }}">{{ $user->approval_status === 'approved' ? 'Approved' : 'Pending' }}</span>
+                                    <span>{{ $user->approval_status === 'approved' ? 'Approved' : 'Pending' }}</span>
                                 @else
-                                    <span class="admin-badge is-muted">N/A</span>
+                                    <span>N/A</span>
                                 @endif
                             </td>
                             <td>{{ $user->created_at->format('M d, Y') }}</td>
@@ -107,7 +79,6 @@
                                             @csrf
                                             @method('PATCH')
                                             <button type="submit" class="admin-secondary-button">
-                                                <i class="fas fa-check"></i>
                                                 <span>Approve</span>
                                             </button>
                                         </form>
@@ -123,7 +94,6 @@
                                             <option value="hotel_owner" @selected($user->role === 'hotel_owner')>Hotel Owner</option>
                                         </select>
                                         <button type="submit" class="admin-secondary-button">
-                                            <i class="fas fa-rotate"></i>
                                             <span>Update</span>
                                         </button>
                                     </form>

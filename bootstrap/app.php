@@ -16,7 +16,11 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'role'=> \App\Http\Middleware\RoleManager::class,
             'is_admin' => \App\Http\Middleware\IsAdmin::class,
+            'prevent-back-history' => \App\Http\Middleware\PreventBackHistory::class,
         ]);
+
+        // Apply PreventBackHistory globally to all web requests
+        $middleware->append(\App\Http\Middleware\PreventBackHistory::class);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->render(function (\Illuminate\Database\QueryException $e, \Illuminate\Http\Request $request) {

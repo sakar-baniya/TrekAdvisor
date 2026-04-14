@@ -2,7 +2,6 @@
     <x-slot name="header">
         <div class="admin-page-heading">
             <div>
-                <p class="admin-eyebrow">Hotel Management</p>
                 <h2 class="admin-page-title">All Hotels</h2>
             </div>
         </div>
@@ -11,33 +10,6 @@
     @if (session('success'))
         <div class="admin-flash success">{{ session('success') }}</div>
     @endif
-
-    <section class="admin-stats-grid">
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-slate"><i class="fas fa-hotel"></i></div>
-            <div>
-                <p>Total Hotels</p>
-                <h3>{{ number_format($hotels->total()) }}</h3>
-                <span>All listings</span>
-            </div>
-        </div>
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-amber"><i class="fas fa-hourglass-half"></i></div>
-            <div>
-                <p>Pending</p>
-                <h3>{{ number_format($pendingCount) }}</h3>
-                <span>Waiting for approval</span>
-            </div>
-        </div>
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-green"><i class="fas fa-circle-check"></i></div>
-            <div>
-                <p>Active</p>
-                <h3>{{ number_format($activeCount) }}</h3>
-                <span>Live hotel listings</span>
-            </div>
-        </div>
-    </section>
 
     <section class="admin-panel">
         <div class="admin-panel__header">
@@ -55,19 +27,19 @@
                     <option value="{{ $option }}" @selected($status === $option)>{{ $option }}</option>
                 @endforeach
             </select>
-            <div class="admin-filter-tabs">
-                <a href="{{ route('admin.hotels.index') }}" class="admin-filter-tab {{ $status === '' ? 'is-active' : '' }}">All Hotels</a>
-                <a href="{{ route('admin.hotels.index', ['status' => 'Pending']) }}" class="admin-filter-tab {{ $status === 'Pending' ? 'is-active' : '' }}">Pending Approval ({{ $pendingCount }})</a>
-                <a href="{{ route('admin.hotels.index', ['status' => 'Active']) }}" class="admin-filter-tab {{ $status === 'Active' ? 'is-active' : '' }}">Active</a>
-                <a href="{{ route('admin.hotels.index', ['status' => 'Inactive']) }}" class="admin-filter-tab {{ $status === 'Inactive' ? 'is-active' : '' }}">Inactive</a>
-            </div>
             <button type="submit" class="admin-primary-button admin-primary-button--fit">Apply</button>
         </form>
     </section>
 
     <section class="admin-card-list">
         @forelse ($hotels as $hotel)
-            <article class="admin-list-card">
+            <article
+                class="admin-list-card js-hotel-card"
+                data-href="{{ route('hotels.show', ['hotel' => $hotel, 'return_to' => request()->fullUrl()]) }}"
+                role="link"
+                tabindex="0"
+                style="cursor: pointer;"
+            >
                 <div class="admin-list-card__media">
                     <img src="{{ $hotel->image ?: 'https://via.placeholder.com/480x320?text=Hotel' }}" alt="{{ $hotel->name }}">
                 </div>
@@ -77,7 +49,7 @@
                             <h3>{{ $hotel->name }}</h3>
                             <p>{{ $hotel->location }}</p>
                         </div>
-                        <span class="admin-badge {{ $hotel->status === 'active' ? 'is-success' : ($hotel->status === 'pending' ? 'is-warning' : 'is-muted') }}">{{ ucfirst($hotel->status) }}</span>
+                        <span>{{ ucfirst($hotel->status) }}</span>
                     </div>
 
                     <div class="admin-list-card__meta">
@@ -96,7 +68,6 @@
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="active" />
                                 <button type="button" class="admin-primary-button" data-confirm="approve-hotel">
-                                    <i class="fas fa-check"></i>
                                     <span>Approve</span>
                                 </button>
                             </form>
@@ -108,7 +79,6 @@
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="inactive" />
                                 <button type="button" class="admin-danger-button" data-confirm="reject-hotel">
-                                    <i class="fas fa-ban"></i>
                                     <span>Set Inactive</span>
                                 </button>
                             </form>
@@ -120,7 +90,6 @@
                                 @method('PATCH')
                                 <input type="hidden" name="status" value="pending" />
                                 <button type="button" class="admin-secondary-button" data-confirm="pending-hotel">
-                                    <i class="fas fa-clock"></i>
                                     <span>Move to Pending</span>
                                 </button>
                             </form>
@@ -143,6 +112,37 @@
     @if ($hotels->hasPages())
         <div class="admin-pagination">{{ $hotels->links() }}</div>
     @endif
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.js-hotel-card');
+
+            cards.forEach((card) => {
+                const navigate = () => {
+                    const href = card.getAttribute('data-href');
+                    if (href) {
+                        window.location.href = href;
+                    }
+                };
+
+                card.addEventListener('click', (event) => {
+                    // Do not hijack clicks on forms/buttons inside the card.
+                    if (event.target.closest('a, button, input, select, textarea, label, form')) {
+                        return;
+                    }
+                    navigate();
+                });
+
+                card.addEventListener('keydown', (event) => {
+                    // Keyboard support: open card with Enter or Space.
+                    if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        navigate();
+                    }
+                });
+            });
+        });
+    </script>
 </x-dashboard-layout>
 
 

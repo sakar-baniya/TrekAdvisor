@@ -29,13 +29,22 @@ class Payment extends Model
         'paid_at' => 'datetime',
     ];
 
+    /**
+     * Yo relation method le model lai user relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le user sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
     /**
-     * Get the associated booking or rental for the payment.
+     * Yo relation method le model lai payable relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le payable sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
      */
     public function payable()
     {

@@ -5,13 +5,21 @@ namespace App\Services\Payment;
 use App\Models\Payment;
 use Illuminate\Support\Facades\DB;
 
+
+/**
+ * Yo EsewaPaymentStateService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class EsewaPaymentStateService
 {
-    public function __construct(
-        private readonly TrekPaymentService $trekPaymentService,
-    ) {
-    }
-
+    /**
+     * Yo method le markCheckoutCompleted related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function markCheckoutCompleted(Payment $payment, array $gatewayPayload = []): Payment
     {
         DB::transaction(function () use ($payment, $gatewayPayload) {
@@ -34,6 +42,12 @@ class EsewaPaymentStateService
         return $payment->fresh() ?? $payment;
     }
 
+    /**
+     * Yo method le markCheckoutFailed related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function markCheckoutFailed(Payment $payment, array $gatewayPayload = []): Payment
     {
         if ($payment->status === 'success') {
@@ -49,3 +63,8 @@ class EsewaPaymentStateService
         return $payment->fresh() ?? $payment;
     }
 }
+
+
+
+
+

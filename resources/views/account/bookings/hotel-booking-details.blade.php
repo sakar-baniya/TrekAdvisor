@@ -1,6 +1,6 @@
 <x-app-layout>
     @php
-        $paymentStatus = $payment?->status ?? 'unpaid';
+        $paymentStatus = $payment?->status ?? 'manual_confirmation';
         $isLocked = in_array($booking->status, ['completed', 'cancelled']);
     @endphp
 

@@ -6,8 +6,21 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
+
+/**
+ * Yo GalleryImageService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class GalleryImageService
 {
+    /**
+     * Yo method le syncHeroImage related state change safely apply garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function syncHeroImage(Request $request, array &$payload, string $directory, ?Model $model = null): void
     {
         if (! $request->hasFile('image')) {
@@ -37,6 +50,12 @@ class GalleryImageService
         // For new models, we'll handle this in the controller after creation
     }
 
+    /**
+     * Yo method le syncGallery related state change safely apply garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function syncGallery(Request $request, Model $model, string $directory): void
     {
         $model->loadMissing('gallery');
@@ -66,6 +85,12 @@ class GalleryImageService
         }
     }
 
+    /**
+     * Yo method le syncUnifiedMedia related state change safely apply garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function syncUnifiedMedia(Request $request, Model $model, string $directory): void
     {
         $model->loadMissing('images');
@@ -115,6 +140,12 @@ class GalleryImageService
         }
     }
 
+    /**
+     * Yo method le deleteAll related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function deleteAll(Model $model): void
     {
         if ($model->image) {
@@ -131,3 +162,8 @@ class GalleryImageService
         return str_replace('/storage/', '', $path);
     }
 }
+
+
+
+
+

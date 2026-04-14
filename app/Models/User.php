@@ -14,9 +14,10 @@ class User extends Authenticatable
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Yo relation method le model lai casts relation sanga map garcha.
      *
-     * @var list<string>
+     * Why:
+     * Yo relation le cast sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
      */
     protected $fillable = [
         'name',
@@ -29,20 +30,16 @@ class User extends Authenticatable
         'avatar_path',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Yo relation method le model lai casts relation sanga map garcha.
      *
-     * @return array<string, string>
+     * Why:
+     * Yo relation le cast sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
      */
     protected function casts(): array
     {
@@ -53,6 +50,12 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Yo relation method le model lai dashboardRouteName relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le dashboardRouteName sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function dashboardRouteName(): string
     {
         return match ($this->role) {
@@ -63,6 +66,12 @@ class User extends Authenticatable
         };
     }
 
+    /**
+     * Yo relation method le model lai isApproved relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le isApproved sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function isApproved(): bool
     {
         return ($this->approval_status ?? 'pending') === 'approved';

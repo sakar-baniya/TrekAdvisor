@@ -6,8 +6,21 @@ use App\Models\Trek;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator;
 
+
+/**
+ * Yo AdminTrekQueryService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class AdminTrekQueryService
 {
+    /**
+     * Yo method le paginate related data prepare/fetch garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function paginate(Request $request): array
     {
         $search = $request->string('search')->toString();
@@ -32,6 +45,12 @@ class AdminTrekQueryService
         ];
     }
 
+    /**
+     * Yo method le makeDraft related data prepare/fetch garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function makeDraft(): Trek
     {
         $trek = new Trek();
@@ -41,6 +60,12 @@ class AdminTrekQueryService
         return $trek;
     }
 
+    /**
+     * Yo method le loadForShow related data prepare/fetch garcha.
+     *
+     * Why:
+     * Yo query rule service ma rak्दा controller slim rahanchha ra data shape sabai screen ma consistent dekhinchha.
+     */
     public function loadForShow(Trek $trek): Trek
     {
         $trek->load(['itineraries', 'departures', 'images']);
@@ -48,6 +73,12 @@ class AdminTrekQueryService
         return $trek;
     }
 
+    /**
+     * Yo method le loadForEdit related data prepare/fetch garcha.
+     *
+     * Why:
+     * Yo query rule service ma rak्दा controller slim rahanchha ra data shape sabai screen ma consistent dekhinchha.
+     */
     public function loadForEdit(Trek $trek): Trek
     {
         $trek->load(['itineraries', 'images']);
@@ -55,3 +86,9 @@ class AdminTrekQueryService
         return $trek;
     }
 }
+
+
+
+
+
+

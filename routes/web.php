@@ -24,7 +24,11 @@ use App\Http\Controllers\Admin\HotelController as AdminHotelController;
 use App\Http\Controllers\HotelOwner\HotelController as HotelOwnerHotelController;
 use App\Http\Controllers\HotelOwner\DashboardController as HotelOwnerDashboardController;
 use App\Http\Controllers\HotelOwner\RoomController as HotelOwnerRoomController;
+use App\Http\Controllers\HotelOwner\BookingController as HotelOwnerBookingController;
 use App\Http\Controllers\Staff\BookingController as StaffBookingController;
+use App\Http\Controllers\Staff\HotelBookingController as StaffHotelBookingController;
+use App\Http\Controllers\Staff\PaymentController as StaffPaymentController;
+use App\Http\Controllers\Staff\ContactMessageController as StaffContactMessageController;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
 use App\Http\Controllers\Staff\DepartureController as StaffDepartureController;
 use App\Http\Controllers\SearchController;
@@ -76,6 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
         Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
         Route::get('contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
+        Route::patch('contact-messages/{contactMessage}/respond', [ContactMessageController::class, 'respond'])->name('contact-messages.respond');
         Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
         Route::get('reviews/flagged', [ReviewController::class, 'flagged'])->name('reviews.flagged');
         Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
@@ -100,6 +105,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('trek-bookings', [StaffBookingController::class, 'index'])->name('trek-bookings.index');
         Route::get('trek-bookings/{trekBooking}', [StaffBookingController::class, 'show'])->name('trek-bookings.show');
         Route::patch('trek-bookings/{trekBooking}/status', [StaffBookingController::class, 'updateStatus'])->name('trek-bookings.status');
+        Route::get('hotel-bookings', [StaffHotelBookingController::class, 'index'])->name('hotel-bookings.index');
+        Route::get('hotel-bookings/{hotelBooking}', [StaffHotelBookingController::class, 'show'])->name('hotel-bookings.show');
+        Route::patch('hotel-bookings/{hotelBooking}/status', [StaffHotelBookingController::class, 'updateStatus'])->name('hotel-bookings.status');
+        Route::get('payments', [StaffPaymentController::class, 'index'])->name('payments.index');
+        Route::get('payments/{payment}', [StaffPaymentController::class, 'show'])->name('payments.show');
+        Route::get('contact-messages', [StaffContactMessageController::class, 'index'])->name('contact-messages.index');
+        Route::get('contact-messages/{contactMessage}', [StaffContactMessageController::class, 'show'])->name('contact-messages.show');
+        Route::patch('contact-messages/{contactMessage}/respond', [StaffContactMessageController::class, 'respond'])->name('contact-messages.respond');
         Route::resource('departures', StaffDepartureController::class)->except(['destroy']);
     });
 
@@ -110,6 +123,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('role:hotel_owner')->prefix('hotel-owner')->name('hotel_owner.')->group(function () {
         Route::resource('hotels', HotelOwnerHotelController::class)->except(['show', 'destroy']);
         Route::resource('hotels.rooms', HotelOwnerRoomController::class)->except(['show', 'destroy']);
+        Route::get('bookings', [HotelOwnerBookingController::class, 'index'])->name('bookings.index');
+        Route::get('bookings/{hotelBooking}', [HotelOwnerBookingController::class, 'show'])->name('bookings.show');
+        Route::patch('bookings/{hotelBooking}/status', [HotelOwnerBookingController::class, 'updateStatus'])->name('bookings.status');
     });
 
     // Customer Only
@@ -118,6 +134,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         ->name('customer.dashboard');
 
     Route::middleware('role:customer')->group(function () {
+        Route::post('/hotels/{hotel}/bookings', [BookingController::class, 'storeHotelBooking'])
+            ->name('customer.hotel-bookings.store');
         Route::get('/customer/trek-bookings/{trekBooking}', [BookingController::class, 'showTrekBooking'])
             ->name('customer.trek-bookings.show');
         Route::get('/customer/hotel-bookings/{hotelBooking}', [BookingController::class, 'showHotelBooking'])

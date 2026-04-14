@@ -17,6 +17,12 @@ class Passenger extends Model
         'age',
     ];
 
+    /**
+     * Yo relation method le model lai trekBooking relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le trekBooking sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function trekBooking(): BelongsTo
     {
         return $this->belongsTo(TrekBooking::class);

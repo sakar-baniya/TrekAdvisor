@@ -105,13 +105,26 @@
         </div>
     </section>
 
+    <section class="admin-panel">
+        <div class="admin-panel__header">
+            <div>
+                <h3>Booking Policy</h3>
+                <p>Show guests your cancellation, check-in, and booking rules before they request.</p>
+            </div>
+        </div>
+        <div class="admin-form-grid">
+            <label class="admin-field admin-field--full">
+                <textarea name="booking_policy" rows="5" class="admin-input admin-textarea" placeholder="Example: Free cancellation up to 48 hours before check-in. Check-in after 1 PM. Valid government ID required at arrival.">{{ old('booking_policy', $hotel->booking_policy) }}</textarea>
+                @error('booking_policy') <small class="admin-error">{{ $message }}</small> @enderror
+            </label>
+        </div>
+    </section>
+
     <div class="admin-form-actions">
         <a href="{{ route('hotel_owner.hotels.index') }}" class="admin-secondary-button">
-            <i class="fas fa-arrow-left"></i>
             <span>Back to Hotels</span>
         </a>
         <button type="submit" class="admin-primary-button">
-            <i class="fas fa-floppy-disk"></i>
             <span>{{ $hotel->exists ? 'Update Hotel' : 'Save Hotel' }}</span>
         </button>
     </div>

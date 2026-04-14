@@ -11,8 +11,20 @@ use App\Models\TrekBooking;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
+/**
+ * Yo AccountReviewsController controller le account reviews controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class AccountReviewsController extends Controller
 {
+    /**
+     * Yo function le store trek ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function storeTrek(Request $request, Trek $trek): RedirectResponse
     {
         $user = $request->user();
@@ -51,6 +63,12 @@ class AccountReviewsController extends Controller
         return back()->with('success', 'Review submitted.');
     }
 
+    /**
+     * Yo function le store hotel ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function storeHotel(Request $request, Hotel $hotel): RedirectResponse
     {
         $user = $request->user();
@@ -89,6 +107,12 @@ class AccountReviewsController extends Controller
         return back()->with('success', 'Review submitted.');
     }
 
+    /**
+     * Yo function le update ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function update(Request $request, Review $review): RedirectResponse
     {
         $this->authorize('update', $review);
@@ -103,6 +127,12 @@ class AccountReviewsController extends Controller
         return back()->with('success', 'Review updated.');
     }
 
+    /**
+     * Yo function le destroy ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function destroy(Review $review): RedirectResponse
     {
         $this->authorize('delete', $review);
@@ -112,3 +142,6 @@ class AccountReviewsController extends Controller
         return back()->with('success', 'Review deleted.');
     }
 }
+
+
+

@@ -19,6 +19,7 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
+            // Auto-submit so customer is moved to eSewa without extra clicks.
             document.getElementById('esewaCheckoutForm').submit();
         });
     </script>

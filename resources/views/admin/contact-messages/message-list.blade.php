@@ -2,8 +2,7 @@
     <x-slot name="header">
         <div class="admin-page-heading">
             <div>
-                <p class="admin-eyebrow">Support</p>
-                <h2 class="admin-page-title">Contact Messages</h2>
+                <h2 class="admin-page-title">Contact Inbox</h2>
             </div>
         </div>
     </x-slot>
@@ -18,9 +17,6 @@
 
         <form method="GET" action="{{ route('admin.contact-messages.index') }}" class="admin-filter-grid">
             <input type="search" name="search" value="{{ $search }}" class="admin-input" placeholder="Search name, email, or subject" />
-            <div class="admin-filter-tabs">
-                <span class="admin-filter-tab is-active">All Messages</span>
-            </div>
             <button type="submit" class="admin-primary-button admin-primary-button--fit">Apply</button>
         </form>
     </section>
@@ -54,7 +50,6 @@
                             <td>{{ $message->created_at->format('M d, Y g:i A') }}</td>
                             <td>
                                 <a href="{{ route('admin.contact-messages.show', $message) }}" class="admin-secondary-button">
-                                    <i class="fas fa-eye"></i>
                                     <span>View</span>
                                 </a>
                             </td>

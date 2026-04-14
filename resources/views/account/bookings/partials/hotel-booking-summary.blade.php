@@ -20,6 +20,12 @@
                 <span class="account-summary-label">Stay</span>
                 <span>{{ $booking->num_rooms }} Rooms x {{ $booking->num_nights }} Nights</span>
             </div>
+            @if (filled($booking->hotelRoom?->hotel?->booking_policy))
+                <div class="account-summary-row" style="display: block;">
+                    <span class="account-summary-label">Booking policy</span>
+                    <span style="display: block; margin-top: 0.35rem; line-height: 1.45;">{!! nl2br(e($booking->hotelRoom->hotel->booking_policy)) !!}</span>
+                </div>
+            @endif
         </div>
         <div class="account-summary-card">
             <div class="account-summary-row">
@@ -38,6 +44,11 @@
                 <div class="account-summary-row">
                     <span class="account-summary-label">Paid at</span>
                     <span>{{ optional($payment->paid_at)->format('F d, Y') ?? 'Pending' }}</span>
+                </div>
+            @else
+                <div class="account-summary-row">
+                    <span class="account-summary-label">Settlement mode</span>
+                    <span>No online payment. Confirm with hotel/front desk.</span>
                 </div>
             @endif
         </div>

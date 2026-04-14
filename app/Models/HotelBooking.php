@@ -29,16 +29,34 @@ class HotelBooking extends Model
         'check_out' => 'date',
     ];
 
+    /**
+     * Yo relation method le model lai user relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le user sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Yo relation method le model lai hotelRoom relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le hotelRoom sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function hotelRoom(): BelongsTo
     {
         return $this->belongsTo(HotelRoom::class);
     }
 
+    /**
+     * Yo relation method le model lai payments relation sanga map garcha.
+     *
+     * Why:
+     * Yo relation le payment sanga linked data eager-load ra filter query ma safely reuse garna help garcha.
+     */
     public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'payable_id')

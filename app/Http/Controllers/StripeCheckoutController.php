@@ -15,6 +15,12 @@ use Stripe\Exception\ApiErrorException;
 use Stripe\Exception\SignatureVerificationException;
 use UnexpectedValueException;
 
+/**
+ * Yo StripeCheckoutController controller le stripe checkout controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class StripeCheckoutController extends Controller
 {
     public function __construct(
@@ -61,6 +67,12 @@ class StripeCheckoutController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le cancel ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function cancel(Payment $payment): View
     {
         $this->paymentAccessService->authorizeOwner($payment, (int) Auth::id());
@@ -72,6 +84,12 @@ class StripeCheckoutController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le webhook ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function webhook(Request $request): Response
     {
         try {
@@ -88,5 +106,8 @@ class StripeCheckoutController extends Controller
         return response('Webhook handled', 200);
     }
 }
+
+
+
 
 

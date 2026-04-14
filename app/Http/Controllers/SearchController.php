@@ -8,8 +8,20 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Yo SearchController controller le search controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class SearchController extends Controller
 {
+    /**
+     * Yo function le invoke ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function __invoke(Request $request): View
     {
         $query = trim((string) $request->get('q', ''));
@@ -48,3 +60,6 @@ class SearchController extends Controller
         ]);
     }
 }
+
+
+

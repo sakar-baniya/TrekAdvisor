@@ -11,15 +11,21 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
 
+
+/**
+ * Yo CreateTrekBookingService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class CreateTrekBookingService
 {
-    public function __construct(
-        private readonly StripeCheckoutWorkflowService $stripeCheckoutWorkflowService,
-        private readonly EsewaCheckoutWorkflowService $esewaCheckoutWorkflowService,
-        private readonly BookingSessionService $bookingSessionService,
-    ) {
-    }
-
+    /**
+     * Yo method le handle related business flow execute garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function handle(int $userId, array $bookingData, array $passengers): array
     {
         $departureId = (int) $bookingData['departure_id'];
@@ -88,4 +94,10 @@ class CreateTrekBookingService
         }
     }
 }
+
+
+
+
+
+
 

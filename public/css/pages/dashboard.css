@@ -767,7 +767,7 @@
 
 
     /* Spacing & Rhythm */
-    --u-sidebar-w: 280px;
+    --u-sidebar-w: 256px;
     --u-topbar-h: 70px;
     --u-radius: 12px;
     --u-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
@@ -812,19 +812,19 @@ i, svg {
     width: var(--u-sidebar-w); background: var(--u-navy); color: white;
     display: flex; flex-direction: column; position: fixed;
     height: 100vh; left: 0; top: 0; z-index: 1000;
-    border-right: 1px solid rgba(255,255,255,0.05);
+    border-right: 1px solid rgba(255,255,255,0.08);
 }
 
 .admin-sidebar__brand {
-    padding: 2rem 1.5rem; flex-shrink: 0;
+    padding: 1.25rem 1rem; flex-shrink: 0;
 }
 
-.admin-brandmark { display: flex; align-items: center; gap: 0.75rem; text-decoration: none; color: white; }
+.admin-brandmark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; color: white; }
 .admin-brandmark__badge { 
-    width: 32px; height: 32px; background: var(--u-primary); color: white; 
+    width: 28px; height: 28px; background: var(--u-primary); color: white; 
     border-radius: 999px; display: flex; align-items: center; justify-content: center; 
     overflow: hidden;
-    font-weight: 800; font-size: 0.85rem; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    font-weight: 800; font-size: 0.8rem; box-shadow: none;
 
 }
 
@@ -836,10 +836,10 @@ i, svg {
     transform: scale(1.12);
 }
 
-.admin-brandmark strong { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.02em; }
+.admin-brandmark strong { font-size: 1.05rem; font-weight: 700; letter-spacing: 0; }
 
 .admin-sidebar__nav { 
-    flex: 1; padding: 0.5rem 1rem; overflow-y: auto; 
+    flex: 1; padding: 0.25rem 0.75rem 0.75rem; overflow-y: auto; 
     scrollbar-width: thin;
     scrollbar-color: rgba(255,255,255,0.1) transparent;
 }
@@ -847,30 +847,35 @@ i, svg {
 .admin-sidebar__nav::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
 
 .admin-nav-link {
-    display: flex; align-items: center; gap: 0.85rem; padding: 0.75rem 1rem;
-    color: rgba(255, 255, 255, 0.65); text-decoration: none;
-    font-size: 0.9rem; font-weight: 500; border-radius: 10px; transition: 0.2s ease;
+    display: flex; align-items: center; padding: 0.56rem 0.72rem;
+    color: rgba(255, 255, 255, 0.72); text-decoration: none;
+    font-size: 0.86rem; font-weight: 500; border-radius: 8px; transition: 0.16s ease;
     margin-bottom: 2px;
 }
-.admin-nav-link i { width: 20px; font-size: 1rem; opacity: 0.6; }
-.admin-nav-link:hover { color: white; background: rgba(255, 255, 255, 0.04); }
-.admin-nav-link.is-active { background: var(--u-primary); color: white; font-weight: 600; box-shadow: 0 4px 12px rgba(15, 23, 42, 0.12); }
-
-
-.admin-nav-link.is-active i { opacity: 1; }
+.admin-nav-link:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
+.admin-nav-link.is-active { background: rgba(255, 255, 255, 0.12); color: #fff; font-weight: 600; box-shadow: none; }
 
 .admin-nav-group__toggle {
-    width: 100%; display: flex; align-items: center; gap: 0.85rem;
-    padding: 0.75rem 1rem; background: transparent; border: none;
-    color: rgba(255, 255, 255, 0.65); cursor: pointer;
-    font-size: 0.9rem; font-weight: 500; border-radius: 10px; text-align: left;
-    transition: 0.2s ease;
+    width: 100%; display: flex; align-items: center;
+    padding: 0.56rem 0.72rem; background: transparent; border: none;
+    color: rgba(255, 255, 255, 0.72); cursor: pointer;
+    font-size: 0.86rem; font-weight: 500; border-radius: 8px; text-align: left;
+    transition: 0.16s ease;
 }
-.admin-nav-group__toggle:hover { color: white; background: rgba(255, 255, 255, 0.04); }
+.admin-nav-group__toggle:hover { color: #fff; background: rgba(255, 255, 255, 0.06); }
 
-.admin-nav-group__menu { display: none; padding-left: 2.25rem; margin-top: 2px; }
+.admin-nav-caret {
+    margin-left: auto;
+    opacity: 0.65;
+    font-size: 0.72rem;
+    line-height: 1;
+    transition: transform 0.16s ease, opacity 0.16s ease;
+}
+
+.admin-nav-group__menu { display: none; padding-left: 1.5rem; margin-top: 1px; }
 .admin-nav-group.is-open .admin-nav-group__menu { display: block; }
-.admin-nav-group.is-open .admin-nav-group__toggle { color: white; font-weight: 600; }
+.admin-nav-group.is-open .admin-nav-group__toggle { color: #fff; font-weight: 600; }
+.admin-nav-group.is-open .admin-nav-caret { transform: rotate(180deg); opacity: 0.95; }
 
 .admin-sidebar__footer { padding: 1.5rem 1rem; border-top: 1px solid rgba(255, 255, 255, 0.05); }
 .admin-footer-btn { 

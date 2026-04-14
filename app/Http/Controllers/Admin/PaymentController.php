@@ -9,8 +9,20 @@ use App\Models\TrekBooking;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Yo PaymentController controller le payment controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class PaymentController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $status = $request->string('status')->toString();
@@ -53,6 +65,12 @@ class PaymentController extends Controller
         return view('admin.payments.payment-list', compact('payments', 'status', 'type', 'search', 'from', 'to', 'totalAmount'));
     }
 
+    /**
+     * Yo function le show ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function show(Payment $payment): View
     {
         $payment->load('user');
@@ -64,6 +82,12 @@ class PaymentController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le resolve reference ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|null
     {
         return match ($payment->payable_type) {
@@ -73,5 +97,8 @@ class PaymentController extends Controller
         };
     }
 }
+
+
+
 
 

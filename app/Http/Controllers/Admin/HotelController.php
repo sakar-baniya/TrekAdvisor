@@ -8,8 +8,20 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Yo HotelController controller le hotel controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class HotelController extends Controller
 {
+    /**
+     * Yo function le index ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
@@ -48,6 +60,12 @@ class HotelController extends Controller
         ]);
     }
 
+    /**
+     * Yo function le update status ko kaam handle garcha.
+     *
+     * Why:
+     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     */
     public function updateStatus(Request $request, Hotel $hotel): RedirectResponse
     {
         $validated = $request->validate([
@@ -67,3 +85,6 @@ class HotelController extends Controller
         return back()->with('success', 'Hotel status updated.');
     }
 }
+
+
+

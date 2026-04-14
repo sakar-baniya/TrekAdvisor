@@ -48,4 +48,14 @@ return [
         'status_url' => env('ESEWA_STATUS_URL', 'https://rc.esewa.com.np/api/epay/transaction/status/'),
     ],
 
+    'whatsapp' => [
+        'support_number' => env('WHATSAPP_SUPPORT_NUMBER', ''),
+    ],
+
+    'sms' => [
+        'endpoint' => env('SMS_ENDPOINT', ''),
+        'token' => env('SMS_TOKEN', ''),
+        'from' => env('SMS_FROM', 'TrekAdvisor'),
+    ],
+
 ];

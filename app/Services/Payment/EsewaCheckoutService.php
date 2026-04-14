@@ -6,14 +6,33 @@ use App\Models\Payment;
 use RuntimeException;
 use Illuminate\Support\Facades\Http;
 
+
+/**
+ * Yo EsewaCheckoutService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class EsewaCheckoutService
 {
-	public function checkoutUrl(): string
+    /**
+     * Yo method le active eSewa checkout endpoint return garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
+    public function checkoutUrl(): string
 	{
 		return (string) config('services.esewa.checkout_url');
 	}
 
-	public function decodeSuccessPayload(string $encodedData, array $fallbackPayload = []): array
+    /**
+     * Yo method le eSewa success payload decode garera usable array banaucha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
+    public function decodeSuccessPayload(string $encodedData, array $fallbackPayload = []): array
 	{
 		if ($encodedData !== '') {
 			$decoded = base64_decode($encodedData, true);
@@ -28,7 +47,13 @@ class EsewaCheckoutService
 		return $fallbackPayload;
 	}
 
-	public function verifyPayloadSignature(array $payload): bool
+    /**
+     * Yo method le eSewa payload signature verify garera data tamper bhayeko chaina bhanne confirm garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
+    public function verifyPayloadSignature(array $payload): bool
 	{
 		$secretKey = (string) config('services.esewa.secret_key');
 		$signedFieldNames = (string) ($payload['signed_field_names'] ?? '');
@@ -52,7 +77,13 @@ class EsewaCheckoutService
 		return hash_equals($generated, $receivedSignature);
 	}
 
-	public function createCheckoutPayload(Payment $payment, string $successUrl, string $failureUrl): array
+    /**
+     * Yo method le eSewa checkout request ko signed payload build garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
+    public function createCheckoutPayload(Payment $payment, string $successUrl, string $failureUrl): array
 	{
 		$productCode = (string) config('services.esewa.product_code');
 		$secretKey = (string) config('services.esewa.secret_key');
@@ -88,7 +119,13 @@ class EsewaCheckoutService
 		];
 	}
 
-	public function verifyTransaction(Payment $payment, ?string $transactionCode = null): bool
+    /**
+     * Yo method le gateway side transaction verify garera payment status trustable banaucha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
+    public function verifyTransaction(Payment $payment, ?string $transactionCode = null): bool
 	{
 		$productCode = (string) config('services.esewa.product_code');
 		$statusUrl = (string) config('services.esewa.status_url');
@@ -122,3 +159,9 @@ class EsewaCheckoutService
 		return $status === 'COMPLETE';
 	}
 }
+
+
+
+
+
+

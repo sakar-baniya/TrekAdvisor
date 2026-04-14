@@ -9,6 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
+/**
+ * Yo AdminAuthController controller le admin auth controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class AdminAuthController extends Controller
 {
     /**
@@ -58,3 +64,4 @@ class AdminAuthController extends Controller
         return redirect('/');
     }
 }
+

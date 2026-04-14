@@ -4,19 +4,32 @@ namespace App\Services\Payment;
 
 use App\Models\Payment;
 
+
+/**
+ * Yo EsewaCheckoutWorkflowService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class EsewaCheckoutWorkflowService
 {
-    public function __construct(
-        private readonly EsewaCheckoutService $esewaCheckoutService,
-        private readonly EsewaPaymentStateService $esewaPaymentStateService,
-    ) {
-    }
-
+    /**
+     * Yo method le failed/pending payment retry flow ko naya checkout link/session banaucha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function createRetryUrl(Payment $payment): string
     {
         return route('esewa.retry', ['payment' => $payment]);
     }
 
+    /**
+     * Yo method le buildRedirectData ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Output banne rule yahi method ma clear rakhda format change huda impact track garna sajilo hunchha.
+     */
     public function buildRedirectData(Payment $payment): array
     {
         $payload = $this->esewaCheckoutService->createCheckoutPayload(
@@ -39,6 +52,12 @@ class EsewaCheckoutWorkflowService
         ];
     }
 
+    /**
+     * Yo method le success callback pachi payment ra booking state sync garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function syncSuccessfulPayment(Payment $payment, array $requestPayload): Payment
     {
         $payload = $this->esewaCheckoutService->decodeSuccessPayload(
@@ -70,8 +89,19 @@ class EsewaCheckoutWorkflowService
         return $this->esewaPaymentStateService->markCheckoutCompleted($payment, $payload);
     }
 
+    /**
+     * Yo method le failed callback pachi payment status failed/cancelled ma update garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
+     */
     public function markFailed(Payment $payment, array $requestPayload = []): Payment
     {
         return $this->esewaPaymentStateService->markCheckoutFailed($payment, $requestPayload);
     }
 }
+
+
+
+
+

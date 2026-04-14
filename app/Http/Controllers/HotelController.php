@@ -6,6 +6,12 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+/**
+ * Yo HotelController controller le hotel controller ko request/response flow handle garcha.
+ *
+ * Why:
+ * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ */
 class HotelController extends Controller
 {
     /**
@@ -106,3 +112,4 @@ class HotelController extends Controller
         return view('hotels.hotel-details', compact('hotel'));
     }
 }
+

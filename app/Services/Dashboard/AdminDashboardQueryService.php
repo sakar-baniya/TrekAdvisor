@@ -10,8 +10,21 @@ use App\Models\TrekBooking;
 use App\Models\User;
 use Illuminate\Support\Collection;
 
+
+/**
+ * Yo AdminDashboardQueryService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
+ */
 class AdminDashboardQueryService
 {
+    /**
+     * Yo method le data ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function data(): array
     {
         return [
@@ -78,6 +91,12 @@ class AdminDashboardQueryService
         return $finalStatus;
     }
 
+    /**
+     * Yo method le recentBookings ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
+     */
     public function recentBookings(): Collection
     {
         $trekBookings = TrekBooking::query()
@@ -123,5 +142,11 @@ class AdminDashboardQueryService
             ->values();
     }
 }
+
+
+
+
+
+
 
 

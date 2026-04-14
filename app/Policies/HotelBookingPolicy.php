@@ -14,7 +14,7 @@ class HotelBookingPolicy
      */
     public function viewAny(User $user): bool
     {
-        return in_array($user->role, ['admin', 'staff', 'customer']);
+        return in_array($user->role, ['admin', 'staff', 'hotel_owner', 'customer']);
     }
 
     /**
@@ -26,6 +26,10 @@ class HotelBookingPolicy
     {
         if (in_array($user->role, ['admin', 'staff'])) {
             return true;
+        }
+
+        if ($user->role === 'hotel_owner') {
+            return (int) ($booking->hotelRoom?->hotel?->owner_id ?? 0) === (int) $user->id;
         }
 
         if ($user->role === 'customer') {
@@ -52,7 +56,15 @@ class HotelBookingPolicy
      */
     public function update(User $user, HotelBooking $booking): bool
     {
-        return in_array($user->role, ['admin', 'staff']);
+        if (in_array($user->role, ['admin', 'staff'])) {
+            return true;
+        }
+
+        if ($user->role === 'hotel_owner') {
+            return (int) ($booking->hotelRoom?->hotel?->owner_id ?? 0) === (int) $user->id;
+        }
+
+        return false;
     }
 
     /**

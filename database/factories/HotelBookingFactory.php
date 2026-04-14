@@ -34,7 +34,7 @@ class HotelBookingFactory extends Factory
             'num_nights' => $numNights,
             'price_per_night' => $pricePerNight,
             'total_price' => $totalPrice,
-            'status' => 'Pending',
+            'status' => 'pending',
         ];
     }
 }

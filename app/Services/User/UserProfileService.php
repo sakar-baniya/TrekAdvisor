@@ -5,18 +5,20 @@ namespace App\Services\User;
 use App\Models\User;
 use Illuminate\Validation\ValidationException;
 
+
 /**
- * UserProfileService
- * 
- * Handles user profile management operations
- * - Update profile information
- * - Change email/phone
- * - Validate changes
+ * Yo UserProfileService service le yo file ko business logic organize garcha.
+ *
+ * Why:
+ * Reusable service steps banauda controller ko code clean ra maintainable rahanchha.
  */
 class UserProfileService
 {
     /**
-     * Update user profile
+     * Yo method le updateProfile related state change safely apply garcha.
+     *
+     * Why:
+     * Write workflow ko validation ra status change ekai thau ma rakhda data mismatch ra side-effect bug kam hunchha.
      */
     public function updateProfile(User $user, array $data): User
     {
@@ -33,22 +35,10 @@ class UserProfileService
     }
 
     /**
-     * Validate profile update data
-     */
-    private function validate(User $user, array $data): void
-    {
-        $rules = [
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|digits:10',
-            'address' => 'nullable|string|max:500',
-        ];
-
-        validator($data, $rules)->validate();
-    }
-
-    /**
-     * Check if email is available
+     * Yo method le isEmailAvailable ko service-level kaam handle garcha.
+     *
+     * Why:
+     * Yo method ko business rule service layer ma rakhda future change garna ra test garna sajilo hunchha.
      */
     public function isEmailAvailable(string $email, int $userId = null): bool
     {
@@ -62,7 +52,10 @@ class UserProfileService
     }
 
     /**
-     * Get user profile data
+     * Yo method le getProfile related data prepare/fetch garcha.
+     *
+     * Why:
+     * Yo query rule service ma rak्दा controller slim rahanchha ra data shape sabai screen ma consistent dekhinchha.
      */
     public function getProfile(User $user): array
     {
@@ -78,3 +71,6 @@ class UserProfileService
         ];
     }
 }
+
+
+

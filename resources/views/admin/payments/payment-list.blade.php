@@ -1,23 +1,42 @@
 <x-dashboard-layout>
+    <style>
+        .payment-status-pill {
+            display: inline-block;
+            padding: 0.2rem 0.55rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        .payment-status-pill.is-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .payment-status-pill.is-pending {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .payment-status-pill.is-failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .payment-status-pill.is-neutral {
+            background: #e5e7eb;
+            color: #374151;
+        }
+    </style>
+
     <x-slot name="header">
         <div class="admin-page-heading">
             <div>
-                <p class="admin-eyebrow">Payments</p>
                 <h2 class="admin-page-title">All Payments</h2>
             </div>
         </div>
     </x-slot>
-
-    <section class="admin-stats-grid">
-        <div class="admin-stat-card">
-            <div class="admin-stat-card__icon is-green"><i class="fas fa-wallet"></i></div>
-            <div>
-                <p>Total Amount</p>
-                <h3>NPR {{ number_format($totalAmount, 2) }}</h3>
-                <span>Filtered records</span>
-            </div>
-        </div>
-    </section>
 
     <section class="admin-panel">
         <div class="admin-panel__header">
@@ -27,7 +46,7 @@
             </div>
         </div>
 
-        <form method="GET" action="{{ route('admin.payments.index') }}" class="admin-filter-grid admin-filter-grid--payments">
+        <form method="GET" action="{{ route('admin.payments.index') }}" class="admin-filter-grid">
             <input type="search" name="search" value="{{ $search }}" class="admin-input" placeholder="Search transaction or customer" />
             <select name="status" class="admin-input">
                 <option value="">All status</option>
@@ -71,7 +90,14 @@
                 <tbody>
                     @forelse ($payments as $payment)
                         <tr>
-                            <td class="admin-table__ref">{{ $payment->transaction_id }}</td>
+                            @php
+                                // Keep list compact: show short id in table, full id in title tooltip.
+                                $fullTransactionId = (string) $payment->transaction_id;
+                                $shortTransactionId = strlen($fullTransactionId) > 16
+                                    ? substr($fullTransactionId, 0, 8) . '...' . substr($fullTransactionId, -4)
+                                    : $fullTransactionId;
+                            @endphp
+                            <td class="admin-table__ref" title="{{ $fullTransactionId }}">{{ $shortTransactionId }}</td>
                             <td>{{ ucfirst($payment->payable_type) }}</td>
                             <td>
                                 <strong>{{ $payment->user?->name ?? 'Unknown customer' }}</strong>
@@ -80,11 +106,20 @@
                             <td>NPR {{ number_format($payment->amount, 2) }}</td>
                             <td>{{ $payment->gateway ? ucfirst($payment->gateway) : 'N/A' }}</td>
                             <td>
-                                <span class="admin-badge {{ $payment->status === 'Success' ? 'is-success' : ($payment->status === 'Pending' ? 'is-warning' : 'is-muted') }}">{{ $payment->status }}</span>
+                                @php
+                                    // Map status text to a simple color class for faster scanning.
+                                    $statusValue = strtolower((string) $payment->status);
+                                    $statusClass = match (true) {
+                                        in_array($statusValue, ['success', 'completed', 'paid'], true) => 'is-success',
+                                        in_array($statusValue, ['pending', 'processing'], true) => 'is-pending',
+                                        in_array($statusValue, ['failed', 'cancelled', 'canceled'], true) => 'is-failed',
+                                        default => 'is-neutral',
+                                    };
+                                @endphp
+                                <span class="payment-status-pill {{ $statusClass }}">{{ $payment->status }}</span>
                             </td>
                             <td>
                                 <a href="{{ route('admin.payments.show', $payment) }}" class="admin-secondary-button">
-                                    <i class="fas fa-eye"></i>
                                     <span>View</span>
                                 </a>
                             </td>
