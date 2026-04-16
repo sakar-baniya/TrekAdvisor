@@ -1,3 +1,15 @@
+/* Hide mobile nav by default, show only on mobile or when open */
+#site-nav-mobile {
+    display: none;
+}
+@media (max-width: 900px) {
+    #site-nav-mobile {
+        display: block;
+    }
+    #site-nav-mobile:not(.open) {
+        display: none;
+    }
+}
 /* --- TrekAdvisor Premium Layout --- */
 
 /* 1. Global Viewport Control */
@@ -210,15 +222,22 @@ body.body-app {
 @media (max-width: 900px) {
     .nav-links, .nav-actions { display: none; }
     
-    .nav-toggle { 
-        display: block; 
-        color: #0F172A !important; /* Fixed visibility on white nav */
+
+    .nav-toggle {
+        display: none;
+        color: #0F172A !important;
         font-size: 1.4rem;
         background: transparent;
         border: 0;
         cursor: pointer;
         padding: 0.5rem;
         transition: transform 0.3s ease;
+    }
+
+    @media (max-width: 900px) {
+        .nav-toggle {
+            display: block;
+        }
     }
 
     .nav-toggle:active {

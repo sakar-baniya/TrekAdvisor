@@ -28,9 +28,9 @@
                 </div>
             </div>
             <div class="nav-section nav-right" style="display:flex;align-items:center;gap:1.25rem;">
-                <a href="{{ route('contact') }}" class="btn btn-cta">Contact</a>
+                <a href="{{ route('contact') }}" class="btn btn-cta d-none d-md-inline-flex">Contact</a>
                 @auth
-                    <div class="nav-account-menu" style="position:relative;">
+                    <div class="nav-account-menu d-none d-md-block" style="position:relative;">
                         <button type="button" class="btn btn-link nav-account-trigger" id="navAccountTrigger" style="display:flex;align-items:center;gap:0.5rem;">
                             <span>My Account</span>
                             <i class="fas fa-chevron-down" style="font-size:0.85em;"></i>
@@ -87,7 +87,7 @@
                 @endauth
                 <button
                     type="button"
-                    class="nav-toggle"
+                    class="nav-toggle d-inline-flex d-md-none"
                     data-nav-toggle
                     aria-expanded="false"
                     aria-controls="site-nav-mobile"

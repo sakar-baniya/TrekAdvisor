@@ -58,16 +58,7 @@
                 </form>
             </div>
 
-            <div class="market-hero__stats">
-                <div>
-                    <strong>{{ \App\Models\Trek::where('status', 'active')->count() }}+</strong>
-                    <span>Featured Treks</span>
-                </div>
-                <div>
-                    <strong>{{ \App\Models\Hotel::where('status', 'active')->count() }}+</strong>
-                    <span>Active Hotels</span>
-                </div>
-            </div>
+
 
         </div>
     </section>
