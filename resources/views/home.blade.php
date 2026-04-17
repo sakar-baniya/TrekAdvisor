@@ -1,11 +1,22 @@
 <x-app-layout>
-    <section class="market-hero">
-        <div class="container market-hero__inner">
-            <div class="market-hero__text-box">
-                <h1 class="market-hero__title">Local Experts in Himalayan<br>Trekking</h1>
-                <p class="market-hero__subtitle">Explore the Himalayas with a team that's guided with care for over 17 years.</p>
+    <!-- Hero Section -->
+    <section class="relative min-h-[85vh] flex items-center justify-center bg-slate-900 overflow-hidden">
+        <!-- Background Image overlay -->
+        <div class="absolute inset-0 bg-cover bg-center bg-no-repeat transition-transform duration-1000" style="background-image: url('{{ asset('images/ui/hero.webp') }}');"></div>
+        <div class="absolute inset-0 bg-slate-900/60 bg-gradient-to-t from-slate-900 pb-20"></div>
+
+        <div class="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center py-20 text-center">
+            <div class="mb-12 max-w-4xl">
+                <h1 class="text-white text-5xl md:text-7xl font-black tracking-tight mb-8 drop-shadow-2xl leading-tight">
+                    Local Experts in Himalayan Trekking
+                </h1>
+                <p class="text-slate-200 text-lg md:text-2xl font-medium tracking-wide max-w-2xl mx-auto opacity-95">
+                    Explore the Himalayas with a team that's guided with care for over 17 years.
+                </p>
             </div>
-            <div class="hero-search-wrapper" x-data="{
+
+            <!-- Search Bar -->
+            <div class="w-full max-w-2xl" x-data="{
                 category: 'treks',
                 treksUrl: '{{ route('treks.index') }}',
                 hotelsUrl: '{{ route('hotels.index') }}',
@@ -22,175 +33,186 @@
                     return this.hotelsUrl
                 }
             }">
-                <div class="hero-search-tabs" role="tablist" aria-label="Search category">
-                    <button
-                        type="button"
-                        class="hero-search-tab"
-                        :class="{ 'is-active': category === 'treks' }"
-                        @click="category = 'treks'"
-                    >
+                <div class="flex justify-center gap-3 mb-6">
+                    <button type="button" @click="category = 'treks'" :class="category === 'treks' ? 'bg-white text-slate-900 font-bold shadow-xl scale-105' : 'bg-slate-900/40 text-white font-medium hover:bg-slate-800/80'" class="px-6 py-2.5 rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 text-sm tracking-wide">
                         Treks
                     </button>
-                    <button
-                        type="button"
-                        class="hero-search-tab"
-                        :class="{ 'is-active': category === 'hotels' }"
-                        @click="category = 'hotels'"
-                    >
+                    <button type="button" @click="category = 'hotels'" :class="category === 'hotels' ? 'bg-white text-slate-900 font-bold shadow-xl scale-105' : 'bg-slate-900/40 text-white font-medium hover:bg-slate-800/80'" class="px-6 py-2.5 rounded-full transition-all duration-300 backdrop-blur-md border border-white/20 text-sm tracking-wide">
                         Hotels
                     </button>
                 </div>
 
-                <form :action="actionUrl()" method="GET" class="hero-search-bar">
-                    <div class="hero-search-left">
-                        <div class="hero-search-row">
-                            <i class="fas fa-search search-icon" aria-hidden="true"></i>
-                            <input
-                                type="text"
-                                name="search"
-                                x-bind:placeholder="placeholder()"
-                                class="hero-search-input"
-                            />
-                        </div>
+                <form :action="actionUrl()" method="GET" class="bg-white p-2.5 rounded-full shadow-2xl flex items-center w-full focus-within:ring-8 focus-within:ring-white/20 transition-all">
+                    <div class="flex-grow flex items-center pl-6 pr-2">
+                        <i class="fas fa-search text-slate-300 mr-4 text-xl" aria-hidden="true"></i>
+                        <input type="text" name="search" x-bind:placeholder="placeholder()" class="w-full text-slate-900 border-none bg-transparent py-4 focus:outline-none focus:ring-0 placeholder-slate-400 font-medium" autocomplete="off" />
                     </div>
-
-                    <button type="submit" class="hero-search-btn" x-text="exploreLabel()"></button>
+                    <button type="submit" class="bg-slate-900 text-white font-black px-10 py-4 rounded-full hover:bg-slate-800 transform transition-all hover:scale-[1.02] shadow-xl flex-shrink-0 uppercase text-xs tracking-widest" x-text="exploreLabel()"></button>
                 </form>
             </div>
-
-
-
         </div>
     </section>
 
-    <section class="booking-section booking-section--tinted">
-        <div class="container container-wide">
-            <div class="booking-section__head">
-                <div class="booking-section__title">
-                    <p class="section-kicker">Adventure Awaits</p>
-                    <h2>Featured Treks</h2>
-                    <p class="section-subtitle">Curated Himalayan routes with trusted local guides.</p>
-                </div>
-                <div class="booking-section__actions">
-                    <a href="{{ route('treks.index') }}" class="view-all-link">View all</a>
-                </div>
-            </div>
-
-            <div class="booking-grid">
-                @forelse ($featuredTreks->take(3) as $trek)
-                    <article class="booking-card booking-card--featured booking-card--trek">
-                        <div class="booking-card__media">
-                            @if($trek->image)
-                                <img src="{{ $trek->image }}" alt="Image of {{ $trek->title }}">
-                            @else
-                                <div class="booking-card__media-placeholder"></div>
-                            @endif
-                        </div>
-                        <div class="booking-card__body">
-                            <div class="booking-card__meta">
-                                <span><i class="fas fa-calendar-alt" aria-hidden="true"></i> {{ $trek->duration_days ? $trek->duration_days . ' days' : 'Multi-day' }}</span>
-                                <span><i class="fas fa-mountain" aria-hidden="true"></i> {{ ucfirst($trek->difficulty ?? 'moderate') }}</span>
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) . ' • ' . $trek->reviews_count . ' reviews' : 'New' }}</span>
-                            </div>
-                            <h3>{{ $trek->title }}</h3>
-                            <div class="booking-card__footer">
-                                <div class="booking-card__price">
-                                    <span class="booking-card__price-label">From</span>
-                                    <span class="booking-card__price-amount">NPR {{ number_format($trek->base_price, 0) }}</span>
-                                    <span class="booking-card__price-unit">per person</span>
-                                </div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="booking-card__action">View details</a>
-                            </div>
-                        </div>
-                    </article>
-                @empty
-                    <p class="empty-note">No featured treks yet.</p>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-    <section id="featured-hotels" class="booking-section booking-section--tinted">
-        <div class="container container-wide">
-            <div class="booking-section__head">
-                <div class="booking-section__title">
-                    <p class="section-kicker">Stay Options</p>
-                    <h2>Featured Hotels</h2>
-                    <p class="section-subtitle">Handpicked stays with comfort, charm, and mountain views.</p>
-                </div>
-                <div class="booking-section__actions">
-                    <a href="{{ route('hotels.index') }}" class="view-all-link">View all</a>
-                </div>
-            </div>
-
-            <div class="booking-grid">
-                @forelse ($featuredHotels->take(3) as $hotel)
-                    <article class="booking-card booking-card--featured booking-card--trek">
-                        <div class="booking-card__media">
-                            @if($hotel->image)
-                                <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}">
-                            @else
-                                <div class="booking-card__media-placeholder"></div>
-                            @endif
-                        </div>
-                        <div class="booking-card__body">
-                            <div class="booking-card__meta">
-                                <span class="booking-card__rating"><i class="fas fa-star"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) . ' • ' . $hotel->reviews_count . ' reviews' : 'New' }}</span>
-                            </div>
-                            <h3>{{ $hotel->name }}</h3>
-                            <div class="booking-card__footer">
-                                <div class="booking-card__price">
-                                    <span class="booking-card__price-label">From</span>
-                                    <span class="booking-card__price-amount">NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
-                                    <span class="booking-card__price-unit">per night</span>
-                                </div>
-                                <a href="{{ route('hotels.show', $hotel) }}" class="booking-card__action">View details</a>
-                            </div>
-                        </div>
-                    </article>
-                @empty
-                    <p class="empty-note">No hotel listings yet.</p>
-                @endforelse
-            </div>
-        </div>
-    </section>
-
-
-
-    <section class="market-cta">
-        <div class="container market-cta__inner">
-            <h2>Ready for Your Adventure?</h2>
-            <p>Join trekkers using TrekAdvisor to plan routes and stays in one thoughtful, premium experience.</p>
-            <a href="{{ route('treks.index') }}" class="market-cta__button">Start Planning Now</a>
-        </div>
-    </section>
-
-    <section class="market-section">
-        <div class="container">
-            <div class="market-section__head">
+    <!-- Featured Treks -->
+    <section class="py-24 bg-slate-50 border-t border-slate-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 border-b border-slate-200 pb-8">
                 <div>
-                    <p class="market-kicker">Testimonials</p>
-                    <h2>What Trekkers Say</h2>
+                    <p class="text-slate-400 font-black tracking-[0.2em] uppercase text-[10px] mb-2">Adventure Awaits</p>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Featured Treks</h2>
+                    <p class="text-slate-600 mt-4 text-xl font-medium">Curated Himalayan routes with trusted local guides.</p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <a href="{{ route('treks.index') }}" class="inline-flex items-center text-slate-900 font-black uppercase tracking-widest text-xs border-2 border-slate-200 rounded-2xl px-8 py-3.5 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                        View all <i class="fas fa-arrow-right ml-3 text-[10px]"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="market-card-grid market-card-grid--three">
-                @foreach($testimonials as $testimonial)
-                    <article class="market-quote-card">
-                        <div class="market-quote-card__top">
-                            <div class="market-quote-card__stars">
-                                @for($i = 0; $i < 5; $i++)
-                                    {{ $i < $testimonial->rating ? '★' : '☆' }}
-                                @endfor
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                @forelse ($featuredTreks->take(3) as $trek)
+                    <article class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group flex flex-col h-full">
+                        <div class="h-64 overflow-hidden relative bg-slate-200">
+                            @if($trek->image)
+                                <img src="{{ $trek->image }}" alt="Image of {{ $trek->title }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
+                                    <i class="fas fa-mountain text-5xl"></i>
+                                </div>
+                            @endif
+                            <div class="absolute top-6 right-6 bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm flex items-center gap-2">
+                                <i class="fas fa-star text-amber-500"></i> {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) : 'NEW' }}
                             </div>
-                            <i class="fas fa-quote-right quote-icon"></i>
                         </div>
-                        <p class="market-quote-card__text">"{{ Str::limit($testimonial->comment, 150) }}"</p>
-                        <div class="market-quote-card__author">
-                            <div class="avatar"><i class="fas fa-user"></i></div>
-                            <div class="author-info">
-                                <strong>{{ $testimonial->user?->name ?? 'Anonymous' }}</strong>
-                                <span>{{ $testimonial->reviewable?->title ?? $testimonial->reviewable?->name ?? 'Recent Trip' }}</span>
+                        <div class="p-10 flex flex-col flex-grow">
+                            <div class="flex items-center gap-6 text-[10px] font-black text-slate-400 mb-4 uppercase tracking-[0.15em]">
+                                <span class="flex items-center gap-2"><i class="far fa-calendar-alt text-slate-300"></i> {{ $trek->duration_days ? $trek->duration_days . ' days' : 'Multi-day' }}</span>
+                                <span class="flex items-center gap-2"><i class="fas fa-mountain text-slate-300"></i> {{ ucfirst($trek->difficulty ?? 'moderate') }}</span>
+                            </div>
+                            <h3 class="text-2xl font-black text-slate-900 mb-6 tracking-tight line-clamp-2 min-h-[4rem]">{{ $trek->title }}</h3>
+                            
+                            <div class="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">From</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-3xl font-black text-slate-900 tracking-tight">NPR {{ number_format($trek->base_price, 0) }}</span>
+                                    </div>
+                                </div>
+                                <a href="{{ route('treks.show', $trek->slug) }}" class="inline-flex justify-center items-center h-12 px-8 bg-slate-900 hover:bg-slate-700 text-white font-black uppercase tracking-widest text-[10px] rounded-2xl transition-all shadow-lg shadow-slate-900/10">
+                                    Book
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <div class="col-span-full py-20 text-center bg-white rounded-[2.5rem] border-2 border-dashed border-slate-100 italic">
+                        <p class="text-slate-400 font-bold">No featured treks available at this moment.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Hotels -->
+    <section id="featured-hotels" class="py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-16 border-b border-slate-50 pb-8">
+                <div>
+                    <p class="text-slate-400 font-black tracking-[0.2em] uppercase text-[10px] mb-2">Luxury Stays</p>
+                    <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">Featured Hotels</h2>
+                    <p class="text-slate-600 mt-4 text-xl font-medium">Handpicked stays with comfort, charm, and mountain views.</p>
+                </div>
+                <div class="mt-6 md:mt-0">
+                    <a href="{{ route('hotels.index') }}" class="inline-flex items-center text-slate-900 font-black uppercase tracking-widest text-xs border-2 border-slate-200 rounded-2xl px-8 py-3.5 hover:bg-slate-900 hover:text-white transition-all duration-300">
+                        Explore all <i class="fas fa-arrow-right ml-3 text-[10px]"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                @forelse ($featuredHotels->take(3) as $hotel)
+                    <article class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden hover:shadow-2xl transition-all duration-500 group flex flex-col h-full">
+                        <div class="h-64 overflow-hidden relative">
+                            @if($hotel->image)
+                                <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700">
+                            @else
+                                <div class="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50">
+                                    <i class="fas fa-hotel text-5xl"></i>
+                                </div>
+                            @endif
+                            <div class="absolute top-6 right-6 bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm flex items-center gap-2">
+                                <i class="fas fa-star text-amber-500"></i> {{ $hotel->reviews_avg_rating ? number_format($hotel->reviews_avg_rating, 1) : 'NEW' }}
+                            </div>
+                        </div>
+                        <div class="p-10 flex flex-col flex-grow">
+                            <h3 class="text-2xl font-black text-slate-900 mb-3 tracking-tight line-clamp-1">{{ $hotel->name }}</h3>
+                            <div class="flex items-center text-[10px] font-black text-slate-400 uppercase tracking-widest mb-6">
+                                <i class="fas fa-map-marker-alt text-slate-300 mr-2"></i> Himalayan Region
+                            </div>
+                            
+                            <div class="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between">
+                                <div>
+                                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nightly</span>
+                                    <div class="flex items-baseline gap-1">
+                                        <span class="text-3xl font-black text-slate-900 tracking-tight">NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
+                                    </div>
+                                </div>
+                                <a href="{{ route('hotels.show', $hotel) }}" class="inline-flex justify-center items-center h-12 px-8 bg-white border-2 border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white font-black uppercase tracking-widest text-[10px] rounded-2xl transition-all">
+                                    Details
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                @empty
+                    <div class="col-span-full py-20 text-center bg-slate-50 rounded-[2.5rem] border-2 border-dashed border-slate-100 italic">
+                        <p class="text-slate-400 font-bold">No hotel properties listed yet.</p>
+                    </div>
+                @endforelse
+            </div>
+        </div>
+    </section>
+
+    <!-- Global CTA -->
+    <section class="py-32 relative overflow-hidden bg-slate-900 text-white text-center rounded-t-[5rem] mt-16 group">
+        <div class="absolute inset-0 bg-slate-800/40 mix-blend-multiply group-hover:scale-105 transition-transform duration-1000"></div>
+        <div class="relative z-10 max-w-4xl mx-auto px-6">
+            <h2 class="text-5xl md:text-7xl font-black tracking-tight mb-8 leading-tight">Ready for Your Adventure?</h2>
+            <p class="text-slate-300 text-xl md:text-2xl font-medium mb-12 max-w-2xl mx-auto leading-relaxed opacity-90">
+                Join thousands of trekkers using TrekAdvisor to plan excursions and stays in one premium experience.
+            </p>
+            <a href="{{ route('treks.index') }}" class="inline-flex items-center justify-center px-12 py-5 bg-white text-slate-900 font-black uppercase tracking-widest text-sm rounded-2xl shadow-2xl hover:bg-slate-50 hover:scale-105 transition-all duration-300">
+                Start Planning Today
+            </a>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-24 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <p class="text-slate-400 font-black tracking-[0.2em] uppercase text-[10px] mb-3">Testimonials</p>
+                <h2 class="text-4xl md:text-5xl font-black text-slate-900 tracking-tight">What Trekkers Say</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                @foreach($testimonials as $testimonial)
+                    <article class="bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 relative mt-6 flex flex-col h-full hover:shadow-xl transition-all duration-500">
+                        <div class="absolute -top-6 left-10 w-12 h-12 bg-slate-900 text-white rounded-2xl flex items-center justify-center shadow-2xl transform -rotate-6">
+                            <i class="fas fa-quote-left text-lg"></i>
+                        </div>
+                        <div class="flex text-amber-500 text-xs mb-6 pt-4 gap-1">
+                            @for($i = 0; $i < 5; $i++)
+                                <i class="{{ $i < $testimonial->rating ? 'fas' : 'far' }} fa-star"></i>
+                            @endfor
+                        </div>
+                        <p class="text-slate-600 font-medium italic leading-relaxed mb-8 flex-grow italic">"{{ Str::limit($testimonial->comment, 160) }}"</p>
+                        <div class="flex items-center gap-5 pt-8 border-t border-slate-50 mt-auto">
+                            <div class="w-12 h-12 bg-slate-100 rounded-xl flex items-center justify-center text-slate-900 font-black flex-shrink-0 text-lg">
+                                {{ substr($testimonial->user?->name ?? 'A', 0, 1) }}
+                            </div>
+                            <div>
+                                <strong class="block text-slate-900 font-black text-xs uppercase tracking-widest mb-1">{{ $testimonial->user?->name ?? 'Anonymous' }}</strong>
+                                <span class="block text-slate-400 text-[10px] font-bold uppercase tracking-widest">{{ $testimonial->reviewable?->title ?? $testimonial->reviewable?->name ?? 'Verified Trekker' }}</span>
                             </div>
                         </div>
                     </article>

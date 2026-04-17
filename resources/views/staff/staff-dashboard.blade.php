@@ -1,93 +1,89 @@
 <x-dashboard-layout>
-    <!-- 1️⃣ Header -->
-    <div class="page-header">
-        <div class="page-header__content">
-            <h1>Staff Console</h1>
-            <p>Track trek booking activity and handle requests.</p>
+    <!-- Page Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+        <div>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Staff Console</h1>
+            <p class="text-slate-500 font-medium">Monitoring trek booking activity and operational requests.</p>
         </div>
-        <div class="page-header__actions">
-            <a href="{{ route('staff.trek-bookings.index') }}" class="btn btn-primary">
-                <i class="fas fa-mountain-sun"></i> Trek bookings
+        <div class="flex gap-3">
+            <a href="{{ route('staff.trek-bookings.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
+                <i class="fas fa-mountain-sun mr-2"></i> Manage Treks
             </a>
         </div>
     </div>
 
-    <!-- 2️⃣ Stats -->
-    <section class="stat-grid">
-        <x-dashboard.stat-card 
-            label="Today's Trek Bookings"
-            value="{{ number_format($stats['today_trek_bookings']) }}"
-            icon="fa-mountain-sun"
-        />
-        
-        <x-dashboard.stat-card 
-            label="Pending Bookings"
-            value="{{ number_format($stats['pending_trek_bookings']) }}"
-            icon="fa-clock"
-        />
-        
-        <x-dashboard.stat-card 
-            label="Cancellation Requests"
-            value="{{ number_format($stats['cancellation_requests']) }}"
-            icon="fa-triangle-exclamation"
-        />
-    </section>
-
-    <!-- 3️⃣ Main Analytics -->
-    <div class="dashboard-grid">
-        <div class="card">
-            <div class="card__header" style="margin-bottom: 1.5rem;">
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+        @foreach([
+            ['label' => "Today's Trek Bookings", 'value' => number_format($stats['today_trek_bookings'] ?? 0), 'icon' => 'fa-mountain-sun', 'color' => 'bg-emerald-50 text-emerald-600'],
+            ['label' => 'Pending Bookings', 'value' => number_format($stats['pending_trek_bookings'] ?? 0), 'icon' => 'fa-clock', 'color' => 'bg-amber-50 text-amber-600'],
+            ['label' => 'Cancellation Alerts', 'value' => number_format($stats['cancellation_requests'] ?? 0), 'icon' => 'fa-triangle-exclamation', 'color' => 'bg-red-50 text-red-600']
+        ] as $stat)
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex items-center gap-5">
+                <div class="w-14 h-14 rounded-2xl {{ $stat['color'] }} flex items-center justify-center text-xl shrink-0">
+                    <i class="fas {{ $stat['icon'] }}"></i>
+                </div>
                 <div>
-                    <h3 class="card__title text-navy">Booking Activity</h3>
-                    <p class="text-muted mt-1">Trek bookings created over the last 7 days.</p>
+                    <strong class="block text-2xl font-black text-slate-900 tracking-tight">{{ $stat['value'] }}</strong>
+                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ $stat['label'] }}</span>
                 </div>
             </div>
-            <div class="chart-container" style="height: 300px;">
+        @endforeach
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+        <!-- Booking Activity Chart -->
+        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+            <div>
+                <h3 class="text-lg font-black text-slate-900 tracking-tight">Booking Activity</h3>
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mt-1 mb-8">Daily Volume (Last 7 Days)</p>
+            </div>
+            <div class="h-[300px]">
                 <canvas id="activityChart"></canvas>
             </div>
         </div>
 
-        <div class="card" style="padding: 1.25rem;">
-            <div class="card__header" style="margin-bottom: 1rem;">
-                <div>
-                    <h3 class="card__title text-navy">Recent Trek Bookings</h3>
-                    <p class="text-muted mt-1">Latest requests from customers.</p>
-                </div>
-                <a href="{{ route('staff.trek-bookings.index') }}" class="btn btn-secondary">View all</a>
+        <!-- Recent Table -->
+        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm flex flex-col overflow-hidden">
+            <div class="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/20">
+                <h3 class="text-sm font-black text-slate-900 uppercase tracking-widest">Recent Orders</h3>
             </div>
-            <div class="admin-table-wrap">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Ref#</th>
-                            <th>Trek</th>
-                            <th>Customer</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($recentTrekBookings as $booking)
-                            <tr>
-                                <td class="admin-table__ref">{{ $booking->booking_reference }}</td>
-                                <td>
-                                    <strong>{{ $booking->departure?->trek?->title ?? 'Unknown Trek' }}</strong>
-                                    <small>{{ optional($booking->departure?->start_date)->format('M d, Y') }} departure</small>
-                                </td>
-                                <td>
-                                    <strong>{{ $booking->user?->name ?? 'Unknown customer' }}</strong>
-                                    <small>{{ $booking->user?->email }}</small>
-                                </td>
-                                <td>
-                                    <span class="admin-badge {{ $booking->status === 'confirmed' ? 'is-success' : ($booking->status === 'pending' ? 'is-warning' : 'is-muted') }}">{{ ucfirst(str_replace('_', ' ', $booking->status)) }}</span>
+            
+            <div class="flex-grow overflow-x-auto">
+                <table class="w-full text-left">
+                    <tbody class="divide-y divide-slate-50">
+                        @forelse ($recentTrekBookings ?? [] as $booking)
+                            <tr class="group hover:bg-slate-50/50 transition-colors">
+                                <td class="px-8 py-5">
+                                    <div class="flex items-center gap-3 mb-1">
+                                         <span class="text-[9px] font-black text-slate-400 uppercase tracking-tighter">#{{ $booking->booking_reference }}</span>
+                                         @php
+                                            $statusClass = $booking->status === 'confirmed' ? 'bg-emerald-500' : ($booking->status === 'pending' ? 'bg-amber-500' : 'bg-slate-200');
+                                         @endphp
+                                         <span class="w-1.5 h-1.5 rounded-full {{ $statusClass }}"></span>
+                                    </div>
+                                    <div class="text-sm font-black text-slate-900 group-hover:text-emerald-600 transition-colors line-clamp-1">
+                                        {{ $booking->departure?->trek?->title ?? 'Trek' }}
+                                    </div>
+                                    <div class="text-[10px] font-bold text-slate-400 truncate uppercase mt-0.5">
+                                        {{ $booking->user?->name }}
+                                    </div>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="admin-table__empty">No trek bookings found.</td>
+                                <td class="px-8 py-12 text-center text-xs font-bold text-slate-400 italic">No activity yet.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
+            </div>
+
+            <div class="p-6 bg-slate-50/50 border-t border-slate-50">
+                <a href="{{ route('staff.trek-bookings.index') }}" class="inline-flex justify-center items-center w-full py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-black rounded-xl hover:bg-slate-900 hover:text-white transition-all uppercase tracking-widest shadow-sm">
+                    All Bookings &rarr;
+                </a>
             </div>
         </div>
     </div>
@@ -96,7 +92,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const ctxActivity = document.getElementById('activityChart').getContext('2d');
-            const dataSet = {!! json_encode($charts['activity']) !!};
+            const dataSet = {!! json_encode($charts['activity'] ?? []) !!};
 
             new Chart(ctxActivity, {
                 type: 'line',
@@ -107,12 +103,14 @@
                         data: dataSet.map(d => d.count),
                         borderColor: '#0f172a',
                         backgroundColor: 'rgba(15, 23, 42, 0.03)',
-                        borderWidth: 2,
+                        borderWidth: 3,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 4,
                         pointBackgroundColor: '#fff',
-                        pointBorderWidth: 2
+                        pointBorderWidth: 3,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#0f172a'
                     }]
                 },
                 options: {
@@ -122,12 +120,16 @@
                     scales: {
                         y: { 
                             beginAtZero: true, 
-                            grid: { color: '#f1f5f9' },
-                            ticks: { color: '#94a3b8', font: { size: 10 } } 
+                            grid: { color: 'rgba(0,0,0,0.03)' },
+                            ticks: { 
+                                color: '#94a3b8', 
+                                font: { weight: 'bold', size: 10 },
+                                precision: 0
+                            } 
                         },
                         x: { 
                             grid: { display: false }, 
-                            ticks: { color: '#94a3b8', font: { size: 10 } } 
+                            ticks: { color: '#94a3b8', font: { weight: 'bold', size: 10 } } 
                         }
                     }
                 }

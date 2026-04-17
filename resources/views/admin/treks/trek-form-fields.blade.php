@@ -1,218 +1,114 @@
 @php
-    $itineraryRows = old('itinerary');
-
-    if ($itineraryRows === null) {
-        $itineraryRows = $trek->itineraries->map(fn ($day) => [
-            'title' => $day->title,
-            'description' => $day->description,
-        ])->values()->all();
-    }
-
-    if (empty($itineraryRows)) {
-        $itineraryRows = [['title' => '', 'description' => '']];
-    }
-
     $imagePreview = old('existing_image', $trek->image);
     $galleryImages = $trek->relationLoaded('gallery') ? $trek->gallery : collect();
 @endphp
 
 @if ($errors->any())
-    <div class="admin-flash error">
-        Please fix the highlighted fields and try again.
+    <div class="mb-8 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
+        <p class="text-sm font-black text-red-800 uppercase tracking-widest">Action Required</p>
+        <p class="text-xs font-semibold text-red-600 mt-1">Please fix the highlighted fields and try again.</p>
     </div>
 @endif
 
-<div class="admin-form-stack">
+<div class="space-y-12" x-data="{
+    itinerary: {{ json_encode(old('itinerary', $trek->itineraries->map(fn($day) => ['title' => $day->title, 'description' => $day->description])->values()->all()) ?: [['title' => '', 'description' => '']]) }},
+    addDay() {
+        this.itinerary.push({ title: '', description: '' });
+    },
+    removeDay(index) {
+        if (this.itinerary.length > 1) {
+            this.itinerary.splice(index, 1);
+        } else {
+            this.itinerary[0] = { title: '', description: '' };
+        }
+    }
+}">
+    <!-- Basic Info Section -->
     <x-dashboard.basic-information-section :trek="$trek" :edit="isset($edit) ? $edit : false" :errors="$errors ?? null" />
 
-    <section class="admin-panel">
-        <div class="admin-panel__header">
+    <!-- Media Section -->
+    <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="p-8 md:p-10 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h3>Trek Media</h3>
-                <p>Upload all photos here. Select one to be your primary "Hero" image.</p>
+                <h3 class="text-xl font-black text-slate-900 tracking-tight">Trek Media</h3>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Upload primary hero and gallery photos</p>
             </div>
-        </div>
-        <div class="admin-form-grid">
-            <label class="admin-upload-card">
-                <input type="file" name="gallery_images[]" accept="image/png,image/jpeg,image/jpg,image/webp" multiple hidden data-gallery-input>
-                <span class="admin-secondary-button">Choose Photos</span>
-                <small>Upload multiple JPG, PNG, or WEBP files. Max 4MB each.</small>
+            <label class="cursor-pointer">
+                <input type="file" name="gallery_images[]" accept="image/*" multiple hidden>
+                <span class="inline-flex items-center px-6 py-3 bg-slate-100 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-900 hover:text-white transition-all">
+                    Choose Photos
+                </span>
             </label>
-
-            <!-- Show existing combined images -->
+        </div>
+        <div class="p-8 md:p-10">
             @if ($trek->images->isNotEmpty())
-                <div class="media-gallery-grid">
+                <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
                     @foreach ($trek->images as $image)
                         <x-dashboard.media-card :image="$image" :isPrimary="$image->sort_order === 0" />
                     @endforeach
                 </div>
+            @else
+                <div class="py-12 text-center border-2 border-dashed border-slate-100 rounded-3xl mb-8">
+                    <p class="text-xs font-bold text-slate-400 italic">No media uploaded yet.</p>
+                </div>
             @endif
-
-            <div class="admin-gallery-grid admin-gallery-grid--pending" data-gallery-preview></div>
-        </div>
-        @error('gallery_images') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
-        @error('gallery_images.*') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
-        @error('primary_image') <small class="admin-error admin-error--block">{{ $message }}</small> @enderror
-    </section>
-
-    <section class="admin-panel">
-        <div class="admin-panel__header">
-            <div>
-                <h3>Description *</h3>
-                <p>Use this as the main trek overview for customers and staff</p>
-            </div>
-        </div>
-        <div class="admin-form-grid">
-            <label class="admin-field admin-field--full">
-                <textarea name="description" rows="8" class="admin-input admin-textarea" required>{{ old('description', $trek->description) }}</textarea>
-                @error('description') <small class="admin-error">{{ $message }}</small> @enderror
-            </label>
+            
+            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest leading-relaxed">
+                <i class="fas fa-info-circle mr-1 text-blue-500"></i> Max 4MB per file. High-resolution JPG or WEBP recommended.
+            </p>
         </div>
     </section>
 
-    <section class="admin-panel">
-        <div class="admin-panel__header">
+    <!-- Description Section -->
+    <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden text-black">
+        <div class="p-8 md:p-10 border-b border-slate-50">
+            <h3 class="text-xl font-black text-slate-900 tracking-tight">Full Description *</h3>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Main overview for customers and staff</p>
+        </div>
+        <div class="p-8 md:p-10">
+            <textarea name="description" rows="10" class="w-full bg-slate-50 border-transparent rounded-3xl focus:ring-slate-900 focus:border-slate-900 text-sm font-medium p-6" required>{{ old('description', $trek->description) }}</textarea>
+            @error('description') <p class="mt-2 text-[10px] font-black text-red-600 uppercase tracking-widest">{{ $message }}</p> @enderror
+        </div>
+    </section>
+
+    <!-- Itinerary Section -->
+    <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+        <div class="p-8 md:p-10 border-b border-slate-50 flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
-                <h3>Day-by-Day Itinerary</h3>
-                <p>Add as many days as you need. Empty rows are ignored on save.</p>
+                <h3 class="text-xl font-black text-slate-900 tracking-tight">Day-by-Day Itinerary</h3>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Add as many days as needed for the trek</p>
             </div>
-            <button type="button" class="admin-secondary-button" data-add-itinerary>
-                <i class="fas fa-plus"></i>
-                <span>Add Day</span>
+            <button type="button" @click="addDay" class="inline-flex items-center px-6 py-3 bg-emerald-50 text-emerald-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
+                <i class="fas fa-plus mr-2"></i> Add Day
             </button>
         </div>
-        <div class="admin-itinerary-stack" data-itinerary-list>
-            @foreach ($itineraryRows as $index => $day)
-                <div class="admin-itinerary-card" data-itinerary-item>
-                    <div class="admin-itinerary-card__header">
-                        <strong>Day <span data-day-number>{{ $index + 1 }}</span></strong>
-                        <button type="button" class="admin-link-button" data-remove-itinerary>Remove</button>
+        
+        <div class="p-8 md:p-10 space-y-6">
+            <template x-for="(day, index) in itinerary" :key="index">
+                <div class="p-8 bg-slate-50/50 rounded-3xl border border-slate-100 group relative">
+                    <div class="flex items-center justify-between mb-6">
+                        <span class="text-xs font-black text-slate-900 uppercase tracking-widest">
+                            Day <span x-text="index + 1"></span>
+                        </span>
+                        <button type="button" @click="removeDay(index)" class="text-[10px] font-black text-red-400 hover:text-red-700 uppercase tracking-widest transition-colors">
+                            Remove
+                        </button>
                     </div>
-                    <div class="admin-form-grid">
-                        <label class="admin-field">
-                            <span>Title</span>
-                            <input type="text" name="itinerary[{{ $index }}][title]" value="{{ $day['title'] ?? '' }}" class="admin-input" />
-                            @error("itinerary.$index.title") <small class="admin-error">{{ $message }}</small> @enderror
-                        </label>
-                        <label class="admin-field admin-field--full">
-                            <span>Description</span>
-                            <textarea name="itinerary[{{ $index }}][description]" rows="4" class="admin-input admin-textarea">{{ $day['description'] ?? '' }}</textarea>
-                            @error("itinerary.$index.description") <small class="admin-error">{{ $message }}</small> @enderror
-                        </label>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <x-input-label value="Title" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                            <x-text-input type="text" ::name="'itinerary['+index+'][title]'" x-model="day.title" placeholder="e.g. Flight to Lukla & Trek to Phakding" />
+                        </div>
+                        <div>
+                            <x-input-label value="Description" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                            <textarea ::name="'itinerary['+index+'][description]'" x-model="day.description" rows="4" class="w-full bg-white border-slate-200 rounded-2xl focus:ring-slate-900 focus:border-slate-900 text-sm font-medium p-4" placeholder="Describe the activities, elevation gain, and sights for this day..."></textarea>
+                        </div>
                     </div>
                 </div>
-            @endforeach
+            </template>
         </div>
     </section>
 
-    <!-- No form actions here; sticky action bar is used in parent -->
+    <!-- No form-actions here; they are in the parent files (create/edit) -->
 </div>
-
-<template id="itinerary-template">
-    <div class="admin-itinerary-card" data-itinerary-item>
-        <div class="admin-itinerary-card__header">
-            <strong>Day <span data-day-number></span></strong>
-            <button type="button" class="admin-link-button" data-remove-itinerary>Remove</button>
-        </div>
-        <div class="admin-form-grid">
-            <label class="admin-field">
-                <span>Title</span>
-                <input type="text" class="admin-input" data-itinerary-field="title" />
-            </label>
-            <label class="admin-field admin-field--full">
-                <span>Description</span>
-                <textarea rows="4" class="admin-input admin-textarea" data-itinerary-field="description"></textarea>
-            </label>
-        </div>
-    </div>
-</template>
-
-<script>
-    (() => {
-        const slugSource = document.querySelector('[data-slug-source]');
-        const slugTarget = document.querySelector('[data-slug-target]');
-
-        const galleryInput = document.querySelector('[data-gallery-input]');
-        const galleryPreview = document.querySelector('[data-gallery-preview]');
-        const list = document.querySelector('[data-itinerary-list]');
-        const addButton = document.querySelector('[data-add-itinerary]');
-        const template = document.getElementById('itinerary-template');
-
-        const slugify = (value) => value
-            .toLowerCase()
-            .trim()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/^-+|-+$/g, '');
-
-        const refreshDayNumbers = () => {
-            [...list.querySelectorAll('[data-itinerary-item]')].forEach((item, index) => {
-                item.querySelector('[data-day-number]').textContent = index + 1;
-                item.querySelector('[data-itinerary-field="title"]')?.setAttribute('name', `itinerary[${index}][title]`);
-                item.querySelector('[data-itinerary-field="description"]')?.setAttribute('name', `itinerary[${index}][description]`);
-                item.querySelector('input[name*="[title]"]')?.setAttribute('name', `itinerary[${index}][title]`);
-                item.querySelector('textarea[name*="[description]"]')?.setAttribute('name', `itinerary[${index}][description]`);
-            });
-        };
-
-        slugSource?.addEventListener('input', () => {
-            slugTarget.value = slugify(slugSource.value);
-        });
-
-
-
-        galleryInput?.addEventListener('change', () => {
-            if (!galleryPreview) {
-                return;
-            }
-
-            galleryPreview.innerHTML = '';
-
-            [...(galleryInput.files || [])].forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const card = document.createElement('div');
-                    card.className = 'admin-gallery-card admin-gallery-card--pending';
-                    card.innerHTML = `
-                        <img src="${event.target.result}" alt="New preview ${index + 1}">
-                        <div class="admin-gallery-card__footer" style="flex-direction: column; gap: 4px; align-items: flex-start;">
-                            <div>
-                                <input type="radio" name="primary_image" value="new_${index}">
-                                <span>${file.name}</span>
-                            </div>
-                            <small class="admin-input--muted">(Primary?)</small>
-                        </div>
-                    `;
-                    galleryPreview.appendChild(card);
-                };
-                reader.readAsDataURL(file);
-            });
-        });
-
-        addButton?.addEventListener('click', () => {
-            const clone = template.content.firstElementChild.cloneNode(true);
-            clone.querySelector('[data-itinerary-field="title"]').setAttribute('name', '');
-            clone.querySelector('[data-itinerary-field="description"]').setAttribute('name', '');
-            list.appendChild(clone);
-            refreshDayNumbers();
-        });
-
-        list?.addEventListener('click', (event) => {
-            const button = event.target.closest('[data-remove-itinerary]');
-            if (!button) {
-                return;
-            }
-
-            const items = list.querySelectorAll('[data-itinerary-item]');
-            if (items.length === 1) {
-                items[0].querySelector('input').value = '';
-                items[0].querySelector('textarea').value = '';
-                return;
-            }
-
-            button.closest('[data-itinerary-item]').remove();
-            refreshDayNumbers();
-        });
-
-        refreshDayNumbers();
-    })();
-</script>

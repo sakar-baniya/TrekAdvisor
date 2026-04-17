@@ -1,340 +1,187 @@
 <x-app-layout>
-    <section class="catalog-hero">
-        <div class="catalog-hero-overlay"></div>
-        <div class="container">
-            <p class="market-kicker">Trek Collection</p>
-            <h1>Discover Amazing Treks</h1>
-            <p>Explore the Himalayas with curated routes, flexible departures, and customer reviews.</p>
+    <!-- Hero Section -->
+    <section class="relative bg-slate-900 overflow-hidden py-16 md:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="absolute inset-0 bg-[url('{{ asset('images/ui/hero.webp') }}')] bg-cover bg-center opacity-30"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-slate-900"></div>
+
+        <div class="relative z-10 max-w-7xl mx-auto text-center">
+            <p class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Trek Collection</p>
+            <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">Discover Amazing Treks</h1>
+            <p class="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">Explore the Himalayas with curated routes, flexible departures, and customer reviews.</p>
         </div>
     </section>
 
-    <div class="container catalog-main">
-        <div class="catalog-filter-bar">
-            <div class="horizontal-filter-form">
-                <div class="filter-row">
-                    <div class="filter-group filter-search">
-                        <i class="fas fa-search"></i>
-                        <input 
-                            type="text" 
-                            id="filter-search" 
-                            value="{{ request('search') }}" 
-                            placeholder="Search treks..." 
-                            class="minimal-input"
-                        >
+    <!-- Main Catalog Area -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12" x-data="{
+        treks: {{ $treks->getCollection()->toJson() }},
+        loading: false,
+        search: '{{ request('search') }}',
+        difficulty: '{{ request('difficulty') }}',
+        minPrice: '{{ request('min_price') }}',
+        maxPrice: '{{ request('max_price') }}',
+        sort: '{{ request('sort', 'popularity') }}',
+        meta: {
+            total: {{ $treks->total() }},
+            current_page: {{ $treks->currentPage() }}
+        },
+        hasFilters() {
+            return this.search || this.difficulty || this.minPrice || this.maxPrice || this.sort !== 'popularity';
+        },
+        async applyFilters() {
+            this.loading = true;
+            const params = new URLSearchParams({
+                search: this.search,
+                difficulty: this.difficulty,
+                min_price: this.minPrice,
+                max_price: this.maxPrice,
+                sort: this.sort,
+                page: 1
+            });
+            
+            try {
+                const response = await fetch(`/api/v1/treks?${params.toString()}`);
+                const data = await response.json();
+                this.treks = data.data;
+                this.meta = data.meta;
+                window.history.pushState({}, '', `/treks?${params.toString()}`);
+            } catch (e) {
+                console.error('Fetch failed', e);
+            } finally {
+                this.loading = false;
+            }
+        },
+        clearFilters() {
+            this.search = '';
+            this.difficulty = '';
+            this.minPrice = '';
+            this.maxPrice = '';
+            this.sort = 'popularity';
+            this.applyFilters();
+        },
+        formatPrice(price) {
+            return new Number(price).toLocaleString();
+        },
+        getBadgeClass(difficulty) {
+            const d = (difficulty || 'moderate').toLowerCase();
+            if (d === 'easy') return 'bg-emerald-100 text-emerald-800';
+            if (d === 'difficult') return 'bg-orange-100 text-orange-800';
+            if (d === 'extreme') return 'bg-red-100 text-red-800';
+            return 'bg-blue-100 text-blue-800';
+        }
+    }">
+        <!-- Filter Toolbar -->
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Search</label>
+                    <div class="relative">
+                        <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input type="text" x-model="search" @keyup.enter="applyFilters()" class="w-full bg-slate-50 border-slate-200 rounded-xl pl-10 pr-4 py-2 text-sm focus:ring-slate-900 focus:border-slate-900 transition-all font-medium" placeholder="Trek name...">
                     </div>
-                    
-                    <div class="filter-group">
-                        <select id="filter-difficulty" class="minimal-select">
-                            <option value="">All Difficulty</option>
-                            <option value="easy" {{ strtolower(request('difficulty')) == 'easy' ? 'selected' : '' }}>Easy</option>
-                            <option value="moderate" {{ strtolower(request('difficulty')) == 'moderate' ? 'selected' : '' }}>Moderate</option>
-                            <option value="difficult" {{ strtolower(request('difficulty')) == 'difficult' ? 'selected' : '' }}>Difficult</option>
-                            <option value="extreme" {{ strtolower(request('difficulty')) == 'extreme' ? 'selected' : '' }}>Extreme</option>
-                        </select>
-                    </div>
+                </div>
 
-                    <div class="filter-group filter-price">
-                        <span class="price-label">Price:</span>
-                        <input 
-                            type="number" 
-                            id="filter-min-price" 
-                            value="{{ request('min_price') }}" 
-                            min="0" 
-                            class="minimal-input" 
-                            placeholder="Min"
-                        >
-                        <span class="price-dash">—</span>
-                        <input 
-                            type="number" 
-                            id="filter-max-price" 
-                            value="{{ request('max_price') }}" 
-                            min="0" 
-                            class="minimal-input" 
-                            placeholder="Max"
-                        >
-                    </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Difficulty</label>
+                    <select x-model="difficulty" @change="applyFilters()" class="w-full bg-slate-50 border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-slate-900 focus:border-slate-900 transition-all font-medium">
+                        <option value="">All Difficulty</option>
+                        <option value="easy">Easy</option>
+                        <option value="moderate">Moderate</option>
+                        <option value="difficult">Difficult</option>
+                        <option value="extreme">Extreme</option>
+                    </select>
+                </div>
 
-                    <div class="filter-actions-inline">
-                        <button type="button" id="btn-apply-filters" class="btn-filter-apply">Apply</button>
-                        <button type="button" id="btn-clear-filters" class="close-btn" aria-label="Clear filters" style="display: {{ request()->anyFilled(['search', 'difficulty', 'min_price', 'max_price']) ? 'flex' : 'none' }}">×</button>
+                <div class="lg:col-span-1">
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Price Range</label>
+                    <div class="flex items-center gap-2">
+                        <input type="number" x-model="minPrice" placeholder="Min" class="w-full bg-slate-50 border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-slate-900 focus:border-slate-900 transition-all font-medium">
+                        <span class="text-slate-300">-</span>
+                        <input type="number" x-model="maxPrice" placeholder="Max" class="w-full bg-slate-50 border-slate-200 rounded-xl px-3 py-2 text-sm focus:ring-slate-900 focus:border-slate-900 transition-all font-medium">
                     </div>
+                </div>
+
+                <div class="flex gap-2">
+                    <button @click="applyFilters()" :disabled="loading" class="flex-1 bg-slate-900 text-white font-bold py-2 rounded-xl hover:bg-slate-800 transition-colors disabled:opacity-50">
+                        <span x-show="!loading">Apply</span>
+                        <span x-show="loading"><i class="fas fa-spinner animate-spin"></i></span>
+                    </button>
+                    <button x-show="hasFilters()" @click="clearFilters()" class="w-10 h-10 flex items-center justify-center bg-slate-100 text-slate-500 rounded-xl hover:bg-slate-200 transition-colors" title="Clear Filters">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Sort By</label>
+                    <select x-model="sort" @change="applyFilters()" class="w-full bg-white border-slate-200 rounded-xl px-4 py-2 text-sm focus:ring-slate-900 focus:border-slate-900 transition-all font-bold">
+                        <option value="popularity">Most Popular</option>
+                        <option value="price_low">Price: Low to High</option>
+                        <option value="price_high">Price: High to Low</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="duration">Duration</option>
+                    </select>
                 </div>
             </div>
         </div>
 
-        <section class="catalog-content-full">
-            <div class="catalog-results-header">
-                <div class="results-left">
-                    <span class="results-count"><strong id="results-count">{{ $treks->total() }}</strong> Treks found</span>
-                </div>
-                <div class="results-right">
-                    <div class="sort-dropdown">
-                        <label for="sort-select">Sort by:</label>
-                        <select id="sort-select" class="minimal-select sort-select">
-                            <option value="popularity" {{ request('sort', 'popularity') == 'popularity' ? 'selected' : '' }}>Most Popular</option>
-                            <option value="price_low" {{ request('sort') == 'price_low' ? 'selected' : '' }}>Price: Low to High</option>
-                            <option value="price_high" {{ request('sort') == 'price_high' ? 'selected' : '' }}>Price: High to Low</option>
-                            <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Highest Rated</option>
-                            <option value="duration" {{ request('sort') == 'duration' ? 'selected' : '' }}>Duration</option>
-                        </select>
+        <!-- Results Info -->
+        <div class="flex items-center justify-between mb-8">
+            <p class="text-slate-500 font-medium">
+                Showing <span class="text-slate-900 font-bold" x-text="meta.total"></span> treks
+            </p>
+        </div>
+
+        <!-- Trek Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" :style="loading ? 'opacity: 0.5' : ''">
+            <template x-for="trek in treks" :key="trek.id">
+                <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                    <div class="h-60 overflow-hidden relative bg-slate-100">
+                        <img :src="trek.image || '/images/ui/placeholder-trek.webp'" :alt="trek.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute top-4 right-4 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm" :class="getBadgeClass(trek.difficulty)" x-text="trek.difficulty || 'Moderate'"></div>
                     </div>
-                </div>
-            </div>
-
-            <div id="trek-grid-container" class="market-card-grid market-card-grid--three">
-                @foreach($treks as $trek)
-                    <article class="market-card market-card--trek">
-                        <div class="market-card__media" @if($trek->image) style="background-image: linear-gradient(rgba(6, 78, 89, 0.25), rgba(15, 23, 42, 0.5)), url('{{ $trek->image }}');" @endif>
-                    <span class="difficulty-badge badge--{{ strtolower($trek->difficulty ?? 'moderate') }}">{{ $trek->difficulty ?? 'Moderate' }}</span>
+                    <div class="p-6 flex flex-col flex-grow">
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-2" x-text="trek.title"></h3>
+                        
+                        <div class="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-4">
+                            <span class="flex items-center gap-1.5"><i class="far fa-clock"></i> <span x-text="trek.duration_days || 'Flexible'"></span> Days</span>
+                            <span class="flex items-center gap-1.5 text-amber-500">
+                                <i class="fas fa-star"></i> 
+                                <span x-text="trek.reviews_avg_rating ? parseFloat(trek.reviews_avg_rating).toFixed(1) : 'New'"></span>
+                                <em class="text-slate-400 font-normal italic ml-1" x-text="'(' + (trek.reviews_count || 0) + ' reviews)'"></em>
+                            </span>
                         </div>
-                        <div class="market-card__body">
-                            <h3>{{ $trek->title }}</h3>
-                            <div class="market-card__trip-meta">
-                                <span>{{ $trek->duration_days ?? 'Flexible' }} Days</span>
-                                <span class="market-card__reviews">
-                                    <i class="fas fa-star"></i>
-                                    {{ $trek->reviews_avg_rating ? number_format($trek->reviews_avg_rating, 1) : 'New' }}
-                                    <em>{{ $trek->reviews_count }} Reviews</em>
-                                </span>
-                            </div>
-                            <div class="market-card__footer">
-                                <div class="market-card__price">
-                                    <strong>NPR {{ number_format($trek->base_price, 0) }}</strong>
-                                    <span>per person</span>
+                        
+                        <div class="mt-auto pt-6 border-t border-slate-50 flex items-end justify-between">
+                            <div>
+                                <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Price</span>
+                                <div class="flex items-baseline gap-1">
+                                    <span class="text-2xl font-black text-slate-900 tracking-tight" x-text="'NPR ' + formatPrice(trek.base_price)"></span>
+                                    <span class="text-xs text-slate-500 font-medium">/pp</span>
                                 </div>
-                                <a href="{{ route('treks.show', $trek->slug) }}" class="market-button">View Details</a>
                             </div>
+                            <a :href="'/treks/' + (trek.slug || trek.id)" class="inline-flex justify-center items-center px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm">
+                                Details
+                            </a>
                         </div>
-                    </article>
-                @endforeach
-            </div>
+                    </div>
+                </article>
+            </template>
+        </div>
 
-            <div id="trek-empty" class="empty-note" style="display: {{ $treks->isEmpty() ? 'block' : 'none' }}">
-                No treks matched your filters.
+        <!-- Empty State -->
+        <div x-show="treks.length === 0 && !loading" style="display: none;" class="py-20 text-center bg-white rounded-3xl border border-slate-200 border-dashed">
+            <div class="text-5xl text-slate-200 mb-4">
+                <i class="fas fa-mountain-sun"></i>
             </div>
+            <h3 class="text-xl font-bold text-slate-900 mb-2">No treks found</h3>
+            <p class="text-slate-500 mb-6 font-medium">Adjust your filters or clear them to see more adventures.</p>
+            <button @click="clearFilters()" class="inline-flex items-center justify-center px-6 py-3 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
+                Clear All Filters
+            </button>
+        </div>
 
-            <div id="trek-loading" class="catalog-loading" style="display: none">
-                <div class="loading-spinner"></div>
-                <p>Loading treks...</p>
-            </div>
-
-            <div id="trek-pagination" class="catalog-pagination trek-pagination-wrap">
-                {{ $treks->links('components.pagination') }}
-            </div>
-        </section>
+        <!-- Static Pagination (Fallback or standard) -->
+        <div class="mt-12" x-show="!hasFilters()">
+             {{ $treks->links('components.pagination') }}
+        </div>
     </div>
 </x-app-layout>
-
-@push('styles')
-<style>
-.catalog-loading {
-    text-align: center;
-    padding: 3rem;
-    color: #64748B;
-}
-.loading-spinner {
-    width: 40px;
-    height: 40px;
-    border: 3px solid #E2E8F0;
-    border-top-color: #0F172A;
-    border-radius: 50%;
-    animation: spin 0.8s linear infinite;
-    margin: 0 auto 1rem;
-}
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-.market-card__media {
-    position: relative;
-}
-.market-card-grid {
-    transition: opacity 0.3s ease;
-}
-</style>
-@endpush
-
-<script>
-(function() {
-    const API_URL = '/api/v1/treks';
-    let currentPage = {{ $treks->currentPage() }};
-    
-    const elements = {
-        search: document.getElementById('filter-search'),
-        difficulty: document.getElementById('filter-difficulty'),
-        minPrice: document.getElementById('filter-min-price'),
-        maxPrice: document.getElementById('filter-max-price'),
-        sort: document.getElementById('sort-select'),
-        applyBtn: document.getElementById('btn-apply-filters'),
-        clearBtn: document.getElementById('btn-clear-filters'),
-        container: document.getElementById('trek-grid-container'),
-        empty: document.getElementById('trek-empty'),
-        loading: document.getElementById('trek-loading'),
-        count: document.getElementById('results-count')
-    };
-
-    function hasActiveFilters() {
-        return elements.search.value || elements.difficulty.value || elements.minPrice.value || elements.maxPrice.value;
-    }
-
-    function updateClearButton() {
-        if (elements.clearBtn) {
-            elements.clearBtn.style.display = hasActiveFilters() ? 'flex' : 'none';
-        }
-    }
-
-    function buildQuery(params) {
-        const query = new URLSearchParams();
-        if (params.search) query.set('search', params.search);
-        if (params.difficulty) query.set('difficulty', params.difficulty);
-        if (params.minPrice) query.set('min_price', params.minPrice);
-        if (params.maxPrice) query.set('max_price', params.maxPrice);
-        if (params.sort) query.set('sort', params.sort);
-        query.set('page', params.page || 1);
-        return query.toString();
-    }
-
-    function renderTrek(trek) {
-        const rating = trek.reviews_avg_rating ? parseFloat(trek.reviews_avg_rating).toFixed(1) : 'New';
-        const reviews = trek.reviews_count || 0;
-        const duration = trek.duration_days || 'Flexible';
-        const badgeClass = (trek.difficulty || 'moderate').toLowerCase();
-        
-        // Use the storage-ready image attribute if available, or fall back to relations
-        let imageUrl = trek.image || '';
-        if (!imageUrl && trek.images && trek.images.length > 0) {
-            const primary = trek.images.find(img => img.is_primary) || trek.images[0];
-            const path = primary.path;
-            imageUrl = (path.startsWith('http') || path.startsWith('/storage/')) ? path : `/storage/${path}`;
-        }
-        
-        const imageStyle = imageUrl ? `background-image: linear-gradient(rgba(6, 78, 89, 0.25), rgba(15, 23, 42, 0.5)), url('${imageUrl}');` : '';
-        
-        return `<article class="market-card market-card--trek">
-            <div class="market-card__media" style="${imageStyle}">
-                <span class="difficulty-badge badge--${badgeClass}">${trek.difficulty || 'Moderate'}</span>
-            </div>
-            <div class="market-card__body">
-                <h3>${trek.title}</h3>
-                <div class="market-card__trip-meta">
-                    <span>${duration} Days</span>
-                    <span class="market-card__reviews">
-                        <i class="fas fa-star"></i>
-                        ${rating}
-                        <em>${reviews} Reviews</em>
-                    </span>
-                </div>
-                <div class="market-card__footer">
-                    <div class="market-card__price">
-                        <strong>NPR ${Number(trek.base_price).toLocaleString()}</strong>
-                        <span>per person</span>
-                    </div>
-                    <a href="/treks/${trek.slug}" class="market-button">View Details</a>
-                </div>
-            </div>
-        </article>`;
-    }
-
-    async function fetchTreks() {
-        if (!elements.applyBtn || !elements.container) return;
-        
-        elements.applyBtn.disabled = true;
-        elements.applyBtn.textContent = 'Loading...';
-        elements.container.style.opacity = '0.5';
-        
-        const filters = {
-            search: elements.search?.value || '',
-            difficulty: elements.difficulty?.value || '',
-            minPrice: elements.minPrice?.value || '',
-            maxPrice: elements.maxPrice?.value || '',
-            sort: elements.sort?.value || 'popularity',
-            page: currentPage
-        };
-        
-        const url = `${API_URL}?${buildQuery(filters)}`;
-        
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            
-            if (data.data && data.data.length > 0) {
-                elements.container.innerHTML = data.data.map(renderTrek).join('');
-                elements.container.style.display = 'grid';
-                if (elements.empty) elements.empty.style.display = 'none';
-            } else {
-                elements.container.style.display = 'none';
-                if (elements.empty) elements.empty.style.display = 'block';
-            }
-            
-            if (elements.count && data.meta) {
-                elements.count.textContent = data.meta.total;
-            }
-        } catch (error) {
-            console.error('Error fetching treks:', error);
-        } finally {
-            elements.applyBtn.disabled = false;
-            elements.applyBtn.textContent = 'Apply';
-            elements.container.style.opacity = '1';
-        }
-    }
-
-    function applyFilters() {
-        currentPage = 1;
-        
-        // Update URL to reflect current filters so browser back/forward and standard pagination work
-        const filters = {
-            search: elements.search?.value || '',
-            difficulty: elements.difficulty?.value || '',
-            minPrice: elements.minPrice?.value || '',
-            maxPrice: elements.maxPrice?.value || '',
-            sort: elements.sort?.value || 'popularity'
-        };
-        const query = buildQuery(filters);
-        window.history.pushState(filters, '', `/treks?${query}`);
-        
-        fetchTreks();
-    }
-
-    function clearFilters() {
-        if (elements.search) elements.search.value = '';
-        if (elements.difficulty) elements.difficulty.value = '';
-        if (elements.minPrice) elements.minPrice.value = '';
-        if (elements.maxPrice) elements.maxPrice.value = '';
-        if (elements.sort) elements.sort.value = 'popularity';
-        currentPage = 1;
-        updateClearButton();
-        
-        window.history.pushState({}, '', '/treks');
-        
-        fetchTreks();
-    }
-
-    if (elements.applyBtn) {
-        elements.applyBtn.addEventListener('click', applyFilters);
-    }
-    
-    if (elements.clearBtn) {
-        elements.clearBtn.addEventListener('click', clearFilters);
-    }
-    
-    if (elements.difficulty) {
-        elements.difficulty.addEventListener('change', () => { currentPage = 1; fetchTreks(); });
-    }
-    
-    if (elements.sort) {
-        elements.sort.addEventListener('change', () => { currentPage = 1; fetchTreks(); });
-    }
-    
-    [elements.search, elements.minPrice, elements.maxPrice].forEach(el => {
-        if (el) {
-            el.addEventListener('input', () => {
-                updateClearButton();
-            });
-            el.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    applyFilters();
-                }
-            });
-        }
-    });
-})();
-</script>

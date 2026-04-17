@@ -1,127 +1,132 @@
 <x-dashboard-layout>
-    <!-- 1️⃣ Header Area -->
-    <!-- Reduced header for dashboard: no hero/banner, just compact actions -->
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.25rem;gap:1.5rem;">
-        <h2 class="fw-bold text-navy mb-0" style="font-size:1.35rem;">Dashboard Overview</h2>
-        <div style="display:flex;gap:0.75rem;">
-            <button class="u-btn u-btn--secondary">
-                <i class="fas fa-file-export"></i> Export Report
+    <!-- Page Header -->
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
+        <div>
+            <h1 class="text-3xl font-black text-slate-900 tracking-tight">Admin Dashboard</h1>
+            <p class="text-slate-500 font-medium">Real-time overview of the TrekAdvisor marketplace.</p>
+        </div>
+        <div class="flex gap-3">
+            <button class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-black uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
+                <i class="fas fa-file-export mr-2"></i> Export
             </button>
-            <a href="{{ route('admin.treks.create') }}" class="u-btn u-btn--primary">
-                <i class="fas fa-plus"></i> New Trek
+            <a href="{{ route('admin.treks.create') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-black uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
+                <i class="fas fa-plus mr-2"></i> New Trek
             </a>
         </div>
     </div>
 
-    <!-- 2️⃣ Stats Grid -->
-    <section class="stat-grid">
-        <x-dashboard.stat-card 
-            label="Monthly Revenue"
-            value="NPR {{ number_format($stats['revenue_this_month'], 0) }}"
-            meta="{{ number_format($stats['bookings_this_month']) }} bookings"
-            icon="fa-wallet"
-            trend="+12%"
-            trendDirection="up"
-        />
-        
-        <x-dashboard.stat-card 
-            label="Total Customers"
-            value="{{ number_format($stats['total_users']) }}"
-            icon="fa-users"
-            trend="+8%"
-            trendDirection="up"
-        />
-        
-        <x-dashboard.stat-card 
-            label="Active Hotels"
-            value="{{ number_format($stats['active_hotels']) }}"
-            meta="{{ number_format($stats['pending_hotels']) }} pending"
-            icon="fa-hotel"
-            trend="+5%"
-            trendDirection="up"
-        />
-
-        <x-dashboard.stat-card 
-            label="Live Treks"
-            value="{{ number_format($stats['active_treks']) }}"
-            icon="fa-mountain-sun"
-            trend="+3%"
-            trendDirection="up"
-        />
-    </section>
-
-    <!-- 3️⃣ Main Analytics -->
-    <div class="dashboard-grid">
-        <!-- Revenue Trend Chart -->
-        <div class="card">
-            <div class="card__header" style="margin-bottom: 1.5rem;">
-                <div>
-                    <h3 class="card__title text-navy">Revenue Trend</h3>
-                    <p class="text-muted mt-1">Growth overview over the last 6 months.</p>
+    <!-- Stats Grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+        @foreach([
+            ['label' => 'Monthly Revenue', 'value' => 'NPR ' . number_format($stats['revenue_this_month'] ?? 0, 0), 'meta' => number_format($stats['bookings_this_month'] ?? 0) . ' bookings', 'icon' => 'fa-wallet', 'color' => 'bg-emerald-50 text-emerald-600', 'trend' => '+12%'],
+            ['label' => 'Total Users', 'value' => number_format($stats['total_users'] ?? 0), 'meta' => 'Registered customers', 'icon' => 'fa-users', 'color' => 'bg-blue-50 text-blue-600', 'trend' => '+8%'],
+            ['label' => 'Active Hotels', 'value' => number_format($stats['active_hotels'] ?? 0), 'meta' => ($stats['pending_hotels'] ?? 0) . ' pending review', 'icon' => 'fa-hotel', 'color' => 'bg-amber-50 text-amber-600', 'trend' => '+5%'],
+            ['label' => 'Live Treks', 'value' => number_format($stats['active_treks'] ?? 0), 'meta' => 'Marketplace inventory', 'icon' => 'fa-mountain-sun', 'color' => 'bg-slate-900 text-white', 'trend' => '+3%']
+        ] as $stat)
+            <div class="bg-white p-6 rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 rounded-xl {{ $stat['color'] }} flex items-center justify-center text-lg">
+                        <i class="fas {{ $stat['icon'] }}"></i>
+                    </div>
+                    <span class="text-[10px] font-black uppercase tracking-widest px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800">
+                        {{ $stat['trend'] }}
+                    </span>
                 </div>
+                <strong class="block text-2xl font-black text-slate-900 tracking-tight">{{ $stat['value'] }}</strong>
+                <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ $stat['label'] }}</span>
+                <p class="text-xs font-semibold text-slate-400 opacity-60">{{ $stat['meta'] }}</p>
             </div>
-            <div class="chart-container" style="height: 300px;">
+        @endforeach
+    </div>
+
+    <!-- Main Analytics Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+        <!-- Revenue Trend Chart -->
+        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h3 class="text-lg font-black text-slate-900 tracking-tight">Revenue Trend</h3>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mt-1">Last 6 Months Growth</p>
+                </div>
+                <select class="bg-slate-50 border-none text-xs font-black uppercase tracking-widest rounded-xl px-4 py-2 text-slate-600">
+                    <option>Year 2024</option>
+                    <option>Year 2023</option>
+                </select>
+            </div>
+            <div class="h-[300px]">
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>
 
         <!-- Booking Status Distribution -->
-        <div class="card">
-            <div class="card__header" style="margin-bottom: 1.5rem;">
-                <h3 class="card__title text-navy">Booking Status</h3>
-            </div>
-            <div class="chart-container" style="height: 180px; position:relative; margin-bottom: 2rem;">
+        <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+            <h3 class="text-lg font-black text-slate-900 tracking-tight mb-8">Booking Status</h3>
+            <div class="h-[180px] relative mb-8">
                 <canvas id="statusChart"></canvas>
             </div>
             
-            <div style="display: flex; flex-direction: column; gap: 0.75rem;">
-                @foreach($charts['status_distribution'] as $status => $count)
-                    <div style="display: flex; align-items: center; justify-content: space-between; font-size: 0.85rem; padding: 0.65rem; background: var(--u-bg); border-radius: 8px;">
-                        <div style="display: flex; align-items: center; gap: 0.65rem;">
-                            <span style="width: 8px; height: 8px; border-radius: 50%; display: inline-block; background: {{ match(strtolower($status)) { 'success', 'confirmed', 'active' => '#10B981', 'pending' => '#F59E0B', 'failed', 'cancelled' => '#EF4444', default => '#94A3B8' } }};"></span>
-                            <span class="text-muted fw-semibold">{{ ucfirst($status) }}</span>
+            <div class="space-y-3 mt-auto">
+                @foreach($charts['status_distribution'] ?? [] as $status => $count)
+                    <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50 border border-transparent hover:border-slate-100 transition-colors">
+                        <div class="flex items-center gap-3">
+                            <span class="w-2.5 h-2.5 rounded-full {{ match(strtolower($status)) { 'success', 'confirmed', 'active' => 'bg-emerald-500', 'pending' => 'bg-amber-500', 'failed', 'cancelled' => 'bg-red-500', default => 'bg-slate-300' } }}"></span>
+                            <span class="text-xs font-bold text-slate-500 uppercase tracking-widest">{{ $status }}</span>
                         </div>
-                        <span class="fw-bold text-navy">{{ $count }}</span>
+                        <span class="text-sm font-black text-slate-900">{{ $count }}</span>
                     </div>
                 @endforeach
             </div>
         </div>
     </div>
 
-    <!-- 4️⃣ Secondary Grid -->
-    <div class="dashboard-grid mt-4" style="grid-template-columns: 1.6fr 1fr;">
+    <!-- Secondary Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Recent Activity Table -->
-        <div class="card card--no-pad">
-            <div class="card__header">
-                <h3 class="card__title">Recent Activity</h3>
-                <a href="#" class="text-muted fw-bold" style="font-size: 0.75rem; text-decoration: none;">View All &rarr;</a>
+        <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden">
+            <div class="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/30">
+                <h3 class="text-lg font-black text-slate-900 tracking-tight">Recent Activity</h3>
+                <a href="#" class="text-[10px] font-black text-slate-400 uppercase tracking-widest hover:text-slate-900 transition-colors">View All &rarr;</a>
             </div>
-            <div class="table-responsive">
-                <table class="u-table">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
                     <thead>
-                        <tr>
-                            <th>Activity / Reference</th>
-                            <th>Amount</th>
-                            <th>Status</th>
+                        <tr class="text-[10px] font-black uppercase tracking-[0.15em] text-slate-400 border-b border-slate-50">
+                            <th class="px-8 py-4">Activity / Reference</th>
+                            <th class="px-8 py-4">Amount</th>
+                            <th class="px-8 py-4">Status</th>
+                            <th class="px-8 py-4"></th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($recentBookings as $booking)
-                            <tr>
-                                <td>
-                                    <div class="fw-bold text-navy">{{ $booking->title }}</div>
-                                    <div class="text-muted small mt-1">#{{ $booking->reference }} &bull; {{ $booking->customer }}</div>
+                    <tbody class="divide-y divide-slate-50">
+                        @foreach($recentBookings ?? [] as $booking)
+                            <tr class="group hover:bg-slate-50/50 transition-colors">
+                                <td class="px-8 py-5">
+                                    <div class="text-sm font-black text-slate-900 mb-1 group-hover:text-emerald-600 transition-colors">{{ $booking->title }}</div>
+                                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                                        <span>#{{ $booking->reference }}</span>
+                                        <span class="w-1 h-1 bg-slate-200 rounded-full"></span>
+                                        <span>{{ $booking->customer }}</span>
+                                    </div>
                                 </td>
-                                <td><span class="fw-bold text-navy">NPR {{ number_format($booking->amount, 0) }}</span></td>
-                                <td>
+                                <td class="px-8 py-5">
+                                    <span class="text-sm font-black text-slate-900 tracking-tight">NPR {{ number_format($booking->amount, 0) }}</span>
+                                </td>
+                                <td class="px-8 py-5">
                                     @php
                                         $statusClass = match(strtolower($booking->status)) {
-                                            'success', 'confirmed', 'active' => 'badge-success',
-                                            'pending' => 'badge-warning',
-                                            default => 'badge-info'
+                                            'success', 'confirmed', 'active' => 'bg-emerald-100 text-emerald-800 border-emerald-200',
+                                            'pending' => 'bg-amber-100 text-amber-800 border-amber-200',
+                                            default => 'bg-slate-100 text-slate-600 border-slate-200'
                                         };
                                     @endphp
-                                    <span class="badge {{ $statusClass }}">{{ $booking->status }}</span>
+                                    <span class="px-3 py-1 rounded-full text-[9px] font-black uppercase tracking-widest border {{ $statusClass }}">
+                                        {{ $booking->status }}
+                                    </span>
+                                </td>
+                                <td class="px-8 py-5 text-right">
+                                    <button class="w-8 h-8 rounded-lg bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all">
+                                        <i class="fas fa-arrow-right text-[10px]"></i>
+                                    </button>
                                 </td>
                             </tr>
                         @endforeach
@@ -130,34 +135,45 @@
             </div>
         </div>
 
-        <!-- Pending Requests & Quick Actions -->
-        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+        <!-- Admin Tools & Alerts -->
+        <div class="space-y-8">
             <!-- Pending Requests Widget -->
-            <div class="card" style="border-left: 4px solid var(--u-warning); padding: 1.25rem;">
-                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1.25rem;">
-                    <h3 class="card__title">Pending Requests</h3>
-                    <span class="badge badge-warning">{{ $stats['pending_hotels'] }}</span>
+            <div class="bg-white rounded-3xl border-l-[6px] border-amber-400 shadow-sm p-8 group">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-lg font-black text-slate-900 tracking-tight">Pending Approval</h3>
+                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-black">{{ $stats['pending_hotels'] ?? 0 }}</span>
                 </div>
-                <div class="ops-item">
-                    <div class="ops-item__icon"><i class="fas fa-hotel"></i></div>
-                    <div class="ops-item__content">
-                        <h4 class="ops-item__title">Hotel Reviews</h4>
-                        <p class="ops-item__desc">Manage {{ $stats['pending_hotels'] }} new partners waiting for approval.</p>
-                        <a href="{{ route('admin.hotels.index', ['status' => 'Pending']) }}" class="btn card-cta mt-3 p-2 d-block text-center" style="font-size: 0.8rem;">Review Queue</a>
+                <div class="flex items-start gap-5">
+                    <div class="w-12 h-12 rounded-2xl bg-amber-50 text-amber-500 flex items-center justify-center text-xl shrink-0 group-hover:bg-amber-400 group-hover:text-white transition-all duration-500">
+                        <i class="fas fa-hotel"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-sm font-black text-slate-900 mb-2 uppercase tracking-tight">Hotel Review Queue</h4>
+                        <p class="text-xs font-semibold text-slate-500 leading-relaxed mb-6">Manage new partners waiting for identity and property approval.</p>
+                        <a href="{{ route('admin.hotels.index', ['status' => 'Pending']) }}" class="inline-flex items-center justify-center w-full py-3 bg-slate-100 text-slate-600 text-[10px] font-black rounded-xl hover:bg-slate-900 hover:text-white transition-all uppercase tracking-widest">
+                            Review Queue
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Quick Actions -->
-            <div class="card" style="padding: 1.25rem;">
-                <h3 class="card__title mb-1">Admin Tools</h3>
-                <p class="text-muted mb-3" style="font-size: 0.75rem;">Manage platform users and settings.</p>
-                <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-                    <a href="{{ route('admin.users.index') }}" class="btn btn-secondary justify-content-start border-0" style="background: var(--u-bg); font-weight: 700; font-size: 0.8rem;">
-                        <i class="fas fa-users-cog text-navy"></i> User Permissions
+            <!-- Admin Tools -->
+            <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
+                <h3 class="text-lg font-black text-slate-900 tracking-tight mb-2">Platform Tools</h3>
+                <p class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-8">Access system-level settings</p>
+                
+                <div class="grid grid-cols-1 gap-3">
+                    <a href="{{ route('admin.users.index') }}" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-slate-100 hover:bg-white transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-white text-slate-400 group-hover:bg-slate-900 group-hover:text-white flex items-center justify-center transition-all">
+                            <i class="fas fa-users-cog text-sm"></i>
+                        </div>
+                        <span class="text-xs font-black text-slate-600 uppercase tracking-widest group-hover:text-slate-900 transition-colors">User Access</span>
                     </a>
-                    <a href="{{ route('admin.payments.index') }}" class="btn btn-secondary justify-content-start border-0" style="background: var(--u-bg); font-weight: 700; font-size: 0.8rem;">
-                        <i class="fas fa-receipt text-navy"></i> Payment Issues
+                    <a href="{{ route('admin.payments.index') }}" class="flex items-center gap-4 p-4 rounded-2xl bg-slate-50 border border-transparent hover:border-slate-100 hover:bg-white transition-all group">
+                        <div class="w-10 h-10 rounded-xl bg-white text-slate-400 group-hover:bg-slate-900 group-hover:text-white flex items-center justify-center transition-all">
+                            <i class="fas fa-receipt text-sm"></i>
+                        </div>
+                        <span class="text-xs font-black text-slate-600 uppercase tracking-widest group-hover:text-slate-900 transition-colors">Finance Logs</span>
                     </a>
                 </div>
             </div>
@@ -169,7 +185,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             // Area Chart Setup
             const revCtx = document.getElementById('revenueChart').getContext('2d');
-            const dataSet = {!! json_encode($charts['revenue']) !!};
+            const dataSet = {!! json_encode($charts['revenue'] ?? []) !!};
             
             new Chart(revCtx, {
                 type: 'line',
@@ -180,12 +196,14 @@
                         data: dataSet.map(d => d.revenue),
                         borderColor: '#0f172a',
                         backgroundColor: 'rgba(15, 23, 42, 0.03)',
-                        borderWidth: 2,
+                        borderWidth: 3,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 4,
                         pointBackgroundColor: '#fff',
-                        pointBorderWidth: 2
+                        pointBorderWidth: 3,
+                        pointHoverRadius: 6,
+                        pointHoverBackgroundColor: '#0f172a'
                     }]
                 },
                 options: {
@@ -195,12 +213,12 @@
                     scales: {
                         y: { 
                             beginAtZero: true, 
-                            grid: { color: '#f1f5f9' },
-                            ticks: { color: '#94a3b8', font: { size: 11 }, callback: v => 'NPR ' + v.toLocaleString() }
+                            grid: { color: 'rgba(0,0,0,0.03)' },
+                            ticks: { color: '#94a3b8', font: { weight: 'bold', size: 10 }, callback: v => 'NPR ' + v.toLocaleString() }
                         },
                         x: { 
                             grid: { display: false }, 
-                            ticks: { color: '#94a3b8', font: { size: 11 } } 
+                            ticks: { color: '#94a3b8', font: { weight: 'bold', size: 10 } } 
                         }
                     }
                 }
@@ -208,7 +226,7 @@
 
             // Donut Chart Setup
             const statusCtx = document.getElementById('statusChart').getContext('2d');
-            const sData = {!! json_encode($charts['status_distribution']) !!};
+            const sData = {!! json_encode($charts['status_distribution'] ?? []) !!};
             
             new Chart(statusCtx, {
                 type: 'doughnut',
@@ -217,8 +235,10 @@
                     datasets: [{
                         data: Object.values(sData),
                         backgroundColor: ['#10B981', '#F59E0B', '#EF4444', '#94A3B8'],
-                        borderWidth: 0,
-                        hoverOffset: 12
+                        borderWidth: 6,
+                        borderColor: '#fff',
+                        hoverOffset: 20,
+                        borderRadius: 10
                     }]
                 },
                 options: {

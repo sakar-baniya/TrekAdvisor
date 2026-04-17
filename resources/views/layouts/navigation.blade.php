@@ -1,163 +1,152 @@
 @php
-    $navVariant = $navVariant ?? 'default';
-    $navClusterClass = $navVariant === 'auth' ? 'site-nav-cluster site-nav-cluster--auth' : 'site-nav-cluster';
-    $navClass = $navVariant === 'auth' ? 'site-nav site-nav--auth' : 'site-nav';
-    $navMobileClass = $navVariant === 'auth' ? 'nav-mobile nav-mobile--auth' : 'nav-mobile';
     $user = auth()->user();
     $userRole = $user?->role;
 @endphp
 
-<div class="{{ $navClusterClass }}" data-nav-shell>
-    <nav class="{{ $navClass }}" aria-label="Primary">
-        <div class="container nav-inner">
-            <div class="nav-section nav-left">
-                <a href="{{ route('home') }}" class="brand">
-                    <span class="brand-badge">
-                        <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
-                    </span>
-                    <span class="brand-wordmark">TrekAdvisor</span>
+<div x-data="{ open: false }" class="sticky top-0 z-50 w-full transition-all duration-300 bg-white shadow-sm border-b border-slate-200">
+    <nav aria-label="Primary" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-20">
+            <!-- Left Side: Logo -->
+            <div class="flex-shrink-0 flex items-center">
+                <a href="{{ route('home') }}" class="flex items-center gap-3 text-slate-900 font-bold text-xl tracking-tight">
+                    <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" class="w-10 h-10 rounded-full bg-slate-900 p-1" alt="TrekAdvisor logo" />
+                    TrekAdvisor
                 </a>
             </div>
-            <div class="nav-section nav-center">
-                <div class="nav-links">
-                    <a href="{{ route('treks.index') }}" class="nav-link {{ request()->routeIs('treks.*') ? 'is-active' : '' }}">Treks</a>
-                    <a href="{{ route('hotels.index') }}" class="nav-link {{ request()->routeIs('hotels.*') ? 'is-active' : '' }}">Hotels</a>
 
-                    <a href="{{ route('about') }}" class="nav-link {{ request()->routeIs('about') ? 'is-active' : '' }}">About Us</a>
-                    <a href="{{ route('blog') }}" class="nav-link {{ request()->routeIs('blog') ? 'is-active' : '' }}">Travel Guide</a>
-                </div>
+            <!-- Center: Navigation Links -->
+            <div class="hidden md:flex md:items-center md:space-x-8">
+                <a href="{{ route('treks.index') }}" class="text-slate-600 hover:text-slate-900 font-semibold transition-colors {{ request()->routeIs('treks.*') ? 'text-slate-900' : '' }}">Treks</a>
+                <a href="{{ route('hotels.index') }}" class="text-slate-600 hover:text-slate-900 font-semibold transition-colors {{ request()->routeIs('hotels.*') ? 'text-slate-900' : '' }}">Hotels</a>
+                <a href="{{ route('about') }}" class="text-slate-600 hover:text-slate-900 font-semibold transition-colors {{ request()->routeIs('about') ? 'text-slate-900' : '' }}">About Us</a>
+                <a href="{{ route('blog') }}" class="text-slate-600 hover:text-slate-900 font-semibold transition-colors {{ request()->routeIs('blog') ? 'text-slate-900' : '' }}">Travel Guide</a>
             </div>
-            <div class="nav-section nav-right" style="display:flex;align-items:center;gap:1.25rem;">
-                <a href="{{ route('contact') }}" class="btn btn-cta d-none d-md-inline-flex">Contact</a>
+
+            <!-- Right Side: CTA / Auth / My Account -->
+            <div class="hidden md:flex md:items-center md:space-x-6">
+                <a href="{{ route('contact') }}" class="text-slate-600 hover:text-slate-900 font-semibold transition-colors">Contact</a>
+                
                 @auth
-                    <div class="nav-account-menu d-none d-md-block" style="position:relative;">
-                        <button type="button" class="btn btn-link nav-account-trigger" id="navAccountTrigger" style="display:flex;align-items:center;gap:0.5rem;">
+                    <div class="relative" x-data="{ accountMenu: false }">
+                        <button @click="accountMenu = !accountMenu" @click.away="accountMenu = false" type="button" class="flex items-center gap-2 text-slate-900 font-semibold hover:text-slate-700 transition">
                             <span>My Account</span>
-                            <i class="fas fa-chevron-down" style="font-size:0.85em;"></i>
+                            <i class="fas fa-chevron-down text-xs transition-transform duration-200" :class="accountMenu ? 'rotate-180' : ''"></i>
                         </button>
-                        <div class="nav-account-dropdown" id="navAccountDropdown" style="display:none;position:absolute;right:0;top:calc(100%+8px);min-width:180px;background:#fff;border-radius:10px;box-shadow:0 8px 24px rgba(15,23,42,0.13);z-index:1201;padding:0.5rem 0;">
+                        
+                        <!-- Dropdown -->
+                        <div x-show="accountMenu" 
+                             x-transition:enter="transition ease-out duration-100"
+                             x-transition:enter-start="transform opacity-0 scale-95"
+                             x-transition:enter-end="transform opacity-100 scale-100"
+                             x-transition:leave="transition ease-in duration-75"
+                             x-transition:leave-start="transform opacity-100 scale-100"
+                             x-transition:leave-end="transform opacity-0 scale-95"
+                             class="absolute right-0 mt-2 w-56 bg-white rounded-xl shadow-lg ring-1 ring-black ring-opacity-5 py-2 z-50 text-sm font-semibold text-slate-700"
+                             style="display: none;">
+                            
                             @if ($userRole === 'customer')
-                                <a href="{{ route('settings.profile.show') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-user-circle opacity-50"></i> Profile
+                                <a href="{{ route('settings.profile.show') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-user-circle text-slate-400 w-4 text-center"></i> Profile
                                 </a>
-                                <a href="{{ route('account.bookings.index') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-clipboard-list opacity-50"></i> My Bookings
+                                <a href="{{ route('account.bookings.index') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-clipboard-list text-slate-400 w-4 text-center"></i> My Bookings
                                 </a>
-                                <a href="{{ route('account.payments.index') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-credit-card opacity-50"></i> Payments
+                                <a href="{{ route('account.payments.index') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-credit-card text-slate-400 w-4 text-center"></i> Payments
                                 </a>
                             @elseif ($userRole === 'staff')
-                                <a href="{{ route('staff.dashboard') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-headset opacity-50"></i> Staff Dashboard
+                                <a href="{{ route('staff.dashboard') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-headset text-slate-400 w-4 text-center"></i> Staff Dashboard
                                 </a>
-                                <a href="{{ route('staff.trek-bookings.index') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-mountain-sun opacity-50"></i> Trek Bookings
+                                <a href="{{ route('staff.trek-bookings.index') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-mountain-sun text-slate-400 w-4 text-center"></i> Trek Bookings
                                 </a>
                             @elseif ($userRole === 'hotel_owner')
-                                <a href="{{ route('hotel_owner.dashboard') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-hotel opacity-50"></i> Hotel Dashboard
+                                <a href="{{ route('hotel_owner.dashboard') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-hotel text-slate-400 w-4 text-center"></i> Hotel Dashboard
                                 </a>
-                                <a href="{{ route('hotel_owner.hotels.index') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-building opacity-50"></i> My Hotels
+                                <a href="{{ route('hotel_owner.hotels.index') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-building text-slate-400 w-4 text-center"></i> My Hotels
                                 </a>
                             @elseif ($userRole === 'admin')
-                                <a href="{{ route('admin.dashboard') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-chart-line opacity-50"></i> Admin Dashboard
+                                <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-chart-line text-slate-400 w-4 text-center"></i> Admin Dashboard
                                 </a>
                             @else
-                                <a href="{{ route('dashboard') }}" class="dropdown-item" style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;text-decoration:none;font-weight:600;">
-                                    <i class="fas fa-compass opacity-50"></i> Dashboard
+                                <a href="{{ route('dashboard') }}" class="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors">
+                                    <i class="fas fa-compass text-slate-400 w-4 text-center"></i> Dashboard
                                 </a>
                             @endif
-                            <form method="POST" action="{{ route('logout') }}" style="margin:0;" data-logout-confirm>
+                            <div class="h-px bg-slate-100 my-1"></div>
+                            <form method="POST" action="{{ route('logout') }}" data-logout-confirm>
                                 @csrf
-                                <button
-                                    type="submit"
-                                    class="dropdown-item"
-                                    style="display:flex;align-items:center;gap:0.75rem;padding:0.75rem 1.25rem;color:#0F172A;background:none;border:none;width:100%;text-align:left;font-weight:600;"
-                                    data-confirm="signout"
-                                >
-                                    <i class="fas fa-sign-out-alt opacity-50"></i> Sign Out
+                                <button type="submit" class="flex w-full items-center gap-3 px-4 py-2.5 text-left hover:bg-slate-50 transition-colors" data-confirm="signout">
+                                    <i class="fas fa-sign-out-alt text-slate-400 w-4 text-center"></i> Sign Out
                                 </button>
                             </form>
                         </div>
                     </div>
                 @else
-                    <a href="{{ route('login') }}" class="btn btn-auth btn-auth--ghost">Login</a>
+                    <a href="{{ route('login') }}" class="bg-slate-900 text-white px-6 py-2.5 rounded-full font-bold shadow-sm hover:border hover:border-slate-800 hover:bg-transparent hover:text-slate-900 transition-all duration-200">
+                        Login
+                    </a>
                 @endauth
-                <button
-                    type="button"
-                    class="nav-toggle d-inline-flex d-md-none"
-                    data-nav-toggle
-                    aria-expanded="false"
-                    aria-controls="site-nav-mobile"
-                    aria-label="Toggle navigation menu"
-                >
-                    <i class="fas fa-bars"></i>
+            </div>
+
+            <!-- Hamburger Button -->
+            <div class="-mr-2 flex items-center md:hidden">
+                <button @click="open = !open" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none transition-colors" aria-expanded="false">
+                    <span class="sr-only">Open main menu</span>
+                    <i class="fas fa-bars text-xl" x-show="!open"></i>
+                    <i class="fas fa-times text-xl" x-show="open" style="display: none;"></i>
                 </button>
             </div>
-        <script>
-        // Navbar My Account dropdown logic
-        document.addEventListener('DOMContentLoaded', function() {
-            var trigger = document.getElementById('navAccountTrigger');
-            var dropdown = document.getElementById('navAccountDropdown');
-            if (trigger && dropdown) {
-                trigger.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
-                });
-                document.addEventListener('click', function(e) {
-                    if (!dropdown.contains(e.target) && !trigger.contains(e.target)) {
-                        dropdown.style.display = 'none';
-                    }
-                });
-            }
-        });
-
-        </script>
         </div>
     </nav>
 
-    <div id="site-nav-mobile" class="{{ $navMobileClass }}" data-nav-mobile>
-        <div class="nav-mobile-links">
-            <a href="{{ route('treks.index') }}" class="nav-link">Treks</a>
-            <a href="{{ route('hotels.index') }}" class="nav-link">Hotels</a>
-
-            <a href="{{ route('about') }}" class="nav-link">About</a>
-            <a href="{{ route('blog') }}" class="nav-link">Travel Guide</a>
-            <a href="{{ route('contact') }}" class="nav-link">Contact</a>
+    <!-- Mobile Menu -->
+    <div x-show="open" x-transition class="md:hidden border-t border-slate-100 bg-white" style="display: none;">
+        <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 font-semibold text-slate-700">
+            <a href="{{ route('treks.index') }}" class="block px-3 py-2 rounded-md hover:bg-slate-50 hover:text-slate-900">Treks</a>
+            <a href="{{ route('hotels.index') }}" class="block px-3 py-2 rounded-md hover:bg-slate-50 hover:text-slate-900">Hotels</a>
+            <a href="{{ route('about') }}" class="block px-3 py-2 rounded-md hover:bg-slate-50 hover:text-slate-900">About</a>
+            <a href="{{ route('blog') }}" class="block px-3 py-2 rounded-md hover:bg-slate-50 hover:text-slate-900">Travel Guide</a>
+            <a href="{{ route('contact') }}" class="block px-3 py-2 rounded-md hover:bg-slate-50 hover:text-slate-900">Contact</a>
+            
+            <div class="h-px bg-slate-100 my-2"></div>
+            
             @auth
                 @if ($userRole === 'customer')
-                    <a href="{{ route('account.bookings.index') }}" class="nav-link">My Bookings</a>
-                    <a href="{{ route('settings.profile.show') }}" class="nav-link">Profile</a>
-                    <a href="{{ route('account.payments.index') }}" class="nav-link">Payments</a>
+                    <a href="{{ route('account.bookings.index') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">My Bookings</a>
+                    <a href="{{ route('settings.profile.show') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Profile</a>
+                    <a href="{{ route('account.payments.index') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Payments</a>
                 @elseif ($userRole === 'staff')
-                    <a href="{{ route('staff.dashboard') }}" class="nav-link">Staff Dashboard</a>
-                    <a href="{{ route('staff.trek-bookings.index') }}" class="nav-link">Trek Bookings</a>
+                    <a href="{{ route('staff.dashboard') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Staff Dashboard</a>
+                    <a href="{{ route('staff.trek-bookings.index') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Trek Bookings</a>
                 @elseif ($userRole === 'hotel_owner')
-                    <a href="{{ route('hotel_owner.dashboard') }}" class="nav-link">Hotel Dashboard</a>
-                    <a href="{{ route('hotel_owner.hotels.index') }}" class="nav-link">My Hotels</a>
+                    <a href="{{ route('hotel_owner.dashboard') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Hotel Dashboard</a>
+                    <a href="{{ route('hotel_owner.hotels.index') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">My Hotels</a>
                 @elseif ($userRole === 'admin')
-                    <a href="{{ route('admin.dashboard') }}" class="nav-link">Admin Dashboard</a>
+                    <a href="{{ route('admin.dashboard') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Admin Dashboard</a>
                 @else
-                    <a href="{{ route('dashboard') }}" class="nav-link">Dashboard</a>
+                    <a href="{{ route('dashboard') }}" class="block px-3 py-2 text-slate-500 hover:text-slate-900">Dashboard</a>
                 @endif
                 <form method="POST" action="{{ route('logout') }}" data-logout-confirm>
                     @csrf
-                    <button type="submit" class="btn btn-link" data-confirm="signout">
+                    <button type="submit" class="block w-full text-left px-3 py-2 text-red-600 font-semibold" data-confirm="signout">
                         Sign Out
                     </button>
                 </form>
             @else
-                <a href="{{ route('login') }}" class="nav-link">Login</a>
+                <a href="{{ route('login') }}" class="block px-3 py-2 mt-4 bg-slate-900 text-white rounded-full text-center hover:bg-slate-800">Login</a>
             @endauth
         </div>
     </div>
 </div>
 
 @if (!request()->is('admin*') && !request()->is('dashboard*'))
-<!-- Floating WhatsApp Button (hidden on admin/dashboard routes) -->
-<a href="https://wa.me/9779816681137" class="floating-whatsapp" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/9779816681137" class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 rounded-full flex items-center justify-center text-white text-3xl shadow-lg hover:shadow-xl hover:scale-110 transition-all duration-300 z-50 focus:outline-none focus:ring-4 focus:ring-green-300" target="_blank" rel="noopener noreferrer" aria-label="Chat with us on WhatsApp">
     <i class="fab fa-whatsapp"></i>
 </a>
 @endif

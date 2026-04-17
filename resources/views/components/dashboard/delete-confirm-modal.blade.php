@@ -1,155 +1,85 @@
-{{-- Delete Confirmation Modal --}}
-<div id="delete-confirm-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Delete Trek</h3>
-            <button type="button" class="modal-close" onclick="document.getElementById('delete-confirm-modal').style.display = 'none'" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p>Are you sure you want to delete <strong id="trek-name-display"></strong>?</p>
-            <p style="color: var(--u-gray-600); font-size: 0.875rem; margin-top: 0.5rem;">This action cannot be undone.</p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="u-btn u-btn--secondary" onclick="document.getElementById('delete-confirm-modal').style.display = 'none'">Cancel</button>
-            <button type="button" class="u-btn u-btn--danger" id="confirm-delete-btn">Delete Trek</button>
+{{-- Delete Confirmation Modal (Tailwind + Alpine) --}}
+<div 
+    x-data="{ 
+        open: false, 
+        trekName: '', 
+        form: null,
+        show(name, formElement) {
+            this.trekName = name;
+            this.form = formElement;
+            this.open = true;
+        },
+        submit() {
+            if (this.form) this.form.submit();
+        }
+    }"
+    x-show="open"
+    x-on:open-delete-modal.window="show($event.detail.name, $event.detail.form)"
+    class="fixed inset-0 z-[100] overflow-y-auto"
+    style="display: none;"
+>
+    <!-- Overlay -->
+    <div 
+        x-show="open" 
+        x-transition:enter="transition ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm"
+        @click="open = false"
+    ></div>
+
+    <!-- Modal Content -->
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div 
+            x-show="open"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 scale-95"
+            x-transition:enter-end="opacity-100 scale-100"
+            class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden relative"
+        >
+            <div class="px-10 pt-10 pb-6 border-b border-slate-50 flex items-center justify-between">
+                <h3 class="text-xl font-black text-slate-900 tracking-tight">Confirm Deletion</h3>
+                <button @click="open = false" class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+            
+            <div class="px-10 py-8">
+                <p class="text-slate-600 font-medium leading-relaxed">
+                    Are you sure you want to delete <strong class="text-slate-900" x-text="trekName"></strong>? 
+                </p>
+                <div class="mt-6 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-xl">
+                    <p class="text-[10px] font-black text-red-800 uppercase tracking-widest leading-none">Warning</p>
+                    <p class="text-xs font-semibold text-red-600 mt-2">This action is irreversible and will remove all associated departures.</p>
+                </div>
+            </div>
+
+            <div class="px-10 py-8 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-end gap-3">
+                <button @click="open = false" class="w-full sm:w-auto px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
+                    Cancel
+                </button>
+                <button @click="submit()" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20">
+                    Delete Permanently
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
-<style>
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 400px;
-        animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .modal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.5rem;
-        border-bottom: 1px solid var(--u-border-color, #e0e0e0);
-    }
-
-    .modal-header h3 {
-        margin: 0;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--u-navy, #1a1a1a);
-    }
-
-    .modal-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--u-gray-600, #666);
-        padding: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .modal-close:hover {
-        background-color: var(--u-gray-100, #f5f5f5);
-    }
-
-    .modal-body {
-        padding: 1.5rem;
-        color: var(--u-gray-700, #555);
-        line-height: 1.6;
-    }
-
-    .modal-body p {
-        margin: 0;
-    }
-
-    .modal-footer {
-        display: flex;
-        gap: 0.75rem;
-        justify-content: flex-end;
-        padding: 1.5rem;
-        border-top: 1px solid var(--u-border-color, #e0e0e0);
-    }
-
-    .u-btn--danger {
-        --btn-bg: #dc3545;
-        --btn-hover-bg: #c82333;
-        --btn-text: white;
-    }
-</style>
-
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const modal = document.getElementById('delete-confirm-modal');
-        const confirmBtn = document.getElementById('confirm-delete-btn');
-        let pendingForm = null;
-
-        // Handle delete button clicks
+        // Handle global click for delete buttons
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-confirm-trek]');
             if (!btn) return;
 
             e.preventDefault();
-            const trekName = btn.dataset.confirmTrek;
-            pendingForm = btn.closest('form');
+            const name = btn.dataset.confirmTrek;
+            const form = btn.closest('form');
 
-            document.getElementById('trek-name-display').textContent = trekName;
-            modal.style.display = 'flex';
-        });
-
-        // Handle confirm delete
-        confirmBtn.addEventListener('click', () => {
-            if (pendingForm) {
-                pendingForm.submit();
-            }
-        });
-
-        // Close modal on overlay click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.style.display = 'none';
-            }
-        });
-
-        // Close on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display !== 'none') {
-                modal.style.display = 'none';
-            }
+            window.dispatchEvent(new CustomEvent('open-delete-modal', { 
+                detail: { name, form } 
+            }));
         });
     });
 </script>

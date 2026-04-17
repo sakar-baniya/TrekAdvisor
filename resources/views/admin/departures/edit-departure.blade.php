@@ -1,20 +1,18 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <div class="admin-page-heading admin-page-heading--split">
-            <div>
-                <p class="admin-eyebrow">Trek Operations</p>
-                <h2 class="admin-page-title">Edit Departure</h2>
-            </div>
+    <div class="max-w-4xl mx-auto">
+        <!-- Page Header -->
+        <div class="mb-10">
+            <a href="{{ route('admin.departures.index') }}" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors mb-4">
+                <i class="fas fa-arrow-left mr-2"></i> Operations
+            </a>
+            <h1 class="text-4xl font-black text-slate-900 tracking-tight">Edit Departure</h1>
+            <p class="text-slate-500 font-medium mt-1 uppercase tracking-widest text-xs italic italic">Updating departure #{{ $departure->id }}</p>
         </div>
-    </x-slot>
 
-    @if (session('success'))
-        <div class="admin-flash success">{{ session('success') }}</div>
-    @endif
-
-    <form action="{{ route('admin.departures.update', $departure) }}" method="POST">
-        @csrf
-        @method('PUT')
+        <form action="{{ route('admin.departures.update', $departure) }}" method="POST">
+            @csrf
+            @method('PATCH')
             @include('admin.departures.departure-form-fields')
-    </form>
+        </form>
+    </div>
 </x-dashboard-layout>

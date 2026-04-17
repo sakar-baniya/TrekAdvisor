@@ -1,196 +1,74 @@
-{{-- Universal Action Confirmation Modal --}}
-<div id="action-confirm-modal" class="modal-overlay" style="display: none;">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3 id="modal-title">Confirm Action</h3>
-            <button type="button" class="modal-close" onclick="closeActionModal()" aria-label="Close">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <p id="modal-message">Are you sure?</p>
-            <p id="modal-warning" style="color: var(--u-gray-600); font-size: 0.875rem; margin-top: 0.5rem; display: none;"></p>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="u-btn u-btn--secondary" onclick="closeActionModal()">Cancel</button>
-            <button type="button" class="u-btn" id="confirm-action-btn">Confirm</button>
+{{-- Universal Action Confirmation Modal (Tailwind + Alpine) --}}
+<div 
+    x-data="{ 
+        open: false, 
+        title: 'Confirm Action', 
+        message: 'Are you sure?', 
+        warning: '', 
+        buttonText: 'Confirm',
+        buttonClass: 'bg-slate-900',
+        confirmCallback: null,
+
+        show(config) {
+            this.title = config.title || 'Confirm Action';
+            this.message = config.message || 'Are you sure?';
+            this.warning = config.warning || '';
+            this.buttonText = config.buttonText || 'Confirm';
+            this.buttonClass = config.buttonClass || 'bg-slate-900';
+            this.confirmCallback = config.onConfirm;
+            this.open = true;
+        },
+        confirm() {
+            if (this.confirmCallback) this.confirmCallback();
+            this.open = false;
+        }
+    }"
+    x-show="open"
+    x-on:action-confirm.window="show($event.detail)"
+    class="fixed inset-0 z-[100] overflow-y-auto"
+    style="display: none;"
+>
+    <!-- Overlay -->
+    <div x-show="open" x-transition.opacity class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm" @click="open = false"></div>
+
+    <!-- Modal Content -->
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div 
+            x-show="open" x-transition.scale.95
+            class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden relative"
+        >
+            <div class="px-10 pt-10 pb-6 border-b border-slate-50 flex items-center justify-between">
+                <h3 x-text="title" class="text-xl font-black text-slate-900 tracking-tight"></h3>
+                <button @click="open = false" class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center">
+                    <i class="fas fa-times text-xs"></i>
+                </button>
+            </div>
+            
+            <div class="px-10 py-8">
+                <p x-text="message" class="text-slate-600 font-medium leading-relaxed"></p>
+                <div x-show="warning" class="mt-6 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl">
+                    <p class="text-[10px] font-black text-amber-800 uppercase tracking-widest leading-none">Important</p>
+                    <p x-text="warning" class="text-xs font-semibold text-amber-700 mt-2"></p>
+                </div>
+            </div>
+
+            <div class="px-10 py-8 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-end gap-3">
+                <button @click="open = false" class="w-full sm:w-auto px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
+                    Cancel
+                </button>
+                <button 
+                    @click="confirm()" 
+                    :class="buttonClass"
+                    class="w-full sm:w-auto px-8 py-3 text-white text-[10px] font-black uppercase tracking-widest rounded-xl transition-all shadow-xl"
+                    x-text="buttonText"
+                ></button>
+            </div>
         </div>
     </div>
 </div>
 
-<style>
-    .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: rgba(0, 0, 0, 0.5);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        z-index: 1000;
-    }
-
-    .modal-content {
-        background: white;
-        border-radius: 8px;
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-        width: 90%;
-        max-width: 420px;
-        animation: slideUp 0.3s ease-out;
-    }
-
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(20px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .modal-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 1.5rem;
-        border-bottom: 1px solid var(--u-border-color, #e0e0e0);
-    }
-
-    .modal-header h3 {
-        margin: 0;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: var(--u-navy, #1a1a1a);
-    }
-
-    .modal-close {
-        background: none;
-        border: none;
-        font-size: 1.5rem;
-        cursor: pointer;
-        color: var(--u-gray-600, #666);
-        padding: 0;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
-
-    .modal-close:hover {
-        background-color: var(--u-gray-100, #f5f5f5);
-    }
-
-    .modal-body {
-        padding: 1.5rem;
-        color: var(--u-gray-700, #555);
-        line-height: 1.6;
-    }
-
-    .modal-body p {
-        margin: 0;
-    }
-
-    .modal-footer {
-        display: flex;
-        gap: 0.75rem;
-        justify-content: flex-end;
-        padding: 1.5rem;
-        border-top: 1px solid var(--u-border-color, #e0e0e0);
-    }
-
-    .u-btn--danger {
-        --btn-bg: #dc3545;
-        --btn-hover-bg: #c82333;
-        --btn-text: white;
-    }
-
-    .u-btn--warning {
-        --btn-bg: #ff9800;
-        --btn-hover-bg: #e68900;
-        --btn-text: white;
-    }
-
-    .u-btn--success {
-        --btn-bg: #28a745;
-        --btn-hover-bg: #218838;
-        --btn-text: white;
-    }
-</style>
-
 <script>
-    (() => {
-        const modal = document.getElementById('action-confirm-modal');
-        const confirmBtn = document.getElementById('confirm-action-btn');
-        const titleEl = document.getElementById('modal-title');
-        const messageEl = document.getElementById('modal-message');
-        const warningEl = document.getElementById('modal-warning');
-
-        let pendingAction = null;
-
-        // Show modal for actions
-        window.showActionConfirmation = (options) => {
-            const {
-                title = 'Confirm Action',
-                message = 'Are you sure?',
-                warning = '',
-                buttonText = 'Confirm',
-                buttonClass = '',
-                onConfirm = () => {}
-            } = options;
-
-            titleEl.textContent = title;
-            messageEl.textContent = message;
-
-            if (warning) {
-                warningEl.textContent = warning;
-                warningEl.style.display = 'block';
-            } else {
-                warningEl.style.display = 'none';
-            }
-
-            confirmBtn.textContent = buttonText;
-            confirmBtn.className = 'u-btn ' + buttonClass;
-
-            pendingAction = onConfirm;
-            modal.style.display = 'flex';
-        };
-
-        // Close modal
-        window.closeActionModal = () => {
-            modal.style.display = 'none';
-            pendingAction = null;
-        };
-
-        // Confirm action
-        confirmBtn.addEventListener('click', () => {
-            if (pendingAction) {
-                pendingAction();
-            }
-            closeActionModal();
-        });
-
-        // Close on overlay click
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                closeActionModal();
-            }
-        });
-
-        // Close on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && modal.style.display !== 'none') {
-                closeActionModal();
-            }
-        });
-
-        // Handle data-confirm attributes for forms
+    document.addEventListener('DOMContentLoaded', () => {
         document.addEventListener('click', (e) => {
             const btn = e.target.closest('[data-confirm-action]');
             if (!btn) return;
@@ -203,72 +81,52 @@
                 title: 'Confirm',
                 message: 'Are you sure?',
                 buttonText: 'Confirm',
-                buttonClass: '',
+                buttonClass: 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/20',
                 onConfirm: () => form && form.submit()
             };
 
-            // Different action types with custom messages
             switch (actionType) {
                 case 'delete':
-                    options = {
-                        ...options,
-                        title: 'Delete Item',
-                        message: 'Are you sure you want to delete this item?',
-                        warning: 'This action cannot be undone.',
-                        buttonText: 'Delete',
-                        buttonClass: 'u-btn--danger'
-                    };
-                    break;
                 case 'delete-review':
                     options = {
                         ...options,
-                        title: 'Delete Review',
-                        message: 'Are you sure you want to delete this review?',
+                        title: 'Confirm Deletion',
+                        message: 'Permanently remove this item from the platform?',
                         warning: 'This action cannot be undone.',
-                        buttonText: 'Delete Review',
-                        buttonClass: 'u-btn--danger'
+                        buttonText: 'Delete Now',
+                        buttonClass: 'bg-red-600 hover:bg-red-700 shadow-red-600/20'
                     };
                     break;
                 case 'approve-hotel':
                     options = {
                         ...options,
                         title: 'Approve Hotel',
-                        message: btn.dataset.confirmMessage || 'Are you sure you want to approve this hotel?',
-                        buttonText: 'Approve',
-                        buttonClass: 'u-btn--success'
+                        message: btn.dataset.confirmMessage || 'Ready to set this hotel as active?',
+                        buttonText: 'Approve Stay',
+                        buttonClass: 'bg-emerald-600 hover:bg-emerald-700 shadow-emerald-600/20'
                     };
                     break;
                 case 'reject-hotel':
                     options = {
                         ...options,
-                        title: 'Set Hotel Inactive',
-                        message: 'Are you sure you want to deactivate this hotel?',
-                        warning: 'Existing bookings will not be affected.',
-                        buttonText: 'Set Inactive',
-                        buttonClass: 'u-btn--danger'
-                    };
-                    break;
-                case 'pending-hotel':
-                    options = {
-                        ...options,
-                        title: 'Move to Pending',
-                        message: 'Are you sure you want to move this hotel back to pending?',
-                        buttonText: 'Move to Pending',
-                        buttonClass: 'u-btn--warning'
+                        title: 'Set Inactive',
+                        message: 'Deactivate this property listing?',
+                        buttonText: 'Deactivate',
+                        buttonClass: 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/20'
                     };
                     break;
                 case 'signout':
                     options = {
                         ...options,
                         title: 'Sign Out',
-                        message: 'Are you sure you want to sign out?',
+                        message: 'End your current session?',
                         buttonText: 'Sign Out',
-                        buttonClass: 'u-btn--secondary'
+                        buttonClass: 'bg-slate-900 hover:bg-slate-800 shadow-slate-900/20'
                     };
                     break;
             }
 
-            showActionConfirmation(options);
+            window.dispatchEvent(new CustomEvent('action-confirm', { detail: options }));
         });
-    })();
+    });
 </script>

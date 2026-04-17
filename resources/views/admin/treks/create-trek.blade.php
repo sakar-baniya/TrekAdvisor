@@ -1,29 +1,45 @@
 <x-dashboard-layout>
-    <x-slot name="header">
-        <div class="admin-page-heading admin-page-heading--split" style="align-items: flex-end;">
-            <div style="display: flex; align-items: center; gap: 1.25rem;">
-                <a href="{{ route('admin.treks.index') }}" aria-label="Back to Treks" class="admin-back-btn">
-                    <i class="fas fa-arrow-left"></i>
-                </a>
+    <div class="max-w-7xl mx-auto">
+        <form action="{{ route('admin.treks.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+            <!-- Page Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
                 <div>
-                    <p class="admin-eyebrow">Trek Management</p>
-                    <h2 class="admin-page-title">Add New Trek</h2>
-                    <p class="admin-page-subtitle">Fill details and click <b>Create Trek</b> to publish/save.</p>
+                    <a href="{{ route('admin.treks.index') }}" class="inline-flex items-center text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors mb-4">
+                        <i class="fas fa-arrow-left mr-2"></i> Inventory
+                    </a>
+                    <h1 class="text-4xl font-black text-slate-900 tracking-tight">Create Trek</h1>
+                    <p class="text-slate-500 font-medium mt-1 uppercase tracking-widest text-xs italic">Define a new adventure for the marketplace</p>
                 </div>
             </div>
-        </div>
-    </x-slot>
 
-    <form action="{{ route('admin.treks.store') }}" method="POST" enctype="multipart/form-data" id="create-trek-form">
-        @csrf
-        @include('admin.treks.trek-form-fields')
-
-        <!-- Sticky Action Bar -->
-        <div class="sticky-action-bar">
-            <div class="sticky-action-bar__inner">
-                <a href="{{ route('admin.treks.index') }}" class="admin-secondary-button">Back to Treks</a>
-                <button type="submit" class="admin-primary-button">Create Trek</button>
+            <!-- Content Area -->
+            <div class="pb-32">
+                @include('admin.treks.trek-form-fields', ['trek' => $trek])
             </div>
-        </div>
-    </form>
+
+            <!-- Sticky Action Bar -->
+            <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-md border-t border-slate-100 p-6 z-50">
+                <div class="max-w-7xl mx-auto flex items-center justify-between">
+                    <div class="hidden md:flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center">
+                            <i class="fas fa-save text-xs"></i>
+                        </div>
+                        <div class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+                            New Trek Draft
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4 w-full md:w-auto">
+                        <a href="{{ route('admin.treks.index') }}" class="flex-1 md:flex-none text-center px-8 py-3 bg-slate-50 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all border border-transparent">
+                            Cancel
+                        </a>
+                        <button type="submit" class="flex-1 md:flex-none px-12 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20">
+                            Create & Publish
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
 </x-dashboard-layout>

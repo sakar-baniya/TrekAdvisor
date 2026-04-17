@@ -14,10 +14,11 @@
 
         <!-- Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     </head>
-    <body class="body-guest body-auth-page">
+    <body class="font-sans antialiased text-slate-900 bg-slate-50 min-h-screen flex flex-col justify-center items-center py-12 px-4 sm:px-6 lg:px-8">
         @php
             $authVisual = match (true) {
                 request()->routeIs('register') => [
@@ -43,54 +44,36 @@
             };
         @endphp
 
-        <div class="guest-shell--auth">
-            <div class="guest-auth-shell">
-                {{ $slot }}
+        <div class="w-full max-w-2xl bg-white rounded-3xl shadow-xl overflow-hidden border border-slate-100 flex flex-col md:flex-row">
+            <!-- Header section for the auth cards -->
+            <div class="px-8 py-10 bg-slate-900 border-r border-slate-800 relative overflow-hidden md:w-5/12 flex flex-col justify-center">
+                <!-- Abstract pattern overlay (optional styling touch) -->
+                <div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(circle at 2px 2px, white 1px, transparent 0); background-size: 24px 24px;"></div>
+                
+                <a href="{{ route('home') }}" class="inline-flex justify-start items-center mb-10 relative z-10 transition-transform hover:scale-105">
+                    <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" class="w-14 h-14 rounded-full bg-slate-800 p-1 shadow-lg border-2 border-slate-700 hover:border-slate-500 transition-colors" alt="TrekAdvisor logo" />
+                </a>
+                
+                <div class="relative z-10">
+                    <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-3">{{ $authVisual['eyebrow'] }}</p>
+                    <h2 class="text-2xl font-bold text-white mb-4 leading-tight tracking-tight">{{ $authVisual['title'] }}</h2>
+                    <p class="text-sm text-slate-300 leading-relaxed">{{ $authVisual['body'] }}</p>
+                </div>
+            </div>
+
+            <!-- Form body section -->
+            <div class="px-8 py-10 bg-white md:w-7/12 flex items-center">
+                <div class="w-full">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
 
     </body>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const syncNavbarState = () => {
-                document.querySelectorAll('.site-nav').forEach((nav) => {
-                    nav.classList.toggle('is-scrolled', window.scrollY > 50);
-                });
-            };
-
-            syncNavbarState();
-            window.addEventListener('scroll', syncNavbarState, { passive: true });
-
-            document.querySelectorAll('[data-nav-shell]').forEach((shell) => {
-                const toggle = shell.querySelector('[data-nav-toggle]');
-                const mobile = shell.querySelector('[data-nav-mobile]');
-
-                if (!toggle || !mobile) {
-                    return;
-                }
-
-                const setOpen = (isOpen) => {
-                    mobile.classList.toggle('open', isOpen);
-                    toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                };
-
-                toggle.addEventListener('click', () => {
-                    setOpen(!mobile.classList.contains('open'));
-                });
-
-                document.addEventListener('click', (event) => {
-                    if (!shell.contains(event.target)) {
-                        setOpen(false);
-                    }
-                });
-
-                document.addEventListener('keydown', (event) => {
-                    if (event.key === 'Escape') {
-                        setOpen(false);
-                    }
-                });
-            });
-
+            // Updated Alpine.js is now favored for most toggle things, but for 
+            // password visibility, leaving this fast Vanilla query selector:
             document.querySelectorAll('[data-toggle-password]').forEach((button) => {
                 const targetId = button.getAttribute('data-target');
                 const input = document.getElementById(targetId);
@@ -115,16 +98,17 @@
                 });
             });
 
-            if (document.body.classList.contains('body-auth-page')) {
-                document.querySelectorAll('.form-error').forEach((errorBlock) => {
-                    const message = errorBlock.textContent.replace(/\s+/g, ' ').trim();
-                    if (message === 'These credentials do not match our records.') {
-                        setTimeout(() => {
-                            errorBlock.style.display = 'none';
-                        }, 4000);
-                    }
-                });
-            }
+            // Handle Laravel flash error messages for auth gently fading out
+            document.querySelectorAll('.form-error').forEach((errorBlock) => {
+                const message = errorBlock.textContent.replace(/\s+/g, ' ').trim();
+                if (message === 'These credentials do not match our records.') {
+                    setTimeout(() => {
+                        errorBlock.style.transition = 'opacity 0.5s ease';
+                        errorBlock.style.opacity = '0';
+                        setTimeout(() => errorBlock.style.display = 'none', 500);
+                    }, 4000);
+                }
+            });
         });
     </script>
 </html>

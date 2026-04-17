@@ -1,96 +1,149 @@
-<x-guest-layout>
-    <a href="{{ route('home') }}" class="auth-back-link">
-        <i class="fas fa-arrow-left"></i>
-        <span>Back</span>
-    </a>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <div class="auth-brand-area auth-brand-area--signin">
-        <div class="auth-brand-mark"><img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" /></div>
-        <span>TrekAdvisor</span>
-    </div>
+        <title>{{ config('app.name', 'TrekAdvisor') }} - Register</title>
 
-    <!-- Session Status -->
-    <x-auth-session-status class="auth-status" :status="session('status')" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-    <div class="auth-header auth-header--signin-simple">
-        <h1 class="auth-title auth-title--signin">
-            <i class="fas fa-user-plus"></i>
-            <span>Sign Up</span>
-        </h1>
-        <div class="auth-divider" aria-hidden="true"></div>
-    </div>
-
-    <form method="POST" action="{{ route('register') }}" class="auth-form">
-        @csrf
-
-        <div class="auth-grid auth-grid--two">
-            <div class="auth-field">
-                <x-input-label for="name" :value="__('Full Name')" />
-                <x-text-input id="name" class="auth-input" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" placeholder="eg: Suman Shrestha" maxlength="80" />
-                <x-input-error :messages="$errors->get('name')" />
+        <style>
+            body { font-family: 'Inter', sans-serif; }
+            .input-field:focus {
+                box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
+            }
+        </style>
+    </head>
+    <body class="antialiased text-slate-900 bg-slate-100 min-h-screen flex items-center justify-center p-4">
+        
+        <div class="w-full max-w-xl">
+            
+            <!-- Logo + Brand (Compact, horizontal) -->
+            <div class="flex items-center justify-center gap-3 mb-5">
+                <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" 
+                     class="w-11 h-11 rounded-xl bg-slate-900 p-1.5 shadow-lg shadow-slate-900/10" 
+                     alt="TrekAdvisor" />
+                <h1 class="text-xl font-bold text-slate-900 tracking-tight">TrekAdvisor</h1>
             </div>
 
-            <div class="auth-field">
-                <x-input-label for="phone" :value="__('Phone (optional)')" />
-                <x-text-input id="phone" class="auth-input" type="tel" name="phone" :value="old('phone')" autocomplete="tel" placeholder="eg: 9800012345" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10" />
-                <x-input-error :messages="$errors->get('phone')" />
-            </div>
-        </div>
-
-        <div class="auth-field">
-            <x-input-label for="email" :value="__('Email Address')" />
-            <x-text-input id="email" class="auth-input" type="email" name="email" :value="old('email')" required autocomplete="username" placeholder="eg: suman.nepal@gmail.com" maxlength="255" />
-            <x-input-error :messages="$errors->get('email')" />
-        </div>
-
-        <div class="auth-grid auth-grid--two">
-            <div class="auth-field">
-                <x-input-label for="password" :value="__('Password')" />
-                <div class="auth-input-wrap">
-                    <x-text-input id="password" class="auth-input auth-input-password"
-                                    type="password"
-                                    name="password" minlength="8"
-                                    required autocomplete="new-password" placeholder="Create a password" />
-                    <button type="button" class="auth-password-toggle" data-toggle-password data-target="password" aria-label="Show password">
-                        <i class="fas fa-eye" data-icon="show"></i>
-                        <i class="fas fa-eye-slash is-hidden" data-icon="hide"></i>
-                    </button>
+            <!-- Card -->
+            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 p-7">
+                
+                <!-- Header -->
+                <div class="mb-5">
+                    <h2 class="text-xl font-bold text-slate-900">Create your account</h2>
+                    <p class="text-sm text-slate-500 mt-0.5">Sign up to book treks and manage trips</p>
                 </div>
-                <x-input-error :messages="$errors->get('password')" />
-            </div>
 
-            <div class="auth-field">
-                <x-input-label for="password_confirmation" :value="__('Confirm')" />
-                <div class="auth-input-wrap">
-                    <x-text-input id="password_confirmation" class="auth-input auth-input-password"
-                                    type="password"
-                                    name="password_confirmation" required autocomplete="new-password" placeholder="Verify password" minlength="8" />
-                    <button type="button" class="auth-password-toggle" data-toggle-password data-target="password_confirmation" aria-label="Show password confirmation">
-                        <i class="fas fa-eye" data-icon="show"></i>
-                        <i class="fas fa-eye-slash is-hidden" data-icon="hide"></i>
+                <!-- Validation Errors -->
+                @if ($errors->any())
+                    <div class="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl flex items-start gap-2">
+                        <i class="fas fa-exclamation-circle text-red-500 mt-0.5 text-sm"></i>
+                        <p class="text-xs text-red-700">Please fix the errors below and try again.</p>
+                    </div>
+                @endif
+
+                <form method="POST" action="{{ route('register') }}" class="space-y-4">
+                    @csrf
+
+                    <!-- Row 1: Name + Phone -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label for="name" class="block text-xs font-medium text-slate-700 mb-1">Full name</label>
+                            <div class="relative">
+                                <i class="fas fa-user absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus autocomplete="name" maxlength="80"
+                                       class="input-field w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-9 pr-3 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
+                                       placeholder="Suman Shrestha" />
+                            </div>
+                            @error('name') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label for="phone" class="block text-xs font-medium text-slate-700 mb-1">
+                                Phone <span class="text-slate-400 font-normal">(optional)</span>
+                            </label>
+                            <div class="relative">
+                                <i class="fas fa-phone absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" autocomplete="tel" inputmode="numeric" pattern="\d{10}" minlength="10" maxlength="10"
+                                       class="input-field w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-9 pr-3 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
+                                       placeholder="9800012345" />
+                            </div>
+                            @error('phone') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+
+                    <!-- Email (full width) -->
+                    <div>
+                        <label for="email" class="block text-xs font-medium text-slate-700 mb-1">Email address</label>
+                        <div class="relative">
+                            <i class="fas fa-envelope absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                            <input id="email" type="email" name="email" value="{{ old('email') }}" required autocomplete="username" maxlength="255"
+                                   class="input-field w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-9 pr-3 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
+                                   placeholder="you@example.com" />
+                        </div>
+                        @error('email') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- Row 2: Password + Confirm -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <div x-data="{ show: false }">
+                            <label for="password" class="block text-xs font-medium text-slate-700 mb-1">Password</label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input id="password" :type="show ? 'text' : 'password'" name="password" required autocomplete="new-password" minlength="8"
+                                       class="input-field w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-9 pr-9 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
+                                       placeholder="Min. 8 chars" />
+                                <button type="button" @click="show = !show" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1.5">
+                                    <i class="fas text-xs" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </button>
+                            </div>
+                            @error('password') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div x-data="{ show: false }">
+                            <label for="password_confirmation" class="block text-xs font-medium text-slate-700 mb-1">Confirm password</label>
+                            <div class="relative">
+                                <i class="fas fa-lock absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-xs"></i>
+                                <input id="password_confirmation" :type="show ? 'text' : 'password'" name="password_confirmation" required autocomplete="new-password" minlength="8"
+                                       class="input-field w-full bg-slate-50 border border-slate-200 rounded-lg py-2.5 pl-9 pr-9 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
+                                       placeholder="Repeat password" />
+                                <button type="button" @click="show = !show" class="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 p-1.5">
+                                    <i class="fas text-xs" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                                </button>
+                            </div>
+                            @error('password_confirmation') <p class="text-xs text-red-600 mt-1">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-3 bg-slate-900 text-white rounded-lg font-semibold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 active:scale-[0.98] flex items-center justify-center gap-2 mt-1">
+                        Create account
+                        <i class="fas fa-arrow-right text-xs"></i>
                     </button>
+                </form>
+
+                <!-- Footer (single line, separated by dot) -->
+                <div class="mt-5 pt-4 border-t border-slate-100 text-center">
+                    <p class="text-xs text-slate-500">
+                        <a href="{{ route('login') }}" class="font-semibold text-slate-900 hover:underline">Sign in</a>
+                        <span class="mx-2 text-slate-300">•</span>
+                        <a href="{{ route('register.hotel') }}" class="font-semibold text-slate-900 hover:underline">Become a partner</a>
+                        <span class="mx-2 text-slate-300">•</span>
+                        <a href="{{ route('home') }}" class="font-medium text-slate-500 hover:text-slate-900">Home</a>
+                    </p>
                 </div>
-                <x-input-error :messages="$errors->get('password_confirmation')" />
             </div>
+
         </div>
 
-        <button type="submit" class="auth-submit">
-            {{ __('Secure Sign Up') }}
-        </button>
-
-        <div class="auth-footer auth-footer--stacked">
-            <div class="auth-footer-copy">
-                Are you a service provider? 
-                <a class="auth-link" href="{{ route('register.hotel') }}">
-                    Partner with TrekAdvisor
-                </a>
-            </div>
-            <div class="auth-footer-copy auth-footer-copy--spaced">
-                Already have an account?
-                <a class="auth-link" href="{{ route('login') }}">
-                    Sign in
-                </a>
-            </div>
-        </div>
-    </form>
-</x-guest-layout>
+    </body>
+</html>

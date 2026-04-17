@@ -11,115 +11,68 @@
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        <link rel="stylesheet" href="{{ asset('css/app.css') }}?v=3">
+        
+        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                const syncNavbarState = function () {
-                    document.querySelectorAll('.site-nav').forEach(function (nav) {
-                        nav.classList.toggle('is-scrolled', window.scrollY > 50);
-                    });
-                };
-
-                syncNavbarState();
-                window.addEventListener('scroll', syncNavbarState, { passive: true });
-
-                document.querySelectorAll('[data-nav-shell]').forEach(function (shell) {
-                    const toggle = shell.querySelector('[data-nav-toggle]');
-                    const mobile = shell.querySelector('[data-nav-mobile]');
-
-                    if (!toggle || !mobile) {
-                        return;
-                    }
-
-                    const setOpen = function (isOpen) {
-                        mobile.classList.toggle('open', isOpen);
-                        toggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
-                    };
-
-                    toggle.addEventListener('click', function () {
-                        setOpen(!mobile.classList.contains('open'));
-                    });
-
-                    document.addEventListener('click', function (event) {
-                        if (!shell.contains(event.target)) {
-                            setOpen(false);
-                        }
-                    });
-
-                    document.addEventListener('keydown', function (event) {
-                        if (event.key === 'Escape') {
-                            setOpen(false);
-                        }
-                    });
-                });
-            });
-        </script>
         @stack('styles')
     </head>
-    <body class="body-app">
-        <div class="page-shell">
-            <header class="site-header">
+    <body class="font-sans antialiased text-slate-900 bg-white min-h-screen flex flex-col">
+        
+        @include('layouts.navigation')
 
-                @include('layouts.navigation')
+        @isset($header)
+            <header class="bg-white border-b border-slate-200">
+                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                    {{ $header }}
+                </div>
             </header>
+        @endisset
 
-            @isset($header)
-                <header class="page-header">
-                    <div class="container header-inner">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+        <main class="flex-grow w-full relative">
+            {{ $slot }}
+        </main>
 
-            <main class="page-content">
-                {{ $slot }}
-            </main>
-        </div>
-
-        <footer class="site-footer">
-            <div class="container section">
-                <div class="footer-grid">
-                    <div>
-                        <div class="footer-brand">
-                            <span class="footer-brand-badge">
-                                <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" alt="TrekAdvisor logo" />
-                            </span>
+        <footer class="bg-slate-900 text-slate-300 py-12 mt-auto border-t border-slate-800">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-3 text-white font-bold text-xl tracking-tight">
+                            <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" class="w-8 h-8 rounded-full bg-slate-800 p-1" alt="TrekAdvisor logo" />
                             TrekAdvisor
                         </div>
-                        <p class="footer-muted footer-text">
+                        <p class="text-slate-400 text-sm leading-relaxed">
                             Trek the Himalayas and plan stays from one beautiful marketplace.
                         </p>
                     </div>
                     <div>
-                        <p class="footer-title">Quick Links</p>
-                        <ul class="footer-muted footer-list">
-                            <li><a href="{{ route('home') }}">Home</a></li>
-                            <li><a href="{{ route('treks.index') }}">Treks</a></li>
-                            <li><a href="{{ route('hotels.index') }}">Hotels</a></li>
-
+                        <h4 class="text-white font-semibold mb-4 tracking-wide uppercase text-sm">Quick Links</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="{{ route('home') }}" class="hover:text-white transition-colors duration-200">Home</a></li>
+                            <li><a href="{{ route('treks.index') }}" class="hover:text-white transition-colors duration-200">Treks</a></li>
+                            <li><a href="{{ route('hotels.index') }}" class="hover:text-white transition-colors duration-200">Hotels</a></li>
                         </ul>
                     </div>
                     <div>
-                        <p class="footer-title">Services</p>
-                        <ul class="footer-muted footer-list">
-                            <li><a href="{{ route('about') }}">About Us</a></li>
-                            <li><a href="{{ route('contact') }}">Contact</a></li>
-                            <li><a href="{{ route('faq') }}">FAQ</a></li>
-                            <li><a href="{{ route('blog') }}">Blog</a></li>
+                        <h4 class="text-white font-semibold mb-4 tracking-wide uppercase text-sm">Services</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="{{ route('about') }}" class="hover:text-white transition-colors duration-200">About Us</a></li>
+                            <li><a href="{{ route('contact') }}" class="hover:text-white transition-colors duration-200">Contact</a></li>
+                            <li><a href="{{ route('faq') }}" class="hover:text-white transition-colors duration-200">FAQ</a></li>
+                            <li><a href="{{ route('blog') }}" class="hover:text-white transition-colors duration-200">Blog</a></li>
                         </ul>
                     </div>
                     <div>
-                        <p class="footer-title">Contact</p>
-                        <ul class="footer-muted footer-list">
+                        <h4 class="text-white font-semibold mb-4 tracking-wide uppercase text-sm">Contact</h4>
+                        <ul class="space-y-2 text-sm text-slate-400">
                             <li>Kathmandu, Nepal</li>
                             <li>info@trekadvisor.com</li>
                             <li>+977 9800000000</li>
                         </ul>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    &copy; {{ date('Y') }} TrekAdvisor. All rights reserved.
+                <div class="border-t border-slate-800 pt-8 text-sm text-slate-500 text-center flex flex-col sm:flex-row justify-between items-center">
+                    <p>&copy; {{ date('Y') }} TrekAdvisor. All rights reserved.</p>
                 </div>
             </div>
         </footer>
