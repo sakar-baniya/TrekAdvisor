@@ -12,7 +12,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="max-w-3xl">
                     <div class="flex flex-wrap items-center gap-4 mb-6">
-                        <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-slate-900 text-white shadow-lg">
+                        <span class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-slate-900 text-white shadow-lg">
                             {{ $trek->difficulty }}
                         </span>
                         <div class="flex items-center gap-2 text-amber-400 font-bold">
@@ -21,7 +21,7 @@
                             <span class="text-slate-400 font-medium text-sm">({{ $reviewCount }} reviews)</span>
                         </div>
                     </div>
-                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-black text-white tracking-tight mb-8">{{ $trek->title }}</h1>
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-semibold text-white tracking-tight mb-8">{{ $trek->title }}</h1>
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-6 border-t border-white/10">
                         <div class="flex items-center gap-3">
@@ -130,7 +130,7 @@
                     <div class="relative space-y-8 before:absolute before:inset-y-0 before:left-8 before:border-l-2 before:border-slate-100">
                         @foreach($trek->itineraries as $itinerary)
                             <div class="relative pl-20 group">
-                                <div class="absolute left-0 top-0 w-16 h-16 bg-white border-4 border-slate-50 rounded-full flex items-center justify-center text-slate-900 font-black shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
+                                <div class="absolute left-0 top-0 w-16 h-16 bg-white border-4 border-slate-50 rounded-full flex items-center justify-center text-slate-900 font-semibold shadow-sm group-hover:bg-slate-900 group-hover:text-white transition-all duration-300">
                                     D{{ $itinerary->day_number }}
                                 </div>
                                 <div class="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm group-hover:shadow-md transition-shadow">
@@ -147,7 +147,7 @@
                     <div class="flex items-center justify-between">
                         <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">Customer Reviews</h2>
                         <div class="flex items-center gap-4 py-2 px-6 bg-slate-900 rounded-full text-white shadow-xl">
-                            <span class="text-2xl font-black">{{ $avgRating ?? '5.0' }}</span>
+                            <span class="text-2xl font-semibold">{{ $avgRating ?? '5.0' }}</span>
                             <div class="h-8 w-px bg-white/20"></div>
                             <span class="text-sm font-bold text-slate-300 uppercase tracking-widest">{{ $reviewCount }} Total</span>
                         </div>
@@ -167,7 +167,7 @@
                                     </div>
                                     <p class="text-lg font-bold text-slate-800 mb-6 italic leading-relaxed">"{{ $review->comment }}"</p>
                                     <div class="flex items-center gap-3 pt-6 border-t border-slate-50">
-                                        <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white font-black text-sm uppercase">
+                                        <div class="w-10 h-10 rounded-full bg-slate-900 flex items-center justify-center text-white font-semibold text-sm uppercase">
                                             {{ substr($review->user->name, 0, 1) }}
                                         </div>
                                         <div>
@@ -190,10 +190,10 @@
             <aside class="space-y-8">
                 <div class="bg-white rounded-xl shadow-lg shadow-slate-900/5 border border-slate-100 overflow-hidden sticky top-24">
                     <div class="bg-slate-900 p-10 text-white text-center">
-                        <span class="block text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Starting from</span>
+                        <span class="block text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-2">Starting from</span>
                         <div class="flex items-baseline justify-center gap-1">
                              <span class="text-sm font-bold opacity-60">NPR</span>
-                             <strong class="text-4xl font-black tracking-tight">{{ number_format($trek->base_price, 0) }}</strong>
+                             <strong class="text-4xl font-semibold tracking-tight">{{ number_format($trek->base_price, 0) }}</strong>
                         </div>
                         <span class="block text-slate-400 text-xs font-semibold mt-1">per person</span>
                     </div>
@@ -223,13 +223,13 @@
                                                     {{ $departure->capacity - $departure->booked_seats }} Seats Left
                                                 </span>
                                             </div>
-                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'bg-blue-50 text-blue-700' : 'bg-red-100 text-red-800' }}">
+                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-tighter {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'bg-blue-50 text-blue-700' : 'bg-red-100 text-red-800' }}">
                                                 {{ $departure->status }}
                                             </span>
                                         </div>
                                         <div class="flex items-center justify-between pt-4 border-t border-slate-50">
-                                            <span class="font-black text-slate-900">NPR {{ number_format($departure->price, 0) }}</span>
-                                            <a href="{{ route('bookings.create', $departure->id) }}" class="inline-flex justify-center items-center px-4 py-2 bg-slate-900 text-white text-xs font-black rounded-lg hover:bg-slate-800 transition-colors">
+                                            <span class="font-semibold text-slate-900">NPR {{ number_format($departure->price, 0) }}</span>
+                                            <a href="{{ route('bookings.create', $departure->id) }}" class="inline-flex justify-center items-center px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-lg hover:bg-slate-800 transition-colors">
                                                 Book
                                             </a>
                                         </div>

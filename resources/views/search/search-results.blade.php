@@ -96,7 +96,7 @@
                                     <li class="p-4 rounded-2xl bg-slate-50 border border-transparent">
                                         <div class="flex items-center justify-between mb-1">
                                             <strong class="text-slate-900 font-bold block">{{ $result->name }}</strong>
-                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter bg-slate-200 text-slate-600">
+                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-semibold uppercase tracking-tighter bg-slate-200 text-slate-600">
                                                 {{ $result->role }}
                                             </span>
                                         </div>

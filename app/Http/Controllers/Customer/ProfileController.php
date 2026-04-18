@@ -121,9 +121,20 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        $this->profileService->updateProfile($request->user(), $request->validated());
+        $user = $request->user();
+        $validated = $request->validated();
 
-        return Redirect::route('settings.profile.show')->with('status', 'profile-updated');
+        $changed = $user->name !== ($validated['name'] ?? $user->name)
+            || $user->email !== ($validated['email'] ?? $user->email)
+            || $user->phone !== ($validated['phone'] ?? $user->phone)
+            || $user->address !== ($validated['address'] ?? $user->address);
+
+        if ($changed) {
+            $this->profileService->updateProfile($user, $validated);
+            return Redirect::route('settings.profile.show')->with('status', 'profile-updated');
+        }
+
+        return Redirect::route('settings.profile.show');
     }
 
     /**

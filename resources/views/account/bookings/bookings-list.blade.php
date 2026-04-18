@@ -53,7 +53,6 @@
                                 <span class="flex items-center gap-2 text-xs text-slate-500">
                                     <i class="fas fa-coins text-slate-400"></i> NPR {{ number_format($booking->total_price) }}
                                 </span>
-                                <x-customer.status-badge :status="$payment['label']" />
                             </x-slot>
                         </x-customer.booking-card>
                     @empty

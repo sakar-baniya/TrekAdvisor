@@ -13,6 +13,8 @@ use App\Models\Departure;
  */
 class BookingSessionService
 {
+    public const SESSION_KEY = 'trek_booking_session';
+
     /**
      * Yo method le store related business flow execute garcha.
      *

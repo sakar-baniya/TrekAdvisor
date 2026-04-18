@@ -49,6 +49,9 @@ class UpsertTrekService
         return DB::transaction(function () use ($request, $validated, $trek) {
             $trek->update($this->buildPayload($request, $validated, $trek));
             
+            // Sync the updated base price across all scheduled departures
+            $trek->departures()->update(['price' => $trek->base_price]);
+
             $this->syncItineraries($trek, $validated['itinerary'] ?? []);
             $this->trekGalleryService->syncUnifiedMedia($request, $trek);
 

@@ -35,7 +35,17 @@
                 </div>
                 <h3 class="text-base font-semibold text-slate-900">{{ $user->name }}</h3>
                 <p class="text-xs text-slate-500 mt-0.5">{{ ucfirst($user->role) }} Account</p>
-                
+
+                @if($avatarUrl)
+                    <form method="POST" action="{{ route('settings.avatar.destroy') }}" class="mt-3" onsubmit="return confirm('Are you sure you want to remove your photo?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-xs text-red-500 hover:text-red-700 font-medium transition-colors">
+                            <i class="fas fa-trash-alt mr-1 text-[10px]"></i> Remove Photo
+                        </button>
+                    </form>
+                @endif
+
                 <form id="avatar-form" method="POST" action="{{ route('settings.avatar.store') }}" enctype="multipart/form-data" class="hidden">
                     @csrf
                     <input type="file" id="avatar-input" name="avatar" onchange="this.form.submit()">

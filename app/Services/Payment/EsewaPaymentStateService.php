@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\DB;
  */
 class EsewaPaymentStateService
 {
+    public function __construct(
+        protected TrekPaymentService $trekPaymentService
+    ) {}
+
     /**
      * Yo method le markCheckoutCompleted related state change safely apply garcha.
      *

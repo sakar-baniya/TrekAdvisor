@@ -52,7 +52,7 @@
 
             <!-- Brand Name -->
             <div class="text-center">
-                <h1 class="text-2xl font-black text-slate-900 tracking-tighter uppercase leading-none">TrekAdvisor</h1>
+                <h1 class="text-2xl font-semibold text-slate-900 tracking-tighter uppercase leading-none">TrekAdvisor</h1>
                 <div class="flex justify-center mt-2">
                     <div class="h-1 w-8 bg-slate-900 rounded-full"></div>
                 </div>
@@ -76,7 +76,7 @@
                 <!-- Session Status Messages -->
                 @if(session('status'))
                     <div class="mb-6 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-xl">
-                        <p class="text-[10px] font-black text-emerald-800 uppercase tracking-widest leading-none mb-1">Status Update</p>
+                        <p class="text-[10px] font-semibold text-emerald-800 uppercase tracking-widest leading-none mb-1">Status Update</p>
                         <p class="text-xs font-semibold text-emerald-600">{{ session('status') }}</p>
                     </div>
                 @endif
@@ -84,7 +84,7 @@
                 <!-- Validation Errors (Global Alert) -->
                 @if($errors->any())
                     <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-                        <p class="text-[10px] font-black text-red-800 uppercase tracking-widest leading-none mb-1">Alert</p>
+                        <p class="text-[10px] font-semibold text-red-800 uppercase tracking-widest leading-none mb-1">Alert</p>
                         <p class="text-xs font-semibold text-red-600">{{ $errorMessage }}</p>
                     </div>
                 @endif

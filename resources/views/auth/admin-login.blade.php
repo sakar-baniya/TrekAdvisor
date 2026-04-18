@@ -22,7 +22,7 @@
                        class="auth-input pl-14"
                        placeholder="admin@trekadvisor.com" />
             </div>
-            @error('email') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+            @error('email') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
         </div>
 
         <!-- Password -->
@@ -30,7 +30,7 @@
             <div class="flex items-center justify-between">
                 <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Security Key</label>
                 @if (Route::has('password.request'))
-                    <a class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors" href="{{ route('password.request') }}">
+                    <a class="text-[10px] font-semibold uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors" href="{{ route('password.request') }}">
                         Forgot?
                     </a>
                 @endif
@@ -50,16 +50,16 @@
                     <i class="fas text-[10px]" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
                 </button>
             </div>
-            @error('password') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+            @error('password') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
         </div>
 
-        <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-[0.2em] text-xs hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98]">
+        <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-semibold uppercase tracking-[0.2em] text-xs hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98]">
             Authenticate Access
         </button>
     </form>
 
     <x-slot name="footer">
-        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+        <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">
             Not an admin? 
             <a href="{{ route('login') }}" class="text-slate-900 hover:text-slate-700 transition-colors ml-1">
                 Customer Sign In
@@ -68,7 +68,7 @@
     </x-slot>
 
     <x-slot name="back">
-        <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
+        <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
             <i class="fas fa-arrow-left text-[10px]"></i>
             Return to Site
         </a>

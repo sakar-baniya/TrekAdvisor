@@ -72,10 +72,10 @@
                                 <span>{{ $review->is_flagged ? 'Unflag' : 'Flag' }}</span>
                             </button>
                         </form>
-                        <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}">
+                        <form method="POST" action="{{ route('admin.reviews.destroy', $review) }}" onsubmit="return confirm('Are you sure you want to delete this review?');">
                             @csrf
                             @method('DELETE')
-                            <button type="button" class="admin-danger-button" data-confirm="delete-review">
+                            <button type="submit" class="admin-danger-button">
                                 <i class="fas fa-trash"></i>
                                 <span>Delete</span>
                             </button>

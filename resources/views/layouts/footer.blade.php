@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="bg-slate-900 text-slate-300 py-12 mt-auto border-t border-slate-800">
+<footer class="bg-slate-900 text-slate-300 py-12 mt-auto border-t border-slate-800 print:hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <!-- Branding -->

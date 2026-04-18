@@ -26,7 +26,7 @@
         <div class="absolute inset-0 flex flex-col justify-end pb-12">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="flex flex-wrap items-center gap-4 mb-4">
-                    <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/90 backdrop-blur-sm text-slate-900 shadow-sm">
+                    <span class="px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-widest bg-white/90 backdrop-blur-sm text-slate-900 shadow-sm">
                         <i class="fas fa-map-marker-alt text-slate-900 mr-1.5"></i> {{ $hotel->location }}
                     </span>
                     <div class="flex items-center gap-2 text-amber-400 font-bold">
@@ -35,7 +35,7 @@
                         <span class="text-slate-400 font-medium text-sm">({{ $hotel->reviews_count }} reviews)</span>
                     </div>
                 </div>
-                <h1 class="text-4xl md:text-5xl font-black text-white tracking-tight">{{ $hotel->name }}</h1>
+                <h1 class="text-4xl md:text-5xl font-semibold text-white tracking-tight">{{ $hotel->name }}</h1>
             </div>
         </div>
     </section>
@@ -48,7 +48,7 @@
                 <!-- Gallery Grid -->
                 @if ($galleryImages->isNotEmpty())
                     <section>
-                        <h2 class="text-xs font-black text-slate-400 uppercase tracking-widest mb-6 px-1">Property Gallery</h2>
+                        <h2 class="text-xs font-semibold text-slate-400 uppercase tracking-widest mb-6 px-1">Property Gallery</h2>
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                             @foreach ($galleryImages->take(6) as $image)
                                 <div class="aspect-[4/3] rounded-3xl overflow-hidden bg-slate-100 shadow-sm border border-slate-100 group">
@@ -61,7 +61,7 @@
 
                 <!-- Overview -->
                 <section>
-                    <h2 class="text-2xl font-black text-slate-900 tracking-tight mb-6">Hotel Overview</h2>
+                    <h2 class="text-2xl font-semibold text-slate-900 tracking-tight mb-6">Hotel Overview</h2>
                     <div class="text-slate-600 leading-relaxed space-y-4 text-lg">
                         {!! nl2br(e($hotel->description)) !!}
                     </div>
@@ -69,7 +69,7 @@
 
                 <!-- Room Types -->
                 <section>
-                    <h2 class="text-2xl font-black text-slate-900 tracking-tight mb-8">Available Room Categories</h2>
+                    <h2 class="text-2xl font-semibold text-slate-900 tracking-tight mb-8">Available Room Categories</h2>
                     <div class="space-y-6">
                         @forelse ($hotel->rooms as $room)
                             <div class="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center gap-6 group">
@@ -87,7 +87,7 @@
                                     <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1 md:justify-end">Price per Night</span>
                                     <div class="flex items-baseline gap-1 md:justify-end">
                                         <span class="text-xs font-bold text-slate-500">NPR</span>
-                                        <strong class="text-2xl font-black text-slate-900 tracking-tight">{{ number_format($room->price_per_night, 0) }}</strong>
+                                        <strong class="text-2xl font-semibold text-slate-900 tracking-tight">{{ number_format($room->price_per_night, 0) }}</strong>
                                     </div>
                                 </div>
                             </div>
@@ -104,10 +104,10 @@
             <aside class="space-y-8">
                 <div class="bg-white rounded-xl shadow-lg shadow-slate-900/5 border border-slate-100 overflow-hidden sticky top-24">
                     <div class="bg-slate-900 p-10 text-white text-center">
-                        <span class="block text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Starting from</span>
+                        <span class="block text-slate-400 text-[10px] font-semibold uppercase tracking-widest mb-2">Starting from</span>
                         <div class="flex items-baseline justify-center gap-1">
                              <span class="text-sm font-bold opacity-60">NPR</span>
-                             <strong class="text-4xl font-black tracking-tight">{{ number_format($hotel->rooms->min('price_per_night') ?? 0, 0) }}</strong>
+                             <strong class="text-4xl font-semibold tracking-tight">{{ number_format($hotel->rooms->min('price_per_night') ?? 0, 0) }}</strong>
                         </div>
                         <span class="block text-slate-400 text-xs font-semibold mt-1">per night</span>
                     </div>
@@ -166,7 +166,7 @@
                                 </div>
 
                                 <div class="pt-4">
-                                    <button type="submit" class="w-full inline-flex justify-center items-center py-4 px-6 bg-slate-900 border border-transparent rounded-2xl shadow-xl text-sm font-black text-white hover:bg-slate-800 focus:outline-none transition-all duration-200">
+                                    <button type="submit" class="w-full inline-flex justify-center items-center py-4 px-6 bg-slate-900 border border-transparent rounded-2xl shadow-xl text-sm font-semibold text-white hover:bg-slate-800 focus:outline-none transition-all duration-200">
                                         Request Booking
                                     </button>
                                     <p class="text-[10px] text-slate-400 font-bold text-center mt-4 px-2 uppercase tracking-tighter">No payment required now. Property will confirm shortly.</p>
@@ -179,7 +179,7 @@
                         @else
                             <div class="p-8 text-center bg-slate-50 rounded-3xl border border-slate-100">
                                 <p class="text-sm text-slate-500 font-bold mb-6">Sign in to request a stay</p>
-                                <a href="{{ route('login') }}" class="inline-flex py-3 px-8 bg-white border border-slate-300 rounded-xl font-black text-slate-900 hover:bg-slate-50 transition-colors shadow-sm text-xs uppercase tracking-widest">
+                                <a href="{{ route('login') }}" class="inline-flex py-3 px-8 bg-white border border-slate-300 rounded-xl font-semibold text-slate-900 hover:bg-slate-50 transition-colors shadow-sm text-xs uppercase tracking-widest">
                                     Sign In
                                 </a>
                             </div>

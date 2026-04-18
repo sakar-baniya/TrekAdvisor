@@ -6,20 +6,20 @@
             <div class="flex items-center justify-between mb-12 relative">
                 <div class="absolute top-1/2 left-0 w-full h-0.5 bg-slate-200 -z-0"></div>
                 <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold">
                         <i class="fas fa-check text-xs"></i>
                     </div>
-                    <span class="mt-2 text-[10px] font-black uppercase tracking-widest text-slate-400">Info</span>
+                    <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Info</span>
                 </div>
                 <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black">
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold">
                         <i class="fas fa-check text-xs"></i>
                     </div>
-                    <span class="mt-2 text-[10px] font-black uppercase tracking-widest text-slate-400">Passengers</span>
+                    <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400">Passengers</span>
                 </div>
                 <div class="relative z-10 flex flex-col items-center">
-                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-black shadow-lg shadow-slate-900/20">3</div>
-                    <span class="mt-2 text-[10px] font-black uppercase tracking-widest text-slate-900">Confirm</span>
+                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold shadow-lg shadow-slate-900/20">3</div>
+                    <span class="mt-2 text-[10px] font-semibold uppercase tracking-widest text-slate-900">Confirm</span>
                 </div>
             </div>
 
@@ -41,7 +41,7 @@
                     <i class="fas {{ $icon }}"></i>
                 </div>
 
-                <h1 class="text-3xl md:text-4xl font-black text-slate-900 tracking-tight mb-4">
+                <h1 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight mb-4">
                     {{ $isPaid ? 'Payment Received!' : ($isCancelled ? 'Checkout Cancelled' : 'Payment Pending') }}
                 </h1>
                 
@@ -57,32 +57,32 @@
 
                 <!-- Summary Info -->
                 <div class="bg-slate-50 rounded-3xl p-8 space-y-4 border border-slate-100 mb-12 text-left shadow-inner">
-                    <div class="flex justify-between items-center text-xs font-black text-slate-400 uppercase tracking-widest">
+                    <div class="flex justify-between items-center text-xs font-semibold text-slate-400 uppercase tracking-widest">
                         <span>Reference</span>
                         <span class="text-slate-900">{{ $booking->booking_reference }}</span>
                     </div>
-                    <div class="flex justify-between items-center text-xs font-black text-slate-400 uppercase tracking-widest">
+                    <div class="flex justify-between items-center text-xs font-semibold text-slate-400 uppercase tracking-widest">
                         <span>Trek Date</span>
                         <span class="text-slate-900">{{ $booking->departure->start_date->format('M d, Y') }}</span>
                     </div>
-                    <div class="flex justify-between items-center text-xs font-black text-slate-400 uppercase tracking-widest">
+                    <div class="flex justify-between items-center text-xs font-semibold text-slate-400 uppercase tracking-widest">
                         <span>Status</span>
                         <span class="text-slate-900">{{ $booking->status }}</span>
                     </div>
                     <div class="pt-6 border-t border-slate-200 flex justify-between items-center">
-                        <span class="text-xs font-black text-slate-400 uppercase tracking-widest">Total NPR</span>
-                        <strong class="text-3xl font-black text-slate-900 tracking-tight">NPR {{ number_format($booking->total_price, 0) }}</strong>
+                        <span class="text-xs font-semibold text-slate-400 uppercase tracking-widest">Total NPR</span>
+                        <strong class="text-3xl font-semibold text-slate-900 tracking-tight">NPR {{ number_format($booking->total_price, 0) }}</strong>
                     </div>
                 </div>
 
                 <!-- Actions -->
                 <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
                     @if (! $isPaid)
-                        <a href="{{ $retryRoute }}" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white text-sm font-black rounded-2xl shadow-xl hover:bg-slate-800 transition-all uppercase tracking-widest">
+                        <a href="{{ $retryRoute }}" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white text-sm font-semibold rounded-2xl shadow-xl hover:bg-slate-800 transition-all uppercase tracking-widest">
                             Retry Payment
                         </a>
                     @else
-                        <a href="{{ route('customer.dashboard') }}" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white text-sm font-black rounded-2xl shadow-xl hover:bg-slate-800 transition-all uppercase tracking-widest">
+                        <a href="{{ route('customer.dashboard') }}" class="w-full sm:w-auto px-8 py-4 bg-slate-900 text-white text-sm font-semibold rounded-2xl shadow-xl hover:bg-slate-800 transition-all uppercase tracking-widest">
                             My Dashboard
                         </a>
                     @endif

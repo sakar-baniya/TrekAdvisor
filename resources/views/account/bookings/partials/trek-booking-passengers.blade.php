@@ -1,44 +1,42 @@
-<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm animate-fadeIn">
-    <div class="flex items-center justify-between mb-8">
-        <div class="flex items-center gap-4">
-            <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center text-base">
-                <i class="fas fa-users"></i>
-            </div>
+<div class="bg-white rounded-2xl border border-slate-200 p-6 animate-fadeIn">
+    <div class="flex items-center justify-between mb-6 border-b border-slate-100 pb-4">
+        <div class="flex items-center gap-3">
+            <i class="fas fa-users w-5 h-5 text-slate-400 text-center"></i>
             <div>
-                <h2 class="text-base font-semibold text-slate-900">Traveler Details</h2>
+                <h2 class="text-lg font-semibold text-slate-900">Traveler Details</h2>
                 <p class="text-sm text-slate-500">Official names and passport information for everyone in this booking.</p>
             </div>
         </div>
         @if ($canEditPassengers)
-            <x-ui.button variant="secondary" data-passenger-edit-open>
+            <x-ui.button variant="secondary" class="whitespace-nowrap text-sm px-4 py-2" data-passenger-edit-open>
                 Edit Travelers
             </x-ui.button>
         @endif
     </div>
 
     @if ($booking->passengers->isEmpty())
-        <div class="text-center py-6 bg-slate-50 rounded-lg border border-dashed border-slate-200">
-            <p class="text-xs font-medium text-slate-500 italic">No traveler details provided yet.</p>
+        <div class="text-center py-6 bg-slate-50 rounded-xl border border-dashed border-slate-200">
+            <p class="text-sm text-slate-500 italic">No traveler details provided yet.</p>
         </div>
     @else
         <div data-passenger-section>
             <!-- View Mode -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6" data-passenger-view>
                 @foreach ($booking->passengers as $index => $passenger)
-                    <div class="p-5 rounded-lg bg-slate-50/50 border border-slate-200/50">
-                        <span class="inline-block text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-3">Traveler {{ $index + 1 }}</span>
-                        <div class="space-y-2.5">
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-slate-500">Legal Name</span>
-                                <span class="text-xs font-semibold text-slate-900">{{ $passenger->full_name }}</span>
+                    <div class="p-5 rounded-xl bg-slate-50/50 border border-slate-200">
+                        <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 border-b border-slate-200/50 pb-2">Traveler {{ $index + 1 }}</div>
+                        <div class="grid grid-cols-2 gap-y-4 gap-x-4">
+                            <div class="col-span-2">
+                                <div class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-1">Legal Name</div>
+                                <div class="text-sm font-semibold text-slate-900">{{ $passenger->full_name }}</div>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-slate-500">Age</span>
-                                <span class="text-xs font-semibold text-slate-900">{{ $passenger->age ?? '—' }}</span>
+                            <div>
+                                <div class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-1">Age</div>
+                                <div class="text-sm font-semibold text-slate-900">{{ $passenger->age ?? '—' }}</div>
                             </div>
-                            <div class="flex items-center justify-between">
-                                <span class="text-xs text-slate-500">Passport</span>
-                                <span class="text-xs font-semibold text-slate-900 font-mono">{{ $passenger->passport_number ?? '—' }}</span>
+                            <div>
+                                <div class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-1">Passport</div>
+                                <div class="text-sm font-semibold text-slate-900 font-mono">{{ $passenger->passport_number ?? '—' }}</div>
                             </div>
                         </div>
                     </div>

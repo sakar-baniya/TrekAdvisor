@@ -14,6 +14,9 @@ use RuntimeException;
  */
 class StartTrekBookingService
 {
+    public function __construct(
+        protected BookingSessionService $bookingSessionService
+    ) {}
     /**
      * Yo method le loadDeparture related data prepare/fetch garcha.
      *

@@ -4,27 +4,28 @@
     $canEditPassengers = ! $isLocked;
 @endphp
 
-<x-customer-layout 
-    title="Booking Details" 
-    subtitle="Reference: {{ $booking->booking_reference }}"
-    :breadcrumb="['My Bookings' => route('account.bookings.index'), 'Details' => null]"
->
-    <div class="space-y-6 max-w-5xl">
-        <!-- Status Banner -->
-        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-300 flex items-center justify-center text-lg">
-                    <i class="fas fa-info-circle"></i>
-                </div>
-                <div class="flex flex-col">
-                    <span class="text-xs text-slate-500 leading-none mb-1.5">Booking Status</span>
-                    <x-customer.status-badge :status="$booking->status" />
-                </div>
-            </div>
-            
-            <a href="{{ route('account.bookings.index') }}" class="text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
-                <i class="fas fa-arrow-left mr-1.5 opacity-60"></i> Back to list
+<x-customer-layout>
+    <div class="space-y-4 max-w-5xl">
+        <!-- Back Link -->
+        <div>
+            <a href="{{ route('account.bookings.index') }}" class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors mb-2">
+                <i class="fas fa-arrow-left mr-2"></i> Back to list
             </a>
+        </div>
+
+        <!-- Header Row -->
+        <div class="flex flex-col md:flex-row md:items-baseline md:justify-between gap-4 mb-8">
+            <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight">Booking Details</h1>
+            <p class="text-sm text-slate-500 font-mono select-all">Ref: {{ $booking->booking_reference }}</p>
+        </div>
+
+        <!-- Status Card -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-4 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-info-circle w-5 h-5 text-slate-400 text-center"></i>
+                <span class="text-sm font-semibold text-slate-900">Booking Status</span>
+            </div>
+            <x-customer.status-badge :status="$booking->status" />
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

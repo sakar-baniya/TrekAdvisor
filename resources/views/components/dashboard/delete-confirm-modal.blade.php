@@ -38,7 +38,7 @@
             class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 w-full max-w-md overflow-hidden relative"
         >
             <div class="px-10 pt-10 pb-6 border-b border-slate-50 flex items-center justify-between">
-                <h3 class="text-xl font-black text-slate-900 tracking-tight">Confirm Deletion</h3>
+                <h3 class="text-xl font-semibold text-slate-900 tracking-tight">Confirm Deletion</h3>
                 <button @click="open = false" class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center">
                     <i class="fas fa-times text-xs"></i>
                 </button>
@@ -49,16 +49,16 @@
                     Are you sure you want to delete <strong class="text-slate-900" x-text="trekName"></strong>? 
                 </p>
                 <div class="mt-6 p-4 bg-red-50 border-l-4 border-red-400 rounded-r-xl">
-                    <p class="text-[10px] font-black text-red-800 uppercase tracking-widest leading-none">Warning</p>
+                    <p class="text-[10px] font-semibold text-red-800 uppercase tracking-widest leading-none">Warning</p>
                     <p class="text-xs font-semibold text-red-600 mt-2">This action is irreversible and will remove all associated departures.</p>
                 </div>
             </div>
 
             <div class="px-10 py-8 bg-slate-50/50 flex flex-col sm:flex-row items-center justify-end gap-3">
-                <button @click="open = false" class="w-full sm:w-auto px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
+                <button @click="open = false" class="w-full sm:w-auto px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
                     Cancel
                 </button>
-                <button @click="submit()" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20">
+                <button @click="submit()" class="w-full sm:w-auto px-8 py-3 bg-red-600 text-white text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-red-700 transition-all shadow-xl shadow-red-600/20">
                     Delete Permanently
                 </button>
             </div>

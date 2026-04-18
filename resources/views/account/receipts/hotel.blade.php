@@ -14,14 +14,14 @@
             <!-- Header -->
             <div class="flex flex-col md:flex-row justify-between items-start gap-8 border-b border-slate-100 pb-8 mb-10">
                 <div>
-                    <h1 class="text-2xl font-semibold text-slate-900 tracking-tight mb-2">Reservation Receipt</h1>
+                    <h1 class="text-2xl md:text-3xl font-bold text-slate-900 tracking-tight mb-2">Reservation Receipt</h1>
                     <div class="flex items-center gap-2.5">
-                        <span class="text-xs font-semibold text-slate-400">Reference</span>
-                        <span class="text-xs font-bold text-slate-900 font-mono">{{ $booking->booking_reference ?? 'HOTEL-STAY' }}</span>
+                        <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Reference</span>
+                        <span class="text-sm font-semibold text-slate-900 font-mono select-all">{{ $booking->booking_reference ?? 'HOTEL-STAY' }}</span>
                     </div>
                 </div>
                 <div class="text-left md:text-right">
-                    <p class="text-xs font-semibold text-slate-400 mb-1">Date Issued</p>
+                    <p class="text-xs font-medium uppercase tracking-wider text-slate-500 mb-1">Date Issued</p>
                     <p class="text-sm font-semibold text-slate-900">{{ now()->format('M d, Y') }}</p>
                 </div>
             </div>
@@ -30,14 +30,14 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
                 <!-- Hotel Info -->
                 <div class="space-y-6">
-                    <h2 class="text-xs font-semibold text-slate-900 border-b border-slate-50 pb-3">Hotel Information</h2>
+                    <h2 class="text-lg font-semibold text-slate-900 border-b border-slate-100 pb-3">Hotel Information</h2>
                     <div class="space-y-4">
                         <div class="space-y-0.5">
-                            <p class="text-xs text-slate-500">Property</p>
+                            <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Property</p>
                             <p class="text-sm font-semibold text-slate-900">{{ $booking->hotelRoom?->hotel?->name }}</p>
                         </div>
                         <div class="space-y-0.5">
-                            <p class="text-xs text-slate-500">Room Type</p>
+                            <p class="text-xs font-medium uppercase tracking-wider text-slate-500">Room Type</p>
                             <p class="text-sm font-semibold text-slate-900">{{ $booking->hotelRoom?->room_type ?? 'Standard Room' }}</p>
                         </div>
                     </div>
@@ -45,34 +45,34 @@
 
                 <!-- Stay Summary -->
                 <div class="space-y-6">
-                    <h2 class="text-xs font-semibold text-slate-900 border-b border-slate-50 pb-3">Stay Details</h2>
+                    <h2 class="text-lg font-semibold text-slate-900 border-b border-slate-100 pb-3">Stay Details</h2>
                     <div class="space-y-4">
                         <div class="flex justify-between items-center">
-                            <span class="text-xs text-slate-500">Check-In</span>
-                            <span class="text-xs font-semibold text-slate-900">{{ optional($booking->check_in)->format('M d, Y') }}</span>
+                            <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Check-In</span>
+                            <span class="text-sm font-semibold text-slate-900">{{ optional($booking->check_in)->format('M d, Y') }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-xs text-slate-500">Check-Out</span>
-                            <span class="text-xs font-semibold text-slate-900">{{ optional($booking->check_out)->format('M d, Y') }}</span>
+                            <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Check-Out</span>
+                            <span class="text-sm font-semibold text-slate-900">{{ optional($booking->check_out)->format('M d, Y') }}</span>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-xs text-slate-500">Reservation</span>
-                            <span class="text-xs font-semibold text-slate-900">{{ $booking->num_rooms }} Room{{ $booking->num_rooms > 1 ? 's' : '' }}</span>
+                            <span class="text-xs font-medium uppercase tracking-wider text-slate-500">Reservation</span>
+                            <span class="text-sm font-semibold text-slate-900">{{ $booking->num_rooms }} Room{{ $booking->num_rooms > 1 ? 's' : '' }}</span>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Payment Summary -->
-            <div class="mt-12 bg-slate-950 p-8 rounded-xl text-white">
+            <div class="mt-12 bg-slate-900 p-8 rounded-2xl text-white">
                 <div class="flex flex-col md:flex-row justify-between items-center gap-6">
                     <div class="text-center md:text-left">
-                        <p class="text-xs font-medium text-slate-400 mb-1">Payment Method</p>
+                        <p class="text-xs font-medium uppercase tracking-wider text-slate-400 mb-1">Payment Method</p>
                         <p class="text-sm font-semibold">{{ $payment?->gateway ? ucfirst($payment->gateway) : 'Manual Settlement' }}</p>
                     </div>
                     <div class="text-center md:text-right">
-                        <p class="text-xs font-medium text-slate-400 mb-1">Total Amount Paid</p>
-                        <p class="text-4xl font-semibold">{{ $payment?->currency ?? 'NPR' }} {{ number_format($booking->total_price) }}</p>
+                        <p class="text-xs font-medium uppercase tracking-wider text-slate-400 mb-1">Total Amount Paid</p>
+                        <p class="text-3xl font-bold tracking-tight">{{ $payment?->currency ?? 'NPR' }} {{ number_format($booking->total_price) }}</p>
                     </div>
                 </div>
             </div>

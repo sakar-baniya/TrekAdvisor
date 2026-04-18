@@ -49,7 +49,7 @@
             class="bg-white rounded-[2.5rem] shadow-2xl border border-slate-100 w-full max-w-lg overflow-hidden relative"
         >
             <div class="px-10 pt-10 pb-6 border-b border-slate-50 flex items-center justify-between">
-                <h3 x-text="title" class="text-xl font-black text-slate-900 tracking-tight"></h3>
+                <h3 x-text="title" class="text-xl font-semibold text-slate-900 tracking-tight"></h3>
                 <button @click="open = false" class="w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-slate-900 hover:text-white transition-all flex items-center justify-center">
                     <i class="fas fa-times text-xs"></i>
                 </button>
@@ -58,15 +58,15 @@
             <div class="px-10 py-8">
                 <p x-text="message" class="text-slate-600 font-medium leading-relaxed"></p>
                 <div x-show="warning" class="mt-4 p-4 bg-amber-50 border-l-4 border-amber-400 rounded-r-xl">
-                    <p x-text="warning" class="text-[10px] font-black text-amber-800 uppercase tracking-widest"></p>
+                    <p x-text="warning" class="text-[10px] font-semibold text-amber-800 uppercase tracking-widest"></p>
                 </div>
             </div>
 
             <div class="px-10 py-8 bg-slate-50/50 flex items-center justify-end gap-3">
-                <button @click="open = false" class="px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
+                <button @click="open = false" class="px-8 py-3 bg-white border border-slate-200 text-slate-600 text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-100 transition-all">
                     Cancel
                 </button>
-                <button @click="confirm()" class="px-8 py-3 bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20">
+                <button @click="confirm()" class="px-8 py-3 bg-slate-900 text-white text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20">
                     Confirm Action
                 </button>
             </div>

@@ -44,7 +44,7 @@
                 </div>
 
                 <div class="flex items-center justify-between pt-6 border-t border-slate-100 mt-8">
-                    <a href="{{ route('settings.security.show') }}" class="text-[11px] font-black text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-colors">
+                    <a href="{{ route('settings.security.show') }}" class="text-[11px] font-semibold text-slate-400 hover:text-slate-600 uppercase tracking-widest transition-colors">
                         <i class="fas fa-arrow-left mr-2"></i> Cancel
                     </a>
                     <x-ui.button type="submit">

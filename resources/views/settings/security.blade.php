@@ -24,7 +24,7 @@
                 </div>
             </div>
             
-            <a href="{{ route('settings.security.password.show') }}" class="inline-flex items-center px-6 py-2.5 bg-slate-900 text-white text-[11px] font-black rounded-xl hover:bg-slate-800 transition-colors shadow-sm uppercase tracking-widest">
+            <a href="{{ route('settings.security.password.show') }}" class="inline-flex items-center px-6 py-2.5 bg-slate-900 text-white text-[11px] font-semibold rounded-xl hover:bg-slate-800 transition-colors shadow-sm uppercase tracking-widest">
                 Update Password
             </a>
         </div>

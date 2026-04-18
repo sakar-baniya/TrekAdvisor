@@ -13,6 +13,11 @@ use App\Models\Payment;
  */
 class EsewaCheckoutWorkflowService
 {
+    public function __construct(
+        protected EsewaCheckoutService $esewaCheckoutService,
+        protected EsewaPaymentStateService $esewaPaymentStateService
+    ) {}
+
     /**
      * Yo method le failed/pending payment retry flow ko naya checkout link/session banaucha.
      *
@@ -32,6 +37,9 @@ class EsewaCheckoutWorkflowService
      */
     public function buildRedirectData(Payment $payment): array
     {
+        // Refresh transaction ID to prevent 'Duplicate transaction UUID' error on eSewa retries
+        $payment->transaction_id = 'TXN-' . strtoupper(\Illuminate\Support\Str::random(12));
+
         $payload = $this->esewaCheckoutService->createCheckoutPayload(
             $payment,
             route('esewa.success', ['payment' => $payment]),

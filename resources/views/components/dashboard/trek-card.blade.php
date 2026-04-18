@@ -21,9 +21,9 @@
                 </button>
                 <div class="trek-card__dropdown" tabindex="-1">
                     <a href="{{ route('admin.treks.edit', $trek) }}" class="dropdown-item"><i class="fas fa-edit"></i> Edit</a>
-                    <form action="{{ route('admin.treks.destroy', $trek) }}" method="POST">
+                    <form action="{{ route('admin.treks.destroy', $trek) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this trek?');">
                         @csrf @method('DELETE')
-                        <button type="button" class="dropdown-item dropdown-item--danger" data-confirm="delete-trek"><i class="fas fa-trash-alt"></i> Delete</button>
+                        <button type="submit" class="dropdown-item dropdown-item--danger"><i class="fas fa-trash-alt"></i> Delete</button>
                     </form>
                 </div>
             </div>

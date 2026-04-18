@@ -16,7 +16,7 @@
                     <i class="fas fa-user absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
                     <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus class="auth-input pl-14" placeholder="Rajesh Hamal" />
                 </div>
-                @error('name') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+                @error('name') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-1.5">
@@ -25,7 +25,7 @@
                     <i class="fas fa-phone absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
                     <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" inputmode="numeric" pattern="\d{10}" maxlength="10" class="auth-input pl-14" placeholder="9800012345" />
                 </div>
-                @error('phone') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+                @error('phone') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
             </div>
         </div>
 
@@ -37,7 +37,7 @@
                     <i class="fas fa-envelope absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
                     <input id="email" type="email" name="email" value="{{ old('email') }}" required class="auth-input pl-14" placeholder="hotel@example.com" />
                 </div>
-                @error('email') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+                @error('email') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-1.5">
@@ -46,7 +46,7 @@
                     <i class="fas fa-building absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
                     <input id="hotel_name" type="text" name="hotel_name" value="{{ old('hotel_name') }}" required class="auth-input pl-14" placeholder="Hotel Everest View" />
                 </div>
-                @error('hotel_name') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+                @error('hotel_name') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
             </div>
         </div>
 
@@ -61,7 +61,7 @@
                         <i class="fas text-[10px]" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
                     </button>
                 </div>
-                @error('password') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+                @error('password') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-1.5" x-data="{ show: false }">
@@ -76,13 +76,13 @@
             </div>
         </div>
 
-        <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-[0.2em] text-xs hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98]">
+        <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-semibold uppercase tracking-[0.2em] text-xs hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98]">
             Apply for Partnership
         </button>
     </form>
 
     <x-slot name="footer">
-        <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] font-black text-slate-400 uppercase tracking-widest text-center">
+        <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-[10px] font-semibold text-slate-400 uppercase tracking-widest text-center">
             <p><a href="{{ route('register') }}" class="text-slate-900 hover:text-slate-700 transition-colors">Trekker signup</a></p>
             <span class="hidden md:inline text-slate-200">|</span>
             <p><a href="{{ route('login') }}" class="text-slate-900 hover:text-slate-700 transition-colors">Sign in</a></p>

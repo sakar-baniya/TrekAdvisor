@@ -15,6 +15,12 @@ use Stripe\Event;
  */
 class StripeCheckoutWorkflowService
 {
+    public function __construct(
+        protected TrekPaymentService $trekPaymentService,
+        protected \App\Services\StripeCheckoutService $stripeCheckoutService,
+        protected StripePaymentStateService $stripePaymentStateService
+    ) {}
+
     /**
      * Yo method le failed/pending payment retry flow ko naya checkout link/session banaucha.
      *

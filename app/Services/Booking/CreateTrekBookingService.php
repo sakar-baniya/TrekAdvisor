@@ -20,6 +20,12 @@ use Throwable;
  */
 class CreateTrekBookingService
 {
+    public function __construct(
+        protected StripeCheckoutWorkflowService $stripeCheckoutWorkflowService,
+        protected EsewaCheckoutWorkflowService $esewaCheckoutWorkflowService,
+        protected BookingSessionService $bookingSessionService
+    ) {}
+
     /**
      * Yo method le handle related business flow execute garcha.
      *
