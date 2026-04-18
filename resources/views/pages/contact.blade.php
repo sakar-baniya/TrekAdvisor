@@ -2,11 +2,11 @@
     <!-- Hero Section -->
     <section class="bg-slate-900 overflow-hidden relative py-24">
         <!-- Decoration -->
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-slate-500/10 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-slate-500/10 rounded-full blur-3xl"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <p class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Support Center</p>
+            <p class="text-slate-400 font-bold tracking-widest uppercase text-sm mb-4">Support Center</p>
             <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">We would love to hear from you</h1>
             <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">Reach out for booking support, trek planning questions, or partnership conversations.</p>
         </div>
@@ -24,8 +24,8 @@
                         </div>
 
                         @if (session('success'))
-                            <div class="mb-8 p-4 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-2xl flex items-center gap-3 font-semibold">
-                                <i class="fas fa-check-circle text-emerald-500 text-xl"></i>
+                            <div class="mb-8 p-4 bg-slate-50 border border-slate-200 text-slate-800 rounded-2xl flex items-center gap-3 font-semibold">
+                                <i class="fas fa-check-circle text-slate-900 text-xl"></i>
                                 {{ session('success') }}
                             </div>
                         @endif
@@ -85,7 +85,7 @@
                         <div class="space-y-8 relative z-10">
                             <div class="flex items-start gap-4">
                                 <div class="bg-white/10 p-3 rounded-xl">
-                                    <i class="fas fa-map-marker-alt text-emerald-400"></i>
+                                    <i class="fas fa-map-marker-alt text-slate-400"></i>
                                 </div>
                                 <div>
                                     <strong class="block text-lg">Kathmandu, Nepal</strong>
@@ -95,7 +95,7 @@
 
                             <div class="flex items-start gap-4">
                                 <div class="bg-white/10 p-3 rounded-xl">
-                                    <i class="fas fa-envelope text-emerald-400"></i>
+                                    <i class="fas fa-envelope text-slate-400"></i>
                                 </div>
                                 <div>
                                     <strong class="block text-lg line-clamp-1">hello@trekadvisor.com</strong>
@@ -105,7 +105,7 @@
 
                             <div class="flex items-start gap-4">
                                 <div class="bg-white/10 p-3 rounded-xl">
-                                    <i class="fas fa-phone-alt text-emerald-400"></i>
+                                    <i class="fas fa-phone-alt text-slate-400"></i>
                                 </div>
                                 <div>
                                     <strong class="block text-lg line-clamp-1">+977 9800000000</strong>
@@ -115,7 +115,7 @@
 
                             <div class="pt-6 border-t border-white/10">
                                 <div class="flex items-center gap-3">
-                                    <div class="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                                    <div class="w-2 h-2 bg-slate-500 rounded-full animate-pulse"></div>
                                     <span class="text-sm font-semibold">Response time: Within 24 Hours</span>
                                 </div>
                             </div>

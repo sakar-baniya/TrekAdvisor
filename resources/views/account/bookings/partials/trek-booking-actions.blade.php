@@ -1,37 +1,48 @@
-<section class="account-panel account-panel--actions">
-    <div class="account-panel__head">
-        <div>
-            <h2>Actions</h2>
-            <p>Download your receipt or manage this booking.</p>
-        </div>
-    </div>
+<div class="space-y-6">
+    <!-- Primary Actions -->
+    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-xs font-black text-slate-900 uppercase tracking-widest mb-4">Manage Booking</h3>
+        
+        <x-ui.button class="w-full justify-center" onclick="window.location.href='{{ route('account.bookings.treks.receipt', $booking) }}'">
+            <i class="fas fa-file-invoice mr-2"></i> Download Receipt
+        </x-ui.button>
+        
+        <x-ui.button variant="secondary" class="w-full justify-center" onclick="window.location.href='{{ route('treks.show', $booking->departure?->trek?->slug ?? '#') }}'">
+            <i class="fas fa-eye mr-2"></i> View Trek Details
+        </x-ui.button>
 
-    <div class="account-actions account-actions--priority">
-        <div class="account-actions__group">
-            <a href="{{ route('account.bookings.treks.receipt', $booking) }}" class="btn btn--primary">Download Receipt</a>
-            <a href="{{ route('treks.show', $booking->departure?->trek?->slug ?? '#') }}" class="btn btn--secondary">View Trek</a>
-            @if ($payment && $payment->status === 'pending' && $payment->gateway === 'stripe')
-                <a href="{{ route('stripe.retry', $payment) }}" class="btn btn--secondary">Pay Now</a>
-            @endif
-        </div>
-        @if (!in_array($booking->status, ['completed', 'cancelled']))
-            @if ($booking->status === 'cancellation_requested')
-                <form method="POST" action="{{ route('account.bookings.treks.cancel-withdraw', $booking) }}" data-confirm-form class="account-actions__group account-actions__group--right">
-                    @csrf
-                    @method('PATCH')
-                    <button type="button" class="btn btn--secondary" data-confirm-open data-confirm-title="Withdraw cancellation request?" data-confirm-message="This will keep your booking active and remove the cancellation request.">Withdraw Cancellation</button>
-                </form>
-            @else
-                <form method="POST" action="{{ route('account.bookings.treks.cancel', $booking) }}" data-confirm-form class="account-actions__group account-actions__group--right">
-                    @csrf
-                    @method('PATCH')
-                    <button type="button" class="btn btn--danger" data-confirm-open data-confirm-title="Request cancellation?" data-confirm-message="Your cancellation request will be reviewed and may incur fees based on trek policy.">Request Cancellation</button>
-                </form>
-            @endif
+        @if ($payment && $payment->status === 'pending' && $payment->gateway === 'stripe')
+            <x-ui.button variant="secondary" class="w-full bg-blue-50 text-blue-700 border-blue-100 hover:bg-blue-100 justify-center" onclick="window.location.href='{{ route('stripe.retry', $payment) }}'">
+                <i class="fas fa-credit-card mr-2"></i> Pay Now
+            </x-ui.button>
         @endif
     </div>
 
-    <p class="account-note">Cancellation requests within 14 days of departure may incur fees. Our team will confirm eligibility and refund details.</p>
+    <!-- Danger Zone -->
+    @if (!in_array($booking->status, ['completed', 'cancelled']))
+        <div class="bg-red-50/50 p-6 rounded-2xl border border-red-100">
+            <h3 class="text-[10px] font-black text-red-900 uppercase tracking-widest mb-2">Danger Zone</h3>
+            <p class="text-[10px] text-red-600 font-medium mb-4 leading-relaxed">
+                Requests within 14 days of departure may incur fees. Eligibility will be confirmed by our team.
+            </p>
 
-    @include('account.bookings.partials.cancel-confirmation-modal')
-</section>
+            @if ($booking->status === 'cancellation_requested')
+                <form method="POST" action="{{ route('account.bookings.treks.cancel-withdraw', $booking) }}">
+                    @csrf
+                    @method('PATCH')
+                    <x-ui.button variant="secondary" class="w-full justify-center bg-white" type="submit" onclick="return confirm('Withdraw cancellation request? This will keep your booking active.')">
+                        Withdraw Request
+                    </x-ui.button>
+                </form>
+            @else
+                <form method="POST" action="{{ route('account.bookings.treks.cancel', $booking) }}">
+                    @csrf
+                    @method('PATCH')
+                    <x-ui.button variant="danger" class="w-full justify-center" type="submit" onclick="return confirm('Request cancellation? Your request will be reviewed by our team.')">
+                        Request Cancellation
+                    </x-ui.button>
+                </form>
+            @endif
+        </div>
+    @endif
+</div>

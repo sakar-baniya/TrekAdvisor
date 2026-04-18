@@ -83,30 +83,10 @@ class HomeController extends Controller
     }
 
     /**
-     * Blog index page.
+     * Travel Guide index page.
      */
-    public function blog(): View
+    public function travelGuide(): View
     {
-        $posts = collect([
-            [
-                'category' => 'Hiking Tips',
-                'title' => 'How to prepare for your first Himalayan trek',
-                'excerpt' => 'Build confidence with a simple training rhythm, thoughtful packing, and a realistic route choice.',
-                'author' => 'TrekAdvisor Team',
-                'date' => 'March 2026',
-                'reading_time' => '5 min read',
-            ],
-            [
-                'category' => 'Trek Stories',
-                'title' => 'Sunrise moments that make mountain journeys unforgettable',
-                'excerpt' => 'The best treks are often remembered through small quiet moments, not just summit milestones.',
-                'author' => 'Expedition Journal',
-                'date' => 'February 2026',
-                'reading_time' => '4 min read',
-            ],
-        ]);
-
-        return view('pages.blog', compact('posts'));
+        return view('pages.travel-guide');
     }
 }
-

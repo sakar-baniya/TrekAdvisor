@@ -1,45 +1,35 @@
-<section class="account-panel account-panel--summary">
-    <div class="account-panel__head">
+<div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm animate-fadeIn">
+    <div class="flex items-center gap-4 mb-8">
+        <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center text-base">
+            <i class="fas fa-mountain"></i>
+        </div>
         <div>
-            <h2>{{ $booking->departure?->trek?->title ?? 'Trek Booking' }}</h2>
-            <p>Booking summary for this trek.</p>
+            <h2 class="text-base font-semibold text-slate-900">{{ $booking->departure?->trek?->title ?? 'Trek Booking' }}</h2>
+            <p class="text-sm text-slate-500">Essential details for your Himalayan adventure.</p>
         </div>
     </div>
 
-    <div class="account-summary-grid">
-        <div class="account-summary-card">
-            <div class="account-summary-row">
-                <span class="account-summary-label">Dates</span>
-                <span>{{ optional($booking->departure?->start_date)->format('F d, Y') }} - {{ optional($booking->departure?->end_date)->format('F d, Y') }}</span>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-6 gap-x-12">
+        <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-50 pb-4">
+                <span class="text-xs text-slate-500">Trek Dates</span>
+                <span class="text-sm font-semibold text-slate-900">{{ optional($booking->departure?->start_date)->format('M d') }} — {{ optional($booking->departure?->end_date)->format('M d, Y') }}</span>
             </div>
-            <div class="account-summary-row">
-                <span class="account-summary-label">Passengers</span>
-                <span>{{ $booking->total_passengers }}</span>
-            </div>
-            <div class="account-summary-row">
-                <span class="account-summary-label">Trek</span>
-                <span>{{ $booking->departure?->trek?->title ?? 'Trek Booking' }}</span>
+            <div class="flex items-center justify-between border-b border-slate-50 pb-4">
+                <span class="text-xs text-slate-500">Total Travelers</span>
+                <span class="text-sm font-semibold text-slate-900">{{ $booking->total_passengers }} Person{{ $booking->total_passengers > 1 ? 's' : '' }}</span>
             </div>
         </div>
-        <div class="account-summary-card">
-            <div class="account-summary-row">
-                <span class="account-summary-label">Payment status</span>
-                <span><x-account.status-badge :status="$paymentStatus" /></span>
+
+        <div class="space-y-4">
+            <div class="flex items-center justify-between border-b border-slate-50 pb-4">
+                <span class="text-xs text-slate-500">Payment Status</span>
+                <x-customer.status-badge :status="$paymentStatus" />
             </div>
-            <div class="account-summary-row">
-                <span class="account-summary-label">Total price</span>
-                <span class="account-summary-price">NPR {{ number_format($booking->total_price, 2) }}</span>
+            <div class="flex items-center justify-between border-b border-slate-50 pb-4">
+                <span class="text-xs text-slate-500">Total Price</span>
+                <span class="text-sm font-bold text-slate-900 uppercase tracking-tight">NPR {{ number_format($booking->total_price) }}</span>
             </div>
-            @if ($payment)
-                <div class="account-summary-row">
-                    <span class="account-summary-label">Payment method</span>
-                    <span>{{ ucfirst($payment->gateway) }}</span>
-                </div>
-                <div class="account-summary-row">
-                    <span class="account-summary-label">Paid at</span>
-                    <span>{{ optional($payment->paid_at)->format('F d, Y') ?? 'Pending' }}</span>
-                </div>
-            @endif
         </div>
     </div>
-</section>
+</div>

@@ -5,7 +5,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto text-center">
-            <p class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Stay Collection</p>
+            <p class="text-slate-400 font-semibold tracking-widest uppercase text-sm mb-4">Stay Collection</p>
             <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">Find Your Perfect Stay</h1>
             <p class="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">Browse premium hotels and lodges across the Himalayan regions, curated for comfort and authenticity.</p>
         </div>
@@ -63,7 +63,7 @@
         }
     }">
         <!-- Filter Toolbar -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-12">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
                 <div class="lg:col-span-1">
                     <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Search</label>
@@ -122,15 +122,15 @@
         <!-- Hotel Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" :style="loading ? 'opacity: 0.5' : ''">
             <template x-for="hotel in hotels" :key="hotel.id">
-                <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col h-full">
                     <div class="h-60 overflow-hidden relative bg-slate-100">
-                        <img :src="hotel.image || '/images/ui/placeholder-hotel.webp'" :alt="hotel.name" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img :src="hotel.image || '/images/ui/placeholder-hotel.webp'" :alt="hotel.name" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-900 shadow-sm border border-slate-100/50">
-                            <i class="fas fa-map-marker-alt text-emerald-500 mr-1"></i> <span x-text="hotel.location"></span>
+                            <i class="fas fa-map-marker-alt text-slate-400 mr-1"></i> <span x-text="hotel.location"></span>
                         </div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-2" x-text="hotel.name"></h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 transition-colors line-clamp-2" x-text="hotel.name"></h3>
                         
                         <div class="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-4">
                             <span class="flex items-center gap-1.5"><i class="fas fa-bed"></i> Comfort & Style</span>
@@ -149,8 +149,9 @@
                                     <span class="text-xs text-slate-500 font-medium">/night</span>
                                 </div>
                             </div>
-                            <a :href="'/hotels/' + (hotel.slug || hotel.id)" class="inline-flex justify-center items-center px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm">
-                                View
+                            <a :href="'/hotels/' + (hotel.slug || hotel.id)"
+                                class="!text-white bg-slate-900 px-6 py-2.5 rounded-full font-semibold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/25 transition-all duration-200 ease-out no-underline">
+                                Book
                             </a>
                         </div>
                     </div>

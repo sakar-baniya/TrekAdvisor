@@ -1,155 +1,84 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<x-auth-page 
+    title="Login" 
+    heading="Welcome back" 
+    subheading="Sign in to your account and prepare for your next trek."
+    errorMessage="Invalid credentials. Please check your email or password.">
 
-        <title>{{ config('app.name', 'TrekAdvisor') }} - Login</title>
+    <form method="POST" action="{{ route('login') }}" class="space-y-6">
+        @csrf
 
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-        
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-        <style>
-            body { font-family: 'Inter', sans-serif; }
-            .input-field:focus {
-                box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
-            }
-        </style>
-    </head>
-    <body class="antialiased text-slate-900 bg-slate-100 min-h-screen flex items-center justify-center p-4">
-        
-        <div class="w-full max-w-md">
-            
-            <!-- Logo + Brand -->
-            <div class="flex flex-col items-center mb-8">
-                <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" 
-                     class="w-16 h-16 rounded-2xl bg-slate-900 p-2 shadow-lg shadow-slate-900/10 mb-4" 
-                     alt="TrekAdvisor" />
-                <h1 class="text-2xl font-bold text-slate-900 tracking-tight">TrekAdvisor</h1>
-                <p class="text-sm text-slate-500 mt-1">Your Himalayan adventure starts here</p>
+        <!-- Email Address -->
+        <div class="space-y-1.5">
+            <label for="email" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Email Address</label>
+            <div class="relative group">
+                <i class="fas fa-envelope absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
+                <input id="email" 
+                       type="email" 
+                       name="email" 
+                       value="{{ old('email') }}" 
+                       required 
+                       autofocus 
+                       autocomplete="username" 
+                       class="auth-input pl-14"
+                       placeholder="you@trekking.com" />
             </div>
-
-            <!-- Card -->
-            <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/60 p-8">
-                
-                <!-- Header -->
-                <div class="mb-6">
-                    <h2 class="text-xl font-bold text-slate-900">Welcome back</h2>
-                    <p class="text-sm text-slate-500 mt-1">Sign in to continue to your account</p>
-                </div>
-
-                <!-- Session Status -->
-                @if (session('status'))
-                    <div class="mb-5 p-3.5 bg-emerald-50 border border-emerald-200 rounded-xl flex items-start gap-3">
-                        <i class="fas fa-check-circle text-emerald-500 mt-0.5"></i>
-                        <p class="text-sm text-emerald-700">{{ session('status') }}</p>
-                    </div>
-                @endif
-
-                <!-- Validation Errors -->
-                @if ($errors->any())
-                    <div class="mb-5 p-3.5 bg-red-50 border border-red-200 rounded-xl flex items-start gap-3">
-                        <i class="fas fa-exclamation-circle text-red-500 mt-0.5"></i>
-                        <p class="text-sm text-red-700">Please check your email or password and try again.</p>
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}" class="space-y-5">
-                    @csrf
-
-                    <!-- Email -->
-                    <div>
-                        <label for="email" class="block text-sm font-medium text-slate-700 mb-1.5">Email address</label>
-                        <div class="relative">
-                            <i class="fas fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                            <input id="email" 
-                                   type="email" 
-                                   name="email" 
-                                   value="{{ old('email') }}" 
-                                   required 
-                                   autofocus 
-                                   autocomplete="username" 
-                                   class="input-field w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-4 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
-                                   placeholder="you@example.com" />
-                        </div>
-                        @error('email') 
-                            <p class="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                                <i class="fas fa-info-circle"></i> {{ $message }}
-                            </p> 
-                        @enderror
-                    </div>
-
-                    <!-- Password -->
-                    <div x-data="{ show: false }">
-                        <div class="flex items-center justify-between mb-1.5">
-                            <label for="password" class="block text-sm font-medium text-slate-700">Password</label>
-                            @if (Route::has('password.request'))
-                                <a class="text-xs font-medium text-slate-600 hover:text-slate-900 transition-colors" href="{{ route('password.request') }}">
-                                    Forgot password?
-                                </a>
-                            @endif
-                        </div>
-                        <div class="relative">
-                            <i class="fas fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
-                            <input id="password" 
-                                   :type="show ? 'text' : 'password'" 
-                                   name="password" 
-                                   required 
-                                   autocomplete="current-password" 
-                                   class="input-field w-full bg-slate-50 border border-slate-200 rounded-xl py-3 pl-11 pr-12 text-sm text-slate-900 placeholder-slate-400 focus:bg-white focus:border-slate-900 focus:outline-none transition-all"
-                                   placeholder="Enter your password" />
-                            <button type="button" 
-                                    @click="show = !show" 
-                                    class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700 transition-colors p-2">
-                                <i class="fas text-sm" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
-                            </button>
-                        </div>
-                        @error('password') 
-                            <p class="text-xs text-red-600 mt-1.5 flex items-center gap-1">
-                                <i class="fas fa-info-circle"></i> {{ $message }}
-                            </p> 
-                        @enderror
-                    </div>
-
-                    <!-- Remember Me -->
-                    <div class="flex items-center">
-                        <label for="remember_me" class="inline-flex items-center cursor-pointer">
-                            <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-300 text-slate-900 focus:ring-slate-900 focus:ring-offset-0">
-                            <span class="ml-2 text-sm text-slate-600">Remember me</span>
-                        </label>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="w-full py-3.5 bg-slate-900 text-white rounded-xl font-semibold text-sm hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/10 active:scale-[0.98] flex items-center justify-center gap-2">
-                        Sign in
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </button>
-                </form>
-
-                <!-- Footer -->
-                <p class="text-center text-sm text-slate-500 mt-6">
-                    Don't have an account?
-                    <a href="{{ route('register') }}" class="font-semibold text-slate-900 hover:underline ml-1">
-                        Create one
-                    </a>
-                </p>
-            </div>
-
-            <!-- Back to home -->
-            <div class="text-center mt-6">
-                <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-slate-900 transition-colors">
-                    <i class="fas fa-arrow-left text-xs"></i>
-                    Back to home
-                </a>
-            </div>
-
+            @error('email') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
         </div>
 
-    </body>
-</html>
+        <!-- Password -->
+        <div class="space-y-1.5" x-data="{ show: false }">
+            <div class="flex items-center justify-between">
+                <label for="password" class="block text-xs font-bold text-slate-700 uppercase tracking-wider">Password</label>
+                @if (Route::has('password.request'))
+                    <a class="text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors" href="{{ route('password.request') }}">
+                        Forgot?
+                    </a>
+                @endif
+            </div>
+            <div class="relative group">
+                <i class="fas fa-lock absolute left-5 top-1/2 -translate-y-1/2 text-slate-300 group-focus-within:text-slate-900 transition-colors text-sm"></i>
+                <input id="password" 
+                       :type="show ? 'text' : 'password'" 
+                       name="password" 
+                       required 
+                       autocomplete="current-password" 
+                       class="auth-input pl-14 pr-14"
+                       placeholder="••••••••" />
+                <button type="button" 
+                        @click="show = !show" 
+                        class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-300 hover:text-slate-900 transition-colors p-2">
+                    <i class="fas text-[10px]" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
+                </button>
+            </div>
+            @error('password') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+        </div>
+
+        <!-- Remember Me -->
+        <div class="flex items-center">
+            <label for="remember_me" class="inline-flex items-center cursor-pointer group">
+                <input id="remember_me" type="checkbox" name="remember" class="rounded border-slate-300 text-slate-900 shadow-sm focus:ring-slate-900 focus:ring-offset-0 transition-all cursor-pointer">
+                <span class="ml-2 text-sm font-semibold text-slate-600 group-hover:text-slate-900 transition-colors">Keep me signed in</span>
+            </label>
+        </div>
+
+        <button type="submit" class="w-full py-4 bg-slate-900 text-white rounded-xl font-black uppercase tracking-[0.2em] text-xs hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20 active:scale-[0.98]">
+            Sign In
+        </button>
+    </form>
+
+    <x-slot name="footer">
+        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">
+            New to TrekAdvisor? 
+            <a href="{{ route('register') }}" class="text-slate-900 hover:text-slate-700 transition-colors ml-1">
+                Create Account
+            </a>
+        </p>
+    </x-slot>
+
+    <x-slot name="back">
+        <a href="{{ route('home') }}" class="inline-flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 hover:text-slate-900 transition-colors">
+            <i class="fas fa-arrow-left text-[10px]"></i>
+            Back to Basecamp
+        </a>
+    </x-slot>
+</x-auth-page>

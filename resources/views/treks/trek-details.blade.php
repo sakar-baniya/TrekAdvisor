@@ -12,7 +12,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="max-w-3xl">
                     <div class="flex flex-wrap items-center gap-4 mb-6">
-                        <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-emerald-500 text-white shadow-xl">
+                        <span class="px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest bg-slate-900 text-white shadow-lg">
                             {{ $trek->difficulty }}
                         </span>
                         <div class="flex items-center gap-2 text-amber-400 font-bold">
@@ -25,28 +25,28 @@
                     
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 py-6 border-t border-white/10">
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-clock text-emerald-400 text-xl"></i>
+                            <i class="fas fa-clock text-slate-400 text-xl"></i>
                             <div>
                                 <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Duration</span>
                                 <strong class="text-white text-lg">{{ $trek->duration_days ?? $trek->itineraries->count() }} Days</strong>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-mountain text-emerald-400 text-xl"></i>
+                            <i class="fas fa-mountain text-slate-400 text-xl"></i>
                             <div>
                                 <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Max Alt.</span>
                                 <strong class="text-white text-lg">{{ $trek->max_altitude ? number_format($trek->max_altitude) . 'm' : 'High Pacing' }}</strong>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-hiking text-emerald-400 text-xl"></i>
+                            <i class="fas fa-hiking text-slate-400 text-xl"></i>
                             <div>
                                 <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Type</span>
                                 <strong class="text-white text-lg">Guided Trek</strong>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-users text-emerald-400 text-xl"></i>
+                            <i class="fas fa-users text-slate-400 text-xl"></i>
                             <div>
                                 <span class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest">Group size</span>
                                 <strong class="text-white text-lg">2 - 12</strong>
@@ -99,11 +99,11 @@
 
                     <div class="bg-slate-50 rounded-3xl p-8 border border-slate-100">
                         <h3 class="text-xl font-extrabold text-slate-900 mb-6 flex items-center gap-2">
-                             <i class="fas fa-sparkles text-emerald-500"></i> What makes this trek stand out
+                             <i class="fas fa-sparkles text-slate-900"></i> What makes this trek stand out
                         </h3>
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div class="flex items-start gap-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
-                                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-700 shrink-0">
                                     <i class="fas fa-check"></i>
                                 </div>
                                 <div>
@@ -112,7 +112,7 @@
                                 </div>
                             </div>
                             <div class="flex items-start gap-4 p-4 bg-white rounded-2xl shadow-sm border border-slate-100">
-                                <div class="w-10 h-10 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 shrink-0">
+                                <div class="w-10 h-10 rounded-full bg-slate-50 flex items-center justify-center text-slate-700 shrink-0">
                                     <i class="fas fa-compass"></i>
                                 </div>
                                 <div>
@@ -188,7 +188,7 @@
 
             <!-- Sidebar -->
             <aside class="space-y-8">
-                <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-900/10 border border-slate-100 overflow-hidden sticky top-24">
+                <div class="bg-white rounded-xl shadow-lg shadow-slate-900/5 border border-slate-100 overflow-hidden sticky top-24">
                     <div class="bg-slate-900 p-10 text-white text-center">
                         <span class="block text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Starting from</span>
                         <div class="flex items-baseline justify-center gap-1">
@@ -205,7 +205,7 @@
                                 @foreach(['3-5 people' => '5% off', '6-9 people' => '10% off', '10+ people' => '15% off'] as $group => $off)
                                     <div class="flex items-center justify-between p-3 rounded-xl bg-slate-50 text-sm font-bold text-slate-700">
                                         <span>{{ $group }}</span>
-                                        <span class="text-emerald-600">{{ $off }}</span>
+                                        <span class="text-slate-900">{{ $off }}</span>
                                     </div>
                                 @endforeach
                             </div>
@@ -223,7 +223,7 @@
                                                     {{ $departure->capacity - $departure->booked_seats }} Seats Left
                                                 </span>
                                             </div>
-                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-800' }}">
+                                            <span class="px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-tighter {{ ($departure->capacity - $departure->booked_seats) > 4 ? 'bg-blue-50 text-blue-700' : 'bg-red-100 text-red-800' }}">
                                                 {{ $departure->status }}
                                             </span>
                                         </div>

@@ -1,83 +1,54 @@
-<x-app-layout>
-    @php
-        $paymentStatus = $payment?->status ?? 'manual_confirmation';
-        $isLocked = in_array($booking->status, ['completed', 'cancelled']);
-    @endphp
+@php
+    $paymentStatus = $payment?->status ?? 'manual_confirmation';
+    $isLocked = in_array($booking->status, ['completed', 'cancelled']);
+@endphp
 
-    <section class="account-shell" id="review">
-        <div class="container">
-            @include('account.bookings.partials.hotel-booking-header', ['booking' => $booking])
-            @include('account.bookings.partials.hotel-booking-summary', [
-                'booking' => $booking,
-                'payment' => $payment,
-                'paymentStatus' => $paymentStatus,
-            ])
-            @include('account.bookings.partials.hotel-booking-actions', [
-                'booking' => $booking,
-                'payment' => $payment,
-            ])
-            @include('account.bookings.partials.hotel-booking-review', [
-                'booking' => $booking,
-                'review' => $review,
-                'isLocked' => $isLocked,
-            ])
+<x-customer-layout 
+    title="Booking Details" 
+    subtitle="Reference: {{ $booking->booking_reference }}"
+    :breadcrumb="['My Bookings' => route('account.bookings.index'), 'Details' => null]"
+>
+    <div class="space-y-6 max-w-5xl">
+        <!-- Status Banner -->
+        <div class="bg-white p-5 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-300 flex items-center justify-center text-lg">
+                    <i class="fas fa-hotel"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="text-xs text-slate-500 leading-none mb-1.5">Reservation Status</span>
+                    <x-customer.status-badge :status="$booking->status" />
+                </div>
+            </div>
+            
+            <a href="{{ route('account.bookings.index') }}" class="text-xs font-medium text-slate-500 hover:text-slate-900 transition-colors">
+                <i class="fas fa-arrow-left mr-1.5 opacity-60"></i> Back to list
+            </a>
         </div>
-    </section>
 
-    @push('scripts')
-        <script>
-            document.addEventListener('DOMContentLoaded', function () {
-                var modal = document.querySelector('[data-confirm-modal]');
-                if (!modal) {
-                    return;
-                }
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Main Details -->
+            <div class="lg:col-span-2 space-y-8">
+                @include('account.bookings.partials.hotel-booking-summary', [
+                    'booking' => $booking,
+                    'payment' => $payment,
+                    'paymentStatus' => $paymentStatus,
+                ])
 
-                var modalTitle = modal.querySelector('[data-confirm-title]');
-                var modalMessage = modal.querySelector('[data-confirm-message]');
-                var confirmButton = modal.querySelector('[data-confirm-submit]');
-                var activeForm = null;
+                @include('account.bookings.partials.hotel-booking-review', [
+                    'booking' => $booking,
+                    'review' => $review,
+                    'isLocked' => $isLocked,
+                ])
+            </div>
 
-                var closeModal = function () {
-                    modal.classList.remove('is-open');
-                    activeForm = null;
-                };
-
-                document.querySelectorAll('[data-confirm-open]').forEach(function (trigger) {
-                    trigger.addEventListener('click', function () {
-                        activeForm = trigger.closest('[data-confirm-form]');
-                        if (!activeForm) {
-                            return;
-                        }
-
-                        if (modalTitle) {
-                            modalTitle.textContent = trigger.getAttribute('data-confirm-title') || 'Confirm action';
-                        }
-                        if (modalMessage) {
-                            modalMessage.textContent = trigger.getAttribute('data-confirm-message') || 'Are you sure you want to continue?';
-                        }
-
-                        modal.classList.add('is-open');
-                    });
-                });
-
-                modal.querySelectorAll('[data-confirm-close]').forEach(function (closeTrigger) {
-                    closeTrigger.addEventListener('click', closeModal);
-                });
-
-                if (confirmButton) {
-                    confirmButton.addEventListener('click', function () {
-                        if (activeForm) {
-                            activeForm.submit();
-                        }
-                    });
-                }
-
-                document.addEventListener('keydown', function (event) {
-                    if (event.key === 'Escape') {
-                        closeModal();
-                    }
-                });
-            });
-        </script>
-    @endpush
-</x-app-layout>
+            <!-- Sidebar Actions -->
+            <div class="space-y-6">
+                @include('account.bookings.partials.hotel-booking-actions', [
+                    'booking' => $booking,
+                    'payment' => $payment,
+                ])
+            </div>
+        </div>
+    </div>
+</x-customer-layout>

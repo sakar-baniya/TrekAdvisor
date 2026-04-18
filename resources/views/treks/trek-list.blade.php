@@ -5,7 +5,7 @@
         <div class="absolute inset-0 bg-gradient-to-t from-slate-900"></div>
 
         <div class="relative z-10 max-w-7xl mx-auto text-center">
-            <p class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Trek Collection</p>
+            <p class="text-slate-400 font-semibold tracking-widest uppercase text-sm mb-4">Trek Collection</p>
             <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">Discover Amazing Treks</h1>
             <p class="text-slate-300 text-lg md:text-xl max-w-2xl mx-auto font-medium">Explore the Himalayas with curated routes, flexible departures, and customer reviews.</p>
         </div>
@@ -63,14 +63,14 @@
         },
         getBadgeClass(difficulty) {
             const d = (difficulty || 'moderate').toLowerCase();
-            if (d === 'easy') return 'bg-emerald-100 text-emerald-800';
-            if (d === 'difficult') return 'bg-orange-100 text-orange-800';
-            if (d === 'extreme') return 'bg-red-100 text-red-800';
-            return 'bg-blue-100 text-blue-800';
+            if (d === 'easy') return 'bg-blue-50 text-blue-700';
+            if (d === 'difficult') return 'bg-orange-50 text-orange-800';
+            if (d === 'extreme') return 'bg-red-50 text-red-800';
+            return 'bg-slate-100 text-slate-800';
         }
     }">
         <!-- Filter Toolbar -->
-        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 mb-12">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 mb-12">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 items-end">
                 <div class="lg:col-span-1">
                     <label class="block text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Search</label>
@@ -133,13 +133,13 @@
         <!-- Trek Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" :style="loading ? 'opacity: 0.5' : ''">
             <template x-for="trek in treks" :key="trek.id">
-                <article class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl transition-all duration-300 group flex flex-col h-full">
+                <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col h-full">
                     <div class="h-60 overflow-hidden relative bg-slate-100">
-                        <img :src="trek.image || '/images/ui/placeholder-trek.webp'" :alt="trek.title" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <img :src="trek.image || '/images/ui/placeholder-trek.webp'" :alt="trek.title" class="w-full h-full object-cover transition-transform duration-300">
                         <div class="absolute top-4 right-4 px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest shadow-sm" :class="getBadgeClass(trek.difficulty)" x-text="trek.difficulty || 'Moderate'"></div>
                     </div>
                     <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors line-clamp-2" x-text="trek.title"></h3>
+                        <h3 class="text-xl font-bold text-slate-900 mb-3 transition-colors line-clamp-2" x-text="trek.title"></h3>
                         
                         <div class="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-4">
                             <span class="flex items-center gap-1.5"><i class="far fa-clock"></i> <span x-text="trek.duration_days || 'Flexible'"></span> Days</span>
@@ -158,8 +158,9 @@
                                     <span class="text-xs text-slate-500 font-medium">/pp</span>
                                 </div>
                             </div>
-                            <a :href="'/treks/' + (trek.slug || trek.id)" class="inline-flex justify-center items-center px-5 py-2.5 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors shadow-sm">
-                                Details
+                            <a :href="'/treks/' + (trek.slug || trek.id)"
+                                class="!text-white bg-slate-900 px-6 py-2.5 rounded-full font-semibold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/25 transition-all duration-200 ease-out no-underline">
+                                Book
                             </a>
                         </div>
                     </div>

@@ -1,37 +1,48 @@
-<section class="account-panel account-panel--actions">
-    <div class="account-panel__head">
-        <div>
-            <h2>Actions</h2>
-            <p>Download your receipt or manage this booking.</p>
-        </div>
-    </div>
+<div class="space-y-6">
+    <!-- Primary Actions -->
+    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm space-y-4">
+        <h3 class="text-xs font-semibold text-slate-400 mb-4">Manage Reservation</h3>
+        
+        <x-ui.button class="w-full justify-center" onclick="window.location.href='{{ route('account.bookings.hotels.receipt', $booking) }}'">
+            <i class="fas fa-file-invoice mr-2 opacity-70"></i> Download Receipt
+        </x-ui.button>
+        
+        <x-ui.button variant="secondary" class="w-full justify-center" onclick="window.location.href='{{ route('hotels.show', $booking->hotelRoom?->hotel ?? '#') }}'">
+            <i class="fas fa-eye mr-2 opacity-70"></i> View Hotel Details
+        </x-ui.button>
 
-    <div class="account-actions account-actions--priority">
-        <div class="account-actions__group">
-            <a href="{{ route('account.bookings.hotels.receipt', $booking) }}" class="btn btn--primary">Download Receipt</a>
-            <a href="{{ route('hotels.show', $booking->hotelRoom?->hotel ?? '#') }}" class="btn btn--secondary">View Hotel</a>
-            @if ($payment && $payment->status === 'pending' && $payment->gateway === 'stripe')
-                <a href="{{ route('stripe.retry', $payment) }}" class="btn btn--secondary">Pay Now</a>
-            @endif
-        </div>
-        @if (!in_array($booking->status, ['completed', 'cancelled']))
-            @if ($booking->status === 'cancellation_requested')
-                <form method="POST" action="{{ route('account.bookings.hotels.cancel-withdraw', $booking) }}" data-confirm-form class="account-actions__group account-actions__group--right">
-                    @csrf
-                    @method('PATCH')
-                    <button type="button" class="btn btn--secondary" data-confirm-open data-confirm-title="Withdraw cancellation request?" data-confirm-message="This will keep your booking active and remove the cancellation request.">Withdraw Cancellation</button>
-                </form>
-            @else
-                <form method="POST" action="{{ route('account.bookings.hotels.cancel', $booking) }}" data-confirm-form class="account-actions__group account-actions__group--right">
-                    @csrf
-                    @method('PATCH')
-                    <button type="button" class="btn btn--danger" data-confirm-open data-confirm-title="Request cancellation?" data-confirm-message="Your cancellation request will be reviewed and may incur fees based on hotel policy.">Request Cancellation</button>
-                </form>
-            @endif
+        @if ($payment && $payment->status === 'pending' && $payment->gateway === 'stripe')
+            <x-ui.button variant="secondary" class="w-full bg-blue-50/50 text-blue-700 border-blue-100 hover:bg-blue-100 justify-center" onclick="window.location.href='{{ route('stripe.retry', $payment) }}'">
+                <i class="fas fa-credit-card mr-2 opacity-70"></i> Pay Now
+            </x-ui.button>
         @endif
     </div>
 
-    <p class="account-note">Cancellations requested within 48 hours of check-in may incur fees. Our team will confirm eligibility and refund details.</p>
+    <!-- Danger Zone -->
+    @if (!in_array($booking->status, ['completed', 'cancelled']))
+        <div class="bg-red-50/30 p-6 rounded-xl border border-red-100/50">
+            <h3 class="text-xs font-semibold text-red-900 mb-2">Cancellation</h3>
+            <p class="text-[11px] text-red-600/70 mb-4 leading-relaxed">
+                Cancellations within 48 hours of check-in may incur fees.
+            </p>
 
-    @include('account.bookings.partials.cancel-confirmation-modal')
-</section>
+            @if ($booking->status === 'cancellation_requested')
+                <form method="POST" action="{{ route('account.bookings.hotels.cancel-withdraw', $booking) }}">
+                    @csrf
+                    @method('PATCH')
+                    <x-ui.button variant="secondary" class="w-full justify-center bg-white" type="submit" onclick="return confirm('Withdraw cancellation request?')">
+                        Withdraw Request
+                    </x-ui.button>
+                </form>
+            @else
+                <form method="POST" action="{{ route('account.bookings.hotels.cancel', $booking) }}">
+                    @csrf
+                    @method('PATCH')
+                    <x-ui.button variant="danger" class="w-full justify-center" type="submit" onclick="return confirm('Request cancellation?')">
+                        Request Cancellation
+                    </x-ui.button>
+                </form>
+            @endif
+        </div>
+    @endif
+</div>

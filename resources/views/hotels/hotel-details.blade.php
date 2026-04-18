@@ -27,7 +27,7 @@
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
                 <div class="flex flex-wrap items-center gap-4 mb-4">
                     <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest bg-white/90 backdrop-blur-sm text-slate-900 shadow-sm">
-                        <i class="fas fa-map-marker-alt text-emerald-500 mr-1.5"></i> {{ $hotel->location }}
+                        <i class="fas fa-map-marker-alt text-slate-900 mr-1.5"></i> {{ $hotel->location }}
                     </span>
                     <div class="flex items-center gap-2 text-amber-400 font-bold">
                         <i class="fas fa-star text-sm"></i>
@@ -80,7 +80,7 @@
                                     <h3 class="text-xl font-bold text-slate-900 mb-1">{{ $room->room_type }}</h3>
                                     <div class="flex items-center gap-4 text-xs font-bold text-slate-400 uppercase tracking-widest">
                                         <span><i class="fas fa-users mr-1"></i> Standard Capacity</span>
-                                        <span><i class="fas fa-check text-emerald-500 mr-1"></i> {{ $room->total_rooms }} Available</span>
+                                        <span><i class="fas fa-check text-slate-900 mr-1"></i> {{ $room->total_rooms }} Available</span>
                                     </div>
                                 </div>
                                 <div class="text-left md:text-right border-t md:border-t-0 md:border-l border-slate-100 pt-6 md:pt-0 md:pl-8">
@@ -102,7 +102,7 @@
 
             <!-- Booking Sidebar -->
             <aside class="space-y-8">
-                <div class="bg-white rounded-[2.5rem] shadow-2xl shadow-slate-900/10 border border-slate-100 overflow-hidden sticky top-24">
+                <div class="bg-white rounded-xl shadow-lg shadow-slate-900/5 border border-slate-100 overflow-hidden sticky top-24">
                     <div class="bg-slate-900 p-10 text-white text-center">
                         <span class="block text-slate-400 text-[10px] font-black uppercase tracking-widest mb-2">Starting from</span>
                         <div class="flex items-baseline justify-center gap-1">

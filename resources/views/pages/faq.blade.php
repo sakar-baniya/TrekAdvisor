@@ -2,11 +2,11 @@
     <!-- Hero Section -->
     <section class="bg-slate-900 overflow-hidden relative py-24">
         <!-- Decoration -->
-        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl"></div>
+        <div class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-slate-500/10 rounded-full blur-3xl"></div>
         <div class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-slate-500/10 rounded-full blur-3xl"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
-            <p class="text-emerald-400 font-bold tracking-widest uppercase text-sm mb-4">Support Center</p>
+            <p class="text-slate-400 font-bold tracking-widest uppercase text-sm mb-4">Support Center</p>
             <h1 class="text-white text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">Frequently asked questions</h1>
             <p class="text-slate-400 text-lg md:text-xl max-w-2xl mx-auto font-medium">Clear answers to common planning, preparation, and booking questions.</p>
         </div>
@@ -19,7 +19,7 @@
                 @foreach ($faqs as $faq)
                     <article class="bg-white rounded-2xl p-8 shadow-sm border border-slate-200 transition-all duration-300 hover:shadow-md hover:border-slate-300 group">
                         <div class="flex items-start gap-5">
-                            <div class="mt-1 bg-slate-900 text-white w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-emerald-600 transition-colors">
+                            <div class="mt-1 bg-slate-900 text-white w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-slate-800 transition-colors">
                                 <i class="fas fa-question text-xs"></i>
                             </div>
                             <div>
