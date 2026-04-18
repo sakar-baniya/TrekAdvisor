@@ -15,6 +15,14 @@ class Trek extends Model
     protected $appends = ['image'];
 
     /**
+     * Use slug for routing instead of ID.
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
+    }
+
+    /**
      * Yo relation method le model lai itineraries relation sanga map garcha.
      *
      * Why:

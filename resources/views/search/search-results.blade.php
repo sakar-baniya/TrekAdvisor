@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <div class="space-y-8">
         <!-- Header -->
         <div class="bg-white rounded-3xl p-8 shadow-sm border border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -110,4 +110,5 @@
             </div>
         @endif
     </div>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

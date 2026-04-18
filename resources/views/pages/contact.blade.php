@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <!-- Hero Section -->
     <section class="bg-slate-900 overflow-hidden relative py-24">
         <!-- Decoration -->
@@ -41,17 +41,17 @@
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <x-input-label for="name" :value="__('Full Name')" class="mb-2" />
-                                    <x-text-input id="name" name="name" :value="old('name')" placeholder="Your full name" required />
+                                    <x-ui.input-label for="name" :value="__('Full Name')" class="mb-2" />
+                                    <x-ui.text-input id="name" name="name" :value="old('name')" placeholder="Your full name" required />
                                 </div>
                                 <div>
-                                    <x-input-label for="email" :value="__('Email Address')" class="mb-2" />
-                                    <x-text-input id="email" type="email" name="email" :value="old('email')" placeholder="you@example.com" required />
+                                    <x-ui.input-label for="email" :value="__('Email Address')" class="mb-2" />
+                                    <x-ui.text-input id="email" type="email" name="email" :value="old('email')" placeholder="you@example.com" required />
                                 </div>
                             </div>
 
                             <div>
-                                <x-input-label for="subject" :value="__('Subject')" class="mb-2" />
+                                <x-ui.input-label for="subject" :value="__('Subject')" class="mb-2" />
                                 <select id="subject" name="subject" required class="w-full rounded-xl border-slate-300 shadow-sm focus:border-slate-900 focus:ring-slate-900 px-4 py-3 bg-slate-50 focus:bg-white transition-colors">
                                     <option value="">Select a topic</option>
                                     <option value="General Inquiry" @selected(old('subject') === 'General Inquiry')>General Inquiry</option>
@@ -61,7 +61,7 @@
                             </div>
 
                             <div>
-                                <x-input-label for="message" :value="__('Message')" class="mb-2" />
+                                <x-ui.input-label for="message" :value="__('Message')" class="mb-2" />
                                 <textarea id="message" name="message" rows="6" placeholder="Tell us how we can help" required class="w-full rounded-xl border-slate-300 shadow-sm focus:border-slate-900 focus:ring-slate-900 px-4 py-3 bg-slate-50 focus:bg-white transition-colors min-h-[150px]">{{ old('message') }}</textarea>
                             </div>
 
@@ -144,4 +144,5 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</x-layouts.app>
+

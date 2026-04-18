@@ -13,6 +13,10 @@ use App\Models\Trek;
  */
 class DeleteTrekService
 {
+    public function __construct(
+        private readonly TrekGalleryService $trekGalleryService
+    ) {}
+
     /**
      * Yo method le handle related business flow execute garcha.
      *
@@ -21,7 +25,7 @@ class DeleteTrekService
      */
     public function handle(Trek $trek): void
     {
-        $trek->loadMissing('gallery');
+        $trek->loadMissing('images');
         $this->trekGalleryService->deleteAll($trek);
         $trek->delete();
     }

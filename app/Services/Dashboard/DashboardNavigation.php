@@ -79,7 +79,6 @@ class DashboardNavigation
                     'icon' => 'fa-star',
                     'children' => [
                         ['label' => 'All Reviews', 'route' => 'admin.reviews.index'],
-                        ['label' => 'Flagged Reviews', 'route' => 'admin.reviews.flagged'],
                     ],
                 ],
             ],

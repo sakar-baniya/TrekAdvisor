@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <div class="admin-page-heading">
         <div>
             <h2 class="admin-page-title">Add Room</h2>
@@ -28,4 +28,5 @@
             </div>
         </form>
     </section>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <div class="admin-page-heading">
         <div>
             <h2 class="admin-page-title">Rooms for {{ $hotel->name }}</h2>
@@ -39,4 +39,5 @@
 
         <div class="admin-pagination">{{ $rooms->links() }}</div>
     </section>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

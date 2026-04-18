@@ -1,4 +1,4 @@
-<x-customer-layout 
+<x-layouts.customer 
     title="Welcome back, {{ auth()->user()->name }}!" 
     subtitle="Manage your Himalayan adventures and hotel stays in one place."
 >
@@ -105,4 +105,5 @@
             </div>
         </section>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

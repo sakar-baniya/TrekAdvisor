@@ -130,6 +130,20 @@ class UserController extends Controller
 
         return back()->with('success', 'User role updated.');
     }
+
+    /**
+     * Delete User: Account permanently delete garne (Admins only).
+     */
+    public function destroy(User $user): RedirectResponse
+    {
+        if (auth()->id() === $user->id) {
+            return back()->with('error', 'You cannot delete your own account.');
+        }
+
+        $user->delete();
+
+        return back()->with('success', 'User account deleted successfully.');
+    }
 }
 
 

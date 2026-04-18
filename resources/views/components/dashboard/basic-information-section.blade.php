@@ -1,73 +1,86 @@
-{{-- BasicInformationSection Component --}}
-@props(['trek', 'edit' => false, 'errors' => null])
-@php
-    $isEdit = $edit ?? false;
-    $required = '<span style="color:var(--u-danger);">*</span>';
-@endphp
-<div class="basic-info-section">
-    <div class="section-header-row">
-        <h2 class="section-title">Basic Information</h2>
+<section class="bg-white border border-slate-200/70 rounded-2xl p-6 md:p-7 overflow-hidden">
+    <div class="mb-6">
+        <h3 class="text-slate-900 text-base font-semibold tracking-tight">Basic Information</h3>
+        <p class="text-slate-500 text-sm mt-1">Core details and identity for this adventure</p>
     </div>
-    <div class="basic-info-grid">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <!-- Trek Title (full width) -->
-        <div class="form-group form-group--full">
-            <label for="title">Trek Title {!! $required !!}</label>
-            <input type="text" name="title" id="title" class="u-input @error('title') error @enderror" value="{{ old('title', $trek->title ?? '') }}" required autocomplete="off">
-            @error('title')<span class="form-error">{{ $message }}</span>@enderror
+        <div class="md:col-span-2 space-y-1">
+            <label for="title" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Trek Title *</label>
+            <input type="text" name="title" id="title" class="w-full rounded-xl border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" value="{{ old('title', $trek->title ?? '') }}" required placeholder="e.g. Everest Base Camp Luxury Trek">
+            @error('title')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
-        <!-- Status (right, compact) -->
-        <div class="form-group form-group--status">
-            <label for="status" class="form-label">Status {!! $required !!}</label>
-            <div class="segmented-control compact" role="group" aria-label="Trek Status">
-                <input type="radio" name="status" id="status-active" value="Active" {{ old('status', $trek->status ?? 'Active') === 'Active' ? 'checked' : '' }} required>
-                <label for="status-active">Active</label>
-                <input type="radio" name="status" id="status-inactive" value="Inactive" {{ old('status', $trek->status ?? 'Active') === 'Inactive' ? 'checked' : '' }}>
-                <label for="status-inactive">Inactive</label>
-            </div>
-            @error('status')<span class="form-error">{{ $message }}</span>@enderror
-        </div>
+
         <!-- Slug (full width) -->
-        <div class="form-group form-group--full">
-            <label for="slug">Slug {!! $required !!}</label>
-            <div class="slug-row">
-                <input type="text" name="slug" id="slug" class="u-input @error('slug') error @enderror" value="{{ old('slug', $trek->slug ?? '') }}" readonly required aria-describedby="slugHelp">
-                <button type="button" class="slug-edit-btn" aria-label="Edit slug" onclick="document.getElementById('slug').removeAttribute('readonly');this.style.display='none';"><i class="fas fa-edit"></i></button>
+        <div class="md:col-span-2 space-y-1">
+            <label for="slug" class="text-xs font-semibold uppercase tracking-wider text-slate-500">URL Slug *</label>
+            <div class="relative">
+                <input type="text" name="slug" id="slug" class="w-full rounded-xl border-slate-200 bg-slate-50 px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30 pr-12" value="{{ old('slug', $trek->slug ?? '') }}" readonly required>
+                <button type="button" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-900 transition-colors" onclick="document.getElementById('slug').removeAttribute('readonly');this.style.display='none';">
+                    <i class="fas fa-edit text-xs"></i>
+                </button>
             </div>
-            <small id="slugHelp" class="form-helper">Auto-generated from title. Click edit to customize.</small>
-            @error('slug')<span class="form-error">{{ $message }}</span>@enderror
+            <p class="text-[10px] text-slate-400 mt-1">Auto-generated from title. Edit carefully.</p>
+            @error('slug')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
-        <!-- Numeric Fields Row: Base Price, Duration, Max Altitude -->
-        <div class="form-group">
-            <label for="base_price">Base Price (NPR) {!! $required !!}</label>
-            <div class="input-prefix-row">
-                <span class="input-prefix">NPR</span>
-                <input type="number" name="base_price" id="base_price" class="u-input @error('base_price') error @enderror" value="{{ old('base_price', $trek->base_price ?? '') }}" min="0" step="0.01" required>
+
+        <!-- Base Price -->
+        <div class="space-y-1">
+            <label for="base_price" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Base Price (NPR) *</label>
+            <div class="relative">
+                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-bold">NPR</span>
+                <input type="number" name="base_price" id="base_price" class="w-full rounded-xl border-slate-200 bg-white pl-12 pr-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" value="{{ old('base_price', $trek->base_price ?? '') }}" min="0" step="0.01" required>
             </div>
-            @error('base_price')<span class="form-error">{{ $message }}</span>@enderror
+            @error('base_price')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
-        <div class="form-group">
-            <label for="duration_days">Duration (days) {!! $required !!}</label>
-            <input type="number" name="duration_days" id="duration_days" class="u-input @error('duration_days') error @enderror" value="{{ old('duration_days', $trek->duration_days ?? '') }}" min="1" required>
-            <small class="form-helper">Number of days</small>
-            @error('duration_days')<span class="form-error">{{ $message }}</span>@enderror
+
+        <!-- Duration -->
+        <div class="space-y-1">
+            <label for="duration_days" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Duration (Days) *</label>
+            <div class="relative">
+                <input type="number" name="duration_days" id="duration_days" class="w-full rounded-xl border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" value="{{ old('duration_days', $trek->duration_days ?? '') }}" min="1" required>
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">days</span>
+            </div>
+            @error('duration_days')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
-        <div class="form-group">
-            <label for="max_altitude">Max Altitude (m)</label>
-            <input type="number" name="max_altitude" id="max_altitude" class="u-input @error('max_altitude') error @enderror" value="{{ old('max_altitude', $trek->max_altitude ?? '') }}" min="0">
-            <small class="form-helper">Highest point in meters</small>
-            @error('max_altitude')<span class="form-error">{{ $message }}</span>@enderror
+
+        <!-- Max Altitude -->
+        <div class="space-y-1">
+            <label for="max_altitude" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Max Altitude (m)</label>
+            <div class="relative">
+                <input type="number" name="max_altitude" id="max_altitude" class="w-full rounded-xl border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" value="{{ old('max_altitude', $trek->max_altitude ?? '') }}" min="0">
+                <span class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-semibold">meters</span>
+            </div>
+            @error('max_altitude')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
-        <!-- Difficulty (full width) -->
-        <div class="form-group form-group--full">
-            <label for="difficulty">Difficulty {!! $required !!}</label>
-            <select name="difficulty" id="difficulty" class="u-input @error('difficulty') error @enderror" required>
-                <option value="">Select difficulty level</option>
-                <option value="Easy" {{ old('difficulty', $trek->difficulty ?? '') === 'Easy' ? 'selected' : '' }}>Easy</option>
-                <option value="Moderate" {{ old('difficulty', $trek->difficulty ?? '') === 'Moderate' ? 'selected' : '' }}>Moderate</option>
-                <option value="Difficult" {{ old('difficulty', $trek->difficulty ?? '') === 'Difficult' ? 'selected' : '' }}>Difficult</option>
-                <option value="Extreme" {{ old('difficulty', $trek->difficulty ?? '') === 'Extreme' ? 'selected' : '' }}>Extreme</option>
+
+        <!-- Difficulty -->
+        <div class="space-y-1">
+            <label for="difficulty" class="text-xs font-semibold uppercase tracking-wider text-slate-500">Difficulty *</label>
+            <select name="difficulty" id="difficulty" class="w-full rounded-xl border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30 appearance-none cursor-pointer" required>
+                <option value="">Select level...</option>
+                @foreach(['easy' => 'Easy', 'moderate' => 'Moderate', 'difficult' => 'Difficult', 'extreme' => 'Extreme'] as $value => $label)
+                    <option value="{{ $value }}" @selected((old('difficulty') !== null ? old('difficulty') : strtolower($trek->difficulty ?? '')) === $value)>{{ $label }}</option>
+                @endforeach
             </select>
-            @error('difficulty')<span class="form-error">{{ $message }}</span>@enderror
+            @error('difficulty')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
+        </div>
+
+        <!-- Status (Full Width on Grid to balance) -->
+        <div class="md:col-span-2 space-y-3 pt-4 border-t border-slate-100">
+            <label class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1">Status</label>
+            <div class="flex items-center gap-6">
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="radio" name="status" value="active" class="w-4 h-4 text-slate-900 focus:ring-slate-900 border-slate-200" {{ (old('status') !== null ? old('status') : strtolower($trek->status ?? 'active')) === 'active' ? 'checked' : '' }}>
+                    <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">Active</span>
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer group">
+                    <input type="radio" name="status" value="draft" class="w-4 h-4 text-slate-900 focus:ring-slate-900 border-slate-200" {{ (old('status') !== null ? old('status') : strtolower($trek->status ?? 'active')) === 'draft' ? 'checked' : '' }}>
+                    <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">Draft</span>
+                </label>
+            </div>
+            @error('status')<p class="text-xs text-red-500 mt-1">{{ $message }}</p>@enderror
         </div>
     </div>
-</div>
+</section>

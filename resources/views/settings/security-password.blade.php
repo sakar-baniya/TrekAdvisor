@@ -1,4 +1,4 @@
-<x-customer-layout 
+<x-layouts.customer 
     title="Change Password" 
     subtitle="Confirm your current password to update it."
     :breadcrumb="['Settings' => route('settings.profile.show'), 'Security' => route('settings.security.show'), 'Change Password' => null]"
@@ -54,4 +54,5 @@
             </form>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

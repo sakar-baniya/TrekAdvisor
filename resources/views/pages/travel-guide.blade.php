@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <main class="max-w-3xl mx-auto px-6 pt-10 pb-20">
         <!-- Hero -->
         <header class="mb-20">
@@ -187,4 +187,5 @@
             </a>
         </footer>
     </main>
-</x-app-layout>
+</x-layouts.app>
+

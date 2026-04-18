@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Trek;
+use App\Models\TrekBooking;
+use App\Models\Review;
 use Illuminate\Http\Request;
 
 /**
@@ -94,22 +96,41 @@ class TrekController extends Controller
     /**
      * Display the specified trek.
      */
-    public function show($slug)
+    public function show(Trek $trek)
     {
-        $trek = Trek::with(['itineraries' => function($q) {
+        $trek->load(['itineraries' => function($q) {
             $q->orderBy('day_number', 'asc');
         }, 'departures' => function($q) {
             $q->where('status', 'available')
               ->where('start_date', '>', now())
               ->orderBy('start_date', 'asc');
-        }, 'gallery'])->where('slug', $slug)->firstOrFail();
+        }, 'gallery']);
 
         // Load reviews separately to show them at the bottom
         $reviews = $trek->reviews()->with('user')->latest()->get();
         $reviewCount = $trek->reviews()->count();
         $avgRating = $reviewCount > 0 ? round($trek->reviews()->avg('rating'), 1) : null;
 
-        return view('treks.trek-details', compact('trek', 'reviews', 'reviewCount', 'avgRating'));
+        $canReview = false;
+        $userReview = null;
+
+        if (auth()->check()) {
+            $canReview = TrekBooking::query()
+                ->where('user_id', auth()->id())
+                ->where('status', 'completed')
+                ->whereHas('departure', fn($q) => $q->where('trek_id', $trek->id))
+                ->exists();
+
+            if ($canReview) {
+                $userReview = Review::query()
+                    ->where('user_id', auth()->id())
+                    ->where('reviewable_type', Trek::class)
+                    ->where('reviewable_id', $trek->id)
+                    ->first();
+            }
+        }
+
+        return view('treks.trek-details', compact('trek', 'reviews', 'reviewCount', 'avgRating', 'canReview', 'userReview'));
     }
 }
 

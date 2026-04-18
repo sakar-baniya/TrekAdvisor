@@ -17,10 +17,10 @@ class UpdateTrekRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'max:255'],
             'base_price' => ['required', 'numeric', 'min:0'],
-            'difficulty' => ['required', Rule::in(['Easy', 'Moderate', 'Difficult', 'Extreme'])],
+            'difficulty' => ['required', Rule::in(['easy', 'moderate', 'difficult', 'extreme'])],
             'duration_days' => ['required', 'integer', 'min:1'],
             'max_altitude' => ['nullable', 'integer', 'min:0'],
-            'status' => ['required', Rule::in(['Active', 'Inactive'])],
+            'status' => ['required', Rule::in(['active', 'draft'])],
             'description' => ['required', 'string'],
             'primary_image' => ['nullable', 'string'],
             'gallery_images' => ['nullable', 'array'],

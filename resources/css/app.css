@@ -30,8 +30,8 @@
     --color-info: #0ea5e9;
 
     /* Typography */
-    --font-display: 'Montserrat', 'Poppins', sans-serif;
-    --font-body: 'Open Sans', 'Inter', sans-serif;
+    --font-display: 'Poppins', sans-serif;
+    --font-body: 'Inter', sans-serif;
 
     /* Radii */
     --radius-sm: 8px;
@@ -73,9 +73,15 @@ h6 {
     font-weight: 800;
 }
 
+label, 
+button,
+.font-display {
+    font-family: var(--font-display);
+}
+
 @layer components {
     .auth-input {
-        @apply w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 px-6 font-semibold text-slate-900 transition-all;
+        @apply w-full bg-slate-50 border border-slate-200 rounded-xl py-3.5 px-6 font-display font-medium text-slate-900 transition-all;
     }
 
     .auth-input::placeholder {
@@ -106,7 +112,7 @@ a {
 }
 
 a:hover {
-    color: var(--at-primary);
+    text-decoration: none;
 }
 
 img {

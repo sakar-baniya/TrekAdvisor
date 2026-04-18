@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <div class="max-w-4xl mx-auto">
         <!-- Page Header -->
         <div class="mb-10">
@@ -15,4 +15,5 @@
             @include('admin.departures.departure-form-fields')
         </form>
     </div>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

@@ -4,7 +4,7 @@
     $canEditPassengers = ! $isLocked;
 @endphp
 
-<x-customer-layout>
+<x-layouts.customer>
     <div class="space-y-4 max-w-5xl">
         <!-- Back Link -->
         <div>
@@ -84,4 +84,5 @@
             });
         </script>
     @endpush
-</x-customer-layout>
+</x-layouts.customer>
+

@@ -1,4 +1,4 @@
-<x-customer-layout 
+<x-layouts.customer 
     title="Security Settings" 
     subtitle="Protect your account with modern security standards."
     :breadcrumb="['Settings' => route('settings.profile.show'), 'Security' => null]"
@@ -42,4 +42,5 @@
             </div>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

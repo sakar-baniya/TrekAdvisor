@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class="bg-slate-50 min-h-screen py-12">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             
@@ -41,16 +41,16 @@
                                      </div>
                                      <div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-6">
                                          <div class="md:col-span-2">
-                                             <x-input-label :value="__('Full Name')" class="mb-2" />
-                                             <x-text-input type="text" name="passengers[{{ $i }}][full_name]" placeholder="Enter legal name" required />
+                                             <x-ui.input-label :value="__('Full Name')" class="mb-2" />
+                                             <x-ui.text-input type="text" name="passengers[{{ $i }}][full_name]" placeholder="Enter legal name" required />
                                          </div>
                                          <div>
-                                             <x-input-label :value="__('Passport Number')" class="mb-2" />
-                                             <x-text-input type="text" name="passengers[{{ $i }}][passport_number]" placeholder="Passport #" required />
+                                             <x-ui.input-label :value="__('Passport Number')" class="mb-2" />
+                                             <x-ui.text-input type="text" name="passengers[{{ $i }}][passport_number]" placeholder="Passport #" required />
                                          </div>
                                          <div>
-                                             <x-input-label :value="__('Age')" class="mb-2" />
-                                             <x-text-input type="number" name="passengers[{{ $i }}][age]" placeholder="Age" min="1" max="120" required />
+                                             <x-ui.input-label :value="__('Age')" class="mb-2" />
+                                             <x-ui.text-input type="number" name="passengers[{{ $i }}][age]" placeholder="Age" min="1" max="120" required />
                                          </div>
                                      </div>
                                 </div>
@@ -104,4 +104,5 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+</x-layouts.app>
+

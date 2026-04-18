@@ -1,4 +1,4 @@
-<x-customer-layout 
+<x-layouts.customer 
     title="Stay Receipt" 
     subtitle="Official record for your hotel reservation."
     :breadcrumb="['My Bookings' => route('account.bookings.index'), 'Details' => route('account.bookings.hotels.show', $booking), 'Receipt' => null]"
@@ -93,4 +93,5 @@
             </x-ui.button>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

@@ -15,6 +15,12 @@ use Illuminate\Http\Request;
  */
 class TrekGalleryService
 {
+    protected GalleryImageService $galleryImageService;
+
+    public function __construct(GalleryImageService $galleryImageService)
+    {
+        $this->galleryImageService = $galleryImageService;
+    }
     /**
      * Yo method le syncUnifiedMedia related state change safely apply garcha.
      *

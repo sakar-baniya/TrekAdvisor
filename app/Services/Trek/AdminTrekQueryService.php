@@ -34,7 +34,7 @@ class AdminTrekQueryService
             ->when($difficulty !== '', fn ($query) => $query->where('difficulty', $difficulty))
             ->when($status !== '', fn ($query) => $query->where('status', $status))
             ->latest()
-            ->paginate(10)
+            ->paginate(9)
             ->withQueryString();
 
         return [

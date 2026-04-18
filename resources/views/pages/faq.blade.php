@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <!-- Hero Section -->
     <section class="bg-slate-900 overflow-hidden relative py-24">
         <!-- Decoration -->
@@ -45,4 +45,5 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</x-layouts.app>
+

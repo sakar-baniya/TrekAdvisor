@@ -16,6 +16,14 @@ class Hotel extends Model
     protected $appends = ['image'];
 
     /**
+     * Use ID for routing (default, but explicit).
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'id';
+    }
+
+    /**
      * Yo relation method le model lai rooms relation sanga map garcha.
      *
      * Why:

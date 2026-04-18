@@ -5,46 +5,58 @@
     $avatarUrl = $user->avatar_path ? Storage::url($user->avatar_path) : null;
 @endphp
 
-<div class="position-relative">
-    <button type="button" class="topbar-control" id="profileMenuTrigger">
-        <div class="topbar-control__avatar">
-            @if ($avatarUrl)
-                <img src="{{ $avatarUrl }}" alt="{{ $user->name }}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-            @else
-                {{ strtoupper(substr($user->name, 0, 1)) }}
-            @endif
-        </div>
-        <span class="topbar-control__name">{{ $user->name }}</span>
-        <i class="fas fa-chevron-down ms-1" style="font-size: 0.7rem; opacity: 0.3;"></i>
+<div class="relative" x-data="{ open: false }">
+    <!-- Trigger Button -->
+    <button @click="open = !open" 
+            type="button" 
+            id="user-menu-button" 
+            aria-expanded="false" 
+            aria-haspopup="true"
+            class="flex items-center gap-2 text-slate-900 font-semibold hover:text-slate-700 transition">
+        <span>My Account</span>
+        <i class="fas fa-chevron-down text-xs transition-transform duration-200" :class="open ? 'rotate-180' : ''"></i>
     </button>
 
-    <div class="v-dropdown shadow-lg" id="profileDropdown">
-        <div class="v-dropdown__header">
-            <h4 class="mb-0 fs-6 fw-bold text-navy">{{ $user->name }}</h4>
-            <p class="mb-0 text-muted" style="font-size: 0.75rem;">{{ $user->email }}</p>
+    <!-- Dropdown Menu -->
+    <div x-show="open" 
+         @click.away="open = false"
+         x-transition:enter="transition ease-out duration-200"
+         x-transition:enter-start="opacity-0 scale-95 translate-y-2"
+         x-transition:enter-end="opacity-100 scale-100 translate-y-0"
+         x-transition:leave="transition ease-in duration-75"
+         x-transition:leave-start="opacity-100 scale-100 translate-y-0"
+         x-transition:leave-end="opacity-0 scale-95 translate-y-2"
+         class="absolute right-0 z-50 mt-2 bg-white rounded-2xl shadow-lg border border-slate-200 p-2 w-64 origin-top-right focus:outline-none" 
+         role="menu" 
+         aria-orientation="vertical" 
+         aria-labelledby="user-menu-button" 
+         tabindex="-1"
+         style="display: none;">
+        
+        <div>
+            <p class="text-xs text-slate-500 px-3 pt-2">Signed in as</p>
+            <p class="text-sm font-semibold text-slate-900 px-3 pb-2 border-b border-slate-100 mb-1 truncate">{{ $user->name }}</p>
         </div>
 
-        <div class="v-dropdown__menu" style="display: flex; flex-direction: column; gap: 0; padding: 8px 0;">
-            <a href="{{ route('settings.profile.show') }}" class="v-dropdown__link" style="min-height:44px;">
-                <i class="fas fa-cog opacity-50"></i>
-                <span>Profile Settings</span>
+        <div>
+            <a href="{{ route('settings.profile.show') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900" role="menuitem">
+                <i class="fas fa-cog w-4 h-4 text-slate-500 flex items-center justify-center"></i>
+                Settings
             </a>
-            <a href="{{ route('home') }}" class="v-dropdown__link" style="min-height:44px;">
-                <i class="fas fa-home opacity-50"></i>
-                <span>Back to Website</span>
+            <a href="{{ route('home') }}" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900" role="menuitem">
+                <i class="fas fa-home w-4 h-4 text-slate-500 flex items-center justify-center"></i>
+                Back to Website
             </a>
-            <form method="POST" action="{{ route('logout') }}" style="margin:0;">
-                @csrf
-                <button
-                    type="button"
-                    class="v-dropdown__link w-100 border-0 bg-transparent text-start"
-                    style="min-height:44px;"
-                    onclick="if (window.showConfirm) { showConfirm({ title: 'Sign Out', message: 'Are you sure you want to sign out?', buttonText: 'Sign Out', buttonClass: 'confirm-btn--secondary', form: this.closest('form') }); } else { this.closest('form').submit(); }"
-                >
-                    <i class="fas fa-sign-out-alt opacity-50"></i>
-                    <span>Sign Out</span>
-                </button>
-            </form>
         </div>
+
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" 
+                    class="flex w-full items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-slate-700 hover:bg-slate-50 hover:text-slate-900 text-left"
+                    onclick="return confirm('Are you sure you want to sign out?')">
+                <i class="fas fa-sign-out-alt w-4 h-4 text-slate-500 flex items-center justify-center"></i>
+                Sign Out
+            </button>
+        </form>
     </div>
 </div>

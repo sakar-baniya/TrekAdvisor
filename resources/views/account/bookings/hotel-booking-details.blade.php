@@ -3,7 +3,7 @@
     $isLocked = in_array($booking->status, ['completed', 'cancelled']);
 @endphp
 
-<x-customer-layout 
+<x-layouts.customer 
     title="Booking Details" 
     subtitle="Reference: {{ $booking->booking_reference }}"
     :breadcrumb="['My Bookings' => route('account.bookings.index'), 'Details' => null]"
@@ -51,4 +51,5 @@
             </div>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

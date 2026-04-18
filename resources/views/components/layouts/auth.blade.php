@@ -40,12 +40,12 @@
             <!-- Refined Logo Container -->
             <div class="relative mb-4">
                 <!-- Outer Glow -->
-                <div class="absolute inset-0 bg-slate-400 opacity-20 rounded-full blur-2xl"></div>
+                <div class="absolute inset-0 bg-slate-400 opacity-10 rounded-full blur-2xl"></div>
                 
-                <!-- The Logo (Circularized to eliminate square white backgrounds) -->
-                <div class="relative w-28 h-28 rounded-full bg-white border-8 border-white shadow-2xl overflow-hidden flex items-center justify-center">
+                <!-- The Logo (Circularized with slate-900 filled background like homepage) -->
+                <div class="relative w-24 h-24 rounded-full bg-slate-900 border-4 border-white shadow-2xl overflow-hidden flex items-center justify-center">
                     <img src="{{ asset('images/ui/trekadvisorLOGO.png') }}" 
-                         class="w-full h-full object-contain" 
+                         class="w-full h-full object-cover scale-[1.50]" 
                          alt="TrekAdvisor Logo">
                 </div>
             </div>
@@ -75,7 +75,13 @@
 
                 <!-- Session Status Messages -->
                 @if(session('status'))
-                    <div class="mb-6 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-xl">
+                    <div x-data="{ show: true }" 
+                         x-show="show" 
+                         x-init="setTimeout(() => show = false, 5000)"
+                         x-transition:leave="transition ease-in duration-500"
+                         x-transition:leave-start="opacity-100"
+                         x-transition:leave-end="opacity-0"
+                         class="mb-6 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-xl">
                         <p class="text-[10px] font-semibold text-emerald-800 uppercase tracking-widest leading-none mb-1">Status Update</p>
                         <p class="text-xs font-semibold text-emerald-600">{{ session('status') }}</p>
                     </div>
@@ -83,10 +89,24 @@
 
                 <!-- Validation Errors (Global Alert) -->
                 @if($errors->any())
-                    <div class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-                        <p class="text-[10px] font-semibold text-red-800 uppercase tracking-widest leading-none mb-1">Alert</p>
-                        <p class="text-xs font-semibold text-red-600">{{ $errorMessage }}</p>
-                    </div>
+                    @php
+                        // If we have specific field errors for login/register, 
+                        // we hide the global alert to prevent redundant messaging.
+                        $hasFieldErrors = $errors->has('email') || $errors->has('password') || $errors->has('name');
+                    @endphp
+                    
+                    @if(!$hasFieldErrors)
+                        <div x-data="{ show: true }" 
+                             x-show="show" 
+                             x-init="setTimeout(() => show = false, 5000)"
+                             x-transition:leave="transition ease-in duration-500"
+                             x-transition:leave-start="opacity-100"
+                             x-transition:leave-end="opacity-0"
+                             class="mb-6 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
+                            <p class="text-[10px] font-semibold text-red-800 uppercase tracking-widest leading-none mb-1">Error</p>
+                            <p class="text-xs font-semibold text-red-600">{{ $errorMessage }}</p>
+                        </div>
+                    @endif
                 @endif
 
                 <!-- Form Content -->

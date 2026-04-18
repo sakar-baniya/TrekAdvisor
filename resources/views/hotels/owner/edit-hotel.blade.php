@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <div class="max-w-7xl mx-auto">
         <form action="{{ route('hotel_owner.hotels.update', $hotel) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -43,4 +43,5 @@
             </div>
         </form>
     </div>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

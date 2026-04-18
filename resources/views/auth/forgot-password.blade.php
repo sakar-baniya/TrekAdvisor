@@ -1,4 +1,4 @@
-<x-auth-page 
+<x-layouts.auth 
     title="Forgot Password" 
     heading="Forgot password?" 
     subheading="No worries! Enter your email and we'll send you a recovery link.">
@@ -44,4 +44,5 @@
             Back to Basecamp
         </a>
     </x-slot>
-</x-auth-page>
+</x-layouts.auth>
+

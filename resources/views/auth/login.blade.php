@@ -1,8 +1,7 @@
-<x-auth-page 
+<x-layouts.auth 
     title="Login" 
     heading="Welcome back" 
-    subheading="Sign in to your account and prepare for your next trek."
-    errorMessage="Invalid credentials. Please check your email or password.">
+    subheading="Sign in to your account and prepare for your next trek.">
 
     <form method="POST" action="{{ route('login') }}" class="space-y-6">
         @csrf
@@ -22,7 +21,17 @@
                        class="auth-input pl-14"
                        placeholder="you@trekking.com" />
             </div>
-            @error('email') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+            @error('email') 
+                <p x-data="{ show: true }" 
+                   x-show="show" 
+                   x-init="setTimeout(() => show = false, 5000)"
+                   x-transition:leave="transition ease-in duration-500"
+                   x-transition:leave-start="opacity-100"
+                   x-transition:leave-end="opacity-0"
+                   class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">
+                    {{ $message }}
+                </p> 
+            @enderror
         </div>
 
         <!-- Password -->
@@ -50,7 +59,17 @@
                     <i class="fas text-[10px]" :class="show ? 'fa-eye-slash' : 'fa-eye'"></i>
                 </button>
             </div>
-            @error('password') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">{{ $message }}</p> @enderror
+            @error('password') 
+                <p x-data="{ show: true }" 
+                   x-show="show" 
+                   x-init="setTimeout(() => show = false, 5000)"
+                   x-transition:leave="transition ease-in duration-500"
+                   x-transition:leave-start="opacity-100"
+                   x-transition:leave-end="opacity-0"
+                   class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1 italic">
+                    {{ $message }}
+                </p> 
+            @enderror
         </div>
 
         <!-- Remember Me -->
@@ -81,4 +100,5 @@
             Back to Basecamp
         </a>
     </x-slot>
-</x-auth-page>
+</x-layouts.auth>
+

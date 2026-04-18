@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <div class="container booking-wrap">
         <div class="booking-layout-card">
             <div class="booking-step-card booking-step-card--wide" style="text-align: center;">
@@ -23,4 +23,5 @@
             document.getElementById('esewaCheckoutForm').submit();
         });
     </script>
-</x-app-layout>
+</x-layouts.app>
+

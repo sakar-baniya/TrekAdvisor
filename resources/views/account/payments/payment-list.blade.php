@@ -1,4 +1,4 @@
-<x-customer-layout 
+<x-layouts.customer 
     title="Payment History" 
     subtitle="Your payment history and transaction status."
     :breadcrumb="['Payments' => null]"
@@ -66,4 +66,5 @@
             </div>
         @endif
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

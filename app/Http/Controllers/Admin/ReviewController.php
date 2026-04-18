@@ -21,15 +21,22 @@ class ReviewController extends Controller
      */
     public function index(Request $request): View
     {
-        return $this->reviewListView($request, false);
-    }
+        $type = $request->string('type')->toString();
+        $rating = $request->string('rating')->toString();
 
-    /**
-     * Flagged Reviews: Naramro (flagged) reviews matra filter garera herne.
-     */
-    public function flagged(Request $request): View
-    {
-        return $this->reviewListView($request, true);
+        $reviews = Review::query()
+            ->with(['user', 'reviewable'])
+            ->when($type !== '', fn ($query) => $query->where('reviewable_type', $this->resolveReviewType($type)))
+            ->when($rating !== '', fn ($query) => $query->where('rating', $rating))
+            ->latest()
+            ->paginate(12)
+            ->withQueryString();
+
+        return view('admin.reviews.review-list', [
+            'reviews' => $reviews,
+            'type' => $type,
+            'rating' => $rating,
+        ]);
     }
 
     /**
@@ -43,16 +50,20 @@ class ReviewController extends Controller
     }
 
     /**
-     * Toggle Flag: Kunai review naramro chha bhane flag/unflag garne.
+     * Reply to Review: Admin le customer ko review ma response dine.
      */
-    public function toggleFlag(Review $review): RedirectResponse
+    public function reply(Request $request, Review $review): RedirectResponse
     {
-        $review->update([
-            'is_flagged' => ! $review->is_flagged,
-            'flagged_at' => ! $review->is_flagged ? now() : null,
+        $validated = $request->validate([
+            'admin_reply' => ['required', 'string', 'max:1000'],
         ]);
 
-        return back()->with('success', $review->is_flagged ? 'Review flagged.' : 'Review unflagged.');
+        $review->update([
+            'admin_reply' => $validated['admin_reply'],
+            'admin_replied_at' => now(),
+        ]);
+
+        return back()->with('success', 'Reply saved successfully.');
     }
 
     /**
@@ -63,31 +74,6 @@ class ReviewController extends Controller
         $review->delete();
 
         return redirect()->route('admin.reviews.index')->with('success', 'Review deleted.');
-    }
-
-    /**
-     * Review List View (Helper): Code reuse garna banayeko list view generator.
-     */
-    protected function reviewListView(Request $request, bool $flaggedOnly): View
-    {
-        $type = $request->string('type')->toString();
-        $rating = $request->string('rating')->toString();
-
-        $reviews = Review::query()
-            ->with(['user', 'reviewable'])
-            ->when($flaggedOnly, fn ($query) => $query->where('is_flagged', true))
-            ->when($type !== '', fn ($query) => $query->where('reviewable_type', $this->resolveReviewType($type)))
-            ->when($rating !== '', fn ($query) => $query->where('rating', $rating))
-            ->latest()
-            ->paginate(12)
-            ->withQueryString();
-
-        return view('admin.reviews.review-list', [
-            'reviews' => $reviews,
-            'type' => $type,
-            'rating' => $rating,
-            'flaggedOnly' => $flaggedOnly,
-        ]);
     }
 
     /**

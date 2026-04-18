@@ -4,7 +4,7 @@
     $initials = strtoupper(substr($user->name ?? '', 0, 1));
 @endphp
 
-<x-customer-layout 
+<x-layouts.customer 
     title="Profile Settings" 
     subtitle="Update your personal details and public profile information."
     :breadcrumb="['Settings' => route('settings.profile.show'), 'Profile' => null]"
@@ -114,15 +114,49 @@
                 </form>
             </div>
 
-            <!-- Danger Zone -->
-            <div class="bg-red-50/30 p-8 rounded-xl border border-red-100/50">
-                <h3 class="text-sm font-semibold text-red-900 mb-1">Delete Account</h3>
-                <p class="text-xs text-red-600/70 mb-6">Permanently remove your account and all associated booking history.</p>
+            <!-- Security -->
+            <div class="bg-white p-8 rounded-xl border border-slate-200 shadow-sm">
+                <h3 class="text-base font-semibold text-slate-900 mb-6">Security</h3>
                 
-                <x-ui.button variant="danger" x-data="" @click="$dispatch('open-modal', 'confirm-user-deletion')">
-                    Deactivate Account
-                </x-ui.button>
+                <form method="POST" action="{{ route('password.update') }}" class="space-y-6">
+                    @csrf
+                    @method('PUT')
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <x-ui.input 
+                            label="Current Password" 
+                            type="password"
+                            name="current_password" 
+                            icon="fa-lock" 
+                            required 
+                            :error="$errors->updatePassword->first('current_password')"
+                        />
+                        <div></div> <!-- Spacer -->
+                        <x-ui.input 
+                            label="New Password" 
+                            type="password"
+                            name="password" 
+                            icon="fa-key" 
+                            required 
+                            :error="$errors->updatePassword->first('password')"
+                        />
+                        <x-ui.input 
+                            label="Confirm New Password" 
+                            type="password"
+                            name="password_confirmation" 
+                            icon="fa-shield-alt" 
+                            required 
+                        />
+                    </div>
+
+                    <div class="flex justify-end pt-4">
+                        <x-ui.button type="submit">
+                            Update Password
+                        </x-ui.button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

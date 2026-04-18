@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <!-- Hero Section -->
     <section class="relative bg-slate-900 overflow-hidden py-16 md:py-24 px-4 sm:px-6 lg:px-8">
         <div
@@ -205,4 +205,5 @@
             {{ $hotels->links('components.pagination') }}
         </div>
     </div>
-</x-app-layout>
+</x-layouts.app>
+

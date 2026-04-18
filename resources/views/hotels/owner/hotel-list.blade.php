@@ -1,4 +1,4 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
         <div>
@@ -83,4 +83,5 @@
             </div>
         @endforelse
     </div>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Hotel;
+use App\Models\HotelBooking;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -109,7 +111,26 @@ class HotelController extends Controller
         $hotel->loadCount('reviews');
         $hotel->loadAvg('reviews', 'rating');
 
-        return view('hotels.hotel-details', compact('hotel'));
+        $canReview = false;
+        $userReview = null;
+
+        if (auth()->check()) {
+            $canReview = HotelBooking::query()
+                ->where('user_id', auth()->id())
+                ->where('status', 'completed')
+                ->whereHas('hotelRoom', fn($q) => $q->where('hotel_id', $hotel->id))
+                ->exists();
+
+            if ($canReview) {
+                $userReview = Review::query()
+                    ->where('user_id', auth()->id())
+                    ->where('reviewable_type', Hotel::class)
+                    ->where('reviewable_id', $hotel->id)
+                    ->first();
+            }
+        }
+
+        return view('hotels.hotel-details', compact('hotel', 'canReview', 'userReview'));
     }
 }
 

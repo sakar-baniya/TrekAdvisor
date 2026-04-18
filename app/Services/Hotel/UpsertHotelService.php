@@ -16,6 +16,13 @@ use Illuminate\Support\Facades\DB;
  */
 class UpsertHotelService
 {
+    private HotelGalleryService $hotelGalleryService;
+
+    public function __construct(HotelGalleryService $hotelGalleryService)
+    {
+        $this->hotelGalleryService = $hotelGalleryService;
+    }
+
     /**
      * Yo method le create related business flow execute garcha.
      *
@@ -71,9 +78,3 @@ class UpsertHotelService
         });
     }
 }
-
-
-
-
-
-

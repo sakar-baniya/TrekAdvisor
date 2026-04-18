@@ -3,7 +3,7 @@
     'subtitle' => '',
 ])
 
-<x-app-layout>
+<x-layouts.app>
     <div class="bg-slate-50/50 min-h-screen">
         <!-- Page Content -->
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fadeIn print:py-0 print:px-0">
@@ -20,5 +20,6 @@
             {{ $slot }}
         </main>
     </div>
-</x-app-layout>
+</x-layouts.app>
+
 

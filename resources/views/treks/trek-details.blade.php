@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     @php
         $galleryImages = $trek->gallery->pluck('path')->prepend($trek->image)->filter()->unique()->values();
     @endphp
@@ -153,6 +153,88 @@
                         </div>
                     </div>
 
+                    @if(session('success'))
+                        <div class="p-4 bg-emerald-50 border border-emerald-100 rounded-2xl text-emerald-700 text-sm font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                            <i class="fas fa-check-circle"></i>
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="p-4 bg-rose-50 border border-rose-100 rounded-2xl text-rose-700 text-sm font-bold flex items-center gap-3 animate-in fade-in slide-in-from-top-2">
+                            <i class="fas fa-exclamation-circle"></i>
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if($canReview && !$userReview)
+                        <div class="p-8 bg-white/80 backdrop-blur-sm rounded-[2rem] border border-slate-100 shadow-xl shadow-slate-200/50">
+                            <div class="flex items-center gap-4 mb-6">
+                                <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center text-white text-xl shadow-lg shadow-indigo-200">
+                                    <i class="fas fa-pen-nib"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-slate-900 leading-tight">Share Your Journey</h3>
+                                    <p class="text-xs font-bold text-slate-500 uppercase tracking-widest mt-1">Tell others about your experience</p>
+                                </div>
+                            </div>
+
+                            @if ($errors->any())
+                                <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+                                    <ul class="list-disc list-inside text-sm text-red-600">
+                                        @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            @endif
+
+                            <form action="{{ route('account.reviews.treks.store', $trek) }}" method="POST" class="space-y-6">
+                                @csrf
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-1">How would you rate it?</label>
+                                    <div class="flex items-center gap-2" x-data="{ rating: 5, hover: 0 }">
+                                        <input type="hidden" name="rating" :value="rating">
+                                        @for ($i = 1; $i <= 5; $i++)
+                                            <button type="button" 
+                                                @click="rating = {{ $i }}" 
+                                                @mouseenter="hover = {{ $i }}" 
+                                                @mouseleave="hover = 0"
+                                                class="text-3xl focus:outline-none transition-transform active:scale-90"
+                                                :class="(hover || rating) >= {{ $i }} ? 'text-amber-400' : 'text-slate-200'">
+                                                <i class="fas fa-star"></i>
+                                            </button>
+                                        @endfor
+                                        <span class="ml-4 text-sm font-bold text-slate-600" x-text="rating + '/5 Stars'"></span>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-3 px-1">Describe your experience</label>
+                                    <textarea name="comment" rows="4" 
+                                        class="w-full bg-slate-50 border-none rounded-[1.5rem] px-6 py-4 text-sm font-medium text-slate-800 placeholder:text-slate-400 focus:ring-4 focus:ring-indigo-500/10 transition-all"
+                                        placeholder="What was the highlight of your trek? Any tips for future travelers?"></textarea>
+                                </div>
+
+                                <button type="submit" 
+                                    class="w-full bg-slate-900 text-white font-bold py-5 rounded-2xl shadow-xl shadow-slate-900/10 hover:bg-slate-800 transition-all flex items-center justify-center gap-3 group">
+                                    Post My Review
+                                    <i class="fas fa-paper-plane text-xs text-slate-400 group-hover:text-white group-hover:translate-x-1 transition-all"></i>
+                                </button>
+                            </form>
+                        </div>
+                    @elseif($userReview)
+                        <div class="p-6 bg-indigo-50/50 border border-indigo-100 rounded-[1.5rem] flex items-center gap-4">
+                            <div class="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center text-indigo-600">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-sm font-bold text-slate-900">Your review is live!</h4>
+                                <p class="text-xs text-slate-500 font-medium">Thank you for sharing your journey with the community.</p>
+                            </div>
+                        </div>
+                    @endif
+
                     <div class="space-y-6">
                         @forelse($reviews as $review)
                             <article class="p-8 bg-white rounded-3xl border border-slate-100 shadow-sm relative overflow-hidden">
@@ -175,6 +257,21 @@
                                             <span class="text-xs text-slate-400 font-semibold uppercase tracking-wider">{{ $review->created_at->diffForHumans() }}</span>
                                         </div>
                                     </div>
+
+                                    @if($review->admin_reply)
+                                        <div class="mt-6 ml-4 md:ml-10 p-6 bg-slate-50 rounded-2xl border-l-4 border-slate-200 relative group/reply hover:border-slate-900 transition-colors">
+                                            <div class="flex items-center justify-between mb-3">
+                                                <div class="flex items-center gap-2">
+                                                    <div class="w-6 h-6 rounded-full bg-slate-900 flex items-center justify-center text-[8px] text-white">
+                                                        <i class="fas fa-shield-alt"></i>
+                                                    </div>
+                                                    <span class="text-[10px] font-extrabold text-slate-900 uppercase tracking-widest italic">Official Response</span>
+                                                </div>
+                                                <span class="text-[10px] text-slate-400 font-bold uppercase tracking-tighter">{{ $review->admin_replied_at?->diffForHumans() }}</span>
+                                            </div>
+                                            <p class="text-sm text-slate-600 leading-relaxed font-medium italic">"{{ $review->admin_reply }}"</p>
+                                        </div>
+                                    @endif
                                 </div>
                             </article>
                         @empty
@@ -244,4 +341,5 @@
             </aside>
         </div>
     </div>
-</x-app-layout>
+</x-layouts.app>
+

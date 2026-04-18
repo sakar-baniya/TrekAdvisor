@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <!-- Hero Section -->
     <section class="relative min-h-[85vh] flex items-center justify-center bg-slate-900 overflow-hidden">
         <!-- Background Image overlay -->
@@ -219,4 +219,5 @@
             </div>
         </div>
     </section>
-</x-app-layout>
+</x-layouts.app>
+

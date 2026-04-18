@@ -44,6 +44,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Enforce global password requirements
+        \Illuminate\Validation\Rules\Password::defaults(function () {
+            return \Illuminate\Validation\Rules\Password::min(8);
+        });
+
         // Register authorization policies
         Gate::policy(User::class, UserPolicy::class);
         Gate::policy(Trek::class, TrekPolicy::class);

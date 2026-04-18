@@ -82,18 +82,20 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
         Route::patch('contact-messages/{contactMessage}/respond', [ContactMessageController::class, 'respond'])->name('contact-messages.respond');
         Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
-        Route::get('reviews/flagged', [ReviewController::class, 'flagged'])->name('reviews.flagged');
         Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
-        Route::patch('reviews/{review}/flag', [ReviewController::class, 'toggleFlag'])->name('reviews.flag');
+        Route::patch('reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
         Route::delete('reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
         Route::get('users', [UserController::class, 'index'])->name('users.index');
         Route::get('users/create-staff', [UserController::class, 'createStaff'])->name('users.create-staff');
         Route::post('users/create-staff', [UserController::class, 'storeStaff'])->name('users.store-staff');
         Route::patch('users/{user}/approve', [UserController::class, 'approve'])->name('users.approve');
         Route::patch('users/{user}/role', [UserController::class, 'updateRole'])->name('users.role');
+        Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
         Route::get('hotels', [AdminHotelController::class, 'index'])->name('hotels.index');
         Route::patch('hotels/{hotel}/status', [AdminHotelController::class, 'updateStatus'])->name('hotels.status');
+
+
     });
 
     // Staff Only
@@ -173,7 +175,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 // --- STANDARD ROUTES ---
 
 Route::get('/treks', [TrekController::class, 'index'])->name('treks.index');
-Route::get('/treks/{slug}', [TrekController::class, 'show'])->name('treks.show');
+Route::get('/treks/{trek}', [TrekController::class, 'show'])->name('treks.show');
 
 Route::middleware('auth')->group(function () {
     Route::get('/bookings/create/{departure}', [BookingController::class, 'create'])->name('bookings.create');

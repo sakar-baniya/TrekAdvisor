@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <!-- Hero Section -->
     <section class="relative bg-slate-900 overflow-hidden py-16 md:py-24 px-4 sm:px-6 lg:px-8">
         <div class="absolute inset-0 bg-[url('{{ asset('images/ui/hero.webp') }}')] bg-cover bg-center opacity-30">
@@ -211,4 +211,5 @@
             {{ $treks->links('components.pagination') }}
         </div>
     </div>
-</x-app-layout>
+</x-layouts.app>
+

@@ -57,7 +57,8 @@ class AccountReviewsController extends Controller
             'comment' => $validated['comment'] ?? null,
         ]);
 
-        return back()->with('success', 'Review submitted.');
+        return redirect()->route('treks.show', ['trek' => $trek->slug])
+            ->with('success', 'Review submitted.');
     }
 
     /**
@@ -98,7 +99,8 @@ class AccountReviewsController extends Controller
             'comment' => $validated['comment'] ?? null,
         ]);
 
-        return back()->with('success', 'Review submitted.');
+        return redirect()->route('hotels.show', ['hotel' => $hotel->id])
+            ->with('success', 'Review submitted.');
     }
 
     /**

@@ -5,74 +5,74 @@
     </div>
 @endif
 
-<div class="space-y-12">
+<div class="space-y-8">
     <!-- Departure Core Details -->
-    <section class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden text-black">
-        <div class="p-8 md:p-10 border-b border-slate-50">
-            <h3 class="text-xl font-semibold text-slate-900 tracking-tight">Departure Logistics</h3>
-            <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-1">Set dates, seats, and specific pricing for this trek run</p>
+    <section class="bg-white border border-slate-200/70 rounded-2xl p-6 md:p-7 overflow-hidden text-black">
+        <div class="mb-6">
+            <h3 class="text-slate-900 text-base font-semibold tracking-tight">Departure Logistics</h3>
+            <p class="text-slate-500 text-sm mt-1">Set dates, seats, and specific pricing for this trek run</p>
         </div>
         
-        <div class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div class="space-y-2">
-                <x-input-label value="Assigned Trek *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <select name="trek_id" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3" required>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Assigned Trek *</label>
+                <select name="trek_id" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
                     <option value="">Select trek</option>
-                    @foreach ($treks as $id => $title)
-                        <option value="{{ $id }}" @selected(old('trek_id', $selectedTrekId) == $id)>{{ $title }}</option>
+                    @foreach ($treks as $trek)
+                        <option value="{{ $trek->id }}" @selected(old('trek_id', $selectedTrekId) == $trek->id)>{{ $trek->title }}</option>
                     @endforeach
                 </select>
-                @error('trek_id') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+                @error('trek_id') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="Booking Status *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <select name="status" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3" required>
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Booking Status *</label>
+                <select name="status" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
                     @foreach (['available' => 'Available', 'full' => 'Fully Booked', 'completed' => 'Expedition Completed'] as $value => $label)
                         <option value="{{ $value }}" @selected(old('status', $departure->status) === $value)>{{ $label }}</option>
                     @endforeach
                 </select>
-                @error('status') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+                @error('status') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="Start Date *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <x-text-input type="date" name="start_date" :value="old('start_date', optional($departure->start_date)->format('Y-m-d'))" required />
-                @error('start_date') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Start Date *</label>
+                <input type="date" name="start_date" value="{{ old('start_date', optional($departure->start_date)->format('Y-m-d')) }}" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
+                @error('start_date') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="End Date *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <x-text-input type="date" name="end_date" :value="old('end_date', optional($departure->end_date)->format('Y-m-d'))" required />
-                @error('end_date') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">End Date *</label>
+                <input type="date" name="end_date" value="{{ old('end_date', optional($departure->end_date)->format('Y-m-d')) }}" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
+                @error('end_date') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="Individual Price (NPR) *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" step="1" min="0" name="price" :value="old('price', $departure->price)" required />
-                @error('price') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Individual Price (NPR) *</label>
+                <input type="number" step="1" min="0" name="price" value="{{ old('price', $departure->price) }}" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
+                @error('price') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="Total Seat Capacity *" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" min="1" name="capacity" :value="old('capacity', $departure->capacity)" required />
-                @error('capacity') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Total Seat Capacity *</label>
+                <input type="number" min="1" name="capacity" value="{{ old('capacity', $departure->capacity) }}" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30" required>
+                @error('capacity') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
 
-            <div class="space-y-2">
-                <x-input-label value="Adjust Booked Seats" class="text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" min="0" name="booked_seats" :value="old('booked_seats', $departure->booked_seats ?? 0)" />
-                @error('booked_seats') <p class="text-[10px] font-semibold text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
+            <div class="space-y-1">
+                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-500 mb-1.5">Adjust Booked Seats</label>
+                <input type="number" min="0" name="booked_seats" value="{{ old('booked_seats', $departure->booked_seats ?? 0) }}" class="w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30">
+                @error('booked_seats') <p class="text-xs text-red-500 mt-1">{{ $message }}</p> @enderror
             </div>
         </div>
     </section>
 
     <!-- Form Actions -->
-    <div class="flex flex-col sm:flex-row items-center gap-4 pt-4">
-        <button type="submit" class="w-full sm:w-auto px-12 py-4 bg-slate-900 text-white text-[10px] font-semibold uppercase tracking-widest rounded-2xl hover:bg-slate-800 transition-all shadow-xl shadow-slate-900/20">
+    <div class="flex items-center gap-4">
+        <button type="submit" class="bg-slate-900 text-white hover:bg-slate-800 rounded-xl px-10 py-2.5 text-sm font-semibold transition-all shadow-lg shadow-slate-900/10">
             <i class="fas fa-save mr-2"></i> {{ $departure->exists ? 'Update Departure' : 'Create Departure' }}
         </button>
-        <a href="{{ route('admin.departures.index') }}" class="w-full sm:w-auto text-center px-8 py-4 bg-white border border-slate-200 text-slate-600 text-[10px] font-semibold uppercase tracking-widest rounded-2xl hover:bg-slate-50 transition-all">
+        <a href="{{ route('admin.departures.index') }}" class="px-6 py-2.5 bg-white border border-slate-200 hover:bg-slate-50 text-slate-600 text-sm font-semibold rounded-xl transition-all">
             Cancel
         </a>
     </div>

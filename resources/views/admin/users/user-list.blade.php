@@ -1,113 +1,116 @@
-<x-dashboard-layout>
-    <!-- Page Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6 mb-10">
-        <div>
-            <h1 class="text-3xl font-semibold text-slate-900 tracking-tight">Identity & Access</h1>
-            <p class="text-slate-500 font-medium mt-1">Manage user roles, partner approvals, and platform permissions.</p>
-        </div>
-        <a href="{{ route('admin.users.create-staff') }}" class="inline-flex items-center px-6 py-3 bg-slate-900 text-white rounded-xl text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
-            <i class="fas fa-plus mr-2 text-sm"></i> Add Staff User
-        </a>
-    </div>
+@section('page-title', 'User Accounts')
+@section('page-subtitle', 'Manage user roles, partner approvals, and platform permissions.')
+
+@section('page-actions')
+    <a href="{{ route('admin.users.create-staff') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-lg text-sm font-semibold hover:bg-slate-800 transition-all shadow-sm">
+        <i class="fas fa-plus mr-2 opacity-70"></i> Add Staff
+    </a>
+@endsection
+
+<x-layouts.dashboard>
 
     <!-- Alert System -->
     @if (session('success'))
-        <div class="mb-8 p-4 bg-emerald-50 border-l-4 border-emerald-500 rounded-r-xl">
-            <p class="text-[10px] font-semibold text-emerald-800 uppercase tracking-widest">Success</p>
-            <p class="text-xs font-semibold text-emerald-600 mt-1 uppercase italic tracking-tight">{{ session('success') }}</p>
+        <div class="mb-8 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
+            <p class="text-xs font-medium text-emerald-700 mb-1">Success</p>
+            <p class="text-xs text-emerald-700">{{ session('success') }}</p>
         </div>
     @endif
     @if (session('error'))
-        <div class="mb-8 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-xl">
-            <p class="text-[10px] font-semibold text-red-800 uppercase tracking-widest">Error</p>
-            <p class="text-xs font-semibold text-red-600 mt-1 uppercase italic tracking-tight">{{ session('error') }}</p>
+        <div class="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl">
+            <p class="text-xs font-medium text-red-700 mb-1">Error</p>
+            <p class="text-xs text-red-700">{{ session('error') }}</p>
         </div>
     @endif
 
     <!-- Filters Section -->
-    <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-10">
-        <div class="px-8 py-6 border-b border-slate-50 bg-slate-50/20">
-            <h3 class="text-xs font-semibold text-slate-900 uppercase tracking-widest">Search & Segmentation</h3>
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-10">
+        <div class="px-5 py-4 border-b border-slate-100 bg-white">
+            <h3 class="text-base font-semibold text-slate-900">Find Users</h3>
         </div>
-        <div class="p-8">
+        <div class="p-5">
             <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col lg:flex-row lg:items-end gap-6">
-                <div class="flex-1">
-                    <x-input-label for="search" value="Keyword Search" class="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                    <x-text-input type="search" name="search" id="search" value="{{ $search }}" placeholder="Search by name or email address..." />
+                <div class="flex-1 space-y-1.5">
+                    <label for="search" class="text-xs font-medium text-slate-500 ml-1">Keyword Search</label>
+                    <div class="relative group">
+                        <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-slate-900 transition-colors"></i>
+                        <input id="search" 
+                               type="search" 
+                               name="search" 
+                               value="{{ $search }}" 
+                               class="w-full bg-slate-50 border border-slate-200 rounded-lg pl-11 pr-4 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:bg-white transition-all transition-colors" 
+                               placeholder="Search by identity or email..." />
+                    </div>
                 </div>
-                <div class="w-full lg:w-64">
-                    <x-input-label for="role" value="Account Role" class="mb-2 text-[10px] font-semibold uppercase tracking-widest text-slate-400" />
-                    <select name="role" id="role" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3">
+                <div class="w-full lg:w-72 space-y-1.5">
+                    <label for="role" class="text-xs font-medium text-slate-500 ml-1">Account Role</label>
+                    <select name="role" id="role" class="w-full bg-slate-50 border border-slate-200 rounded-lg px-4 py-2.5 text-sm font-medium text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:bg-white transition-all appearance-none cursor-pointer">
                         <option value="">All Account Types</option>
                         @foreach (['admin' => 'Administrators', 'staff' => 'Internal Staff', 'customer' => 'Retail Customers', 'hotel_owner' => 'Hotel Owners'] as $value => $label)
                             <option value="{{ $value }}" @selected($role === $value)>{{ $label }}</option>
                         @endforeach
                     </select>
                 </div>
-                <button type="submit" class="w-full lg:w-auto px-8 py-3.5 bg-slate-100 text-slate-600 text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-slate-900 hover:text-white transition-all">
-                    Apply List Filters
+                <button type="submit" class="h-[43px] px-8 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-all shadow-sm">
+                    Apply Filters
                 </button>
             </form>
         </div>
     </div>
 
     <!-- User Table -->
-    <div class="bg-white rounded-[2.5rem] border border-slate-100 shadow-sm overflow-hidden">
+    <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
         <div class="overflow-x-auto">
             <table class="w-full text-left">
                 <thead>
-                    <tr class="text-[10px] font-semibold uppercase tracking-[0.15em] text-slate-400 border-b border-slate-50 bg-slate-50/20">
-                        <th class="px-8 py-5">Verified User</th>
-                        <th class="px-8 py-5">Platform Role</th>
-                        <th class="px-8 py-5">Partner Status</th>
-                        <th class="px-8 py-5">Joined</th>
-                        <th class="px-8 py-5 text-right">Administrative Actions</th>
+                    <tr class="text-xs font-medium text-slate-500 border-b border-slate-100 bg-slate-50/50">
+                        <th class="px-6 py-4">Verified User</th>
+                        <th class="px-6 py-4">Platform Role</th>
+                        <th class="px-6 py-4">Partner Status</th>
+                        <th class="px-6 py-4 text-right">Actions</th>
                     </tr>
                 </thead>
-                <tbody class="divide-y divide-slate-50 italic-hover">
-                    @forelse ($users as $user)
-                        <tr class="group hover:bg-slate-50/50 transition-colors">
-                            <td class="px-8 py-6">
+                <tbody class="divide-y divide-slate-50/50">
+                    @foreach ($users as $user)
+                        <tr class="group hover:bg-slate-50/30 transition-all">
+                            <td class="px-6 py-4">
                                 <div class="flex items-center gap-4">
-                                    <div class="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-semibold text-xs shrink-0">
-                                        {{ substr($user->name, 0, 1) }}
+                                    <div class="w-10 h-10 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-semibold text-xs shrink-0">
+                                        {{ strtoupper(substr($user->name, 0, 1)) }}
                                     </div>
                                     <div>
-                                        <div class="text-sm font-semibold text-slate-900 group-hover:text-emerald-600 transition-colors uppercase tracking-tight">{{ $user->name }}</div>
-                                        <div class="text-[10px] font-medium text-slate-400 lowercase tracking-wider">{{ $user->email }}</div>
+                                        <div class="text-sm font-semibold text-slate-900">{{ $user->name }}</div>
+                                        <div class="text-xs text-slate-500">{{ $user->email }}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td class="px-8 py-6">
-                                <span class="px-3 py-1 rounded-full text-[9px] font-semibold uppercase tracking-widest border border-slate-100 bg-slate-50 text-slate-600">
+                            <td class="px-6 py-4">
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-medium border border-slate-200 bg-slate-50 text-slate-600">
                                     {{ str_replace('_', ' ', $user->role) }}
                                 </span>
                             </td>
-                            <td class="px-8 py-6">
+                            <td class="px-10 py-6">
                                 @if ($user->role === 'hotel_owner')
                                     @php
                                         $approved = $user->approval_status === 'approved';
                                     @endphp
-                                    <div class="flex items-center gap-2">
-                                         <span class="w-1.5 h-1.5 rounded-full {{ $approved ? 'bg-emerald-500' : 'bg-amber-400 animate-pulse' }}"></span>
-                                         <span class="text-[9px] font-semibold uppercase tracking-widest {{ $approved ? 'text-emerald-700' : 'text-amber-700' }}">
+                                    <div class="flex items-center gap-2.5">
+                                         <span class="w-2 h-2 rounded-full {{ $approved ? 'bg-emerald-500 shadow-sm shadow-emerald-500/20' : 'bg-amber-400 animate-pulse shadow-sm shadow-amber-400/20' }}"></span>
+                                         <span class="text-xs font-medium {{ $approved ? 'text-emerald-700' : 'text-amber-700' }}">
                                              {{ $approved ? 'Approved' : 'Pending Verification' }}
                                          </span>
                                     </div>
                                 @else
-                                    <span class="text-[9px] font-semibold text-slate-300 uppercase italic">N/A</span>
+                                    <span class="text-xs text-slate-300 italic opacity-40">N/A</span>
                                 @endif
                             </td>
-                            <td class="px-8 py-6">
-                                <span class="text-[10px] font-bold text-slate-500 uppercase tracking-tighter">{{ $user->created_at->format('M d, Y') }}</span>
-                            </td>
-                            <td class="px-8 py-6">
-                                <div class="flex items-center justify-end gap-4">
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-end gap-3">
                                     @if ($user->role === 'hotel_owner' && $user->approval_status !== 'approved')
                                         <form method="POST" action="{{ route('admin.users.approve', $user) }}">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="px-4 py-2 bg-emerald-50 text-emerald-600 text-[10px] font-semibold uppercase tracking-widest rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
+                                            <button type="submit" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">
                                                 Approve
                                             </button>
                                         </form>
@@ -116,28 +119,31 @@
                                     <form method="POST" action="{{ route('admin.users.role', $user) }}" class="flex items-center gap-2">
                                         @csrf
                                         @method('PATCH')
-                                        <select name="role" class="text-[10px] font-semibold uppercase border-slate-100 rounded-xl py-2 pl-3 pr-8 focus:ring-slate-900 focus:border-slate-900 bg-slate-50/50">
+                                        <select name="role" class="text-xs font-semibold border-slate-200 rounded-lg py-1.5 pl-3 pr-8 focus:ring-slate-900/10 focus:border-slate-900/30 bg-slate-50/50 appearance-none cursor-pointer">
                                             @foreach(['admin', 'staff', 'customer', 'hotel_owner'] as $r)
                                                 <option value="{{ $r }}" @selected($user->role === $r)>{{ str_replace('_', ' ', $r) }}</option>
                                             @endforeach
                                         </select>
-                                        <button type="submit" class="w-8 h-8 rounded-xl bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-all">
+                                        <button type="submit" class="w-8 h-8 rounded-lg bg-slate-900 text-white flex items-center justify-center hover:bg-slate-800 transition-all shadow-sm">
                                             <i class="fas fa-check text-[10px]"></i>
                                         </button>
                                     </form>
+
+                                    @if ($user->id !== auth()->id())
+                                        <form method="POST" action="{{ route('admin.users.destroy', $user) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" 
+                                                    class="w-8 h-8 rounded-lg bg-red-50 text-red-600 flex items-center justify-center hover:bg-red-600 hover:text-white transition-all border border-red-100"
+                                                    onclick="return confirm('Are you sure you want to PERMANENTLY delete this user account? This action cannot be undone.')">
+                                                <i class="fas fa-trash-alt text-[10px]"></i>
+                                            </button>
+                                        </form>
+                                    @endif
                                 </div>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="px-8 py-16 text-center">
-                                <div class="w-16 h-16 rounded-full bg-slate-50 flex items-center justify-center mx-auto mb-4">
-                                    <i class="fas fa-user-slash text-2xl text-slate-200"></i>
-                                </div>
-                                <p class="text-xs font-bold text-slate-400 italic">No users found matching your segments.</p>
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -149,4 +155,5 @@
             {{ $users->links() }}
         </div>
     @endif
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

@@ -13,7 +13,7 @@
     };
 @endphp
 
-<x-customer-layout 
+<x-layouts.customer 
     title="My Bookings" 
     subtitle="Manage upcoming and past trek or hotel bookings in one place."
     :breadcrumb="['My Bookings' => null]"
@@ -119,4 +119,5 @@
             </section>
         </div>
     </div>
-</x-customer-layout>
+</x-layouts.customer>
+

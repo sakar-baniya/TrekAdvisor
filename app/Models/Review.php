@@ -12,8 +12,7 @@ class Review extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'is_flagged' => 'boolean',
-        'flagged_at' => 'datetime',
+        'admin_replied_at' => 'datetime',
     ];
 
     /**

@@ -54,7 +54,7 @@ class TrekController extends Controller
         $trek = $this->upsertTrekService->create($request);
 
         return redirect()
-            ->route('admin.treks.edit', $trek)
+            ->route('admin.treks.index')
             ->with('success', 'Trek created successfully.');
     }
 

@@ -1,111 +1,159 @@
-<x-dashboard-layout>
-    <x-slot name="header">
-        <div class="admin-page-heading admin-page-heading--split">
-            <div>
-                <p class="admin-eyebrow">Trek Operations</p>
-                <h2 class="admin-page-title">Booking {{ $booking->booking_reference }}</h2>
-            </div>
-            <a href="{{ route('staff.trek-bookings.index') }}" class="admin-secondary-button">
-                <i class="fas fa-arrow-left"></i>
-                <span>Back to Bookings</span>
-            </a>
-        </div>
-    </x-slot>
+@section('page-title', 'Booking Management')
+@section('page-subtitle', 'Ref: ' . $booking->booking_reference)
+@section('page-back', route('staff.trek-bookings.index'))
 
-    @if (session('success'))
-        <div class="admin-flash success">{{ session('success') }}</div>
-    @endif
-
-    <section class="admin-show-grid">
-        <article class="admin-panel">
-            <div class="admin-panel__header">
-                <div>
-                    <h3>Booking Details</h3>
-                    <p>Main booking information and passenger list</p>
-                </div>
-            </div>
-
-            <div class="admin-info-list">
-                <div><span>Customer</span><strong>{{ $booking->user?->name }} ({{ $booking->user?->email }})</strong></div>
-                <div><span>Trek</span><strong>{{ $booking->departure?->trek?->title }}</strong></div>
-                <div><span>Departure</span><strong>{{ optional($booking->departure?->start_date)->format('M d') }} - {{ optional($booking->departure?->end_date)->format('M d, Y') }}</strong></div>
-                <div><span>Total Passengers</span><strong>{{ $booking->total_passengers }}</strong></div>
-                <div><span>Status</span><strong>{{ ucfirst(str_replace('_', ' ', $booking->status)) }}</strong></div>
-            </div>
-
-            <div class="admin-panel__header">
-                <div>
-                    <h3>Passengers</h3>
-                    <p>Traveler records saved with this booking</p>
-                </div>
-            </div>
-            <div class="admin-table-wrap">
-                <table class="admin-table">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Passport</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @forelse ($booking->passengers as $passenger)
-                            <tr>
-                                <td>{{ $passenger->full_name }}</td>
-                                <td>{{ $passenger->age ?? 'N/A' }}</td>
-                                <td>{{ $passenger->passport_number ?: 'Not provided' }}</td>
-                            </tr>
-                        @empty
-                            <tr>
-                                <td colspan="3" class="admin-table__empty">No passenger details found.</td>
-                            </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </article>
-
-        <aside class="admin-side-stack">
-            <section class="admin-panel">
-                <div class="admin-panel__header">
+<x-layouts.dashboard>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 pb-20">
+        <!-- Main Booking Content -->
+        <article class="lg:col-span-2 space-y-8">
+            <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden flex flex-col">
+                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h3>Pricing</h3>
-                        <p>Booking total breakdown</p>
+                        <h3 class="text-base font-semibold text-slate-900 tracking-tight">Booking Information</h3>
+                        <p class="text-sm text-slate-500 mt-0.5">Primary details of the trek reservation</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center text-lg">
+                        <i class="fas fa-mountain"></i>
                     </div>
                 </div>
-                <div class="admin-info-list">
-                    <div><span>Base Price</span><strong>NPR {{ number_format($booking->price_per_person, 2) }} x {{ $booking->total_passengers }}</strong></div>
-                    <div><span>Subtotal</span><strong>NPR {{ number_format($booking->subtotal, 2) }}</strong></div>
-                    <div><span>Discount</span><strong>{{ $booking->discount_percent }}% (-NPR {{ number_format($booking->discount_amount, 2) }})</strong></div>
-                    <div><span>Final Total</span><strong>NPR {{ number_format($booking->total_price, 2) }}</strong></div>
+
+                <div class="px-6 py-8 grid grid-cols-1 sm:grid-cols-2 gap-y-8 gap-x-6">
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-medium text-slate-500">Customer</span>
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold text-xs uppercase">
+                                {{ substr($booking->user?->name ?? 'G', 0, 1) }}
+                            </div>
+                            <div>
+                                <p class="text-sm font-semibold text-slate-900">{{ $booking->user?->name ?? 'Guest' }}</p>
+                                <p class="text-xs text-slate-500 leading-none">{{ $booking->user?->email }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-medium text-slate-500">Trek Departure</span>
+                        <p class="text-sm font-semibold text-slate-900 leading-tight">{{ $booking->departure?->trek?->title }}</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-medium text-slate-500">Travel Dates</span>
+                        <p class="text-sm font-semibold text-slate-900">
+                            {{ optional($booking->departure?->start_date)->format('M d') }} - {{ optional($booking->departure?->end_date)->format('M d, Y') }}
+                        </p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-medium text-slate-500">Passengers</span>
+                        <p class="text-sm font-semibold text-slate-900">{{ $booking->total_passengers }} Travelers</p>
+                    </div>
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-medium text-slate-500">Payment Status</span>
+                        <div class="flex items-center gap-2">
+                            @php $payment = $booking->payments()->where('status', 'success')->latest()->first(); @endphp
+                            @if ($payment)
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-emerald-50 text-emerald-700 border border-emerald-100">Paid ({{ ucfirst($payment->gateway) }})</span>
+                            @else
+                                <span class="px-2.5 py-1 rounded-lg text-xs font-medium bg-red-50 text-red-700 border border-red-100">Action Required</span>
+                            @endif
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            <section class="admin-panel">
-                <div class="admin-panel__header">
+            <section class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="px-6 py-5 border-b border-slate-100 flex items-center justify-between">
                     <div>
-                        <h3>Status</h3>
-                        <p>Update the current booking state</p>
+                        <h3 class="text-base font-semibold text-slate-900 tracking-tight">Passenger List</h3>
+                        <p class="text-sm text-slate-500 mt-0.5">Verified travelers for this departure</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-lg bg-slate-50 text-slate-400 flex items-center justify-center text-lg">
+                        <i class="fas fa-passport"></i>
                     </div>
                 </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead>
+                            <tr class="bg-slate-50/50 border-b border-slate-100">
+                                <th class="px-6 py-4 text-xs font-medium text-slate-500">Full Name</th>
+                                <th class="px-6 py-4 text-xs font-medium text-slate-500">Age</th>
+                                <th class="px-6 py-4 text-xs font-medium text-slate-500">Passport No.</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-50">
+                            @forelse ($booking->passengers as $passenger)
+                                <tr>
+                                    <td class="px-6 py-4 text-sm font-semibold text-slate-900">{{ $passenger->full_name }}</td>
+                                    <td class="px-6 py-4 text-sm font-semibold text-slate-600">{{ $passenger->age ?? 'N/A' }}</td>
+                                    <td class="px-6 py-4 text-sm font-mono font-semibold text-slate-400">{{ $passenger->passport_number ?: '---' }}</td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="3" class="px-8 py-10 text-center">
+                                        <p class="text-xs font-medium text-slate-400 italic">No passenger details recorded.</p>
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </article>
 
-                <form method="POST" action="{{ route('staff.trek-bookings.status', $booking) }}" class="admin-status-form">
+        <!-- Sidebar Stats -->
+         <aside class="space-y-8">
+            <section class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div class="mb-6 border-b border-slate-100 pb-4">
+                    <h3 class="text-base font-semibold text-slate-900 tracking-tight">Financial Summary</h3>
+                    <p class="text-sm text-slate-500 mt-0.5">Payment breakdown</p>
+                </div>
+
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500">Base Price</span>
+                        <span class="font-semibold text-slate-900">NPR {{ number_format($booking->price_per_person, 2) }}</span>
+                    </div>
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-slate-500">Travelers</span>
+                        <span class="font-semibold text-slate-900">x {{ $booking->total_passengers }}</span>
+                    </div>
+                    @if($booking->discount_amount > 0)
+                        <div class="flex justify-between items-center text-sm">
+                            <span class="text-slate-500">Discount ({{ $booking->discount_percent }}%)</span>
+                            <span class="font-semibold text-red-500">-NPR {{ number_format($booking->discount_amount, 2) }}</span>
+                        </div>
+                    @endif
+                    <div class="pt-4 border-t border-slate-100">
+                        <p class="text-xs font-medium text-slate-500 mb-1">Total Paid</p>
+                        <p class="text-2xl font-semibold text-slate-900 tracking-tight">NPR {{ number_format($booking->total_price, 2) }}</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                <div class="mb-6">
+                    <h3 class="text-base font-semibold text-slate-900 tracking-tight">Status Update</h3>
+                    <p class="text-sm text-slate-500 mt-0.5">Manage reservation state</p>
+                </div>
+
+                <form method="POST" action="{{ route('staff.trek-bookings.status', $booking) }}" class="space-y-4">
                     @csrf
                     @method('PATCH')
-                    <label class="admin-field">
-                        <span>Booking Status</span>
-                        <select name="status" class="admin-input">
+                    
+                    <div class="space-y-1.5">
+                        <label class="text-xs font-medium text-slate-500 ml-1">Current Lifecycle</label>
+                        <select name="status" class="w-full bg-white border-slate-200 rounded-lg px-4 py-2.5 text-sm font-semibold text-slate-900 focus:ring-2 focus:ring-slate-900/10 focus:border-slate-900/30 transition-all appearance-none cursor-pointer">
                             @foreach (['pending' => 'Pending', 'confirmed' => 'Confirmed', 'cancellation_requested' => 'Cancellation Requested', 'completed' => 'Completed', 'cancelled' => 'Cancelled'] as $value => $label)
                                 <option value="{{ $value }}" @selected($booking->status === $value)>{{ $label }}</option>
                             @endforeach
                         </select>
-                    </label>
-                    <button type="submit" class="admin-primary-button admin-primary-button--fit">
-                        <i class="fas fa-floppy-disk"></i>
-                        <span>Save Status</span>
+                    </div>
+
+                    <button type="submit" class="w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-slate-900 text-white text-sm font-semibold rounded-lg hover:bg-slate-800 transition-all shadow-sm" onclick="return confirm('Are you sure you want to update the booking status?')">
+                        <i class="fas fa-check-circle text-xs opacity-70"></i>
+                        <span>Apply Changes</span>
                     </button>
                 </form>
             </section>
+
         </aside>
-    </section>
-</x-dashboard-layout>
+    </div>
+</x-layouts.dashboard>
+

@@ -6,6 +6,18 @@
 *.md diff=markdown
 *.php diff=php
 
+# Exclude non-app directories from GitHub language statistics
+tools/** linguist-vendored
+database/factories/** linguist-vendored
+database/seeders/** linguist-vendored
+
+# Exclude specific file types from language statistics
+*.css linguist-vendored
+*.js linguist-vendored
+*.json linguist-vendored
+*.xml linguist-vendored
+*.svg linguist-vendored
+
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore

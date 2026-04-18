@@ -22,9 +22,6 @@
             <input type="search" placeholder="Search..." />
         </label>
 
-        <button type="button" class="dashboard-topbar__icon-btn" aria-label="Notifications">
-            <i class="fas fa-bell"></i>
-        </button>
 
         <x-dashboard.profile-menu />
     </div>

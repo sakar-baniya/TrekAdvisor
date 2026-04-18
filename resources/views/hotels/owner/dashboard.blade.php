@@ -1,9 +1,9 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <h1 class="text-3xl font-semibold text-slate-900 tracking-tight">Hotel Owner Dashboard</h1>
-            <p class="text-slate-500 font-medium tracking-tight">Track requests, confirm stays, and manage property inventory.</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight font-display">Dashboard</h1>
+            <p class="text-sm font-medium text-slate-500 mt-1">Track requests, confirm stays, and manage your property inventory.</p>
         </div>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('hotel_owner.bookings.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
@@ -12,7 +12,7 @@
             <a href="{{ route('hotel_owner.hotels.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl text-xs font-semibold uppercase tracking-widest text-slate-600 hover:bg-slate-50 transition-colors shadow-sm">
                 Properties
             </a>
-            <a href="{{ route('hotel_owner.hotels.create') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
+            <a href="{{ route('hotel_owner.hotels.create') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/10">
                 <i class="fas fa-plus mr-2"></i> Add Hotel
             </a>
         </div>
@@ -42,8 +42,8 @@
         <!-- Revenue Chart -->
         <div class="lg:col-span-2 bg-white rounded-3xl border border-slate-100 shadow-sm p-8 flex flex-col">
             <div class="mb-8">
-                <h3 class="text-lg font-semibold text-slate-900 tracking-tight">Weekly Revenue Trend</h3>
-                <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest mt-1">Based on confirmed stays</p>
+                <h3 class="text-xl font-bold text-slate-900 tracking-tight font-display">Weekly Revenue</h3>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Based on confirmed stays</p>
             </div>
             <div class="flex-grow h-[300px]">
                 <canvas id="hotelRevenueChart"></canvas>
@@ -54,7 +54,7 @@
         <div class="space-y-8">
             <!-- Pipeline -->
             <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-8">
-                <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest mb-6">Stay Pipeline</h3>
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6">Booking Summary</h3>
                 <div class="space-y-3">
                     @foreach($statusBreakdown ?? [] as $label => $val)
                         <div class="flex items-center justify-between p-3 rounded-2xl bg-slate-50/50">
@@ -67,7 +67,7 @@
 
             <!-- Inventory -->
             <div class="bg-white rounded-3xl border-l-[6px] border-slate-900 shadow-sm p-8">
-                <h3 class="text-sm font-semibold text-slate-900 uppercase tracking-widest mb-6 px-1">Inventory Snapshot</h3>
+                <h3 class="text-sm font-bold text-slate-900 uppercase tracking-widest mb-6 px-1">Properties Overview</h3>
                 <div class="grid grid-cols-2 gap-4">
                     <div class="p-4 bg-slate-50 rounded-2xl">
                          <span class="block text-xl font-semibold text-slate-900">{{ $stats['hotels'] ?? 0 }}</span>
@@ -86,8 +86,8 @@
     <div class="bg-white rounded-3xl border border-slate-100 shadow-sm overflow-hidden mb-10">
         <div class="p-8 border-b border-slate-50 flex items-center justify-between bg-slate-50/20">
             <div>
-                <h3 class="text-lg font-semibold text-slate-900 tracking-tight">Recent Booking Requests</h3>
-                <p class="text-[10px] font-semibold text-slate-400 uppercase tracking-widest">Latest check-in requests across all hotels</p>
+                <h3 class="text-xl font-bold text-slate-900 tracking-tight font-display">Recent Activity</h3>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-1">Latest check-in requests across all hotels</p>
             </div>
             <a href="{{ route('hotel_owner.bookings.index') }}" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-xl text-[10px] font-semibold uppercase tracking-widest text-slate-600 hover:bg-slate-900 hover:text-white transition-all shadow-sm">
                 View All &rarr;
@@ -113,7 +113,7 @@
                                 <span class="bg-slate-50 text-slate-400 text-[10px] font-bold px-2 py-1 rounded-lg">#{{ $booking->booking_reference }}</span>
                             </td>
                             <td class="px-8 py-5">
-                                <div class="text-sm font-semibold text-slate-900 group-hover:text-blue-600 transition-colors uppercase tracking-tight">{{ $booking->hotelRoom?->hotel?->name ?? 'Hotel' }}</div>
+                                <div class="text-sm font-semibold text-slate-900 transition-colors uppercase tracking-tight">{{ $booking->hotelRoom?->hotel?->name ?? 'Hotel' }}</div>
                                 <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">{{ $booking->hotelRoom?->room_type ?? 'Standard Room' }}</div>
                             </td>
                             <td class="px-8 py-5">
@@ -205,4 +205,5 @@
             });
         });
     </script>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

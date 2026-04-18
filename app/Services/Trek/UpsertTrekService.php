@@ -3,6 +3,8 @@
 namespace App\Services\Trek;
 
 use App\Models\Trek;
+use App\Services\Trek\TrekGalleryService;
+use App\Services\Trek\TrekSlugService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -15,6 +17,11 @@ use Illuminate\Support\Facades\DB;
  */
 class UpsertTrekService
 {
+    public function __construct(
+        private readonly TrekSlugService $trekSlugService,
+        private readonly TrekGalleryService $trekGalleryService,
+    ) {}
+
     /**
      * Yo method le create related business flow execute garcha.
      *
@@ -83,14 +90,14 @@ class UpsertTrekService
         $trek->itineraries()->delete();
 
         $rows = collect($itineraries)
-            ->filter(fn (array $day) => filled($day['title'] ?? null) && filled($day['description'] ?? null))
+            ->filter(fn (array $day) => filled($day['title'] ?? null))
             ->values();
 
         foreach ($rows as $index => $day) {
             $trek->itineraries()->create([
-                'day_number' => $index + 1,
-                'title' => $day['title'],
-                'description' => $day['description'],
+                'day_number'  => $index + 1,
+                'title'       => $day['title'],
+                'description' => $day['description'] ?? '',
             ]);
         }
     }

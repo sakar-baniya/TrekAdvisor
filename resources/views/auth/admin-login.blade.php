@@ -1,4 +1,4 @@
-<x-auth-page 
+<x-layouts.auth 
     title="Admin Access" 
     heading="Admin Access" 
     subheading="Please authenticate to access the platform management dashboard."
@@ -73,4 +73,5 @@
             Return to Site
         </a>
     </x-slot>
-</x-auth-page>
+</x-layouts.auth>
+

@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-layouts.app>
     <main class="max-w-5xl mx-auto px-4 pt-12 pb-32 space-y-24">
         <!-- Hero -->
         <header class="text-center">
@@ -53,4 +53,5 @@
             </div>
         </section>
     </main>
-</x-app-layout>
+</x-layouts.app>
+

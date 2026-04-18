@@ -1,9 +1,9 @@
-<x-dashboard-layout>
+<x-layouts.dashboard>
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <h1 class="text-3xl font-semibold text-slate-900 tracking-tight">Staff Console</h1>
-            <p class="text-slate-500 font-medium">Monitoring trek booking activity and operational requests.</p>
+            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight font-display">Staff Dashboard</h1>
+            <p class="text-sm font-medium text-slate-500 mt-1">Monitoring trek booking activity and operational requests.</p>
         </div>
         <div class="flex gap-3">
             <a href="{{ route('staff.trek-bookings.index') }}" class="inline-flex items-center px-4 py-2 bg-slate-900 text-white rounded-xl text-xs font-semibold uppercase tracking-widest hover:bg-slate-800 transition-colors shadow-lg shadow-slate-900/20">
@@ -136,4 +136,5 @@
             });
         });
     </script>
-</x-dashboard-layout>
+</x-layouts.dashboard>
+

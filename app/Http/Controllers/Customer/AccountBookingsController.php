@@ -90,8 +90,8 @@ class AccountBookingsController extends Controller
         $payment = $this->latestPayment($trekBooking->payments);
         $review = Review::query()
             ->where('user_id', auth()->id())
-            ->where('reviewable_type', TrekBooking::class)
-            ->where('reviewable_id', $trekBooking->id)
+            ->where('reviewable_type', \App\Models\Trek::class)
+            ->where('reviewable_id', $trekBooking->departure->trek_id)
             ->first();
 
         return view('account.bookings.trek-booking-details', [
@@ -147,8 +147,8 @@ class AccountBookingsController extends Controller
         $payment = $this->latestPayment($hotelBooking->payments);
         $review = Review::query()
             ->where('user_id', auth()->id())
-            ->where('reviewable_type', HotelBooking::class)
-            ->where('reviewable_id', $hotelBooking->id)
+            ->where('reviewable_type', \App\Models\Hotel::class)
+            ->where('reviewable_id', $hotelBooking->hotelRoom->hotel_id)
             ->first();
 
         return view('account.bookings.hotel-booking-details', [
