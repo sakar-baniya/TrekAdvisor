@@ -13,6 +13,7 @@ class Hotel extends Model
     use HasFactory;
 
     protected $guarded = [];
+    protected $appends = ['image'];
 
     /**
      * Yo relation method le model lai rooms relation sanga map garcha.
@@ -72,7 +73,7 @@ class Hotel extends Model
         if (!$path) return null;
 
         // External URLs or already-prefixed paths must be returned as-is
-        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/storage/')) {
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/storage/') || str_starts_with($path, '/images/')) {
             return $path;
         }
 

@@ -32,10 +32,11 @@
         <div class="p-8">
             <form method="GET" action="{{ route('admin.users.index') }}" class="flex flex-col lg:flex-row lg:items-end gap-6">
                 <div class="flex-1">
-                    <x-ui.input type="search" name="search" id="search" label="Keyword Search" value="{{ $search }}" placeholder="Search by name or email address..." />
+                    <x-input-label for="search" value="Keyword Search" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                    <x-text-input type="search" name="search" id="search" value="{{ $search }}" placeholder="Search by name or email address..." />
                 </div>
                 <div class="w-full lg:w-64">
-                    <label for="role" class="block text-xs font-semibold text-slate-700 pl-1 mb-2">Account Role</label>
+                    <x-input-label for="role" value="Account Role" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
                     <select name="role" id="role" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3">
                         <option value="">All Account Types</option>
                         @foreach (['admin' => 'Administrators', 'staff' => 'Internal Staff', 'customer' => 'Retail Customers', 'hotel_owner' => 'Hotel Owners'] as $value => $label)

@@ -71,13 +71,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse ($featuredTreks->take(3) as $trek)
-                    <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full">
+                    <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full group">
                         <div class="h-64 overflow-hidden relative bg-slate-200">
                             @if($trek->image)
-                                <img src="{{ $trek->image }}" alt="Image of {{ $trek->title }}" class="w-full h-full object-cover">
+                                <img src="{{ $trek->image }}" alt="{{ $trek->title }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.onerror=null; this.src='/images/treks/trek-1.png';">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-400 bg-slate-100">
-                                    <i class="fas fa-mountain text-5xl"></i>
+                                <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-300">
+                                    <i class="fas fa-mountain text-4xl"></i>
                                 </div>
                             @endif
                             <div class="absolute top-6 right-6 bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm flex items-center gap-2">
@@ -93,9 +93,9 @@
                             
                             <div class="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between">
                                 <div>
-                                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">From</span>
+                                    <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">From</span>
                                     <div class="flex items-baseline gap-1">
-                                        <span class="text-3xl font-black text-slate-900 tracking-tight">NPR {{ number_format($trek->base_price, 0) }}</span>
+                                        <span class="text-3xl font-bold text-slate-900 tracking-tight">NPR {{ number_format($trek->base_price, 0) }}</span>
                                     </div>
                                 </div>
                                 <a href="{{ route('treks.show', $trek->slug) }}"
@@ -132,13 +132,13 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
                 @forelse ($featuredHotels->take(3) as $hotel)
-                    <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full">
-                        <div class="h-64 overflow-hidden relative">
+                    <article class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-300 flex flex-col h-full group">
+                        <div class="h-64 overflow-hidden relative bg-slate-200">
                             @if($hotel->image)
-                                <img src="{{ $hotel->image }}" alt="Image of {{ $hotel->name }}" class="w-full h-full object-cover ">
+                                <img src="{{ $hotel->image }}" alt="{{ $hotel->name }}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" onerror="this.onerror=null; this.src='/images/hotels/hotel-1.png';">
                             @else
-                                <div class="w-full h-full flex items-center justify-center text-slate-300 bg-slate-50">
-                                    <i class="fas fa-hotel text-5xl"></i>
+                                <div class="w-full h-full flex items-center justify-center bg-slate-100 text-slate-300">
+                                    <i class="fas fa-hotel text-4xl"></i>
                                 </div>
                             @endif
                             <div class="absolute top-6 right-6 bg-white/95 backdrop-blur-sm text-slate-900 text-[10px] font-black uppercase tracking-widest px-4 py-2 rounded-xl shadow-sm flex items-center gap-2">
@@ -153,9 +153,9 @@
                             
                             <div class="mt-auto pt-8 border-t border-slate-50 flex items-center justify-between">
                                 <div>
-                                    <span class="block text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Nightly</span>
+                                    <span class="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Per Night</span>
                                     <div class="flex items-baseline gap-1">
-                                        <span class="text-3xl font-black text-slate-900 tracking-tight">NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
+                                        <span class="text-3xl font-bold text-slate-900 tracking-tight">NPR {{ number_format($hotel->rooms_min_price_per_night ?? 0, 0) }}</span>
                                     </div>
                                 </div>
                                 <a href="{{ route('hotels.show', $hotel) }}"

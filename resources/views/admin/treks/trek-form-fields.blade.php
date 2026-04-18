@@ -97,10 +97,11 @@
                     
                     <div class="grid grid-cols-1 gap-6">
                         <div>
-                            <x-ui.input type="text" ::name="'itinerary['+index+'][title]'" x-model="day.title" label="Title" placeholder="e.g. Flight to Lukla & Trek to Phakding" />
+                            <x-input-label value="Title" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                            <x-text-input type="text" ::name="'itinerary['+index+'][title]'" x-model="day.title" placeholder="e.g. Flight to Lukla & Trek to Phakding" />
                         </div>
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 pl-1 mb-2">Description</label>
+                            <x-input-label value="Description" class="mb-2 text-[10px] font-black uppercase tracking-widest text-slate-400" />
                             <textarea ::name="'itinerary['+index+'][description]'" x-model="day.description" rows="4" class="w-full bg-white border-slate-200 rounded-2xl focus:ring-slate-900 focus:border-slate-900 text-sm font-medium p-4" placeholder="Describe the activities, elevation gain, and sights for this day..."></textarea>
                         </div>
                     </div>

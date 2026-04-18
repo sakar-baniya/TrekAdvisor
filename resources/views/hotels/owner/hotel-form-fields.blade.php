@@ -19,11 +19,13 @@
         </div>
         <div class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-2">
-                <x-ui.input type="text" name="name" label="Hotel Name *" :value="old('name', $hotel->name)" required />
+                <x-input-label value="Hotel Name *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                <x-text-input type="text" name="name" :value="old('name', $hotel->name)" required />
                 @error('name') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
             <div class="space-y-2">
-                <x-ui.input type="text" name="location" label="Location *" :value="old('location', $hotel->location)" required />
+                <x-input-label value="Location *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                <x-text-input type="text" name="location" :value="old('location', $hotel->location)" required />
                 @error('location') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
         </div>

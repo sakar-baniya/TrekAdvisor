@@ -72,7 +72,7 @@ class Trek extends Model
         if (!$path) return null;
 
         // External URLs or already-prefixed paths must be returned as-is
-        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/storage/')) {
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://') || str_starts_with($path, '/storage/') || str_starts_with($path, '/images/')) {
             return $path;
         }
 
