@@ -10,15 +10,12 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\View\View;
 
 /**
- * Yo ConfirmablePasswordController controller le confirmable password controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Confirm Password Controller: Sensitive settings hernu vanda paila password check garne thau.
  */
 class ConfirmablePasswordController extends Controller
 {
     /**
-     * Show the confirm password view.
+     * Confirm View: Sanu sensitive action garnu vanda paila password magne screen.
      */
     public function show(): View
     {
@@ -26,7 +23,7 @@ class ConfirmablePasswordController extends Controller
     }
 
     /**
-     * Confirm the user's password.
+     * Confirm Action: Password check garera 2-hour session confirm garne.
      */
     public function store(Request $request): RedirectResponse
     {

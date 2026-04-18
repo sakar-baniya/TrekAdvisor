@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo DashboardController controller le dashboard controller ko request/response flow handle garcha.
+ * Hotel Owner Dashboard Controller: Hotel owner ko main landing page.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Kati bookings aayo, ra earning kati bhyo bhanne stats QueryService bata dekhaur.
  */
 class DashboardController extends Controller
 {
@@ -21,14 +21,11 @@ class DashboardController extends Controller
     }
 
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Dashboard View: Owner ko summary stats dekhaune.
      */
     public function index(Request $request): View
     {
-        return view('hotel.hotel-owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
+        return view('hotels.owner.dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
     }
 }
 

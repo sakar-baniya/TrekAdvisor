@@ -7,10 +7,10 @@ use App\Services\Dashboard\UserDashboardQueryService;
 use Illuminate\View\View;
 
 /**
- * Yo DashboardController controller le dashboard controller ko request/response flow handle garcha.
+ * Staff Dashboard Controller: Staff ko main landing page.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Staff ko daily tasks, summary data, ra pending works dekhauna QueryService call garcha.
  */
 class DashboardController extends Controller
 {
@@ -20,10 +20,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Dashboard View: Staff ko summary stats dekhaune.
      */
     public function index(): View
     {

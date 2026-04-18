@@ -12,18 +12,15 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo AccountBookingsController controller le account bookings controller ko request/response flow handle garcha.
+ * Customer Account Bookings Controller: Customer le aafno bookings herne ra chalune thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Afno booking history herne, passenger details update garne, receipt nikalne, ra cancellation request garne.
  */
 class AccountBookingsController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Bookings List (Index): Customer ko sabai upcoming ra past bookings dekhaune.
      */
     public function index(Request $request): View
     {
@@ -83,10 +80,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le show trek ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Trek Booking Details: Euta specific trek booking ko detail page herne.
      */
     public function showTrek(TrekBooking $trekBooking): View
     {
@@ -108,10 +102,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le update passengers ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Passengers: Customer le aafno booking ma form bhardai passenger ko name/passport add garne.
      */
     public function updatePassengers(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
@@ -146,10 +137,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le show hotel ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Hotel Booking Details: Euta specific hotel booking ko detail page herne.
      */
     public function showHotel(HotelBooking $hotelBooking): View
     {
@@ -171,10 +159,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le cancel trek ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Cancel Trek Request: Customer le admin lai booking cancel garidinus bhanera request garne.
      */
     public function cancelTrek(TrekBooking $trekBooking): RedirectResponse
     {
@@ -194,10 +179,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le withdraw trek cancellation ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Withdraw Cancellation: Customer le galti le cancel garchu bhaneko thiyo bhane firta line.
      */
     public function withdrawTrekCancellation(TrekBooking $trekBooking): RedirectResponse
     {
@@ -213,10 +195,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le cancel hotel ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Cancel Hotel Request: Hotel booking cancel garna admin lai request pathaune.
      */
     public function cancelHotel(HotelBooking $hotelBooking): RedirectResponse
     {
@@ -236,10 +215,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le withdraw hotel cancellation ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Withdraw Cancellation: Hotel cancellation request firta line.
      */
     public function withdrawHotelCancellation(HotelBooking $hotelBooking): RedirectResponse
     {
@@ -255,10 +231,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le trek receipt ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Trek Receipt: Payment garisake pachi invoice / receipt print garna dekhaune page.
      */
     public function trekReceipt(TrekBooking $trekBooking): View
     {
@@ -272,10 +245,7 @@ class AccountBookingsController extends Controller
     }
 
     /**
-     * Yo function le hotel receipt ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Hotel Receipt: Payment garisake pachi hotel ko invoice / receipt print garna dekhaune page.
      */
     public function hotelReceipt(HotelBooking $hotelBooking): View
     {

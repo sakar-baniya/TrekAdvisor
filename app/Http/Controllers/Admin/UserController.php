@@ -10,18 +10,15 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 /**
- * Yo UserController controller le user controller ko request/response flow handle garcha.
+ * Admin User Controller: Platform ka sabai users, staff, ra hotel owners manage garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Role change garne, naya staff thapne, ra pending hotel owners lai approve garne.
  */
 class UserController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * User List (Index): Search ra role filter garera sabai users herne.
      */
     public function index(Request $request): View
     {
@@ -57,10 +54,7 @@ class UserController extends Controller
     }
 
     /**
-     * Yo function le create staff ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Create Staff Form: Naya admin ya staff member banaune khali form dekhaune.
      */
     public function createStaff(): View
     {
@@ -68,10 +62,7 @@ class UserController extends Controller
     }
 
     /**
-     * Yo function le store staff ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Save Staff: Khata banayera database ma secure tarikale password hash garera halne.
      */
     public function storeStaff(Request $request): RedirectResponse
     {
@@ -99,10 +90,7 @@ class UserController extends Controller
     }
 
     /**
-     * Yo function le approve ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Approve Hotel Owner: Pending approval ma baseka owner lai website ma kaam garna din permission dine.
      */
     public function approve(User $user): RedirectResponse
     {
@@ -118,10 +106,7 @@ class UserController extends Controller
     }
 
     /**
-     * Yo function le update role ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Role: Existing user ko role change garne (Customer lai Staff banaune etc.).
      */
     public function updateRole(Request $request, User $user): RedirectResponse
     {

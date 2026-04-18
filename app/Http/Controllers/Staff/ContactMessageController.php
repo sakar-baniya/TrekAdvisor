@@ -12,18 +12,15 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 /**
- * Yo ContactMessageController controller le staff ko contact inbox flow handle garcha.
+ * Staff Contact Message Controller: Staff le customer messages herne ra reply dine thau.
  *
- * Why:
- * Contact message list, open, ra response save ko logic euta thau ma huda support flow clear huncha.
+ * Function:
+ * Contact form bata aayeka messages check garne, read mark garne, ra support reply pathaune.
  */
 class ContactMessageController extends Controller
 {
     /**
-     * Yo function le staff inbox ko message list banaucha with search ra status filter.
-     *
-     * Why:
-     * Staff lai unread/responded message chhito track garna easy hunchha.
+     * Message List (Index): Staff inbox jaha sabai messages search ra status anusar herna milcha.
      */
     public function index(Request $request): View
     {
@@ -54,10 +51,7 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Yo function le selected message open garera first view ma read mark garcha.
-     *
-     * Why:
-     * Team le kun message heriyo/herena clearly track garna milcha.
+     * View Message (Show): Specific message open garne ra 'is_read' flag update garne.
      */
     public function show(ContactMessage $contactMessage): View
     {
@@ -76,10 +70,7 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Yo function le staff ko response note validate garera message ma save garcha.
-     *
-     * Why:
-     * Follow-up history, response owner, ra response time record clear rahos bhanera.
+     * Staff Respond: Form bata aayeko reply save garne ra customer lai email pathaune.
      */
     public function respond(Request $request, ContactMessage $contactMessage): RedirectResponse
     {

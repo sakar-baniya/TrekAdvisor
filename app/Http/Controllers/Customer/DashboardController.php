@@ -8,10 +8,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Handles dashboard screens for customer-facing role pages.
+ * Role Dashboard Controller: Role anusar ko dashboard page redirect garne thau.
  *
- * Why this exists:
- * Keeps dashboard data loading in one place and sends it to the right view.
+ * Function:
+ * Customer lai customer dashboard, Staff lai staff dashboard ma data pathaucha.
  */
 class DashboardController extends Controller
 {
@@ -21,21 +21,15 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the customer dashboard.
-     *
-     * Why:
-     * Customer users need booking summaries and quick stats in one page.
+     * Customer Dashboard: Customer ko aafno summary dekhaune.
      */
     public function customer(Request $request): View
     {
-        return view('customer.customer-dashboard', $this->userDashboardQueryService->customerData($request->user()));
+        return view('account.dashboard', $this->userDashboardQueryService->customerData($request->user()));
     }
 
     /**
-     * Show the staff dashboard view from this controller.
-     *
-     * Why:
-     * Kept for compatibility with older calls that may still hit this method.
+     * Staff Dashboard: Staff ko summary dekhaune.
      */
     public function staff(): View
     {
@@ -43,13 +37,10 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the hotel-owner dashboard.
-     *
-     * Why:
-     * Hotel owners need their own booking and revenue overview.
+     * Hotel Owner Dashboard: Hotel owner ko hotel bookings ra earnings dekhaune.
      */
     public function hotelOwner(Request $request): View
     {
-        return view('hotel.hotel-owner-dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
+        return view('hotels.owner.dashboard', $this->userDashboardQueryService->hotelOwnerData($request->user()));
     }
 }

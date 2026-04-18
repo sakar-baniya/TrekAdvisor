@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
- * Yo AuthenticatedSessionController controller le authenticated session controller ko request/response flow handle garcha.
+ * User Session Controller: User session suru ra khatam garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Customer, Staff, ra Hotel Owner ko login session manage garchha.
  */
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Display the login view.
+     * Login Page View: User lai login form dekhaune.
      */
     public function create(): View
     {
@@ -26,7 +26,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Handle an incoming authentication request.
+     * Login Action: Credential check garne ra role anusar dashboard ma pathaune.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -61,7 +61,7 @@ class AuthenticatedSessionController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout Action: Session invalidate garera login page ma ferkaune.
      */
     public function destroy(Request $request): RedirectResponse
     {

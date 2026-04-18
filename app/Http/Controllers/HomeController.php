@@ -9,15 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo HomeController controller le home controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Home Controller: Website ko main landing pages (Home, About, FAQ) handle garchha.
  */
 class HomeController extends Controller
 {
     /**
-     * Display the home page.
+     * Home Page: Trending treks ra hotels haru front page ma dekhaune.
      */
     public function home(): View
     {
@@ -50,7 +47,7 @@ class HomeController extends Controller
     }
 
     /**
-     * About page.
+     * About Page: Company ko info page.
      */
     public function about(): View
     {
@@ -58,7 +55,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Contact page.
+     * Contact Page: Contact form vako screen.
      */
     public function contact(): View
     {
@@ -66,7 +63,7 @@ class HomeController extends Controller
     }
 
     /**
-     * FAQ page.
+     * FAQ Page: Sadhai sodhine prasna ra uttar haru.
      */
     public function faq(): View
     {
@@ -83,7 +80,7 @@ class HomeController extends Controller
     }
 
     /**
-     * Travel Guide index page.
+     * Travel Guide Page: Yatri lai darsan dine guides haru.
      */
     public function travelGuide(): View
     {

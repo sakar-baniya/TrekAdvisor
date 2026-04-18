@@ -11,15 +11,12 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Throwable;
 
 /**
- * Yo PasswordResetLinkController controller le password reset link controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Forgot Password Controller: Password birsekama reset link pathaune thau.
  */
 class PasswordResetLinkController extends Controller
 {
     /**
-     * Display the password reset link request view.
+     * Forgot Password View: User lai email halne screen dekhaune.
      */
     public function create(): View
     {
@@ -27,9 +24,7 @@ class PasswordResetLinkController extends Controller
     }
 
     /**
-     * Handle an incoming password reset link request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Send Reset Link (Action): Email validate garera secure link inbox ma pathaune.
      */
     public function store(Request $request): RedirectResponse
     {

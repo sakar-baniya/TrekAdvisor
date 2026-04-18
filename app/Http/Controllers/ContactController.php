@@ -7,18 +7,12 @@ use App\Models\ContactMessage;
 use Illuminate\Http\RedirectResponse;
 
 /**
- * Yo ContactController controller le contact controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Root Contact Controller: Website ko global contact form handle garne thau.
  */
 class ContactController extends Controller
 {
     /**
-     * Yo function le store ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Store (Action): Form bata aayeko message database ma save garne.
      */
     public function store(ContactMessageRequest $request): RedirectResponse
     {

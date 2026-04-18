@@ -14,10 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo TrekController controller le trek controller ko request/response flow handle garcha.
+ * Admin Trek Controller: Trek haru banaune, edit garne, ra delete garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Services (Query, Upsert, Delete) call garera business logic chhuttyayeko chha. Database sidhai yaha bata chalaidaina.
  */
 class TrekController extends Controller
 {
@@ -29,10 +29,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Trek List (Index): Sabai treks ko list dekhaune paginated views.
      */
     public function index(Request $request): View
     {
@@ -40,10 +37,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le create ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Create Form (Create): Naya trek banaune khali form dekhaune.
      */
     public function create(): View
     {
@@ -53,10 +47,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le store ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Save New Trek (Store): Form bata aayeko naya data sabai validate garera save garne.
      */
     public function store(StoreTrekRequest $request): RedirectResponse
     {
@@ -68,10 +59,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le show ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * View Trek Details (Show): Euta trek ko pura details (itinerary/departures) frontend ma herne.
      */
     public function show(Trek $trek): View
     {
@@ -81,10 +69,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le edit ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Edit Form (Edit): Purano trek update garna form ma details bhariyera dekhaune.
      */
     public function edit(Trek $trek): View
     {
@@ -94,10 +79,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le update ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Trek (Update): Form bata edit gareko naya kura haru save garne.
      */
     public function update(UpdateTrekRequest $request, Trek $trek): RedirectResponse
     {
@@ -109,10 +91,7 @@ class TrekController extends Controller
     }
 
     /**
-     * Yo function le destroy ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Delete Trek (Destroy): Trek lai database bata delete garna service pathaune.
      */
     public function destroy(Trek $trek): RedirectResponse
     {

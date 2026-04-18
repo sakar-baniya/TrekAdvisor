@@ -10,18 +10,15 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo PaymentController controller le payment controller ko request/response flow handle garcha.
+ * Admin Payment Controller: Sabai transactions haru track garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Website ma bhayeko earning, dates filter, ra reference bookings check garne.
  */
 class PaymentController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Payment List (Index): Dates, status, ra type filter garera payments herne.
      */
     public function index(Request $request): View
     {
@@ -66,10 +63,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Yo function le show ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Payment Details (Show): Euta payment ko pura reference (trek/hotel booking) dekhaune.
      */
     public function show(Payment $payment): View
     {
@@ -83,10 +77,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Yo function le resolve reference ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Resolve Reference (Helper): Payment kun booking type (trek/hotel) ko ho bhanera object nikalne.
      */
     protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|null
     {

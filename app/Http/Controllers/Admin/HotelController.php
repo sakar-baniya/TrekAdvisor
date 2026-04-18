@@ -9,18 +9,15 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo HotelController controller le hotel controller ko request/response flow handle garcha.
+ * Admin Hotel Controller: Hotel haru ko list ra approval status manage garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Hotel list herne, search garne, ra pending hotels lai approve/active garne.
  */
 class HotelController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Hotel List (Index): Sabai hotels, filter garera dekhaune ra counts nikalne.
      */
     public function index(Request $request): View
     {
@@ -61,10 +58,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le update status ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Status: Hotel lai active, inactive, ya pending ma rakhne ra owner approve garne.
      */
     public function updateStatus(Request $request, Hotel $hotel): RedirectResponse
     {

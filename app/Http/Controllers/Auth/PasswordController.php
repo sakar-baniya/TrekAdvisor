@@ -9,15 +9,12 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 
 /**
- * Yo PasswordController controller le password controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Profile Password Controller: User le logged in vako bela password badalne thau.
  */
 class PasswordController extends Controller
 {
     /**
-     * Update the user's password.
+     * Update Action: Purano password check garera naya save garne.
      */
     public function update(Request $request): RedirectResponse
     {

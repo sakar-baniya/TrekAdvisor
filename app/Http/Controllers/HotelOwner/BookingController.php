@@ -13,6 +13,12 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use RuntimeException;
 
+/**
+ * Hotel Owner Booking Controller: Hotel owner le aafno hotel ko bookings herne ra status manage garne thau.
+ *
+ * Function:
+ * Kati jana le room book gareko chhan herne ra 'confirmed' ya 'cancelled' status update garne.
+ */
 class BookingController extends Controller
 {
     public function __construct(
@@ -20,6 +26,9 @@ class BookingController extends Controller
     ) {
     }
 
+    /**
+     * Booking List (Index): Afno hotel ko bookings filter ra search garera nikalne.
+     */
     public function index(Request $request): View
     {
         $search = trim($request->string('search')->toString());
@@ -57,6 +66,9 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Booking Details (Show): Euta booking ko details (customer info, dates) herne.
+     */
     public function show(Request $request, HotelBooking $hotelBooking): View
     {
         $booking = $this->ownerBooking($request, $hotelBooking);
@@ -67,6 +79,9 @@ class BookingController extends Controller
         ]);
     }
 
+    /**
+     * Update Status: Customer booking lai 'confirmed' ya 'cancelled' banaune.
+     */
     public function updateStatus(Request $request, HotelBooking $hotelBooking): RedirectResponse
     {
         $booking = $this->ownerBooking($request, $hotelBooking);

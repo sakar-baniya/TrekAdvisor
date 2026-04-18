@@ -15,10 +15,10 @@ use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 /**
- * Yo ProfileController controller le profile controller ko request/response flow handle garcha.
+ * Customer Profile Controller: Account settings ra password change garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * User le aafno naam, email, ra password purai change garna pauchha yaha bata.
  */
 class ProfileController extends Controller
 {
@@ -28,10 +28,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le settings profile ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Profile Settings View: Basic details edit garne page herne.
      */
     public function settingsProfile(Request $request): View
     {
@@ -42,10 +39,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le settings security ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Security Settings View: Password ya 2FA change garne page herne.
      */
     public function settingsSecurity(Request $request): View
     {
@@ -55,10 +49,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le settings security password ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Change Password View: Naya password halne chhutai screen herne.
      */
     public function settingsSecurityPassword(Request $request): View
     {
@@ -68,10 +59,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le update security password ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Password (Action): Database ma naya encrypted password save garne.
      */
     public function updateSecurityPassword(Request $request): RedirectResponse
     {
@@ -88,10 +76,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le store avatar ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Upload Avatar (Action): Profile picture upload garera storage ma save garne.
      */
     public function storeAvatar(Request $request): RedirectResponse
     {
@@ -115,10 +100,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Yo function le destroy avatar ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Remove Avatar (Action): Profile picture storage bata hataune.
      */
     public function destroyAvatar(Request $request): RedirectResponse
     {
@@ -135,7 +117,7 @@ class ProfileController extends Controller
 
 
     /**
-     * Update the user's profile information.
+     * Update Profile Info (Action): User ko naam ra thamel update garne.
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
@@ -145,7 +127,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Show user profile details page.
+     * Show Profile View: Profile page ma pathaune redirect helper.
      */
     public function show(Request $request): RedirectResponse
     {
@@ -153,7 +135,7 @@ class ProfileController extends Controller
     }
 
     /**
-     * Delete the user's account.
+     * Delete Account (Action): Khata purai Delete gari Session out garne.
      */
     public function destroy(Request $request): RedirectResponse
     {

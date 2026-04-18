@@ -9,18 +9,12 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo SearchController controller le search controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Search Controller: Pura website bhari treks, hotels, ya users search garna milne engine.
  */
 class SearchController extends Controller
 {
     /**
-     * Yo function le invoke ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Search Results: Keyword anusar database bata data filter garera dekhaune.
      */
     public function __invoke(Request $request): View
     {
@@ -38,7 +32,7 @@ class SearchController extends Controller
                 ->get();
 
             $hotelsQuery = Hotel::query()->where('name', 'like', "%{$query}%");
-            if ($user->role === 'hotel_owner') {
+            if ($user && $user->role === 'hotel_owner') {
                 $hotelsQuery->where('owner_id', $user->id);
             }
             $hotels = $hotelsQuery->limit(8)->get();

@@ -13,15 +13,15 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 /**
- * Yo RegisteredUserController controller le registered user controller ko request/response flow handle garcha.
+ * User Registration Controller: Naya user register garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Customer register garne ra Hotel Partner application submit garne logic herya chha.
  */
 class RegisteredUserController extends Controller
 {
     /**
-     * Display the registration view.
+     * Register View: Customer registration form.
      */
     public function create(): View
     {
@@ -29,7 +29,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Display the hotel partner registration view.
+     * Hotel Partner View: Hotel owner banne form.
      */
     public function createHotel(): View
     {
@@ -37,7 +37,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming partner registration request.
+     * Submit Partner App: Hotel owner ko profile database ma 'pending' status ma rakhne.
      */
     public function storeHotel(Request $request): RedirectResponse
     {
@@ -69,9 +69,7 @@ class RegisteredUserController extends Controller
     }
 
     /**
-     * Handle an incoming registration request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Register Customer Action: Naya customer account banaune ra sidhai login garaune.
      */
     public function store(Request $request): RedirectResponse
     {

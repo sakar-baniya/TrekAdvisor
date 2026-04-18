@@ -14,15 +14,12 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 /**
- * Yo NewPasswordController controller le new password controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * New Password Controller: Reset link thichepachi naya password set garne thau.
  */
 class NewPasswordController extends Controller
 {
     /**
-     * Display the password reset view.
+     * Reset Form View: Email link bata aayera naya password halne screen.
      */
     public function create(Request $request): View
     {
@@ -30,9 +27,7 @@ class NewPasswordController extends Controller
     }
 
     /**
-     * Handle an incoming new password request.
-     *
-     * @throws \Illuminate\Validation\ValidationException
+     * Update Password (Action): Token verify garera database ma password refresh garne.
      */
     public function store(Request $request): RedirectResponse
     {

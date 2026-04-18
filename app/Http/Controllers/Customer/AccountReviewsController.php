@@ -12,18 +12,15 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 /**
- * Yo AccountReviewsController controller le account reviews controller ko request/response flow handle garcha.
+ * Customer Account Reviews Controller: Customer le aafno reviews halne ra edit garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Completed trek ra hotel ma review post garne, aafno purano review update ya delete garne.
  */
 class AccountReviewsController extends Controller
 {
     /**
-     * Yo function le store trek ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Submit Trek Review (Store): Customer le ghumera aayepachi trek lai rating dine.
      */
     public function storeTrek(Request $request, Trek $trek): RedirectResponse
     {
@@ -64,10 +61,7 @@ class AccountReviewsController extends Controller
     }
 
     /**
-     * Yo function le store hotel ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Submit Hotel Review (Store): Basera aayepachi hotel lai rating dine.
      */
     public function storeHotel(Request $request, Hotel $hotel): RedirectResponse
     {
@@ -108,10 +102,7 @@ class AccountReviewsController extends Controller
     }
 
     /**
-     * Yo function le update ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Review (Update): Purano review edit garne.
      */
     public function update(Request $request, Review $review): RedirectResponse
     {
@@ -128,10 +119,7 @@ class AccountReviewsController extends Controller
     }
 
     /**
-     * Yo function le destroy ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Delete Review (Destroy): Aafno review delete garne.
      */
     public function destroy(Review $review): RedirectResponse
     {

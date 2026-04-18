@@ -12,18 +12,18 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
- * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ * Admin Booking Controller: Trek Bookings manage garne mukhya thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Admin le sabai customer ko bookings herne, status update garne, ra details track garne kaam garchha.
  */
 class BookingController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
+     * Booking List (Index): Admin le sabai trek bookings haru herchha.
+     * 
      * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Search, Status, ra Trek filter garera database bata paginated list dekhauna ko lagi.
      */
     public function index(Request $request): View
     {
@@ -57,10 +57,10 @@ class BookingController extends Controller
     }
 
     /**
-     * Yo function le show ko kaam handle garcha.
-     *
+     * Booking Details (Show): Euta specific booking ko pura detail dekhaune.
+     * 
      * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Customer ko details, selected trek, passengers, ra payment history herna ko lagi.
      */
     public function show(TrekBooking $trekBooking): View
     {
@@ -79,10 +79,10 @@ class BookingController extends Controller
     }
 
     /**
-     * Yo function le update status ko kaam handle garcha.
-     *
+     * Update Status: Booking ko haalat (status) change garne.
+     * 
      * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Admin le booking lai 'confirmed', 'completed', ya 'cancelled' ma switch garna sakchha.
      */
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {

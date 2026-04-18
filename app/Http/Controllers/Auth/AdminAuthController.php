@@ -10,15 +10,15 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
- * Yo AdminAuthController controller le admin auth controller ko request/response flow handle garcha.
+ * Admin Auth Controller: Admin login handle garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Administrator login flow, password verify, ra session security handle garchha.
  */
 class AdminAuthController extends Controller
 {
     /**
-     * Display the admin login view.
+     * Login View: Admin login page dekhaune thau.
      */
     public function create(): View
     {
@@ -26,7 +26,7 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * Handle an incoming admin authentication request.
+     * Login Action: Post request validate garera admin lai dashboard ma pathaune.
      */
     public function store(LoginRequest $request): RedirectResponse
     {
@@ -51,7 +51,7 @@ class AdminAuthController extends Controller
     }
 
     /**
-     * Destroy an authenticated session.
+     * Logout Action: Sessions clean garne ra logout garne.
      */
     public function destroy(Request $request): RedirectResponse
     {

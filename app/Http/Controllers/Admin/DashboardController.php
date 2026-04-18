@@ -7,10 +7,10 @@ use App\Services\Dashboard\AdminDashboardQueryService;
 use Illuminate\Contracts\View\View;
 
 /**
- * Yo DashboardController controller le dashboard controller ko request/response flow handle garcha.
+ * Admin Dashboard Controller: Admin ko mukhya landing page.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Total bookings, revenue, ra platform ko summary data tanna ko lagi query service call garchha.
  */
 class DashboardController extends Controller
 {
@@ -20,10 +20,7 @@ class DashboardController extends Controller
     }
 
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Dashboard View (Index): Admin dashboard render garne thau.
      */
     public function index(): View
     {

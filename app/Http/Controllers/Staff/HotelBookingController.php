@@ -12,10 +12,10 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
- * Yo HotelBookingController controller le hotel booking controller ko request/response flow handle garcha.
+ * Staff Hotel Booking Controller: Staff le hotel bookings ko management garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Sabai hotel bookings herne, search garne, ra status (Stay active/cancelled) update garne.
  */
 class HotelBookingController extends Controller
 {
@@ -25,7 +25,7 @@ class HotelBookingController extends Controller
     }
 
     /**
-     * Show hotel bookings for staff with search and filters.
+     * Hotel Booking List (Index): Paginated list of all hotel bookings for staff.
      */
     public function index(Request $request): View
     {
@@ -60,7 +60,7 @@ class HotelBookingController extends Controller
     }
 
     /**
-     * Show one hotel booking and linked payment records.
+     * Booking Details (Show): Detail view of a single hotel reservation.
      */
     public function show(HotelBooking $hotelBooking): View
     {
@@ -72,7 +72,7 @@ class HotelBookingController extends Controller
     }
 
     /**
-     * Update only the booking status from staff panel.
+     * Update Booking Status: Staff le manual status update garne functionality.
      */
     public function updateStatus(Request $request, HotelBooking $hotelBooking): RedirectResponse
     {

@@ -10,18 +10,14 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo PaymentController controller le payment controller ko request/response flow handle garcha.
+ * Staff Payment Controller: Staff le payments follow-up garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Pending ra failed payments herne, customer identity resolve garne, ra help garne.
  */
 class PaymentController extends Controller
 {
-    /**
-     * Show a staff queue of payments that need follow-up.
-     *
-     * Default queue: pending + failed payments.
-     */
+
     public function index(Request $request): View
     {
         $search = $request->string('search')->toString();
@@ -52,7 +48,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Show one payment with its linked booking reference.
+     * Payment Details (Show): Payment ra sambandhit booking link dekhaune.
      */
     public function show(Payment $payment): View
     {
@@ -65,7 +61,7 @@ class PaymentController extends Controller
     }
 
     /**
-     * Resolve the booking record linked to this payment.
+     * Resolve Reference (Helper): Payment kun trek ya hotel ko ho bhanera object nikalne.
      */
     protected function resolveReference(Payment $payment): TrekBooking|HotelBooking|null
     {

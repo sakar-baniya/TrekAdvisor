@@ -14,10 +14,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Yo HotelController controller le hotel controller ko request/response flow handle garcha.
+ * Hotel Owner Hotel Controller: Hotel owner le aafno hotel ko details halne ra edit garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Hotel profile set garne, k k facilities chha bhanne update garne.
  */
 class HotelController extends Controller
 {
@@ -29,10 +29,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Hotel List (Index): Owner le aafno sabai hotels ko list herne.
      */
     public function index(Request $request): View
     {
@@ -42,10 +39,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le create ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Create Hotel Form: Naya hotel ko detail bharna blank form dekhaune.
      */
     public function create(): View
     {
@@ -55,10 +49,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le store ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Save Hotel (Store): Naya hotel ko data database ma save garne.
      */
     public function store(StoreHotelRequest $request): RedirectResponse
     {
@@ -70,10 +61,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le edit ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Edit Hotel Form: Purano hotel ko information update garna form dekhaune.
      */
     public function edit(Request $request, Hotel $hotel): View
     {
@@ -85,10 +73,7 @@ class HotelController extends Controller
     }
 
     /**
-     * Yo function le update ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Hotel (Update): Form ko data validate garera save garne.
      */
     public function update(UpdateHotelRequest $request, Hotel $hotel): RedirectResponse
     {

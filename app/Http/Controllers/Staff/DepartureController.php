@@ -5,10 +5,9 @@ namespace App\Http\Controllers\Staff;
 use App\Http\Controllers\Admin\DepartureController as AdminDepartureController;
 
 /**
- * Yo DepartureController controller le departure controller ko request/response flow handle garcha.
+ * Staff Departure Controller: Staff le trek ka dates manage garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Note: Staff le Admin ko DepartureController ko logic nai reuse garcha.
  */
 class DepartureController extends AdminDepartureController
 {

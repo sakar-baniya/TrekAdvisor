@@ -11,18 +11,15 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
- * Yo DepartureController controller le departure controller ko request/response flow handle garcha.
+ * Admin Departure Controller: Trek haru ko start date, end date, ra seats handle garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Kun trek kaile jaane, kati price, ra kati capacity chha bhanne kura set garchha.
  */
 class DepartureController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Departure List (Index): Sabai departures haru ko list, filters sahit dekhaune.
      */
     public function index(Request $request): View
     {
@@ -49,10 +46,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le create ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Create Form (Create): Naya departure thapna ko lagi form dekhaune.
      */
     public function create(Request $request): View
     {
@@ -68,10 +62,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le store ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Save Departure (Store): Form bata aayeko data database ma save garne.
      */
     public function store(Request $request): RedirectResponse
     {
@@ -87,10 +78,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le show ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Show to Edit (Show): Details dekhauna ko sato sidhai edit page ma redirect garne.
      */
     public function show(Departure $departure): RedirectResponse
     {
@@ -98,10 +86,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le edit ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Edit Form (Edit): Purano departure detail update garne form dekhaune.
      */
     public function edit(Departure $departure): View
     {
@@ -115,10 +100,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le update ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Update Departure (Update): Form bata aayeko data edit garera save garne.
      */
     public function update(Request $request, Departure $departure): RedirectResponse
     {
@@ -138,10 +120,7 @@ class DepartureController extends Controller
     }
 
     /**
-     * Yo function le validate request ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Validate (Helper): Form ko data thik chha ki nai check garne validation rules.
      */
     protected function validateRequest(Request $request): array
     {

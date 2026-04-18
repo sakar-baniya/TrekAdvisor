@@ -19,10 +19,10 @@ use Illuminate\View\View;
 use RuntimeException;
 
 /**
- * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ * Customer Checkout Booking Controller: Naya booking banaune checkout process herya thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Step 1 bata Step 4 samma ko payment checkout ra backend API calling (Stripe/SSession) handle garcha.
  */
 class BookingController extends Controller
 {
@@ -104,10 +104,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Yo function le show trek booking ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Show Trek Booking Payment Status: Checkout pass bhayepachi booking herne.
      */
     public function showTrekBooking(TrekBooking $trekBooking): View
     {
@@ -119,10 +116,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Yo function le show hotel booking ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Show Hotel Booking Payment Status: Checkout pass bhayepachi hotel booking herne.
      */
     public function showHotelBooking(HotelBooking $hotelBooking): View
     {

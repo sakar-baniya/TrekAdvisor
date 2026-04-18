@@ -41,12 +41,10 @@
                             @csrf
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div>
-                                    <x-input-label for="name" :value="__('Full Name')" class="mb-2" />
-                                    <x-text-input id="name" name="name" :value="old('name')" placeholder="Your full name" required />
+                                    <x-ui.input id="name" name="name" label="Full Name" :value="old('name')" placeholder="Your full name" required />
                                 </div>
                                 <div>
-                                    <x-input-label for="email" :value="__('Email Address')" class="mb-2" />
-                                    <x-text-input id="email" type="email" name="email" :value="old('email')" placeholder="you@example.com" required />
+                                    <x-ui.input id="email" type="email" name="email" label="Email Address" :value="old('email')" placeholder="you@example.com" required />
                                 </div>
                             </div>
 

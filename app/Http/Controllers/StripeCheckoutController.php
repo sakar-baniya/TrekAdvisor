@@ -16,10 +16,7 @@ use Stripe\Exception\SignatureVerificationException;
 use UnexpectedValueException;
 
 /**
- * Yo StripeCheckoutController controller le stripe checkout controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Stripe Checkout Controller: International payments (Credit Card) handle garchha.
  */
 class StripeCheckoutController extends Controller
 {
@@ -68,10 +65,7 @@ class StripeCheckoutController extends Controller
     }
 
     /**
-     * Yo function le cancel ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Payment Cancelled: Customer le stripe form mathi 'cancel' thichepachi result dekhaune.
      */
     public function cancel(Payment $payment): View
     {
@@ -85,10 +79,7 @@ class StripeCheckoutController extends Controller
     }
 
     /**
-     * Yo function le webhook ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Webhook Handle: Stripe ko server bata aayeko background signals read garne.
      */
     public function webhook(Request $request): Response
     {

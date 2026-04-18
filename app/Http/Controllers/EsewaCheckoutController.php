@@ -11,10 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 /**
- * Yo EsewaCheckoutController controller le esewa checkout controller ko request/response flow handle garcha.
- *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * eSewa Checkout Controller: Nepal ko payment gateway (eSewa) handle garchha.
  */
 class EsewaCheckoutController extends Controller
 {
@@ -26,10 +23,7 @@ class EsewaCheckoutController extends Controller
     }
 
     /**
-     * Yo function le retry ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Retry Payment: Yadi payment fail bhayo bhane feri eSewa ma pathaune.
      */
     public function retry(Payment $payment): View
     {
@@ -57,10 +51,7 @@ class EsewaCheckoutController extends Controller
     }
 
     /**
-     * Yo function le success ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Payment Success: Bank bata paisa cutting bhayepachi booking confirm garne.
      */
     public function success(Request $request, Payment $payment): View
     {
@@ -76,10 +67,7 @@ class EsewaCheckoutController extends Controller
     }
 
     /**
-     * Yo function le failure ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Payment Failure: Transaction cancel ya message error aayepachi handle garne.
      */
     public function failure(Request $request, Payment $payment): View
     {

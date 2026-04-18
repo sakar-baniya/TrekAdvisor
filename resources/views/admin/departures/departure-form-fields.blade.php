@@ -15,7 +15,7 @@
         
         <div class="p-8 md:p-10 grid grid-cols-1 md:grid-cols-2 gap-8">
             <div class="space-y-2">
-                <x-input-label value="Assigned Trek *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                <label class="block text-xs font-semibold text-slate-700 pl-1 mb-2 text-[10px] uppercase tracking-widest">Assigned Trek *</label>
                 <select name="trek_id" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3" required>
                     <option value="">Select trek</option>
                     @foreach ($treks as $id => $title)
@@ -26,7 +26,7 @@
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="Booking Status *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
+                <label class="block text-xs font-semibold text-slate-700 pl-1 mb-2 text-[10px] uppercase tracking-widest">Booking Status *</label>
                 <select name="status" class="w-full rounded-2xl border-slate-200 text-sm font-bold text-slate-900 focus:ring-slate-900 focus:border-slate-900 py-3" required>
                     @foreach (['available' => 'Available', 'full' => 'Fully Booked', 'completed' => 'Expedition Completed'] as $value => $label)
                         <option value="{{ $value }}" @selected(old('status', $departure->status) === $value)>{{ $label }}</option>
@@ -36,32 +36,27 @@
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="Start Date *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
-                <x-text-input type="date" name="start_date" :value="old('start_date', optional($departure->start_date)->format('Y-m-d'))" required />
+                <x-ui.input type="date" name="start_date" label="Start Date *" :value="old('start_date', optional($departure->start_date)->format('Y-m-d'))" required />
                 @error('start_date') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="End Date *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
-                <x-text-input type="date" name="end_date" :value="old('end_date', optional($departure->end_date)->format('Y-m-d'))" required />
+                <x-ui.input type="date" name="end_date" label="End Date *" :value="old('end_date', optional($departure->end_date)->format('Y-m-d'))" required />
                 @error('end_date') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="Individual Price (NPR) *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" step="1" min="0" name="price" :value="old('price', $departure->price)" required />
+                <x-ui.input type="number" step="1" min="0" name="price" label="Individual Price (NPR) *" :value="old('price', $departure->price)" required />
                 @error('price') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="Total Seat Capacity *" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" min="1" name="capacity" :value="old('capacity', $departure->capacity)" required />
+                <x-ui.input type="number" min="1" name="capacity" label="Total Seat Capacity *" :value="old('capacity', $departure->capacity)" required />
                 @error('capacity') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
 
             <div class="space-y-2">
-                <x-input-label value="Adjust Booked Seats" class="text-[10px] font-black uppercase tracking-widest text-slate-400" />
-                <x-text-input type="number" min="0" name="booked_seats" :value="old('booked_seats', $departure->booked_seats ?? 0)" />
+                <x-ui.input type="number" min="0" name="booked_seats" label="Adjust Booked Seats" :value="old('booked_seats', $departure->booked_seats ?? 0)" />
                 @error('booked_seats') <p class="text-[10px] font-black text-red-600 uppercase tracking-widest mt-1">{{ $message }}</p> @enderror
             </div>
         </div>

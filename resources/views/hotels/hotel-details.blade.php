@@ -134,7 +134,7 @@
                                 @endif
 
                                 <div>
-                                    <x-input-label for="hotel_room_id" :value="__('Select Room Type')" class="mb-2" />
+                                    <label for="hotel_room_id" class="block text-xs font-semibold text-slate-700 pl-1 mb-2">Select Room Type</label>
                                     <select name="hotel_room_id" id="hotel_room_id" required class="w-full rounded-xl border-slate-300 shadow-sm focus:border-slate-900 focus:ring-slate-900 px-4 py-3 bg-slate-50 focus:bg-white transition-colors text-sm font-bold text-slate-700">
                                         <option value="">Choose a room...</option>
                                         @foreach ($hotel->rooms as $room)
@@ -143,26 +143,22 @@
                                             </option>
                                         @endforeach
                                     </select>
-                                    <x-input-error :messages="$errors->get('hotel_room_id')" class="mt-2" />
+                                    @error('hotel_room_id')
+                                        <p class="text-[11px] font-medium text-red-600 pl-1 mt-1 animate-fadeIn">{{ $message }}</p>
+                                    @enderror
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-4">
                                     <div>
-                                        <x-input-label for="check_in" :value="__('Check-in')" class="mb-2" />
-                                        <x-text-input type="date" name="check_in" id="check_in" required value="{{ old('check_in') }}" min="{{ now()->toDateString() }}" class="text-sm" />
-                                        <x-input-error :messages="$errors->get('check_in')" class="mt-2" />
+                                        <x-ui.input type="date" name="check_in" id="check_in" label="Check-in" required value="{{ old('check_in') }}" min="{{ now()->toDateString() }}" class="text-sm" :error="$errors->first('check_in')" />
                                     </div>
                                     <div>
-                                        <x-input-label for="check_out" :value="__('Check-out')" class="mb-2" />
-                                        <x-text-input type="date" name="check_out" id="check_out" required value="{{ old('check_out') }}" min="{{ now()->addDay()->toDateString() }}" class="text-sm" />
-                                        <x-input-error :messages="$errors->get('check_out')" class="mt-2" />
+                                        <x-ui.input type="date" name="check_out" id="check_out" label="Check-out" required value="{{ old('check_out') }}" min="{{ now()->addDay()->toDateString() }}" class="text-sm" :error="$errors->first('check_out')" />
                                     </div>
                                 </div>
 
                                 <div>
-                                    <x-input-label for="num_rooms" :value="__('Number of Rooms')" class="mb-2" />
-                                    <x-text-input type="number" name="num_rooms" id="num_rooms" min="1" max="10" required value="{{ old('num_rooms', 1) }}" />
-                                    <x-input-error :messages="$errors->get('num_rooms')" class="mt-2" />
+                                    <x-ui.input type="number" name="num_rooms" id="num_rooms" label="Number of Rooms" min="1" max="10" required value="{{ old('num_rooms', 1) }}" :error="$errors->first('num_rooms')" />
                                 </div>
 
                                 <div class="pt-4">

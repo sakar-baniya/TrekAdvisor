@@ -12,18 +12,18 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 /**
- * Yo ContactMessageController controller le contact message controller ko request/response flow handle garcha.
+ * Admin Contact Messages Controller: Customer support handle garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Website ko contact form bata aayeko sabai messages haru herne ra email reply pathaune.
  */
 class ContactMessageController extends Controller
 {
     /**
-     * Yo function le index ko kaam handle garcha.
-     *
+     * Message List (Index): Sabai incoming messages dekhaune.
+     * 
      * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Name, email id, wa subject bata message search garera support dina sajilo huna ko lagi.
      */
     public function index(Request $request): View
     {
@@ -48,10 +48,7 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Yo function le show ko kaam handle garcha.
-     *
-     * Why:
-     * Request bata aako data process garera sahi view/response return garna yo function chahinchha.
+     * Message Details (Show): Pura message ra details herne thau.
      */
     public function show(ContactMessage $contactMessage): View
     {
@@ -61,7 +58,10 @@ class ContactMessageController extends Controller
     }
 
     /**
-     * Save admin reply and send response email to message sender.
+     * Respond (Reply): Admin le customer lai email reply garne.
+     * 
+     * Process:
+     * 1. Response save garchha. 2. Status 'read' banauchha. 3. Real email pathauchha.
      */
     public function respond(Request $request, ContactMessage $contactMessage): RedirectResponse
     {

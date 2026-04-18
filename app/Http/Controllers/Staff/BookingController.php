@@ -11,15 +11,15 @@ use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 /**
- * Yo BookingController controller le booking controller ko request/response flow handle garcha.
+ * Staff Booking Controller: Staff le trek bookings herne ra update garne thau.
  *
- * Why:
- * Route bata aaune kaam yaha rakheko le flow clear huncha, check haru euta thau ma huncha, ra debug garna sajilo huncha.
+ * Function:
+ * Customer ko bookings search garne, details herne, ra trek status (confirmed/pending) milaine.
  */
 class BookingController extends Controller
 {
     /**
-     * Show trek bookings for staff with search and filters.
+     * Booking List (Index): Sabai bookings search ra filters sahit dekhaune page.
      */
     public function index(Request $request): View
     {
@@ -54,7 +54,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Show one trek booking with passengers and payments.
+     * Booking Details (Show): Euta booking ko pura detail (passenger/payment) herne.
      */
     public function show(TrekBooking $trekBooking): View
     {
@@ -66,7 +66,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Update only the booking status from staff panel.
+     * Update Status: Staff le booking ko status status matra change garne.
      */
     public function updateStatus(Request $request, TrekBooking $trekBooking): RedirectResponse
     {
