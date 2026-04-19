@@ -128,9 +128,9 @@
         </div>
 
         <!-- Results Info -->
-        <div class="flex items-center justify-between mb-8">
-            <p class="text-slate-500 font-medium">
-                Showing <span class="text-slate-900 font-bold" x-text="meta.total"></span> hotels
+        <div class="mb-8">
+            <p class="text-slate-500 font-medium text-lg">
+                Showing <span class="text-slate-900 font-extrabold" x-text="meta.total"></span> luxury hotels
             </p>
         </div>
 
@@ -138,36 +138,36 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" :style="loading ? 'opacity: 0.5' : ''">
             <template x-for="hotel in hotels" :key="hotel.id">
                 <article
-                    class="bg-white rounded-xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-md transition-all duration-200 flex flex-col h-full group">
-                    <div class="h-60 overflow-hidden relative bg-slate-100">
+                    class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-300 flex flex-col h-full group">
+                    <div class="h-64 overflow-hidden relative bg-slate-100">
                         <img :src="hotel.image || '/images/hotels/hotel-2.png'" :alt="hotel.name"
-                            class="w-full h-full object-cover transition-transform duration-500 "
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                             x-on:error="$el.src='/images/hotels/hotel-2.png'">
                         <div
-                            class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-900 shadow-sm border border-slate-100/50">
-                            <i class="fas fa-map-marker-alt text-slate-400 mr-1"></i> <span
+                            class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest text-slate-900 shadow-sm border border-slate-100/50">
+                            <i class="fas fa-map-marker-alt text-slate-400 mr-2"></i> <span
                                 x-text="hotel.location"></span>
                         </div>
                     </div>
-                    <div class="p-6 flex flex-col flex-grow">
+                    <div class="p-8 flex flex-col flex-grow">
                         <h3 class="text-xl font-bold text-slate-900 mb-3 transition-colors line-clamp-2"
                             x-text="hotel.name"></h3>
 
-                        <div class="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-4">
+                        <div class="flex items-center gap-4 text-xs font-semibold text-slate-400 mb-6">
                             <span class="flex items-center gap-1.5"><i class="fas fa-bed"></i> Comfort & Style</span>
                             <span class="flex items-center gap-1.5 text-amber-500">
-                                <i class="fas fa-star"></i>
-                                <span
+                                <i class="fas fa-star text-[10px]"></i>
+                                <span class="text-slate-900"
                                     x-text="hotel.reviews_avg_rating ? parseFloat(hotel.reviews_avg_rating).toFixed(1) : 'New'"></span>
                                 <em class="text-slate-400 font-normal italic ml-1"
-                                    x-text="'(' + (hotel.reviews_count || 0) + ' reviews)'"></em>
+                                    x-text="'(' + (hotel.reviews_count || 0) + ')'"></em>
                             </span>
                         </div>
 
-                        <div class="mt-auto pt-6 border-t border-slate-50 flex items-end justify-between">
+                        <div class="mt-auto pt-6 border-t border-slate-50 flex items-center justify-between">
                             <div>
                                 <span
-                                    class="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1">Starting
+                                    class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-1">Starting
                                     from</span>
                                 <div class="flex items-baseline gap-1">
                                     <span class="text-2xl font-bold text-slate-900 tracking-tight"
@@ -175,9 +175,10 @@
                                     <span class="text-xs text-slate-500 font-medium">/night</span>
                                 </div>
                             </div>
-                            <a :href="'/hotels/' + (hotel.slug || hotel.id)"
-                                class="!text-white bg-slate-900 px-6 py-2.5 rounded-full font-semibold hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/25 transition-all duration-200 ease-out no-underline">
-                                Book
+                            
+                            <a :href="'/hotels/' + hotel.id"
+                                class="!text-white bg-slate-900 px-8 py-3 rounded-2xl font-bold text-sm hover:bg-slate-800 hover:shadow-lg hover:shadow-slate-900/25 transition-all duration-300 no-underline">
+                                View Stay
                             </a>
                         </div>
                     </div>
@@ -187,21 +188,20 @@
 
         <!-- Empty State -->
         <div x-show="hotels.length === 0 && !loading" style="display: none;"
-            class="py-20 text-center bg-white rounded-3xl border border-slate-200 border-dashed">
-            <div class="text-5xl text-slate-200 mb-4">
-                <i class="fas fa-hotel"></i>
+            class="py-20 text-center bg-white rounded-[3rem] border-2 border-slate-100 border-dashed">
+            <div class="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <i class="fas fa-hotel text-3xl text-slate-200"></i>
             </div>
-            <h3 class="text-xl font-bold text-slate-900 mb-2">No hotels found</h3>
-            <p class="text-slate-500 mb-6 font-medium">We couldn't find any stays matching your criteria. Try adjusting
-                your filters.</p>
+            <h3 class="text-2xl font-bold text-slate-900 mb-2">No hotels found</h3>
+            <p class="text-slate-400 mb-8 font-medium max-w-sm mx-auto">We couldn't find any stays matching your criteria. Try adjusting your filters or location search.</p>
             <button @click="clearFilters()"
-                class="inline-flex items-center justify-center px-6 py-3 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 hover:bg-slate-50 transition-colors shadow-sm">
-                Clear All Filters
+                class="inline-flex items-center justify-center px-8 py-3 bg-slate-900 text-white rounded-2xl font-bold hover:bg-slate-800 transition-all shadow-lg shadow-slate-900/20">
+                Reset Selection
             </button>
         </div>
 
-        <!-- Static Pagination (Fallback or standard) -->
-        <div class="mt-12" x-show="!hasFilters()">
+        <!-- Static Pagination -->
+        <div class="mt-16" x-show="!hasFilters()">
             {{ $hotels->links('components.pagination') }}
         </div>
     </div>

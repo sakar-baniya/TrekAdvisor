@@ -67,6 +67,32 @@
                     </div>
                 </section>
 
+                <!-- Location Map -->
+                @if($hotel->latitude && $hotel->longitude)
+                    <section>
+                        <h2 class="text-2xl font-semibold text-slate-900 tracking-tight mb-6">Location</h2>
+                        <div class="w-full h-[400px] rounded-3xl overflow-hidden shadow-sm border border-slate-100">
+                            <iframe 
+                                width="100%" 
+                                height="100%" 
+                                frameborder="0" 
+                                scrolling="no" 
+                                marginheight="0" 
+                                marginwidth="0" 
+                                src="https://maps.google.com/maps?q={{ $hotel->latitude }},{{ $hotel->longitude }}&hl=en&z=14&amp;output=embed"
+                            >
+                            </iframe>
+                        </div>
+                        <div class="mt-4">
+                            <a href="https://www.google.com/maps/dir/?api=1&destination={{ $hotel->latitude }},{{ $hotel->longitude }}" 
+                               target="_blank" 
+                               class="inline-flex items-center text-sm font-bold text-slate-600 hover:text-slate-900 transition-colors">
+                                <i class="fas fa-directions mr-2"></i> Get Directions
+                            </a>
+                        </div>
+                    </section>
+                @endif
+
                 <!-- Room Types -->
                 <section>
                     <h2 class="text-2xl font-semibold text-slate-900 tracking-tight mb-8">Available Room Categories</h2>

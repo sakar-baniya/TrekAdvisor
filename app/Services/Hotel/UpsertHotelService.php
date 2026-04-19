@@ -38,7 +38,10 @@ class UpsertHotelService
                 'owner_id' => $owner->id,
                 'name' => $validated['name'],
                 'location' => $validated['location'],
+                'latitude' => $validated['latitude'] ?? null,
+                'longitude' => $validated['longitude'] ?? null,
                 'description' => $validated['description'],
+                'booking_policy' => $validated['booking_policy'] ?? null,
                 'status' => 'pending',
             ];
 
@@ -46,6 +49,7 @@ class UpsertHotelService
 
             $hotel = Hotel::query()->create($payload);
             $this->hotelGalleryService->syncGallery($request, $hotel);
+            $this->syncRooms($hotel, $request->input('rooms', []));
 
             return $hotel;
         });
@@ -65,16 +69,45 @@ class UpsertHotelService
             $payload = [
                 'name' => $validated['name'],
                 'location' => $validated['location'],
+                'latitude' => $validated['latitude'] ?? null,
+                'longitude' => $validated['longitude'] ?? null,
                 'description' => $validated['description'],
-                'status' => $hotel->status === 'active' ? 'pending' : $hotel->status,
+                'booking_policy' => $validated['booking_policy'] ?? null,
+                // STATUS CHANGE: Once active, stay active after edits.
+                'status' => $hotel->status, 
             ];
 
             $this->hotelGalleryService->syncHeroImage($request, $payload, $hotel);
 
             $hotel->update($payload);
             $this->hotelGalleryService->syncGallery($request, $hotel);
+            $this->syncRooms($hotel, $request->input('rooms', []));
 
             return $hotel;
         });
+    }
+
+    /**
+     * Yo method le hotel ko rooms data sync garcha (Create/Update/Delete).
+     */
+    private function syncRooms(Hotel $hotel, array $roomsData): void
+    {
+        // Get IDs of rooms that should remain
+        $submittedIds = collect($roomsData)->pluck('id')->filter()->toArray();
+        
+        // Remove rooms that are not in the submitted list
+        $hotel->rooms()->whereNotIn('id', $submittedIds)->delete();
+
+        // Update or create rooms
+        foreach ($roomsData as $room) {
+            $hotel->rooms()->updateOrCreate(
+                ['id' => $room['id'] ?? null],
+                [
+                    'room_type' => $room['room_type'],
+                    'price_per_night' => $room['price_per_night'],
+                    'total_rooms' => $room['total_rooms'],
+                ]
+            );
+        }
     }
 }

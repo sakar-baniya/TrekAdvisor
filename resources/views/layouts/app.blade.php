@@ -44,6 +44,7 @@
     @include('layouts.footer')
 
     @stack('scripts')
+    <x-whatsapp-button />
 </body>
 
 </html>

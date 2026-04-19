@@ -15,6 +15,13 @@ use Illuminate\Http\Request;
  */
 class HotelGalleryService
 {
+    private GalleryImageService $galleryImageService;
+
+    public function __construct(GalleryImageService $galleryImageService)
+    {
+        $this->galleryImageService = $galleryImageService;
+    }
+
     /**
      * Yo method le syncHeroImage related state change safely apply garcha.
      *
