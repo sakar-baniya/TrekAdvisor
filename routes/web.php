@@ -28,7 +28,6 @@ use App\Http\Controllers\HotelOwner\BookingController as HotelOwnerBookingContro
 use App\Http\Controllers\Staff\BookingController as StaffBookingController;
 use App\Http\Controllers\Staff\HotelBookingController as StaffHotelBookingController;
 use App\Http\Controllers\Staff\PaymentController as StaffPaymentController;
-use App\Http\Controllers\Staff\ContactMessageController as StaffContactMessageController;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
 use App\Http\Controllers\Staff\DepartureController as StaffDepartureController;
 use App\Http\Controllers\SearchController;
@@ -80,7 +79,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('payments/{payment}', [AdminPaymentController::class, 'show'])->name('payments.show');
         Route::get('contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
         Route::get('contact-messages/{contactMessage}', [ContactMessageController::class, 'show'])->name('contact-messages.show');
-        Route::patch('contact-messages/{contactMessage}/respond', [ContactMessageController::class, 'respond'])->name('contact-messages.respond');
         Route::get('reviews', [ReviewController::class, 'index'])->name('reviews.index');
         Route::get('reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
         Route::patch('reviews/{review}/reply', [ReviewController::class, 'reply'])->name('reviews.reply');
@@ -112,9 +110,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('hotel-bookings/{hotelBooking}/status', [StaffHotelBookingController::class, 'updateStatus'])->name('hotel-bookings.status');
         Route::get('payments', [StaffPaymentController::class, 'index'])->name('payments.index');
         Route::get('payments/{payment}', [StaffPaymentController::class, 'show'])->name('payments.show');
-        Route::get('contact-messages', [StaffContactMessageController::class, 'index'])->name('contact-messages.index');
-        Route::get('contact-messages/{contactMessage}', [StaffContactMessageController::class, 'show'])->name('contact-messages.show');
-        Route::patch('contact-messages/{contactMessage}/respond', [StaffContactMessageController::class, 'respond'])->name('contact-messages.respond');
         Route::resource('departures', StaffDepartureController::class)->except(['destroy']);
     });
 

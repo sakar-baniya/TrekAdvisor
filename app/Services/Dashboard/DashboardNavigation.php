@@ -118,11 +118,6 @@ class DashboardNavigation
                     'icon' => 'fa-receipt',
                     'route' => 'staff.payments.index',
                 ],
-                [
-                    'label' => 'Contact Inbox',
-                    'icon' => 'fa-inbox',
-                    'route' => 'staff.contact-messages.index',
-                ],
             ],
         ];
     }

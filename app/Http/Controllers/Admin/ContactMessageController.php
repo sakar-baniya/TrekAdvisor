@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Mail\ContactMessageReplyMail;
 use App\Models\ContactMessage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
 
 /**
@@ -57,34 +54,6 @@ class ContactMessageController extends Controller
         ]);
     }
 
-    /**
-     * Respond (Reply): Admin le customer lai email reply garne.
-     * 
-     * Process:
-     * 1. Response save garchha. 2. Status 'read' banauchha. 3. Real email pathauchha.
-     */
-    public function respond(Request $request, ContactMessage $contactMessage): RedirectResponse
-    {
-        $validated = $request->validate([
-            'staff_response' => ['required', 'string', 'max:4000'],
-        ]);
-
-        $contactMessage->update([
-            'is_read' => true,
-            'read_at' => $contactMessage->read_at ?? now(),
-            'staff_response' => $validated['staff_response'],
-            'responded_by_staff_id' => Auth::id(),
-            'responded_at' => now(),
-        ]);
-
-        if (filled($contactMessage->email)) {
-            Mail::to($contactMessage->email)->send(new ContactMessageReplyMail($contactMessage));
-        }
-
-        return redirect()
-            ->route('admin.contact-messages.show', $contactMessage)
-            ->with('success', 'Reply saved and email sent to customer.');
-    }
 }
 
 
