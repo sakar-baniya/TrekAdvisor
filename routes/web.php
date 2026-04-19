@@ -39,7 +39,7 @@ Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.submit');
-Route::get('/faq', [HomeController::class, 'faq'])->name('faq');
+
 Route::get('/travel-guide', [HomeController::class, 'travelGuide'])->name('travel-guide');
 Route::get('/hotels', [HotelController::class, 'index'])->name('hotels.index');
 Route::get('/hotels/{hotel}', [HotelController::class, 'show'])->name('hotels.show');

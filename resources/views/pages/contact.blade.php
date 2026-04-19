@@ -122,24 +122,7 @@
                         </div>
                     </div>
 
-                    <!-- Helpful Link card -->
-                    <div class="bg-white rounded-3xl p-8 border border-slate-200 shadow-sm">
-                        <h4 class="font-bold text-slate-900 mb-4">Looking for help?</h4>
-                        <ul class="space-y-3">
-                            <li>
-                                <a href="{{ route('faq') }}" class="text-slate-600 hover:text-slate-900 flex items-center justify-between group">
-                                    <span>Browse FAQ</span>
-                                    <i class="fas fa-chevron-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{{ route('treks.index') }}" class="text-slate-600 hover:text-slate-900 flex items-center justify-between group">
-                                    <span>Explore Treks</span>
-                                    <i class="fas fa-chevron-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
+
                 </aside>
             </div>
         </div>

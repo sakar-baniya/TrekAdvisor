@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 /**
- * Home Controller: Website ko main landing pages (Home, About, FAQ) handle garchha.
+ * Home Controller: Website ko main landing pages (Home, About, etc.) handle garchha.
  */
 class HomeController extends Controller
 {
@@ -60,23 +60,6 @@ class HomeController extends Controller
     public function contact(): View
     {
         return view('pages.contact');
-    }
-
-    /**
-     * FAQ Page: Sadhai sodhine prasna ra uttar haru.
-     */
-    public function faq(): View
-    {
-        $faqs = [
-            ['question' => 'What is included in the trek price?', 'answer' => 'Most treks include guide support, itinerary planning, and the booking structure defined for that route.'],
-            ['question' => 'How physically fit do I need to be?', 'answer' => 'Fitness needs vary by route difficulty, duration, and altitude. Each trek page helps set expectations clearly.'],
-            ['question' => 'Can I reschedule my booking?', 'answer' => 'Rescheduling depends on availability and the booking policy for the selected departure.'],
-            ['question' => 'Do you provide equipment?', 'answer' => 'Basic trekking equipment recommendations are provided with each booking.'],
-            ['question' => 'What happens if I get altitude sickness?', 'answer' => 'Trek planning should always include acclimatization, pacing, and proper safety guidance.'],
-            ['question' => 'Do I need travel insurance?', 'answer' => 'Insurance is strongly recommended for trekking and high-altitude travel.'],
-        ];
-
-        return view('pages.faq', compact('faqs'));
     }
 
     /**

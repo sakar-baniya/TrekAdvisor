@@ -29,7 +29,7 @@
                 <ul class="space-y-2 text-sm">
                     <li><a href="{{ route('about') }}" class="text-white hover:text-white">About Us</a></li>
                     <li><a href="{{ route('contact') }}" class="text-white hover:text-white">Contact</a></li>
-                    <li><a href="{{ route('faq') }}" class="text-white hover:text-white">FAQ</a></li>
+
                     <li><a href="{{ route('travel-guide') }}" class="text-white hover:text-white">Travel Guide</a></li>
                 </ul>
             </div>

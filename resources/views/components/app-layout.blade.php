@@ -163,14 +163,9 @@
             }
             event.preventDefault();
             if (isLogout) {
-                window.dispatchEvent(new CustomEvent('open-confirm-modal', {
-                    detail: {
-                        title: 'Sign Out',
-                        message: 'Are you sure you want to sign out?',
-                        buttonClass: 'confirm-btn--secondary',
-                        callback: () => form.submit()
-                    }
-                }));
+                if (window.confirm('Are you sure you want to sign out?')) {
+                    form.submit();
+                }
             } else {
                 var action = confirmTrigger.getAttribute('data-confirm');
                 window.showConfirm(action && action !== 'true' ? action : {
