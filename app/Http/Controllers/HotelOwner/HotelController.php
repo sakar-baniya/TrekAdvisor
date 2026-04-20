@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\HotelOwner;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreHotelRequest;
-use App\Http\Requests\UpdateHotelRequest;
+use App\Http\Requests\Admin\StoreHotelRequest;
+use App\Http\Requests\Admin\UpdateHotelRequest;
 use App\Models\Hotel;
 use App\Services\Hotel\HotelOwnerAccessService;
 use App\Services\Hotel\HotelOwnerQueryService;

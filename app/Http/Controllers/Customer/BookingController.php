@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ConfirmBookingRequest;
-use App\Http\Requests\StoreHotelBookingRequest;
-use App\Http\Requests\StoreBookingRequest;
+use App\Http\Requests\Booking\ConfirmBookingRequest;
+use App\Http\Requests\Booking\StoreHotelBookingRequest;
+use App\Http\Requests\Booking\StoreBookingRequest;
 use App\Models\Departure;
 use App\Models\Hotel;
 use App\Services\Booking\CreateHotelBookingService;

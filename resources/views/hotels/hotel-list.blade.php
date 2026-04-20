@@ -201,9 +201,8 @@
         </div>
 
         <!-- Static Pagination -->
-        <div class="mt-16" x-show="!hasFilters()">
-            {{ $hotels->links('components.pagination') }}
+        <div class="mt-12" x-show="!hasFilters()">
+            {{ $hotels->links('components.ui.pagination') }}
         </div>
     </div>
 </x-layouts.app>
-

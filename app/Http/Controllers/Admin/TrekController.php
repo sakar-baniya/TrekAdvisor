@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreTrekRequest;
-use App\Http\Requests\UpdateTrekRequest;
+use App\Http\Requests\Admin\StoreTrekRequest;
+use App\Http\Requests\Admin\UpdateTrekRequest;
 use App\Models\Trek;
 use App\Services\Trek\AdminTrekQueryService;
 use App\Services\Trek\DeleteTrekService;

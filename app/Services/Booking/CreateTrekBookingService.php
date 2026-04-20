@@ -5,8 +5,7 @@ namespace App\Services\Booking;
 use App\Models\Passenger;
 use App\Models\Payment;
 use App\Models\TrekBooking;
-use App\Services\Payment\EsewaCheckoutWorkflowService;
-use App\Services\Payment\StripeCheckoutWorkflowService;
+use App\Services\Payment\StripeCheckoutService;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Throwable;
@@ -21,8 +20,7 @@ use Throwable;
 class CreateTrekBookingService
 {
     public function __construct(
-        protected StripeCheckoutWorkflowService $stripeCheckoutWorkflowService,
-        protected EsewaCheckoutWorkflowService $esewaCheckoutWorkflowService,
+        protected StripeCheckoutService $stripeCheckoutService,
         protected BookingSessionService $bookingSessionService
     ) {}
 
@@ -94,8 +92,8 @@ class CreateTrekBookingService
 
         try {
             $checkoutUrl = $paymentMethod === 'esewa'
-                ? $this->esewaCheckoutWorkflowService->createRetryUrl($payment)
-                : $this->stripeCheckoutWorkflowService->createRetrySession($payment);
+                ? route('esewa.retry', ['payment' => $payment])
+                : $this->stripeCheckoutService->createRetrySession($payment);
 
             $this->bookingSessionService->clear();
 

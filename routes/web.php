@@ -1,17 +1,17 @@
 <?php
 
-use App\Http\Controllers\TrekController;
-use App\Http\Controllers\HotelController;
+use App\Http\Controllers\Public\TrekController;
+use App\Http\Controllers\Public\HotelController;
 use App\Http\Controllers\Customer\BookingController;
 use App\Http\Controllers\Customer\AccountBookingsController;
 use App\Http\Controllers\Customer\AccountReviewsController;
 use App\Http\Controllers\Customer\DashboardController;
 use App\Http\Controllers\Customer\PaymentController as CustomerPaymentController;
 use App\Http\Controllers\Customer\ProfileController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\StripeCheckoutController;
-use App\Http\Controllers\EsewaCheckoutController;
+use App\Http\Controllers\General\HomeController;
+use App\Http\Controllers\General\ContactController;
+use App\Http\Controllers\Payment\StripeCheckoutController;
+use App\Http\Controllers\Payment\EsewaCheckoutController;
 use App\Http\Controllers\Admin\DepartureController;
 use App\Http\Controllers\Admin\ReviewController;
 use App\Http\Controllers\Admin\UserController;
@@ -30,7 +30,7 @@ use App\Http\Controllers\Staff\HotelBookingController as StaffHotelBookingContro
 use App\Http\Controllers\Staff\PaymentController as StaffPaymentController;
 use App\Http\Controllers\Staff\DashboardController as StaffDashboardController;
 use App\Http\Controllers\Staff\DepartureController as StaffDepartureController;
-use App\Http\Controllers\SearchController;
+use App\Http\Controllers\General\SearchController;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 

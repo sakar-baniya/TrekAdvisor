@@ -208,7 +208,7 @@
 
         <!-- Static Pagination (Fallback or standard) -->
         <div class="mt-12" x-show="!hasFilters()">
-            {{ $treks->links('components.pagination') }}
+            {{ $treks->links('components.ui.pagination') }}
         </div>
     </div>
 </x-layouts.app>
