@@ -37,19 +37,34 @@ class CreateTrekBookingService
         $departureId = (int) $bookingData['departure_id'];
         $totalPassengers = (int) $bookingData['total_passengers'];
         $pricePerPerson = (float) $bookingData['price_per_person'];
-        $totalPrice = $pricePerPerson * $totalPassengers;
+        $subtotal = $pricePerPerson * $totalPassengers;
+
+        $discountPercent = 0;
+        if ($totalPassengers >= 10) {
+            $discountPercent = 15;
+        } elseif ($totalPassengers >= 6) {
+            $discountPercent = 10;
+        } elseif ($totalPassengers >= 3) {
+            $discountPercent = 5;
+        }
+
+        $discountAmount = ($subtotal * $discountPercent) / 100;
+        $totalPrice = $subtotal - $discountAmount;
+
         $paymentMethod = in_array(($bookingData['payment_method'] ?? 'stripe'), ['stripe', 'esewa'], true)
             ? $bookingData['payment_method']
             : 'stripe';
 
-        [$booking, $payment] = DB::transaction(function () use ($userId, $departureId, $totalPassengers, $pricePerPerson, $totalPrice, $passengers, $paymentMethod) {
+        [$booking, $payment] = DB::transaction(function () use ($userId, $departureId, $totalPassengers, $pricePerPerson, $subtotal, $discountPercent, $discountAmount, $totalPrice, $passengers, $paymentMethod) {
             $booking = TrekBooking::query()->create([
                 'user_id' => $userId,
                 'departure_id' => $departureId,
                 'booking_reference' => 'TB-' . strtoupper(Str::random(8)),
                 'total_passengers' => $totalPassengers,
                 'price_per_person' => $pricePerPerson,
-                'subtotal' => $totalPrice,
+                'subtotal' => $subtotal,
+                'discount_percent' => $discountPercent,
+                'discount_amount' => $discountAmount,
                 'total_price' => $totalPrice,
                 'status' => 'pending',
             ]);

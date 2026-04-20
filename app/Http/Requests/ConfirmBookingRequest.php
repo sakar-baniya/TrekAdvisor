@@ -17,7 +17,7 @@ class ConfirmBookingRequest extends FormRequest
             'payment_method' => ['required', 'in:stripe,esewa'],
             'passengers' => ['required', 'array', 'min:1'],
             'passengers.*.full_name' => ['required', 'string', 'max:255'],
-            'passengers.*.passport_number' => ['required', 'string', 'max:50'],
+            'passengers.*.passport_number' => ['required', 'string', 'min:5', 'max:50', 'distinct', 'regex:/\d/'],
             'passengers.*.age' => ['required', 'integer', 'min:1', 'max:120'],
         ];
     }
