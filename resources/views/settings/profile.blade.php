@@ -8,6 +8,7 @@
     title="Profile Settings" 
     subtitle="Update your personal details and public profile information."
     :breadcrumb="['Settings' => route('settings.profile.show'), 'Profile' => null]"
+    :hideFooter="true"
 >
     @if (session('status'))
         <div class="mb-6 animate-fadeIn">

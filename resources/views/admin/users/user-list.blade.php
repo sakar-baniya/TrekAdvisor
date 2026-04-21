@@ -9,19 +9,8 @@
 
 <x-layouts.dashboard>
 
-    <!-- Alert System -->
-    @if (session('success'))
-        <div class="mb-8 p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-            <p class="text-xs font-medium text-emerald-700 mb-1">Success</p>
-            <p class="text-xs text-emerald-700">{{ session('success') }}</p>
-        </div>
-    @endif
-    @if (session('error'))
-        <div class="mb-8 p-4 bg-red-50 border border-red-200 rounded-xl">
-            <p class="text-xs font-medium text-red-700 mb-1">Error</p>
-            <p class="text-xs text-red-700">{{ session('error') }}</p>
-        </div>
-    @endif
+
+
 
     <!-- Filters Section -->
     <div class="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden mb-10">
@@ -110,7 +99,9 @@
                                         <form method="POST" action="{{ route('admin.users.approve', $user) }}">
                                             @csrf
                                             @method('PATCH')
-                                            <button type="submit" class="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100">
+                                            <button type="submit"
+                                                    class="px-3 py-1.5 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-lg hover:bg-emerald-100 transition-colors border border-emerald-100"
+                                                    onclick="return confirm('Approve this hotel owner account? They will gain full access to the Hotel Owner dashboard.')">
                                                 Approve
                                             </button>
                                         </form>

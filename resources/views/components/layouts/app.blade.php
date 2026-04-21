@@ -1,3 +1,6 @@
+@props([
+    'hideFooter' => false,
+])
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -70,6 +73,7 @@
     </main>
     
     <!-- Global Footer -->
+    @if(!$hideFooter)
     <footer class="page-footer">
         <div class="footer-container">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
@@ -123,6 +127,7 @@
             </div>
         </div>
     </footer>
+    @endif
     
     <!-- Confirmation Modal Component -->
     <x-ui.confirmation-modal />

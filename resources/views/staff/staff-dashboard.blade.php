@@ -2,7 +2,6 @@
     <!-- Page Header -->
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-10">
         <div>
-            <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight font-display">Staff Dashboard</h1>
             <p class="text-sm font-medium text-slate-500 mt-1">Monitoring trek booking activity and operational requests.</p>
         </div>
         <div class="flex gap-3">

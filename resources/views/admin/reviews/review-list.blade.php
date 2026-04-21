@@ -4,9 +4,8 @@
 <x-layouts.dashboard>
     <div class="space-y-6">
 
-    @if (session('success'))
-        <div class="admin-flash success">{{ session('success') }}</div>
-    @endif
+
+
 
     <!-- Filters -->
     <section class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm mb-10">

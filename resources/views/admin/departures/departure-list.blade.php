@@ -10,13 +10,8 @@
 <x-layouts.dashboard>
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
 
-        <!-- Alert System -->
-        @if (session('success'))
-            <div class="p-4 bg-emerald-50 border border-emerald-200 rounded-xl">
-                <p class="text-xs font-semibold uppercase tracking-wider text-emerald-700 mb-1">Success</p>
-                <p class="text-sm text-emerald-700">{{ session('success') }}</p>
-            </div>
-        @endif
+
+
 
         <!-- Global Filters Card -->
         <div class="bg-white border border-slate-200/70 rounded-2xl p-6">

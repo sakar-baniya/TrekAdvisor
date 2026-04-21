@@ -32,14 +32,13 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
         <!-- Revenue Trend Chart -->
         <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/60 shadow-sm p-8 flex flex-col">
-            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6 mb-10">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h3 class="text-base font-semibold text-slate-900">Revenue</h3>
                     <p class="text-sm text-slate-500 mt-1">Last 12 months</p>
                 </div>
-
             </div>
-            <div class="h-[350px] mt-auto">
+            <div class="flex-grow h-[300px]">
                 <canvas id="revenueChart"></canvas>
             </div>
         </div>
@@ -177,15 +176,14 @@
                         label: 'Earnings',
                         data: dataSet.map(d => d.revenue),
                         borderColor: '#0f172a',
-                        backgroundColor: 'rgba(15, 23, 42, 0.03)',
-                        borderWidth: 3,
+                        backgroundColor: 'rgba(15, 23, 42, 0.05)',
+                        borderWidth: 2,
                         fill: true,
                         tension: 0.4,
                         pointRadius: 4,
                         pointBackgroundColor: '#fff',
-                        pointBorderWidth: 3,
-                        pointHoverRadius: 6,
-                        pointHoverBackgroundColor: '#0f172a'
+                        pointBorderColor: '#0f172a',
+                        pointBorderWidth: 2
                     }]
                 },
                 options: {
@@ -195,12 +193,12 @@
                     scales: {
                         y: { 
                             beginAtZero: true, 
-                            grid: { color: 'rgba(0,0,0,0.03)' },
-                            ticks: { color: '#94a3b8', font: { weight: 'bold', size: 10 }, callback: v => 'NPR ' + v.toLocaleString() }
+                            grid: { color: '#f1f5f9' },
+                            ticks: { color: '#94a3b8', font: { size: 11 }, callback: v => 'NPR ' + v.toLocaleString() }
                         },
                         x: { 
                             grid: { display: false }, 
-                            ticks: { color: '#94a3b8', font: { weight: 'bold', size: 10 } } 
+                            ticks: { color: '#94a3b8', font: { size: 11 } } 
                         }
                     }
                 }

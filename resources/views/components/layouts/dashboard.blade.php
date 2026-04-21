@@ -129,6 +129,41 @@
             </div>
         </div>
 
+        <!-- Flash Toast Notifications -->
+        @if(session('success') || session('error'))
+        <div
+            x-data="{
+                show: true,
+                type: '{{ session('success') ? 'success' : 'error' }}',
+                message: '{{ addslashes(session('success') ?? session('error')) }}'
+            }"
+            x-init="setTimeout(() => show = false, 4000)"
+            x-show="show"
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0 translate-y-4"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 translate-y-0"
+            x-transition:leave-end="opacity-0 translate-y-4"
+            class="fixed bottom-6 right-6 z-[9999] flex items-start gap-3 px-5 py-4 rounded-2xl shadow-xl border max-w-sm"
+            :class="type === 'success'
+                ? 'bg-emerald-50 border-emerald-200 text-emerald-800'
+                : 'bg-red-50 border-red-200 text-red-800'"
+            style="display: none;"
+        >
+            <div class="mt-0.5 shrink-0">
+                <i class="fas text-sm" :class="type === 'success' ? 'fa-circle-check text-emerald-500' : 'fa-circle-xmark text-red-500'"></i>
+            </div>
+            <div class="flex-1 min-w-0">
+                <p class="text-xs font-bold uppercase tracking-widest mb-0.5" x-text="type === 'success' ? 'Success' : 'Error'"></p>
+                <p class="text-sm font-medium leading-snug" x-text="message"></p>
+            </div>
+            <button @click="show = false" class="shrink-0 opacity-40 hover:opacity-100 transition-opacity ml-1 mt-0.5">
+                <i class="fas fa-times text-xs"></i>
+            </button>
+        </div>
+        @endif
+
         <!-- Confirmation Modal Component -->
         <x-ui.confirmation-modal />
         <script>

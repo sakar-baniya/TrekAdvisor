@@ -2,6 +2,7 @@
     title="Security Settings" 
     subtitle="Protect your account with modern security standards."
     :breadcrumb="['Settings' => route('settings.profile.show'), 'Security' => null]"
+    :hideFooter="true"
 >
     @if (session('status'))
         <div class="mb-6 animate-fadeIn">

@@ -33,19 +33,7 @@
                             <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Subject</span>
                             <p class="text-sm font-semibold text-slate-900">{{ $message->subject }}</p>
                         </div>
-                        <div class="space-y-1">
-                            <span class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Platform Status</span>
-                            @php
-                                $status = $message->is_read ? 'read' : 'unread';
-                                $statusColor = match($status) {
-                                    'read' => 'bg-emerald-50 text-emerald-700 border-emerald-100',
-                                    default => 'bg-amber-50 text-amber-700 border-amber-100'
-                                };
-                            @endphp
-                            <span class="inline-flex px-2 py-0.5 rounded text-[9px] font-bold uppercase tracking-widest border {{ $statusColor }}">
-                                {{ $status }}
-                            </span>
-                        </div>
+
                     </div>
 
                     <div class="p-8 bg-slate-50 rounded-3xl border border-slate-100 relative">

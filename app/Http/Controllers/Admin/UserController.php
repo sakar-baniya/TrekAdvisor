@@ -84,9 +84,11 @@ class UserController extends Controller
             'email_verified_at' => now(),
         ]);
 
+        $roleLabel = ucfirst($validated['role']); // 'Admin' or 'Staff'
+
         return redirect()
             ->route('admin.users.index')
-            ->with('success', 'Staff user added.');
+            ->with('success', "{$roleLabel} user added.");
     }
 
     /**
