@@ -185,7 +185,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const imageInput = document.querySelector('[data-image-input]');
-            const imagePreview = document.querySelector('[data-image-preview]');
+            const imagePreview = document.getElementById('image-preview-box');
             const galleryInput = document.querySelector('[data-gallery-input]');
             const galleryPreview = document.querySelector('[data-gallery-preview]');
 
@@ -280,4 +280,3 @@
         </script>
     @endpush
 </div>
-

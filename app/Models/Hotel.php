@@ -96,6 +96,9 @@ class Hotel extends Model
      */
     public function gallery(): HasMany
     {
-        return $this->hasMany(HotelImage::class)->orderBy('sort_order')->orderBy('id');
+        return $this->hasMany(HotelImage::class)
+            ->where('sort_order', '>', 0)
+            ->orderBy('sort_order')
+            ->orderBy('id');
     }
 }

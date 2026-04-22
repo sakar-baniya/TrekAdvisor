@@ -45,9 +45,8 @@ class UpsertHotelService
                 'status' => 'pending',
             ];
 
-            $this->hotelGalleryService->syncHeroImage($request, $payload);
-
             $hotel = Hotel::query()->create($payload);
+            $this->hotelGalleryService->syncHeroImage($request, $payload, $hotel);
             $this->hotelGalleryService->syncGallery($request, $hotel);
             $this->syncRooms($hotel, $request->input('rooms', []));
 
